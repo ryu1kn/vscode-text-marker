@@ -1,0 +1,9 @@
+.vscode/**
+typings/**
+test/**
+images/animations/**
+.gitignore
+.editorconfig
+.eslintrc.yaml
+jsconfig.json
+vsc-extension-quickstart.md
