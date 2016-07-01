@@ -15,15 +15,11 @@ suite('App', () => {
                 inquire: () => null,
                 issue: stubWithArgs(['SELECTED'], 'DECORATION_TYPE')
             };
-            new App({decorationRegistry, vscode, logger}).markText(editor);
+            const textLocator = {locate: () => ['RANGE_1', 'RANGE_2']};
+            new App({decorationRegistry, textLocator, vscode, logger}).markText(editor);
 
-            expect(vscode.window.visibleTextEditors[0].setDecorations).to.have.been.calledWith(
-                'DECORATION_TYPE',
-                [
-                    {start: 'POSITION:5', end: 'POSITION:13'},
-                    {start: 'POSITION:19', end: 'POSITION:27'}
-                ]
-            );
+            expect(vscode.window.visibleTextEditors[0].setDecorations)
+                .to.have.been.calledWith('DECORATION_TYPE', ['RANGE_1', 'RANGE_2']);
         });
 
         test('Selecting already selected text is de-highlights the selected strings', () => {
@@ -35,35 +31,23 @@ suite('App', () => {
             };
             new App({decorationRegistry, vscode, logger}).markText(editor);
 
-            expect(vscode.window.visibleTextEditors[0].setDecorations).to.have.been.calledWith(
-                'DECORATION_TYPE',
-                []
-            );
+            expect(vscode.window.visibleTextEditors[0].setDecorations)
+                .to.have.been.calledWith('DECORATION_TYPE', []);
         });
     });
 
     function fakeEditor(selectedText, entireText) {
         return {
-            selection: {
-                text: selectedText,
-                isEmpty: !selectedText
-            },
+            selection: {text: selectedText},
             document: {
-                getText: selection => selection ? selection.text : entireText,
-                positionAt: offset => `POSITION:${offset}`
+                getText: selection => selection ? selection.text : entireText
             },
             setDecorations: sinon.spy()
         };
     }
 
     function fakeVscode(editor) {
-        const Range = function (position1, position2) {
-            return {start: position1, end: position2};
-        };
-        return {
-            window: {visibleTextEditors: [editor]},
-            Range
-        };
+        return {window: {visibleTextEditors: [editor]}};
     }
 
     function getLogger() {
