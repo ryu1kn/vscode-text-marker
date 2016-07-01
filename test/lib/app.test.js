@@ -22,6 +22,20 @@ suite('App', () => {
                 ]
             );
         });
+
+        test('Selecting already selected text is de-highlights the selected strings', () => {
+            const editor = fakeEditor('SELECTED', 'STR1 SELECTED STR2 SELECTED');
+            const vscode = fakeVscode(editor);
+            const logger = getLogger();
+            const app = new App({vscode, logger});
+            app.markText(editor);
+            app.markText(editor);
+
+            expect(vscode.window.visibleTextEditors[0].setDecorations.args[1]).to.eql([
+                'DECORATION_TYPE',
+                []
+            ]);
+        });
     });
 
     function fakeEditor(selectedText, entireText) {
