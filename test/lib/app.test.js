@@ -1,5 +1,6 @@
 
 const App = require('../../lib/app');
+const Throttle = require('../../lib/throttle');
 
 // TODO: Too much fake object setup, decompose implementation
 
@@ -35,6 +36,9 @@ suite('App', () => {
             expect(decorationRegistry.revoke).to.have.been.calledWith('SELECTED');
             expect(vscode.window.visibleTextEditors[0].setDecorations)
                 .to.have.been.calledWith('DECORATION_TYPE', []);
+        });
+
+        test.skip('it does nothing if text is not selected', () => {
         });
 
         test('it logs error if an exception occurred', () => {
@@ -90,6 +94,49 @@ suite('App', () => {
         });
     });
 
+    suite('#refreshDecorationsWithDelay', () => {
+
+        // TODO: Remove timeout!
+        test('it refreshes text markups once the time elapsed certain amount', done => {
+            const editor = fakeEditor('SELECTED', 'STR1 SELECTED STR2 SELECTED');
+            const vscode = fakeVscode(editor);
+            const logger = getLogger();
+            const decorationRegistry = {retrieveAll: () => ({TEXT: 'DECORATION_TYPE'})};
+            const textLocator = {locate: () => ['RANGE_1', 'RANGE_2']};
+            const throttle = new Throttle({timeout: 1});
+            const app = new App({throttle, decorationRegistry, textLocator, logger, vscode});
+            app.refreshDecorationsWithDelay('DOCUMENT_CHANGE_EVENT_1');
+            app.refreshDecorationsWithDelay('DOCUMENT_CHANGE_EVENT_2');
+            app.refreshDecorationsWithDelay('DOCUMENT_CHANGE_EVENT_3');
+
+            setTimeout(() => {
+                expect(editor.setDecorations).to.have.been.calledWith('DECORATION_TYPE', ['RANGE_1', 'RANGE_2']);
+                done();
+            }, 5);
+        });
+
+        test('it does nothing if editor is not given when invoked', done => {
+            const logger = {error: sinon.spy()};
+            const decorationRegistry = {retrieveAll: sinon.spy()};
+            const throttle = new Throttle({timeout: 1});
+            const vscode = fakeVscode();
+            new App({decorationRegistry, logger, throttle, vscode}).refreshDecorationsWithDelay();
+            setTimeout(() => {
+                expect(decorationRegistry.retrieveAll).to.have.been.not.called;
+                done();
+            }, 5);
+        });
+
+        test('it logs error if an exception occurred', () => {
+            const logger = {error: sinon.spy()};
+            const decorationRegistry = {
+                retrieveAll: () => {throw new Error('RETRIEVE_ALL_ERROR');}
+            };
+            new App({decorationRegistry, logger}).refreshDecorationsWithDelay('EDITOR');
+            expect(logger.error.args[0][0]).to.have.string('TypeError: Cannot read property \'window\' of undefined');
+        });
+    });
+
     function fakeEditor(selectedText, entireText) {
         return {
             selection: {text: selectedText},
@@ -101,7 +148,12 @@ suite('App', () => {
     }
 
     function fakeVscode(editor) {
-        return {window: {visibleTextEditors: [editor]}};
+        return {
+            window: {
+                visibleTextEditors: [editor],
+                activeTextEditor: editor
+            }
+        };
     }
 
     function getLogger() {
