@@ -27,10 +27,12 @@ suite('App', () => {
             const vscode = fakeVscode(editor);
             const logger = getLogger();
             const decorationRegistry = {
-                inquire: stubWithArgs(['SELECTED'], 'DECORATION_TYPE')
+                inquire: stubWithArgs(['SELECTED'], 'DECORATION_TYPE'),
+                revoke: sinon.spy()
             };
             new App({decorationRegistry, vscode, logger}).markText(editor);
 
+            expect(decorationRegistry.revoke).to.have.been.calledWith('SELECTED');
             expect(vscode.window.visibleTextEditors[0].setDecorations)
                 .to.have.been.calledWith('DECORATION_TYPE', []);
         });
