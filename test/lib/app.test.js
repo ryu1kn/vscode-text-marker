@@ -11,9 +11,12 @@ suite('App', () => {
             const editor = fakeEditor('SELECTED', 'STR1 SELECTED STR2 SELECTED');
             const vscode = fakeVscode(editor);
             const logger = getLogger();
-            new App({vscode, logger}).markText(editor);
+            const decorationRegistry = {
+                inquire: () => null,
+                issue: stubWithArgs(['SELECTED'], 'DECORATION_TYPE')
+            };
+            new App({decorationRegistry, vscode, logger}).markText(editor);
 
-            expect(vscode.window.createTextEditorDecorationType).to.have.been.calledWith({color: 'pink'});
             expect(vscode.window.visibleTextEditors[0].setDecorations).to.have.been.calledWith(
                 'DECORATION_TYPE',
                 [
@@ -27,14 +30,15 @@ suite('App', () => {
             const editor = fakeEditor('SELECTED', 'STR1 SELECTED STR2 SELECTED');
             const vscode = fakeVscode(editor);
             const logger = getLogger();
-            const app = new App({vscode, logger});
-            app.markText(editor);
-            app.markText(editor);
+            const decorationRegistry = {
+                inquire: stubWithArgs(['SELECTED'], 'DECORATION_TYPE')
+            };
+            new App({decorationRegistry, vscode, logger}).markText(editor);
 
-            expect(vscode.window.visibleTextEditors[0].setDecorations.args[1]).to.eql([
+            expect(vscode.window.visibleTextEditors[0].setDecorations).to.have.been.calledWith(
                 'DECORATION_TYPE',
                 []
-            ]);
+            );
         });
     });
 
@@ -57,10 +61,7 @@ suite('App', () => {
             return {start: position1, end: position2};
         };
         return {
-            window: {
-                visibleTextEditors: [editor],
-                createTextEditorDecorationType: sinon.stub().returns('DECORATION_TYPE')
-            },
+            window: {visibleTextEditors: [editor]},
             Range
         };
     }
