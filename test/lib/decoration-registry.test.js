@@ -17,4 +17,17 @@ suite('DecorationRegistry', () => {
         registry.revoke('TEXT');
         expect(registry.inquire('TEXT')).to.be.null;
     });
+
+    test('it can return all registered decorations at once', () => {
+        const decorationTypes = ['DECORATION_TYPE_1', 'DECORATION_TYPE_2'];
+        const window = {
+            createTextEditorDecorationType: () => decorationTypes.shift()};
+        const registry = new DecorationRegistry({window});
+        registry.issue('TEXT_1');
+        registry.issue('TEXT_2');
+        expect(registry.retrieveAll()).to.eql({
+            TEXT_1: 'DECORATION_TYPE_1',
+            TEXT_2: 'DECORATION_TYPE_2'
+        });
+    });
 });
