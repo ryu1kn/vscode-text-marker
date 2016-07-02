@@ -16,11 +16,12 @@ suite('App', () => {
                 inquire: () => null,
                 issue: stubWithArgs(['SELECTED'], 'DECORATION_TYPE')
             };
-            const textLocator = {locate: () => ['RANGE_1', 'RANGE_2']};
-            new App({decorationRegistry, textLocator, vscode, logger}).markText(editor);
+            const textDecorator = {decorate: sinon.spy()};
+            new App({decorationRegistry, textDecorator, vscode, logger}).markText(editor);
 
-            expect(vscode.window.visibleTextEditors[0].setDecorations)
-                .to.have.been.calledWith('DECORATION_TYPE', ['RANGE_1', 'RANGE_2']);
+            expect(textDecorator.decorate).to.have.been.calledWith(
+                [editor], 'DECORATION_TYPE', 'SELECTED'
+            );
         });
 
         test('Selecting already selected text is de-highlights the selected strings', () => {
@@ -31,11 +32,13 @@ suite('App', () => {
                 inquire: stubWithArgs(['SELECTED'], 'DECORATION_TYPE'),
                 revoke: sinon.spy()
             };
-            new App({decorationRegistry, vscode, logger}).markText(editor);
+            const textDecorator = {undecorate: sinon.spy()};
+            new App({decorationRegistry, textDecorator, vscode, logger}).markText(editor);
 
             expect(decorationRegistry.revoke).to.have.been.calledWith('SELECTED');
-            expect(vscode.window.visibleTextEditors[0].setDecorations)
-                .to.have.been.calledWith('DECORATION_TYPE', []);
+            expect(textDecorator.undecorate).to.have.been.calledWith(
+                [editor], 'DECORATION_TYPE'
+            );
         });
 
         test.skip('it does nothing if text is not selected', () => {
@@ -56,24 +59,17 @@ suite('App', () => {
     suite('#refreshDecorations', () => {
 
         test('it sets all currently active decorations to visible the given editor', () => {
-            const editor = fakeEditor('SELECTED', 'STR1 SELECTED STR2 SELECTED');
+            const editor = 'EDITOR';
             const logger = getLogger();
             const decorationRegistry = {
                 retrieveAll: () => ({TEXT_1: 'DECORATION_TYPE_1', TEXT_2: 'DECORATION_TYPE_2'})
             };
-            const textLocator = {
-                locate: (editor, text) => {
-                    switch (text) { // eslint-disable-line default-case
-                    case 'TEXT_1': return ['RANGE_1_1', 'RANGE_1_2'];
-                    case 'TEXT_2': return ['RANGE_2'];
-                    }
-                }
-            };
-            new App({decorationRegistry, textLocator, logger}).refreshDecorations(editor);
+            const textDecorator = {decorate: sinon.spy()};
+            new App({decorationRegistry, textDecorator, logger}).refreshDecorations(editor);
 
-            expect(editor.setDecorations.args).to.eql([
-                ['DECORATION_TYPE_1', ['RANGE_1_1', 'RANGE_1_2']],
-                ['DECORATION_TYPE_2', ['RANGE_2']]
+            expect(textDecorator.decorate.args).to.eql([
+                [[editor], 'DECORATION_TYPE_1', 'TEXT_1'],
+                [[editor], 'DECORATION_TYPE_2', 'TEXT_2']
             ]);
         });
 
@@ -98,19 +94,22 @@ suite('App', () => {
 
         // TODO: Remove timeout!
         test('it refreshes text markups once the time elapsed certain amount', done => {
-            const editor = fakeEditor('SELECTED', 'STR1 SELECTED STR2 SELECTED');
+            const editor = 'EDITOR';
             const vscode = fakeVscode(editor);
             const logger = getLogger();
             const decorationRegistry = {retrieveAll: () => ({TEXT: 'DECORATION_TYPE'})};
-            const textLocator = {locate: () => ['RANGE_1', 'RANGE_2']};
+            const textDecorator = {decorate: sinon.spy()};
             const throttle = new Throttle({timeout: 1});
-            const app = new App({throttle, decorationRegistry, textLocator, logger, vscode});
+            const app = new App({throttle, decorationRegistry, textDecorator, logger, vscode});
+
             app.refreshDecorationsWithDelay('DOCUMENT_CHANGE_EVENT_1');
             app.refreshDecorationsWithDelay('DOCUMENT_CHANGE_EVENT_2');
             app.refreshDecorationsWithDelay('DOCUMENT_CHANGE_EVENT_3');
 
             setTimeout(() => {
-                expect(editor.setDecorations).to.have.been.calledWith('DECORATION_TYPE', ['RANGE_1', 'RANGE_2']);
+                expect(textDecorator.decorate).to.have.been.calledWith(
+                    [editor], 'DECORATION_TYPE', 'TEXT'
+                );
                 done();
             }, 5);
         });
