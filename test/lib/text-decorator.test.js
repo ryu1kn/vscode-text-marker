@@ -30,4 +30,20 @@ suite('TextDecorator', () => {
         expect(editors[1].setDecorations)
             .to.have.been.calledWith('DECORATION_TYPE', []);
     });
+
+    test("it doesn't apply decorations if decorationType is not valid", () => {
+        const editors = [{setDecorations: sinon.spy()}];
+        const textLocator = {
+            locate: stubWithArgs(
+                [editors[0], 'TEXT_1'], ['RANGE1-1', 'RANGE1-2'],
+                [editors[0], 'TEXT_2'], ['RANGE2']
+            )
+        };
+        const textDecorator = new TextDecorator({textLocator});
+        textDecorator.decorate(editors, {TEXT_1: 'DECORATION_TYPE', TEXT_2: null});
+
+        expect(editors[0].setDecorations.args).to.eql([
+            ['DECORATION_TYPE', ['RANGE1-1', 'RANGE1-2']]
+        ]);
+    });
 });
