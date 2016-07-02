@@ -1,6 +1,5 @@
 
 const App = require('../../lib/app');
-const Throttle = require('../../lib/throttle');
 
 // TODO: Too much fake object setup, decompose implementation
 
@@ -99,38 +98,29 @@ suite('App', () => {
 
     suite('#refreshDecorationsWithDelay', () => {
 
-        // TODO: Remove timeout!
-        test('it refreshes text markups once the time elapsed certain amount', done => {
+        test('it refreshes text markups but debounce the execution with throttle', () => {
             const editor = 'EDITOR';
             const vscode = fakeVscode(editor);
             const logger = getLogger();
             const decorationRegistry = {retrieveAll: () => ({TEXT: 'DECORATION_TYPE'})};
             const textDecorator = {decorate: sinon.spy()};
-            const throttle = new Throttle({timeout: 1});
+            const throttle = {throttle: callback => callback()};
             const app = new App({throttle, decorationRegistry, textDecorator, logger, vscode});
 
-            app.refreshDecorationsWithDelay('DOCUMENT_CHANGE_EVENT_1');
-            app.refreshDecorationsWithDelay('DOCUMENT_CHANGE_EVENT_2');
-            app.refreshDecorationsWithDelay('DOCUMENT_CHANGE_EVENT_3');
+            app.refreshDecorationsWithDelay('DOCUMENT_CHANGE_EVENT');
 
-            setTimeout(() => {
-                expect(textDecorator.decorate).to.have.been.calledWith(
-                    [editor], 'DECORATION_TYPE', 'TEXT'
-                );
-                done();
-            }, 5);
+            expect(textDecorator.decorate).to.have.been.calledWith(
+                [editor], 'DECORATION_TYPE', 'TEXT'
+            );
         });
 
-        test('it does nothing if editor is not given when invoked', done => {
+        test('it does nothing if editor is not given when invoked', () => {
             const logger = {error: sinon.spy()};
             const decorationRegistry = {retrieveAll: sinon.spy()};
-            const throttle = new Throttle({timeout: 1});
+            const throttle = {throttle: callback => callback()};
             const vscode = fakeVscode();
             new App({decorationRegistry, logger, throttle, vscode}).refreshDecorationsWithDelay();
-            setTimeout(() => {
-                expect(decorationRegistry.retrieveAll).to.have.been.not.called;
-                done();
-            }, 5);
+            expect(decorationRegistry.retrieveAll).to.have.been.not.called;
         });
 
         test('it logs error if an exception occurred', () => {
