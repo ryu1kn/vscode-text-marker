@@ -41,7 +41,14 @@ suite('App', () => {
             );
         });
 
-        test.skip('it does nothing if text is not selected', () => {
+        test('it does nothing if text is not selected', () => {
+            const editor = fakeEditor('', 'ENTIRE TEXT');
+            const decorationRegistry = {
+                inquire: stubWithArgs(['SELECTED'], 'DECORATION_TYPE'),
+                revoke: sinon.spy()
+            };
+            new App({decorationRegistry}).markText(editor);
+            expect(decorationRegistry.inquire).to.have.been.not.called;
         });
 
         test('it logs error if an exception occurred', () => {
