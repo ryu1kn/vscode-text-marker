@@ -19,7 +19,7 @@ suite('App', () => {
             new App({decorationRegistry, textDecorator, vscode, logger}).markText(editor);
 
             expect(textDecorator.decorate).to.have.been.calledWith(
-                [editor], 'DECORATION_TYPE', 'SELECTED'
+                [editor], {SELECTED: 'DECORATION_TYPE'}
             );
         });
 
@@ -74,8 +74,7 @@ suite('App', () => {
             new App({decorationRegistry, textDecorator, logger}).refreshDecorations(editor);
 
             expect(textDecorator.decorate.args).to.eql([
-                [[editor], 'DECORATION_TYPE_1', 'TEXT_1'],
-                [[editor], 'DECORATION_TYPE_2', 'TEXT_2']
+                [[editor], {TEXT_1: 'DECORATION_TYPE_1', TEXT_2: 'DECORATION_TYPE_2'}]
             ]);
         });
 
@@ -110,7 +109,7 @@ suite('App', () => {
             app.refreshDecorationsWithDelay('DOCUMENT_CHANGE_EVENT');
 
             expect(textDecorator.decorate).to.have.been.calledWith(
-                [editor], 'DECORATION_TYPE', 'TEXT'
+                [editor], {TEXT: 'DECORATION_TYPE'}
             );
         });
 

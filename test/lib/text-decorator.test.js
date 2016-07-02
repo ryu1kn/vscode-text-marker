@@ -12,7 +12,7 @@ suite('TextDecorator', () => {
             )
         };
         const textDecorator = new TextDecorator({textLocator});
-        textDecorator.decorate(editors, 'DECORATION_TYPE', 'TEXT');
+        textDecorator.decorate(editors, {TEXT: 'DECORATION_TYPE'});
 
         expect(editors[0].setDecorations)
             .to.have.been.calledWith('DECORATION_TYPE', ['RANGE1-1', 'RANGE1-2']);
