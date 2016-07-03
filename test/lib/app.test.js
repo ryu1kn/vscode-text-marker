@@ -97,14 +97,14 @@ suite('App', () => {
 
     suite('#refreshDecorationsWithDelay', () => {
 
-        test('it refreshes text markups but debounce the execution with throttle', () => {
+        test('it refreshes text markups but debounce the execution', () => {
             const editor = 'EDITOR';
             const vscode = fakeVscode(editor);
             const logger = getLogger();
             const decorationRegistry = {retrieveAll: () => ({TEXT: 'DECORATION_TYPE'})};
             const textDecorator = {decorate: sinon.spy()};
-            const throttle = {throttle: sinon.stub().callsArg(0)};
-            const app = new App({throttle, decorationRegistry, textDecorator, logger, vscode});
+            const debouncer = {debounce: sinon.stub().callsArg(0)};
+            const app = new App({debouncer, decorationRegistry, textDecorator, logger, vscode});
 
             app.refreshDecorationsWithDelay('DOCUMENT_CHANGE_EVENT');
 
@@ -116,9 +116,9 @@ suite('App', () => {
         test('it does nothing if editor is not given when invoked', () => {
             const logger = {error: sinon.spy()};
             const decorationRegistry = {retrieveAll: sinon.spy()};
-            const throttle = {throttle: callback => callback()};
+            const debouncer = {debounce: callback => callback()};
             const vscode = fakeVscode();
-            new App({decorationRegistry, logger, throttle, vscode}).refreshDecorationsWithDelay();
+            new App({decorationRegistry, logger, debouncer, vscode}).refreshDecorationsWithDelay();
             expect(decorationRegistry.retrieveAll).to.have.been.not.called;
         });
 

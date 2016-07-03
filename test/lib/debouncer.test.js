@@ -1,16 +1,16 @@
 
-const Throttle = require('../../lib/throttle');
+const Debouncer = require('../../lib/debouncer');
 
-suite('Throttle', () => {
+suite('Debouncer', () => {
 
     test('it suppresses the multiple calls of given callback happened in the certain time period only once', done => {
         const configStore = {get: stubWithArgs(['decorationRefreshDelay'], 1)};
-        const throttle = new Throttle({configStore});
+        const debounce = new Debouncer({configStore});
         const callbackSpy = sinon.spy();
 
-        throttle.throttle(callbackSpy);
-        throttle.throttle(callbackSpy);
-        throttle.throttle(callbackSpy);
+        debounce.debounce(callbackSpy);
+        debounce.debounce(callbackSpy);
+        debounce.debounce(callbackSpy);
 
         setTimeout(() => {
             expect(callbackSpy).to.have.callCount(1);
@@ -18,12 +18,12 @@ suite('Throttle', () => {
         }, 10);
     });
 
-    test("it doesn't invoke the callback if non number throttling time is given", done => {
+    test("it doesn't invoke the callback if non number debouncing time is given", done => {
         const configStore = {get: stubWithArgs(['decorationRefreshDelay'], null)};
-        const throttle = new Throttle({configStore});
+        const debouncer = new Debouncer({configStore});
 
         const callbackSpy = sinon.spy();
-        throttle.throttle(callbackSpy);
+        debouncer.debounce(callbackSpy);
 
         setTimeout(() => {
             expect(callbackSpy).to.have.been.not.called;
