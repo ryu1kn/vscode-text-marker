@@ -2,11 +2,13 @@
 
 ## Features
 
-Highlight text you want them to stand out.
+Highlight the text you want them to stand out.
 
 ## Commands
 
 * `TextMarker: Mark text`
+
+    Mark the selected text for highlighting
 
 ## Release Notes
 

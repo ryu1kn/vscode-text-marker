@@ -43,8 +43,8 @@
           "default": ["darkgoldenrod", "darkmagenta", "darkolivegreen", "darkslateblue", "darkslategray", "darkviolet", "darkblue", "darkturquoise", "darkgray", "darkkhaki", "darkorange", "darksalmon", "darkseagreen"]
         },
         "textmarker.decorationRefreshDelay": {
-          "description": "Number of milliseconds before refreshing the decorations on editor contents change",
-          "type": "number",
+          "description": "Number of milliseconds to wait before refreshing the highlights on editor contents change. null for no refresh",
+          "type": ["number", "null"],
           "default": 500
         }
       }
