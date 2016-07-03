@@ -22,4 +22,14 @@ suite('ColourRegistry', () => {
 
         expect(colourRegistry.issue()).to.eql('COLOUR_1');
     });
+
+    test('it issues "gray" if it already used all the colours given in the settings', () => {
+        const coloursInSettings = [];
+        const workspace = {
+            getConfiguration: stubWithArgs(['textmarker.colorList'], coloursInSettings)
+        };
+        const colourRegistry = new ColourRegistry({workspace});
+
+        expect(colourRegistry.issue()).to.eql('gray');
+    });
 });
