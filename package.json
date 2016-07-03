@@ -1,7 +1,7 @@
 {
   "name": "text-marker",
   "displayName": "Text Marker",
-  "description": "Highlight text you want them to stand out",
+  "description": "Highlight code with the colors you want",
   "version": "0.0.1",
   "publisher": "ryu1kn",
   "license": "SEE LICENSE IN LICENSE.txt",
@@ -23,7 +23,9 @@
   "keywords": [
     "vscode",
     "mark",
-    "highlight"
+    "marker",
+    "highlight",
+    "search"
   ],
   "activationEvents": [
     "onCommand:textmarker.markText"
@@ -34,25 +36,25 @@
       "type": "object",
       "title": "Text Marker configurations",
       "properties": {
-        "textmarker.colorList": {
-          "description": "List of colors to be used to markup selected texts",
+        "textmarker.highlightColors": {
+          "description": "List of colors to be used to highlight the selected text",
           "type": "array",
           "items": {
             "type": "string"
           },
           "default": ["darkgoldenrod", "darkmagenta", "darkolivegreen", "darkslateblue", "darkslategray", "darkviolet", "darkblue", "darkturquoise", "darkgray", "darkkhaki", "darkorange", "darksalmon", "darkseagreen"]
         },
-        "textmarker.decorationRefreshDelay": {
+        "textmarker.highlightRefreshDelay": {
           "description": "Number of milliseconds to wait before refreshing the highlights on editor contents change. null for no refresh",
           "type": ["number", "null"],
-          "default": 500
+          "default": 100
         }
       }
     },
     "commands": [
       {
         "command": "textmarker.markText",
-        "title": "TextMarker: Mark Text"
+        "title": "TextMarker: Mark Text for Highlighting/De-Highlighting"
       }
     ]
   },
