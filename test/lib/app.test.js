@@ -103,7 +103,7 @@ suite('App', () => {
             const logger = getLogger();
             const decorationRegistry = {retrieveAll: () => ({TEXT: 'DECORATION_TYPE'})};
             const textDecorator = {decorate: sinon.spy()};
-            const throttle = {throttle: callback => callback()};
+            const throttle = {throttle: sinon.stub().callsArg(0)};
             const app = new App({throttle, decorationRegistry, textDecorator, logger, vscode});
 
             app.refreshDecorationsWithDelay('DOCUMENT_CHANGE_EVENT');

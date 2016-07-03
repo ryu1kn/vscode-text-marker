@@ -30,6 +30,25 @@
   ],
   "main": "./extension",
   "contributes": {
+    "configuration": {
+      "type": "object",
+      "title": "Text Marker configurations",
+      "properties": {
+        "textmarker.colorList": {
+          "description": "List of colors to be used to markup selected texts",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": ["darkgoldenrod", "darkmagenta", "darkolivegreen", "darkslateblue", "darkslategray", "darkviolet", "darkblue", "darkturquoise", "darkgray", "darkkhaki", "darkorange", "darksalmon", "darkseagreen"]
+        },
+        "textmarker.decorationRefreshDelay": {
+          "description": "Number of milliseconds before refreshing the decorations on editor contents change",
+          "type": "number",
+          "default": 500
+        }
+      }
+    },
     "commands": [
       {
         "command": "textmarker.markText",

@@ -4,18 +4,14 @@ const ColourRegistry = require('../../lib/colour-registry');
 suite('ColourRegistry', () => {
 
     test('it returns a color which has not been used', () => {
-        const workspace = {
-            getConfiguration: stubWithArgs(['textmarker.colorList'], ['COLOUR_1'])
-        };
-        const colourRegistry = new ColourRegistry({workspace});
+        const configStore = {get: stubWithArgs(['colorList'], ['COLOUR_1'])};
+        const colourRegistry = new ColourRegistry({configStore});
         expect(colourRegistry.issue()).to.eql('COLOUR_1');
     });
 
     test('it releases the given colour and make it available', () => {
-        const workspace = {
-            getConfiguration: stubWithArgs(['textmarker.colorList'], ['COLOUR_1'])
-        };
-        const colourRegistry = new ColourRegistry({workspace});
+        const configStore = {get: stubWithArgs(['colorList'], ['COLOUR_1'])};
+        const colourRegistry = new ColourRegistry({configStore});
 
         colourRegistry.issue();
         colourRegistry.revoke('COLOUR_1');
@@ -24,12 +20,8 @@ suite('ColourRegistry', () => {
     });
 
     test('it issues "gray" if it already used all the colours given in the settings', () => {
-        const coloursInSettings = [];
-        const workspace = {
-            getConfiguration: stubWithArgs(['textmarker.colorList'], coloursInSettings)
-        };
-        const colourRegistry = new ColourRegistry({workspace});
-
+        const configStore = {get: stubWithArgs(['colorList'], [])};
+        const colourRegistry = new ColourRegistry({configStore});
         expect(colourRegistry.issue()).to.eql('gray');
     });
 });
