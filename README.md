@@ -8,7 +8,7 @@ Select text in your code and mark all matches. The marking colour is configurabl
 
 ## Commands
 
-* `TextMarker: Mark text`
+* `TextMarker: Mark Text to Highlight/Unhighlight`
 
     Mark the selected text for highlighting. Marking the already selected text will unhighlight the text.
 
