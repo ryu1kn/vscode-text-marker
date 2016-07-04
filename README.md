@@ -10,7 +10,7 @@ Highlight code with the colors you want.
 
 * `TextMarker: Mark text`
 
-    Mark the selected text for highlighting. Marking the already selected text will de-highlight the text.
+    Mark the selected text for highlighting. Marking the already selected text will unhighlight the text.
 
 ## Extension Settings
 
@@ -20,7 +20,7 @@ You can specify a template for a print statement per language.
 
     List of colors to be used to highlight the selected text. The colors are used with respect to the order in the list.
 
-* `textmarker.highlightRefreshDelay`
+* `textmarker.delayForRefreshingHighlight`
 
     Number of milliseconds to wait before refreshing the highlights on editor contents change. `null` for no refresh.
 

@@ -44,7 +44,7 @@
           },
           "default": ["darkgoldenrod", "darkmagenta", "darkolivegreen", "darkslateblue", "darkslategray", "darkviolet", "darkblue", "darkturquoise", "darkgray", "darkkhaki", "darkorange", "darksalmon", "darkseagreen"]
         },
-        "textmarker.highlightRefreshDelay": {
+        "textmarker.delayForRefreshingHighlight": {
           "description": "Number of milliseconds to wait before refreshing the highlights on editor contents change. null for no refresh",
           "type": ["number", "null"],
           "default": 100
@@ -54,7 +54,7 @@
     "commands": [
       {
         "command": "textmarker.markText",
-        "title": "TextMarker: Mark Text for Highlighting/De-Highlighting"
+        "title": "TextMarker: Mark Text to Highlight/Unhighlight"
       }
     ]
   },
