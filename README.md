@@ -2,9 +2,9 @@
 
 ## Features
 
-Highlight code with the colors you want.
+Select text in your code and mark all matches. The marking colour is configurable
 
-`![Highlight text](https://https://raw.githubusercontent.com/ryu1kn/vscode-text-marker/master/images/animations/)`
+![Highlight and unhighlight text](https://https://raw.githubusercontent.com/ryu1kn/vscode-text-marker/master/images/animations/highlight-unhighlight-texts.gif)
 
 ## Commands
 

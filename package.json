@@ -1,11 +1,11 @@
 {
   "name": "text-marker",
   "displayName": "Text Marker",
-  "description": "Highlight code with the colors you want",
+  "description": "Select text in your code and mark all matches. The marking colour is configurable",
   "version": "0.0.1",
   "publisher": "ryu1kn",
   "license": "SEE LICENSE IN LICENSE.txt",
-  "icon": "images/textmarker.png",
+  "icon": "images/text-marker.png",
   "bugs": {
     "url": "https://github.com/ryu1kn/vscode-text-marker/issues"
   },
@@ -47,7 +47,7 @@
         "textmarker.delayForRefreshingHighlight": {
           "description": "Number of milliseconds to wait before refreshing the highlights on editor contents change. null for no refresh",
           "type": ["number", "null"],
-          "default": 100
+          "default": 300
         }
       }
     },
