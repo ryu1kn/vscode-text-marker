@@ -4,7 +4,7 @@
 
 Select text in your code and mark all matches. The marking colour is configurable
 
-![Highlight and unhighlight text](https://https://raw.githubusercontent.com/ryu1kn/vscode-text-marker/master/images/animations/highlight-unhighlight-texts.gif)
+![Highlight and unhighlight text](https://raw.githubusercontent.com/ryu1kn/vscode-text-marker/master/images/animations/highlight-unhighlight-texts.gif)
 
 ## Commands
 
