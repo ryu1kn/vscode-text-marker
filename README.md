@@ -14,11 +14,9 @@ Select text in your code and mark all matches. The marking colour is configurabl
 
 ## Extension Settings
 
-You can specify a template for a print statement per language.
-
 * `textmarker.highlightColors`
 
-    List of colors to be used to highlight the selected text. The colors are used with respect to the order in the list.
+    List of colours to be used to highlight the selected text. The colours are used with respect to the order in the list.
 
 * `textmarker.delayForRefreshingHighlight`
 
