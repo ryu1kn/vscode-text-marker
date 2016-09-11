@@ -62,6 +62,29 @@ suite('App', () => {
         });
     });
 
+    suite('#clearAllHighlight', () => {
+
+        test('it highlights all the strings equal to the selected string', () => {
+            const vscode = {
+                window: {visibleTextEditors: ['EDITOR_1', 'EDITOR_2']}
+            };
+            const logger = getLogger();
+            const decorationRegistry = {
+                retrieveAll: () => ({
+                    text1: 'DECORATION_TYPE_1',
+                    text2: 'DECORATION_TYPE_2'
+                })
+            };
+            const textDecorator = {undecorate: sinon.spy()};
+            new App({decorationRegistry, textDecorator, vscode, logger}).clearAllHighlight();
+
+            expect(textDecorator.undecorate.args).to.eql([
+                [['EDITOR_1', 'EDITOR_2'], 'DECORATION_TYPE_1'],
+                [['EDITOR_1', 'EDITOR_2'], 'DECORATION_TYPE_2']
+            ]);
+        });
+    });
+
     suite('#refreshDecorations', () => {
 
         test('it sets all currently active decorations to visible the given editor', () => {
