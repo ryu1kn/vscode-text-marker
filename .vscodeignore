@@ -2,6 +2,7 @@
 typings/**
 test/**
 images/animations/**
+coverage/**
 .gitignore
 .editorconfig
 .eslintrc.yaml

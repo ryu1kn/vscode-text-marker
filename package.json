@@ -42,11 +42,28 @@
           "items": {
             "type": "string"
           },
-          "default": ["darkgoldenrod", "darkmagenta", "darkolivegreen", "darkslateblue", "darkslategray", "darkviolet", "darkblue", "darkturquoise", "darkgray", "darkkhaki", "darkorange", "darksalmon", "darkseagreen"]
+          "default": [
+            "darkgoldenrod",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkviolet",
+            "darkblue",
+            "darkturquoise",
+            "darkgray",
+            "darkkhaki",
+            "darkorange",
+            "darksalmon",
+            "darkseagreen"
+          ]
         },
         "textmarker.delayForRefreshingHighlight": {
           "description": "Number of milliseconds to wait before refreshing the highlights on editor contents change. null for no refresh",
-          "type": ["number", "null"],
+          "type": [
+            "number",
+            "null"
+          ],
           "default": 300
         }
       }
@@ -64,6 +81,7 @@
   },
   "scripts": {
     "postinstall": "node ./node_modules/vscode/bin/install",
+    "coverage": "istanbul cover ./node_modules/.bin/_mocha -- test --recursive --ui tdd",
     "lint": "eslint .",
     "test": "mocha test --recursive --ui tdd",
     "test-mode": "mocha test --recursive --ui tdd --watch"
@@ -72,6 +90,7 @@
     "chai": "^3.5.0",
     "eslint": "^2.12.0",
     "eslint-config-xo": "^0.15.0",
+    "istanbul": "^0.4.5",
     "mocha": "^2.5.3",
     "sinon": "^1.17.4",
     "sinon-chai": "^2.8.0",
