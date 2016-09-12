@@ -70,6 +70,7 @@ suite('App', () => {
             };
             const logger = getLogger();
             const decorationRegistry = {
+                revoke: sinon.spy(),
                 retrieveAll: () => ({
                     text1: 'DECORATION_TYPE_1',
                     text2: 'DECORATION_TYPE_2'
@@ -78,6 +79,7 @@ suite('App', () => {
             const textDecorator = {undecorate: sinon.spy()};
             new App({decorationRegistry, textDecorator, vscode, logger}).clearAllHighlight();
 
+            expect(decorationRegistry.revoke.args).to.eql([['text1'], ['text2']]);
             expect(textDecorator.undecorate).to.have.been.calledWith(
                 ['EDITOR_1', 'EDITOR_2'],
                 ['DECORATION_TYPE_1', 'DECORATION_TYPE_2']
