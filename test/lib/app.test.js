@@ -7,47 +7,23 @@ suite('App', () => {
 
     suite('#markText', () => {
 
-        test('it highlights all the strings equal to the selected string', () => {
+        test('it toggles the decoration of selected text', () => {
             const editor = fakeEditor('SELECTED', 'STR1 SELECTED STR2 SELECTED');
             const vscode = fakeVscode(editor);
             const logger = getLogger();
-            const decorationRegistry = {
-                inquire: () => null,
-                issue: stubWithArgs(['SELECTED'], 'DECORATION_TYPE')
-            };
-            const textDecorator = {decorate: sinon.spy()};
-            new App({decorationRegistry, textDecorator, vscode, logger}).markText(editor);
+            const decorationOperator = {toggleDecoration: sinon.spy()};
+            const decorationOperatorFactory = {create: sinon.stub().returns(decorationOperator)};
+            new App({decorationOperatorFactory, vscode, logger}).markText(editor);
 
-            expect(textDecorator.decorate).to.have.been.calledWith(
-                [editor], {SELECTED: 'DECORATION_TYPE'}
-            );
-        });
-
-        test('Selecting already selected text is de-highlights the selected strings', () => {
-            const editor = fakeEditor('SELECTED', 'STR1 SELECTED STR2 SELECTED');
-            const vscode = fakeVscode(editor);
-            const logger = getLogger();
-            const decorationRegistry = {
-                inquire: stubWithArgs(['SELECTED'], 'DECORATION_TYPE'),
-                revoke: sinon.spy()
-            };
-            const textDecorator = {undecorate: sinon.spy()};
-            new App({decorationRegistry, textDecorator, vscode, logger}).markText(editor);
-
-            expect(decorationRegistry.revoke).to.have.been.calledWith('SELECTED');
-            expect(textDecorator.undecorate).to.have.been.calledWith(
-                [editor], ['DECORATION_TYPE']
-            );
+            expect(decorationOperatorFactory.create).to.have.been.calledWith([editor]);
+            expect(decorationOperator.toggleDecoration).to.have.been.calledWith('SELECTED');
         });
 
         test('it does nothing if text is not selected', () => {
             const editor = fakeEditor('', 'ENTIRE TEXT');
-            const decorationRegistry = {
-                inquire: stubWithArgs(['SELECTED'], 'DECORATION_TYPE'),
-                revoke: sinon.spy()
-            };
-            new App({decorationRegistry}).markText(editor);
-            expect(decorationRegistry.inquire).to.have.been.not.called;
+            const decorationOperatorFactory = {create: sinon.spy()};
+            new App({decorationOperatorFactory}).markText(editor);
+            expect(decorationOperatorFactory.create).to.have.been.not.called;
         });
 
         test('it logs error if an exception occurred', () => {
