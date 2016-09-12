@@ -36,7 +36,7 @@ suite('App', () => {
 
             expect(decorationRegistry.revoke).to.have.been.calledWith('SELECTED');
             expect(textDecorator.undecorate).to.have.been.calledWith(
-                [editor], 'DECORATION_TYPE'
+                [editor], ['DECORATION_TYPE']
             );
         });
 
@@ -78,10 +78,10 @@ suite('App', () => {
             const textDecorator = {undecorate: sinon.spy()};
             new App({decorationRegistry, textDecorator, vscode, logger}).clearAllHighlight();
 
-            expect(textDecorator.undecorate.args).to.eql([
-                [['EDITOR_1', 'EDITOR_2'], 'DECORATION_TYPE_1'],
-                [['EDITOR_1', 'EDITOR_2'], 'DECORATION_TYPE_2']
-            ]);
+            expect(textDecorator.undecorate).to.have.been.calledWith(
+                ['EDITOR_1', 'EDITOR_2'],
+                ['DECORATION_TYPE_1', 'DECORATION_TYPE_2']
+            );
         });
     });
 

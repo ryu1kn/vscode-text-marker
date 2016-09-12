@@ -23,12 +23,16 @@ suite('TextDecorator', () => {
     test('it removes decorations from the text in the editors', () => {
         const editors = [{setDecorations: sinon.spy()}, {setDecorations: sinon.spy()}];
         const textDecorator = new TextDecorator({});
-        textDecorator.undecorate(editors, 'DECORATION_TYPE');
+        textDecorator.undecorate(editors, ['DECORATION_TYPE_1', 'DECORATION_TYPE_2']);
 
-        expect(editors[0].setDecorations)
-            .to.have.been.calledWith('DECORATION_TYPE', []);
-        expect(editors[1].setDecorations)
-            .to.have.been.calledWith('DECORATION_TYPE', []);
+        expect(editors[0].setDecorations.args).to.eql([
+            ['DECORATION_TYPE_1', []],
+            ['DECORATION_TYPE_2', []]
+        ]);
+        expect(editors[1].setDecorations.args).to.eql([
+            ['DECORATION_TYPE_1', []],
+            ['DECORATION_TYPE_2', []]
+        ]);
     });
 
     test("it doesn't apply decorations if decorationType is not valid", () => {
