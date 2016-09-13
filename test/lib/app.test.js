@@ -60,12 +60,12 @@ suite('App', () => {
             const editor = fakeEditor('SELECTED', 'STR1 SELECTED STR2 SELECTED');
             const vscode = fakeVscode(editor);
             const logger = getLogger();
-            const decorationOperator = {refreshDecoration: sinon.spy()};
+            const decorationOperator = {refreshDecorations: sinon.spy()};
             const decorationOperatorFactory = {create: sinon.stub().returns(decorationOperator)};
             new App({decorationOperatorFactory, vscode, logger}).refreshDecorations(editor);
 
             expect(decorationOperatorFactory.create).to.have.been.calledWith([editor]);
-            expect(decorationOperator.refreshDecoration).to.have.been.calledWith();
+            expect(decorationOperator.refreshDecorations).to.have.been.calledWith();
         });
 
         test('it does nothing if editor is not given when invoked', () => {
@@ -92,7 +92,7 @@ suite('App', () => {
             const editor = 'EDITOR';
             const vscode = fakeVscode(editor);
             const logger = getLogger();
-            const decorationOperator = {refreshDecoration: sinon.spy()};
+            const decorationOperator = {refreshDecorations: sinon.spy()};
             const decorationOperatorFactory = {create: sinon.stub().returns(decorationOperator)};
             const debouncer = {debounce: sinon.stub().callsArg(0)};
             const app = new App({debouncer, decorationOperatorFactory, logger, vscode});
@@ -100,7 +100,7 @@ suite('App', () => {
             app.refreshDecorationsWithDelay('DOCUMENT_CHANGE_EVENT');
 
             expect(decorationOperatorFactory.create).to.have.been.calledWith([editor]);
-            expect(decorationOperator.refreshDecoration).to.have.been.calledWith();
+            expect(decorationOperator.refreshDecorations).to.have.been.calledWith();
         });
 
         test('it does nothing if editor is not given when invoked', () => {

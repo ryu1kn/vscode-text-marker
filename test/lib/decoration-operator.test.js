@@ -36,7 +36,7 @@ suite('DecorationOperator', () => {
         });
     });
 
-    suite('#refreshDecoration', () => {
+    suite('#refreshDecorations', () => {
 
         test('it sets all currently active decorations to visible the given editor', () => {
             const editors = ['EDITOR'];
@@ -45,7 +45,7 @@ suite('DecorationOperator', () => {
             };
             const textDecorator = {decorate: sinon.spy()};
             const operator = new DecorationOperator({editors, decorationRegistry, textDecorator});
-            operator.refreshDecoration();
+            operator.refreshDecorations();
 
             expect(textDecorator.decorate.args).to.eql([
                 [editors, {TEXT_1: 'DECORATION_TYPE_1', TEXT_2: 'DECORATION_TYPE_2'}]
