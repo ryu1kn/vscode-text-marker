@@ -28,6 +28,7 @@
     "search"
   ],
   "activationEvents": [
+    "onCommand:textmarker.clearAllHighlight",
     "onCommand:textmarker.markText"
   ],
   "main": "./extension",
