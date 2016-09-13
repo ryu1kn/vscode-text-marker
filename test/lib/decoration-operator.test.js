@@ -52,4 +52,27 @@ suite('DecorationOperator', () => {
             ]);
         });
     });
+
+    suite('#removeAllDecorations', () => {
+
+        test('it highlights all the strings equal to the selected string', () => {
+            const editors = ['EDITOR_1', 'EDITOR_2'];
+            const decorationRegistry = {
+                revoke: sinon.spy(),
+                retrieveAll: () => ({
+                    text1: 'DECORATION_TYPE_1',
+                    text2: 'DECORATION_TYPE_2'
+                })
+            };
+            const textDecorator = {undecorate: sinon.spy()};
+            const operator = new DecorationOperator({decorationRegistry, textDecorator, editors})
+            operator.removeAllDecorations();
+
+            expect(decorationRegistry.revoke.args).to.eql([['text1'], ['text2']]);
+            expect(textDecorator.undecorate).to.have.been.calledWith(
+                ['EDITOR_1', 'EDITOR_2'],
+                ['DECORATION_TYPE_1', 'DECORATION_TYPE_2']
+            );
+        });
+    });
 });

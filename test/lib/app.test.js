@@ -40,26 +40,17 @@ suite('App', () => {
 
     suite('#clearAllHighlight', () => {
 
-        test('it highlights all the strings equal to the selected string', () => {
+        test('it lets DecorationOperator to remove all decorations', () => {
             const vscode = {
                 window: {visibleTextEditors: ['EDITOR_1', 'EDITOR_2']}
             };
             const logger = getLogger();
-            const decorationRegistry = {
-                revoke: sinon.spy(),
-                retrieveAll: () => ({
-                    text1: 'DECORATION_TYPE_1',
-                    text2: 'DECORATION_TYPE_2'
-                })
-            };
-            const textDecorator = {undecorate: sinon.spy()};
-            new App({decorationRegistry, textDecorator, vscode, logger}).clearAllHighlight();
+            const decorationOperator = {removeAllDecorations: sinon.spy()};
+            const decorationOperatorFactory = {create: sinon.stub().returns(decorationOperator)};
+            new App({decorationOperatorFactory, vscode, logger}).clearAllHighlight();
 
-            expect(decorationRegistry.revoke.args).to.eql([['text1'], ['text2']]);
-            expect(textDecorator.undecorate).to.have.been.calledWith(
-                ['EDITOR_1', 'EDITOR_2'],
-                ['DECORATION_TYPE_1', 'DECORATION_TYPE_2']
-            );
+            expect(decorationOperatorFactory.create).to.have.been.calledWith(['EDITOR_1', 'EDITOR_2']);
+            expect(decorationOperator.removeAllDecorations).to.have.been.calledWith();
         });
     });
 
