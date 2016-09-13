@@ -65,34 +65,33 @@ suite('App', () => {
 
     suite('#refreshDecorations', () => {
 
-        test('it sets all currently active decorations to visible the given editor', () => {
-            const editor = 'EDITOR';
+        test('it lets DecorationOperator to refresh decorations', () => {
+            const editor = fakeEditor('SELECTED', 'STR1 SELECTED STR2 SELECTED');
+            const vscode = fakeVscode(editor);
             const logger = getLogger();
-            const decorationRegistry = {
-                retrieveAll: () => ({TEXT_1: 'DECORATION_TYPE_1', TEXT_2: 'DECORATION_TYPE_2'})
-            };
-            const textDecorator = {decorate: sinon.spy()};
-            new App({decorationRegistry, textDecorator, logger}).refreshDecorations(editor);
+            const decorationOperator = {refreshDecoration: sinon.spy()};
+            const decorationOperatorFactory = {create: sinon.stub().returns(decorationOperator)};
+            new App({decorationOperatorFactory, vscode, logger}).refreshDecorations(editor);
 
-            expect(textDecorator.decorate.args).to.eql([
-                [[editor], {TEXT_1: 'DECORATION_TYPE_1', TEXT_2: 'DECORATION_TYPE_2'}]
-            ]);
+            expect(decorationOperatorFactory.create).to.have.been.calledWith([editor]);
+            expect(decorationOperator.refreshDecoration).to.have.been.calledWith();
         });
 
         test('it does nothing if editor is not given when invoked', () => {
+            const editor = undefined;
             const logger = {error: sinon.spy()};
-            const decorationRegistry = {retrieveAll: sinon.spy()};
-            new App({decorationRegistry, logger}).refreshDecorations();
-            expect(decorationRegistry.retrieveAll).to.have.been.not.called;
+            const decorationOperatorFactory = {create: sinon.spy()};
+            new App({decorationOperatorFactory, logger}).refreshDecorations(editor);
+            expect(decorationOperatorFactory.create).to.have.been.not.called;
         });
 
         test('it logs error if an exception occurred', () => {
             const logger = {error: sinon.spy()};
-            const decorationRegistry = {
-                retrieveAll: () => {throw new Error('RETRIEVE_ALL_ERROR');}
+            const decorationOperatorFactory = {
+                create: () => {throw new Error('CREATE_ERROR');}
             };
-            new App({decorationRegistry, logger}).refreshDecorations('EDITOR');
-            expect(logger.error.args[0][0]).to.have.string('Error: RETRIEVE_ALL_ERROR');
+            new App({decorationOperatorFactory, logger}).refreshDecorations('EDITOR');
+            expect(logger.error.args[0][0]).to.have.string('Error: CREATE_ERROR');
         });
     });
 
@@ -102,33 +101,30 @@ suite('App', () => {
             const editor = 'EDITOR';
             const vscode = fakeVscode(editor);
             const logger = getLogger();
-            const decorationRegistry = {retrieveAll: () => ({TEXT: 'DECORATION_TYPE'})};
-            const textDecorator = {decorate: sinon.spy()};
+            const decorationOperator = {refreshDecoration: sinon.spy()};
+            const decorationOperatorFactory = {create: sinon.stub().returns(decorationOperator)};
             const debouncer = {debounce: sinon.stub().callsArg(0)};
-            const app = new App({debouncer, decorationRegistry, textDecorator, logger, vscode});
+            const app = new App({debouncer, decorationOperatorFactory, logger, vscode});
 
             app.refreshDecorationsWithDelay('DOCUMENT_CHANGE_EVENT');
 
-            expect(textDecorator.decorate).to.have.been.calledWith(
-                [editor], {TEXT: 'DECORATION_TYPE'}
-            );
+            expect(decorationOperatorFactory.create).to.have.been.calledWith([editor]);
+            expect(decorationOperator.refreshDecoration).to.have.been.calledWith();
         });
 
         test('it does nothing if editor is not given when invoked', () => {
+            const editor = undefined;
+            const vscode = fakeVscode(editor);
             const logger = {error: sinon.spy()};
-            const decorationRegistry = {retrieveAll: sinon.spy()};
+            const decorationOperatorFactory = {create: sinon.spy()};
             const debouncer = {debounce: callback => callback()};
-            const vscode = fakeVscode();
-            new App({decorationRegistry, logger, debouncer, vscode}).refreshDecorationsWithDelay();
-            expect(decorationRegistry.retrieveAll).to.have.been.not.called;
+            new App({decorationOperatorFactory, logger, debouncer, vscode}).refreshDecorationsWithDelay('DOCUMENT_CHANGE_EVENT');
+            expect(decorationOperatorFactory.create).to.have.been.not.called;
         });
 
         test('it logs error if an exception occurred', () => {
             const logger = {error: sinon.spy()};
-            const decorationRegistry = {
-                retrieveAll: () => {throw new Error('RETRIEVE_ALL_ERROR');}
-            };
-            new App({decorationRegistry, logger}).refreshDecorationsWithDelay('EDITOR');
+            new App({logger}).refreshDecorationsWithDelay('EDITOR');
             expect(logger.error.args[0][0]).to.have.string('TypeError: Cannot read property \'window\' of undefined');
         });
     });
@@ -146,7 +142,7 @@ suite('App', () => {
     function fakeVscode(editor) {
         return {
             window: {
-                visibleTextEditors: [editor],
+                visibleTextEditors: editor ? [editor] : [],
                 activeTextEditor: editor
             }
         };

@@ -35,4 +35,21 @@ suite('DecorationOperator', () => {
             );
         });
     });
+
+    suite('#refreshDecoration', () => {
+
+        test('it sets all currently active decorations to visible the given editor', () => {
+            const editors = ['EDITOR'];
+            const decorationRegistry = {
+                retrieveAll: () => ({TEXT_1: 'DECORATION_TYPE_1', TEXT_2: 'DECORATION_TYPE_2'})
+            };
+            const textDecorator = {decorate: sinon.spy()};
+            const operator = new DecorationOperator({editors, decorationRegistry, textDecorator});
+            operator.refreshDecoration();
+
+            expect(textDecorator.decorate.args).to.eql([
+                [editors, {TEXT_1: 'DECORATION_TYPE_1', TEXT_2: 'DECORATION_TYPE_2'}]
+            ]);
+        });
+    });
 });
