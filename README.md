@@ -8,9 +8,13 @@ Select text in your code and mark all matches. The marking colour is configurabl
 
 ## Commands
 
-* `TextMarker: Mark Text to Highlight/Unhighlight`
+* `TextMarker: Clear All Highlights` (**Command ID**: `textmarker.clearAllHighlight`)
 
-    Mark the selected text for highlighting. Marking the already selected text will unhighlight the text. (**Command ID:** `textmarker.markText`)
+    Clear all highlights with one shot
+
+* `TextMarker: Mark Text to Highlight/Unhighlight` (**Command ID**: `textmarker.markText`)
+
+    Mark the selected text for highlighting. Marking the already selected text will unhighlight the text.
 
 ## Extension Settings
 
@@ -36,6 +40,10 @@ You can quickly toggle highlight of a selected text by registering the TextMarke
 https://github.com/ryu1kn/vscode-text-marker/issues
 
 ## Release Notes
+
+### 0.1.0
+
+Added **Clear All Highlights** command to remove all highlights at once
 
 ### 0.0.1
 
