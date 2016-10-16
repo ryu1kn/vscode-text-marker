@@ -65,7 +65,7 @@ suite('DecorationOperator', () => {
                 })
             };
             const textDecorator = {undecorate: sinon.spy()};
-            const operator = new DecorationOperator({decorationRegistry, textDecorator, editors})
+            const operator = new DecorationOperator({decorationRegistry, textDecorator, editors});
             operator.removeAllDecorations();
 
             expect(decorationRegistry.revoke.args).to.eql([['text1'], ['text2']]);

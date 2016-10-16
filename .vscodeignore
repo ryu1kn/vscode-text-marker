@@ -7,5 +7,7 @@ coverage/**
 .gitignore
 .editorconfig
 .eslintrc.yaml
+.eslintignore
+.travis.yml
 jsconfig.json
 vsc-extension-quickstart.md
