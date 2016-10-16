@@ -3,6 +3,7 @@ typings/**
 test/**
 images/animations/**
 coverage/**
+.codeclimate.yml
 .gitignore
 .editorconfig
 .eslintrc.yaml
