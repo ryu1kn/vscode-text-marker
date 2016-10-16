@@ -1,3 +1,5 @@
+[![Code Climate](https://codeclimate.com/github/ryu1kn/vscode-text-marker/badges/gpa.svg)](https://codeclimate.com/github/ryu1kn/vscode-text-marker)
+
 # Text Marker
 
 ## Features
