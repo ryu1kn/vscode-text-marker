@@ -2,7 +2,7 @@
   "name": "text-marker",
   "displayName": "Text Marker",
   "description": "Select text in your code and mark all matches. The marking colour is configurable",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "publisher": "ryu1kn",
   "license": "SEE LICENSE IN LICENSE.txt",
   "icon": "images/text-marker.png",
