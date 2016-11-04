@@ -3,10 +3,12 @@ const DecorationRegistry = require('../../lib/decoration-registry');
 
 suite('DecorationRegistry', () => {
 
+    const OverviewRulerLane = {Center: 'OVERVIEW_RULER_LANE'};
+
     test('it returns a registered decoration type for the passed string', () => {
         const window = {createTextEditorDecorationType: () => 'DECORATION_TYPE'};
         const colourRegistry = {issue: () => 'pink'};
-        const registry = new DecorationRegistry({colourRegistry, window});
+        const registry = new DecorationRegistry({colourRegistry, window, OverviewRulerLane});
         registry.issue('TEXT');
         expect(registry.inquire('TEXT')).to.eql('DECORATION_TYPE');
     });
@@ -17,7 +19,7 @@ suite('DecorationRegistry', () => {
             issue: () => 'pink',
             revoke: () => {}
         };
-        const registry = new DecorationRegistry({colourRegistry, window});
+        const registry = new DecorationRegistry({colourRegistry, window, OverviewRulerLane});
         registry.issue('TEXT');
         registry.revoke('TEXT');
         expect(registry.inquire('TEXT')).to.be.null;
@@ -28,7 +30,7 @@ suite('DecorationRegistry', () => {
         const window = {
             createTextEditorDecorationType: () => decorationTypes.shift()};
         const colourRegistry = {issue: () => 'pink'};
-        const registry = new DecorationRegistry({colourRegistry, window});
+        const registry = new DecorationRegistry({colourRegistry, window, OverviewRulerLane});
         registry.issue('TEXT_1');
         registry.issue('TEXT_2');
         expect(registry.retrieveAll()).to.eql({
@@ -40,12 +42,21 @@ suite('DecorationRegistry', () => {
     test('it issues new decoration with new color', () => {
         const window = {createTextEditorDecorationType: sinon.stub().returns('DECORATION_TYPE')};
         const colourRegistry = {issue: stubReturns('pink', 'yellow')};
-        const registry = new DecorationRegistry({colourRegistry, window});
+        const registry = new DecorationRegistry({colourRegistry, window, OverviewRulerLane});
         registry.issue('TEXT_1');
         registry.issue('TEXT_2');
 
         expect(window.createTextEditorDecorationType.args).to.eql([
-            [{backgroundColor: 'pink'}], [{backgroundColor: 'yellow'}]
+            [{
+                backgroundColor: 'pink',
+                overviewRulerColor: 'violet',
+                overviewRulerLane: 'OVERVIEW_RULER_LANE'
+            }],
+            [{
+                backgroundColor: 'yellow',
+                overviewRulerColor: 'violet',
+                overviewRulerLane: 'OVERVIEW_RULER_LANE'
+            }]
         ]);
     });
 
