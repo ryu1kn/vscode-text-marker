@@ -9,11 +9,11 @@ suite('App', () => {
 
         test('it toggles the decoration of selected text', () => {
             const editor = fakeEditor('SELECTED', 'STR1 SELECTED STR2 SELECTED');
-            const vscode = fakeVscode(editor);
+            const vsWindow = fakeVscodeWindow(editor);
             const logger = getLogger();
             const decorationOperator = {toggleDecoration: sinon.spy()};
             const decorationOperatorFactory = {create: sinon.stub().returns(decorationOperator)};
-            new App({decorationOperatorFactory, vscode, logger}).markText(editor);
+            new App({decorationOperatorFactory, vsWindow, logger}).markText(editor);
 
             expect(decorationOperatorFactory.create).to.have.been.calledWith([editor]);
             expect(decorationOperator.toggleDecoration).to.have.been.calledWith('SELECTED');
@@ -41,13 +41,11 @@ suite('App', () => {
     suite('#clearAllHighlight', () => {
 
         test('it lets DecorationOperator to remove all decorations', () => {
-            const vscode = {
-                window: {visibleTextEditors: ['EDITOR_1', 'EDITOR_2']}
-            };
+            const vsWindow = {visibleTextEditors: ['EDITOR_1', 'EDITOR_2']};
             const logger = getLogger();
             const decorationOperator = {removeAllDecorations: sinon.spy()};
             const decorationOperatorFactory = {create: sinon.stub().returns(decorationOperator)};
-            new App({decorationOperatorFactory, vscode, logger}).clearAllHighlight();
+            new App({decorationOperatorFactory, vsWindow, logger}).clearAllHighlight();
 
             expect(decorationOperatorFactory.create).to.have.been.calledWith(['EDITOR_1', 'EDITOR_2']);
             expect(decorationOperator.removeAllDecorations).to.have.been.calledWith();
@@ -58,11 +56,11 @@ suite('App', () => {
 
         test('it lets DecorationOperator to refresh decorations', () => {
             const editor = fakeEditor('SELECTED', 'STR1 SELECTED STR2 SELECTED');
-            const vscode = fakeVscode(editor);
+            const vsWindow = fakeVscodeWindow(editor);
             const logger = getLogger();
             const decorationOperator = {refreshDecorations: sinon.spy()};
             const decorationOperatorFactory = {create: sinon.stub().returns(decorationOperator)};
-            new App({decorationOperatorFactory, vscode, logger}).refreshDecorations(editor);
+            new App({decorationOperatorFactory, vsWindow, logger}).refreshDecorations(editor);
 
             expect(decorationOperatorFactory.create).to.have.been.calledWith([editor]);
             expect(decorationOperator.refreshDecorations).to.have.been.calledWith();
@@ -90,12 +88,12 @@ suite('App', () => {
 
         test('it refreshes text markups but debounce the execution', () => {
             const editor = 'EDITOR';
-            const vscode = fakeVscode(editor);
+            const vsWindow = fakeVscodeWindow(editor);
             const logger = getLogger();
             const decorationOperator = {refreshDecorations: sinon.spy()};
             const decorationOperatorFactory = {create: sinon.stub().returns(decorationOperator)};
             const debouncer = {debounce: sinon.stub().callsArg(0)};
-            const app = new App({debouncer, decorationOperatorFactory, logger, vscode});
+            const app = new App({debouncer, decorationOperatorFactory, logger, vsWindow});
 
             app.refreshDecorationsWithDelay('DOCUMENT_CHANGE_EVENT');
 
@@ -105,18 +103,18 @@ suite('App', () => {
 
         test('it does nothing if editor is not given when invoked', () => {
             const editor = undefined;
-            const vscode = fakeVscode(editor);
+            const vsWindow = fakeVscodeWindow(editor);
             const logger = {error: sinon.spy()};
             const decorationOperatorFactory = {create: sinon.spy()};
             const debouncer = {debounce: callback => callback()};
-            new App({decorationOperatorFactory, logger, debouncer, vscode}).refreshDecorationsWithDelay('DOCUMENT_CHANGE_EVENT');
+            new App({decorationOperatorFactory, logger, debouncer, vsWindow}).refreshDecorationsWithDelay('DOCUMENT_CHANGE_EVENT');
             expect(decorationOperatorFactory.create).to.have.been.not.called;
         });
 
         test('it logs error if an exception occurred', () => {
             const logger = {error: sinon.spy()};
             new App({logger}).refreshDecorationsWithDelay('EDITOR');
-            expect(logger.error.args[0][0]).to.have.string('TypeError: Cannot read property \'window\' of undefined');
+            expect(logger.error.args[0][0]).to.have.string('TypeError: Cannot read property \'activeTextEditor\' of undefined');
         });
     });
 
@@ -130,12 +128,10 @@ suite('App', () => {
         };
     }
 
-    function fakeVscode(editor) {
+    function fakeVscodeWindow(editor) {
         return {
-            window: {
-                visibleTextEditors: editor ? [editor] : [],
-                activeTextEditor: editor
-            }
+            visibleTextEditors: editor ? [editor] : [],
+            activeTextEditor: editor
         };
     }
 
