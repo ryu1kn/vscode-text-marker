@@ -16,7 +16,7 @@ Select text in your code and mark all matches. The marking colour is configurabl
 
 * `TextMarker: Mark Text to Highlight/Unhighlight` (**Command ID**: `textmarker.markText`)
 
-    Mark the selected text for highlighting. Marking the already selected text will unhighlight the text.
+    Mark the selected text for highlighting. If no text is selected, the word under cursor will be marked. Marking the already selected text will unhighlight the text.
 
 ## Extension Settings
 
