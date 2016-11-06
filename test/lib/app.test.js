@@ -50,6 +50,16 @@ suite('App', () => {
             expect(decorationOperatorFactory.create).to.have.been.calledWith(['EDITOR_1', 'EDITOR_2']);
             expect(decorationOperator.removeAllDecorations).to.have.been.calledWith();
         });
+
+        test('it logs error if an exception occurred', () => {
+            const vsWindow = {visibleTextEditors: ['EDITOR_1', 'EDITOR_2']};
+            const logger = {error: sinon.spy()};
+            const decorationOperatorFactory = {
+                create: () => {throw new Error('UNEXPECTED_ERROR');}
+            };
+            new App({decorationOperatorFactory, vsWindow, logger}).clearAllHighlight();
+            expect(logger.error.args[0][0]).to.have.string('Error: UNEXPECTED_ERROR');
+        });
     });
 
     suite('#refreshDecorations', () => {
@@ -77,10 +87,10 @@ suite('App', () => {
         test('it logs error if an exception occurred', () => {
             const logger = {error: sinon.spy()};
             const decorationOperatorFactory = {
-                create: () => {throw new Error('CREATE_ERROR');}
+                create: () => {throw new Error('UNEXPECTED_ERROR');}
             };
             new App({decorationOperatorFactory, logger}).refreshDecorations('EDITOR');
-            expect(logger.error.args[0][0]).to.have.string('Error: CREATE_ERROR');
+            expect(logger.error.args[0][0]).to.have.string('Error: UNEXPECTED_ERROR');
         });
     });
 
