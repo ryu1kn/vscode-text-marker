@@ -122,9 +122,14 @@ suite('App', () => {
         });
 
         test('it logs error if an exception occurred', () => {
+            const editor = 'EDITOR';
+            const vsWindow = fakeVscodeWindow(editor);
+            const debouncer = {
+                debounce: () => {throw new Error('UNEXPECTED_ERROR');}
+            };
             const logger = {error: sinon.spy()};
-            new App({logger}).refreshDecorationsWithDelay('EDITOR');
-            expect(logger.error.args[0][0]).to.have.string('TypeError: Cannot read property \'activeTextEditor\' of undefined');
+            new App({logger, debouncer, vsWindow}).refreshDecorationsWithDelay(editor);
+            expect(logger.error.args[0][0]).to.have.string('Error: UNEXPECTED_ERROR');
         });
     });
 
