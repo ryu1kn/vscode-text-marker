@@ -1,40 +1,40 @@
 
 const App = require('../../lib/app');
 
-// TODO: Too much fake object setup, decompose implementation
-
 suite('App', () => {
 
     suite('#markText', () => {
 
         test('it toggles the decoration of selected text', () => {
-            const editor = fakeEditor('SELECTED', 'STR1 SELECTED STR2 SELECTED');
+            const editor = 'EDITOR';
+            const selectedTextFinder = {find: sinon.stub().returns('SELECTED')};
             const vsWindow = fakeVscodeWindow(editor);
             const logger = getLogger();
             const decorationOperator = {toggleDecoration: sinon.spy()};
             const decorationOperatorFactory = {create: sinon.stub().returns(decorationOperator)};
-            new App({decorationOperatorFactory, vsWindow, logger}).markText(editor);
+            new App({decorationOperatorFactory, vsWindow, logger, selectedTextFinder}).markText(editor);
 
+            expect(selectedTextFinder.find).to.have.been.calledWith(editor);
             expect(decorationOperatorFactory.create).to.have.been.calledWith([editor]);
             expect(decorationOperator.toggleDecoration).to.have.been.calledWith('SELECTED');
         });
 
         test('it does nothing if text is not selected', () => {
-            const editor = fakeEditor('', 'ENTIRE TEXT');
+            const editor = 'EDITOR';
+            const selectedTextFinder = {find: sinon.spy()};
             const decorationOperatorFactory = {create: sinon.spy()};
-            new App({decorationOperatorFactory}).markText(editor);
+            new App({decorationOperatorFactory, selectedTextFinder}).markText(editor);
             expect(decorationOperatorFactory.create).to.have.been.not.called;
         });
 
         test('it logs error if an exception occurred', () => {
             const logger = {error: sinon.spy()};
-            const editor = {
-                document: {
-                    getText: () => {throw new Error('GET_TEXT_ERROR');}
-                }
+            const selectedTextFinder = {
+                find: () => {throw new Error('UNEXPECTED_ERROR');}
             };
-            new App({logger}).markText(editor);
-            expect(logger.error.args[0][0]).to.have.string('Error: GET_TEXT_ERROR');
+            const editor = 'EDITOR';
+            new App({logger, selectedTextFinder}).markText(editor);
+            expect(logger.error.args[0][0]).to.have.string('Error: UNEXPECTED_ERROR');
         });
     });
 
@@ -55,7 +55,7 @@ suite('App', () => {
     suite('#refreshDecorations', () => {
 
         test('it lets DecorationOperator to refresh decorations', () => {
-            const editor = fakeEditor('SELECTED', 'STR1 SELECTED STR2 SELECTED');
+            const editor = 'EDITOR';
             const vsWindow = fakeVscodeWindow(editor);
             const logger = getLogger();
             const decorationOperator = {refreshDecorations: sinon.spy()};
@@ -117,16 +117,6 @@ suite('App', () => {
             expect(logger.error.args[0][0]).to.have.string('TypeError: Cannot read property \'activeTextEditor\' of undefined');
         });
     });
-
-    function fakeEditor(selectedText, entireText) {
-        return {
-            selection: {text: selectedText},
-            document: {
-                getText: selection => selection ? selection.text : entireText
-            },
-            setDecorations: sinon.spy()
-        };
-    }
 
     function fakeVscodeWindow(editor) {
         return {
