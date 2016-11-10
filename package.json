@@ -82,10 +82,10 @@
   },
   "scripts": {
     "postinstall": "node ./node_modules/vscode/bin/install",
-    "coverage": "istanbul cover ./node_modules/.bin/_mocha -- test --recursive --ui tdd",
+    "coverage": "istanbul cover ./node_modules/.bin/_mocha -- --opts ./test/cli-test-mocha.opts",
     "lint": "eslint .",
-    "test": "mocha test --recursive --ui tdd",
-    "test-mode": "mocha test --recursive --ui tdd --watch"
+    "test": "mocha --opts ./test/cli-test-mocha.opts",
+    "test-mode": "mocha --opts ./test/cli-test-mocha.opts --watch"
   },
   "devDependencies": {
     "chai": "^3.5.0",
