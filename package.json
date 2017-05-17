@@ -72,11 +72,13 @@
     "commands": [
       {
         "command": "textmarker.markText",
-        "title": "TextMarker: Mark Text to Highlight/Unhighlight"
+        "title": "Mark Text to Highlight/Unhighlight",
+        "category": "TextMarker"
       },
       {
         "command": "textmarker.clearAllHighlight",
-        "title": "TextMarker: Clear All Highlights"
+        "title": "Clear All Highlights",
+        "category": "TextMarker"
       }
     ]
   },
