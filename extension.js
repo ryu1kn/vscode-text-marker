@@ -1,4 +1,3 @@
-'use strict';
 
 const AppIntegratorFactory = require('./lib/app-integrator-factory');
 

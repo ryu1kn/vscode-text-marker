@@ -6,8 +6,6 @@ global.expect = chai.expect;
 global.sinon = require('sinon');
 
 global.stubWithArgs = function () {
-    'use strict';
-
     const args = Array.prototype.slice.call(arguments);
     const stub = sinon.stub();
     for (let i = 0; i + 1 < args.length; i += 2) {
