@@ -8,9 +8,10 @@ suite('TextLocator', () => {
             return {start: position1, end: position2};
         };
         const textLocator = new TextLocator({Range});
-        const ranges = textLocator.locate(fakeEditor('ENTIRE_TEXT'), 'TEXT');
+        const ranges = textLocator.locate(fakeEditor('ENTIRE LONG LONG TEXT'), 'LONG');
         expect(ranges).to.eql([
-            {start: 'POSITION:7', end: 'POSITION:11'}
+            {start: 'POSITION:7', end: 'POSITION:11'},
+            {start: 'POSITION:12', end: 'POSITION:16'}
         ]);
     });
 
