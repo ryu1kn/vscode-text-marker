@@ -25,8 +25,7 @@ suite('DecorationRegistry', () => {
 
     test('it can return all registered decorations at once', () => {
         const decorationTypes = ['DECORATION_TYPE_1', 'DECORATION_TYPE_2'];
-        const window = {
-            createTextEditorDecorationType: () => decorationTypes.shift()};
+        const window = {createTextEditorDecorationType: () => decorationTypes.shift()};
         const colourRegistry = {issue: () => 'pink'};
         const registry = new DecorationRegistry({colourRegistry, window});
         registry.issue('TEXT_1');
