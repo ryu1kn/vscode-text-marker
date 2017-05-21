@@ -50,6 +50,18 @@ suite('TextLocator', () => {
         ]);
     });
 
+    test('it does not get stuck with matching an empty string match', () => {
+        const Range = function (position1, position2) {
+            return {start: position1, end: position2};
+        };
+        const textLocator = new TextLocator({Range});
+        const ranges = textLocator.locate(fakeEditor('ENTIRE\n\nTEXT'), /.*/);
+        expect(ranges).to.eql([
+            {start: 'POSITION:0', end: 'POSITION:6'},
+            {start: 'POSITION:8', end: 'POSITION:12'}
+        ]);
+    });
+
     function fakeEditor(entireText) {
         return {
             document: {
