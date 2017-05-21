@@ -16,7 +16,11 @@ suite('DecorationOperator', () => {
             operator.toggleDecoration('SELECTED_TEXT');
 
             expect(textDecorator.decorate).to.have.been.calledWith(
-                editors, {SELECTED_TEXT: 'DECORATION_TYPE'}
+                editors,
+                [{
+                    pattern: 'SELECTED_TEXT',
+                    decorationType: 'DECORATION_TYPE'
+                }]
             );
         });
 
@@ -40,16 +44,12 @@ suite('DecorationOperator', () => {
 
         test('it sets all currently active decorations to visible the given editor', () => {
             const editors = ['EDITOR'];
-            const decorationRegistry = {
-                retrieveAll: () => ({TEXT_1: 'DECORATION_TYPE_1', TEXT_2: 'DECORATION_TYPE_2'})
-            };
+            const decorationRegistry = {retrieveAll: () => 'DECORATIONS'};
             const textDecorator = {decorate: sinon.spy()};
             const operator = new DecorationOperator({editors, decorationRegistry, textDecorator});
             operator.refreshDecorations();
 
-            expect(textDecorator.decorate.args).to.eql([
-                [editors, {TEXT_1: 'DECORATION_TYPE_1', TEXT_2: 'DECORATION_TYPE_2'}]
-            ]);
+            expect(textDecorator.decorate.args).to.eql([[editors, 'DECORATIONS']]);
         });
     });
 
