@@ -11,7 +11,26 @@ suite('DecorationRegistry', () => {
         expect(registry.inquire('TEXT')).to.eql('DECORATION_TYPE');
     });
 
-    test("it can remove given text and it's associated decoration type from the registry", () => {
+    test('it returns a registered decoration type for the passed regex', () => {
+        const window = {createTextEditorDecorationType: () => 'DECORATION_TYPE'};
+        const colourRegistry = {issue: () => 'pink'};
+        const registry = new DecorationRegistry({colourRegistry, window});
+        registry.issue(/REGEX/);
+        expect(registry.inquire(/REGEX/)).to.eql('DECORATION_TYPE');
+    });
+
+    test('it does not confuse with regex and text pattern', () => {
+        const window = {createTextEditorDecorationType: () => 'DECORATION_TYPE'};
+        const colourRegistry = {issue: () => 'pink'};
+        const registry = new DecorationRegistry({colourRegistry, window});
+
+        const textPattern = '/PATTERN/';
+        const regexPattern = /PATTERN/;
+        registry.issue(textPattern);
+        expect(registry.inquire(regexPattern)).to.be.null;
+    });
+
+    test("it can remove given pattern and it's associated decoration type from the registry", () => {
         const window = {createTextEditorDecorationType: () => 'DECORATION_TYPE'};
         const colourRegistry = {
             issue: () => 'pink',
@@ -29,11 +48,17 @@ suite('DecorationRegistry', () => {
         const colourRegistry = {issue: () => 'pink'};
         const registry = new DecorationRegistry({colourRegistry, window});
         registry.issue('TEXT_1');
-        registry.issue('TEXT_2');
-        expect(registry.retrieveAll()).to.eql({
-            TEXT_1: 'DECORATION_TYPE_1',
-            TEXT_2: 'DECORATION_TYPE_2'
-        });
+        registry.issue(/TEXT_2/);
+        expect(registry.retrieveAll()).to.eql([
+            {
+                pattern: 'TEXT_1',
+                decorationType: 'DECORATION_TYPE_1'
+            },
+            {
+                pattern: /TEXT_2/,
+                decorationType: 'DECORATION_TYPE_2'
+            }
+        ]);
     });
 
     test('it issues new decoration with new color', () => {
