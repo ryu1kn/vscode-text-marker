@@ -40,6 +40,27 @@ suite('DecorationOperator', () => {
         });
     });
 
+    suite('#addDecoration', () => {
+
+        test('it highlights all the strings match to the given pattern', () => {
+            const editors = ['EDITOR'];
+            const decorationRegistry = {
+                issue: stubWithArgs(['SELECTED_TEXT'], 'DECORATION_TYPE')
+            };
+            const textDecorator = {decorate: sinon.spy()};
+            const operator = new DecorationOperator({editors, decorationRegistry, textDecorator});
+            operator.addDecoration('SELECTED_TEXT');
+
+            expect(textDecorator.decorate).to.have.been.calledWith(
+                editors,
+                [{
+                    pattern: 'SELECTED_TEXT',
+                    decorationType: 'DECORATION_TYPE'
+                }]
+            );
+        });
+    });
+
     suite('#refreshDecorations', () => {
 
         test('it sets all currently active decorations to visible the given editor', () => {
