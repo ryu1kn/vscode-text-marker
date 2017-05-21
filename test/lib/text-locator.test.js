@@ -27,6 +27,18 @@ suite('TextLocator', () => {
         ]);
     });
 
+    test('it also works when the given regex has `g` flag set', () => {
+        const Range = function (position1, position2) {
+            return {start: position1, end: position2};
+        };
+        const textLocator = new TextLocator({Range});
+        const ranges = textLocator.locate(fakeEditor('ENTIRE TEXT Z ZZ'), /Z+/gi);
+        expect(ranges).to.eql([
+            {start: 'POSITION:12', end: 'POSITION:13'},
+            {start: 'POSITION:14', end: 'POSITION:16'}
+        ]);
+    });
+
     test('it does not convert text expression into regex', () => {
         const Range = function (position1, position2) {
             return {start: position1, end: position2};
