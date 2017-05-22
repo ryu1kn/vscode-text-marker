@@ -92,7 +92,16 @@
         "title": "Clear All Highlights",
         "category": "TextMarker"
       }
-    ]
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "textmarker.markText",
+          "group": "2_textmarker",
+          "when": "editorTextFocus"
+        }
+      ]
+    }
   },
   "scripts": {
     "postinstall": "node ./node_modules/vscode/bin/install",
