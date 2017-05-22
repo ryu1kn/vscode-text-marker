@@ -29,6 +29,7 @@
   ],
   "activationEvents": [
     "onCommand:textmarker.clearAllHighlight",
+    "onCommand:textmarker.clearHighlight",
     "onCommand:textmarker.markText",
     "onCommand:textmarker.markTextByRegex"
   ],
@@ -79,6 +80,11 @@
       {
         "command": "textmarker.markTextByRegex",
         "title": "Highlight Text Specified by Regex",
+        "category": "TextMarker"
+      },
+      {
+        "command": "textmarker.clearHighlight",
+        "title": "Clear Highlight",
         "category": "TextMarker"
       },
       {
