@@ -61,6 +61,24 @@ suite('DecorationOperator', () => {
         });
     });
 
+    suite('#removeDecoration', () => {
+
+        test('it removes a decoration', () => {
+            const editors = ['EDITOR_1', 'EDITOR_2'];
+            const decorationRegistry = {
+                inquire: stubWithArgs(['SELECTED_TEXT'], 'DECORATION_TYPE'),
+                revoke: sinon.spy()
+            };
+            const textDecorator = {undecorate: sinon.spy()};
+            const operator = new DecorationOperator({editors, decorationRegistry, textDecorator});
+            operator.removeDecoration('SELECTED_TEXT');
+
+            expect(textDecorator.undecorate).to.have.been.calledWith(
+                editors, ['DECORATION_TYPE']
+            );
+        });
+    });
+
     suite('#refreshDecorations', () => {
 
         test('it sets all currently active decorations to visible the given editor', () => {
