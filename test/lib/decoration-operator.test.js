@@ -8,7 +8,7 @@ suite('DecorationOperator', () => {
         test('it highlights all the strings equal to the selected string', () => {
             const editors = ['EDITOR'];
             const decorationRegistry = {
-                inquire: () => null,
+                inquireByPattern: () => null,
                 issue: stubWithArgs(['SELECTED_TEXT'], 'DECORATION_TYPE')
             };
             const textDecorator = {decorate: sinon.spy()};
@@ -27,7 +27,7 @@ suite('DecorationOperator', () => {
         test('Selecting already selected text is de-highlights the selected strings', () => {
             const editors = ['EDITOR_1', 'EDITOR_2'];
             const decorationRegistry = {
-                inquire: stubWithArgs(['SELECTED_TEXT'], 'DECORATION_TYPE'),
+                inquireByPattern: stubWithArgs(['SELECTED_TEXT'], 'DECORATION_TYPE'),
                 revoke: sinon.spy()
             };
             const textDecorator = {undecorate: sinon.spy()};
@@ -66,7 +66,7 @@ suite('DecorationOperator', () => {
         test('it removes a decoration', () => {
             const editors = ['EDITOR_1', 'EDITOR_2'];
             const decorationRegistry = {
-                inquire: stubWithArgs(['SELECTED_TEXT'], 'DECORATION_TYPE'),
+                inquireByPattern: stubWithArgs(['SELECTED_TEXT'], 'DECORATION_TYPE'),
                 revoke: sinon.spy()
             };
             const textDecorator = {undecorate: sinon.spy()};

@@ -8,7 +8,7 @@ suite('DecorationRegistry', () => {
         const colourRegistry = {issue: () => 'pink'};
         const registry = new DecorationRegistry({colourRegistry, window});
         registry.issue('TEXT');
-        expect(registry.inquire('TEXT')).to.eql('DECORATION_TYPE');
+        expect(registry.inquireByPattern('TEXT')).to.eql('DECORATION_TYPE');
     });
 
     test('it returns a registered decoration type for the passed regex', () => {
@@ -16,7 +16,7 @@ suite('DecorationRegistry', () => {
         const colourRegistry = {issue: () => 'pink'};
         const registry = new DecorationRegistry({colourRegistry, window});
         registry.issue(/REGEX/);
-        expect(registry.inquire(/REGEX/)).to.eql('DECORATION_TYPE');
+        expect(registry.inquireByPattern(/REGEX/)).to.eql('DECORATION_TYPE');
     });
 
     test('it does not confuse with regex and text pattern', () => {
@@ -27,7 +27,7 @@ suite('DecorationRegistry', () => {
         const textPattern = '/PATTERN/';
         const regexPattern = /PATTERN/;
         registry.issue(textPattern);
-        expect(registry.inquire(regexPattern)).to.be.null;
+        expect(registry.inquireByPattern(regexPattern)).to.be.null;
     });
 
     test("it can remove given pattern and it's associated decoration type from the registry", () => {
@@ -39,7 +39,7 @@ suite('DecorationRegistry', () => {
         const registry = new DecorationRegistry({colourRegistry, window});
         registry.issue('TEXT');
         registry.revoke('TEXT');
-        expect(registry.inquire('TEXT')).to.be.null;
+        expect(registry.inquireByPattern('TEXT')).to.be.null;
     });
 
     test('it can return all registered decorations at once', () => {
