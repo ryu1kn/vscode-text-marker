@@ -9,7 +9,10 @@ suite('DecorationOperator', () => {
             const editors = ['EDITOR'];
             const decorationRegistry = {
                 inquireByPattern: () => null,
-                issue: stubWithArgs(['SELECTED_TEXT'], 'DECORATION_TYPE')
+                issue: stubWithArgs(['SELECTED_TEXT'], {
+                    id: 'DECORATION_ID',
+                    decorationType: 'DECORATION_TYPE'
+                })
             };
             const textDecorator = {decorate: sinon.spy()};
             const operator = new DecorationOperator({editors, decorationRegistry, textDecorator});
@@ -27,13 +30,17 @@ suite('DecorationOperator', () => {
         test('Selecting already selected text is de-highlights the selected strings', () => {
             const editors = ['EDITOR_1', 'EDITOR_2'];
             const decorationRegistry = {
-                inquireByPattern: stubWithArgs(['SELECTED_TEXT'], 'DECORATION_TYPE'),
+                inquireByPattern: stubWithArgs(['SELECTED_TEXT'], {
+                    id: 'DECORATION_ID',
+                    decorationType: 'DECORATION_TYPE'
+                }),
                 revoke: sinon.spy()
             };
             const textDecorator = {undecorate: sinon.spy()};
             const operator = new DecorationOperator({editors, decorationRegistry, textDecorator});
             operator.toggleDecoration('SELECTED_TEXT');
 
+            expect(decorationRegistry.revoke).to.have.been.calledWith('DECORATION_ID');
             expect(textDecorator.undecorate).to.have.been.calledWith(
                 editors, ['DECORATION_TYPE']
             );
@@ -45,7 +52,10 @@ suite('DecorationOperator', () => {
         test('it highlights all the strings match to the given pattern', () => {
             const editors = ['EDITOR'];
             const decorationRegistry = {
-                issue: stubWithArgs(['SELECTED_TEXT'], 'DECORATION_TYPE')
+                issue: stubWithArgs(['SELECTED_TEXT'], {
+                    id: 'DECORATION_ID',
+                    decorationType: 'DECORATION_TYPE'
+                })
             };
             const textDecorator = {decorate: sinon.spy()};
             const operator = new DecorationOperator({editors, decorationRegistry, textDecorator});
@@ -66,13 +76,17 @@ suite('DecorationOperator', () => {
         test('it removes a decoration', () => {
             const editors = ['EDITOR_1', 'EDITOR_2'];
             const decorationRegistry = {
-                inquireByPattern: stubWithArgs(['SELECTED_TEXT'], 'DECORATION_TYPE'),
+                inquireById: stubWithArgs(['DECORATION_ID'], {
+                    id: 'DECORATION_ID',
+                    decorationType: 'DECORATION_TYPE'
+                }),
                 revoke: sinon.spy()
             };
             const textDecorator = {undecorate: sinon.spy()};
             const operator = new DecorationOperator({editors, decorationRegistry, textDecorator});
-            operator.removeDecoration('SELECTED_TEXT');
+            operator.removeDecoration('DECORATION_ID');
 
+            expect(decorationRegistry.revoke).to.have.been.calledWith('DECORATION_ID');
             expect(textDecorator.undecorate).to.have.been.calledWith(
                 editors, ['DECORATION_TYPE']
             );
@@ -99,9 +113,11 @@ suite('DecorationOperator', () => {
             const decorationRegistry = {
                 revoke: sinon.spy(),
                 retrieveAll: () => [{
+                    id: 'DECORATION_ID_1',
                     pattern: 'text1',
                     decorationType: 'DECORATION_TYPE_1'
                 }, {
+                    id: 'DECORATION_ID_2',
                     pattern: /text2/,
                     decorationType: 'DECORATION_TYPE_2'
                 }]
@@ -110,7 +126,9 @@ suite('DecorationOperator', () => {
             const operator = new DecorationOperator({decorationRegistry, textDecorator, editors});
             operator.removeAllDecorations();
 
-            expect(decorationRegistry.revoke.args).to.eql([['text1'], [/text2/]]);
+            expect(decorationRegistry.revoke.args).to.eql([
+                ['DECORATION_ID_1'], ['DECORATION_ID_2']
+            ]);
             expect(textDecorator.undecorate).to.have.been.calledWith(
                 ['EDITOR_1', 'EDITOR_2'],
                 ['DECORATION_TYPE_1', 'DECORATION_TYPE_2']

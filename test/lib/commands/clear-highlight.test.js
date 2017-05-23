@@ -7,12 +7,12 @@ suite('ClearHighlightCommand', () => {
         const vsWindow = {visibleTextEditors: ['EDITOR_1', 'EDITOR_2']};
         const decorationOperator = {removeDecoration: sinon.spy()};
         const decorationOperatorFactory = {create: sinon.stub().returns(decorationOperator)};
-        const highlightPatternPicker = {pick: () => Promise.resolve('PATTERN')};
+        const highlightPatternPicker = {pick: () => Promise.resolve('DECORATION_ID')};
         const command = new ClearHighlightCommand({decorationOperatorFactory, highlightPatternPicker, vsWindow});
 
         return command.execute().then(() => {
             expect(decorationOperatorFactory.create).to.have.been.calledWith(['EDITOR_1', 'EDITOR_2']);
-            expect(decorationOperator.removeDecoration).to.have.been.calledWith('PATTERN');
+            expect(decorationOperator.removeDecoration).to.have.been.calledWith('DECORATION_ID');
         });
     });
 

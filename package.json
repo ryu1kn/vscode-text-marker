@@ -122,6 +122,7 @@
     "vscode": "^1.1.0"
   },
   "dependencies": {
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "uuid": "^3.0.1"
   }
 }
