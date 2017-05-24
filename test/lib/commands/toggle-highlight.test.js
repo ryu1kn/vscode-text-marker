@@ -1,7 +1,7 @@
 
-const MarkTextCommand = require('../../../lib/commands/mark-text');
+const ToggleHighlightCommand = require('../../../lib/commands/toggle-highlight');
 
-suite('MarkTextCommand', () => {
+suite('ToggleHighlightCommand', () => {
 
     test('it toggles the decoration of selected text', () => {
         const editor = 'EDITOR';
@@ -10,7 +10,7 @@ suite('MarkTextCommand', () => {
         const logger = getLogger();
         const decorationOperator = {toggleDecoration: sinon.spy()};
         const decorationOperatorFactory = {create: sinon.stub().returns(decorationOperator)};
-        new MarkTextCommand({decorationOperatorFactory, vsWindow, logger, selectedTextFinder}).execute(editor);
+        new ToggleHighlightCommand({decorationOperatorFactory, vsWindow, logger, selectedTextFinder}).execute(editor);
 
         expect(selectedTextFinder.find).to.have.been.calledWith(editor);
         expect(decorationOperatorFactory.create).to.have.been.calledWith([editor]);
@@ -21,7 +21,7 @@ suite('MarkTextCommand', () => {
         const editor = 'EDITOR';
         const selectedTextFinder = {find: sinon.spy()};
         const decorationOperatorFactory = {create: sinon.spy()};
-        new MarkTextCommand({decorationOperatorFactory, selectedTextFinder}).execute(editor);
+        new ToggleHighlightCommand({decorationOperatorFactory, selectedTextFinder}).execute(editor);
         expect(decorationOperatorFactory.create).to.have.been.not.called;
     });
 
@@ -31,7 +31,7 @@ suite('MarkTextCommand', () => {
             find: () => {throw new Error('UNEXPECTED_ERROR');}
         };
         const editor = 'EDITOR';
-        new MarkTextCommand({logger, selectedTextFinder}).execute(editor);
+        new ToggleHighlightCommand({logger, selectedTextFinder}).execute(editor);
         expect(logger.error.args[0][0]).to.have.string('Error: UNEXPECTED_ERROR');
     });
 
