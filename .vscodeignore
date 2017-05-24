@@ -12,3 +12,4 @@ coverage/**
 .travis.yml
 jsconfig.json
 vsc-extension-quickstart.md
+__*
