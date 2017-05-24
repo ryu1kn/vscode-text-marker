@@ -29,9 +29,9 @@
   ],
   "activationEvents": [
     "onCommand:textmarker.clearAllHighlight",
-    "onCommand:textmarker.clearHighlight",
+    "onCommand:textmarker.highlightUsingRegex",
     "onCommand:textmarker.markText",
-    "onCommand:textmarker.markTextByRegex"
+    "onCommand:textmarker.unhighlight"
   ],
   "main": "./extension",
   "contributes": {
@@ -78,13 +78,13 @@
         "category": "TextMarker"
       },
       {
-        "command": "textmarker.markTextByRegex",
-        "title": "Highlight Text Specified by Regex",
+        "command": "textmarker.highlightUsingRegex",
+        "title": "Highlight Text Using Regex",
         "category": "TextMarker"
       },
       {
-        "command": "textmarker.clearHighlight",
-        "title": "Clear Highlight",
+        "command": "textmarker.unhighlight",
+        "title": "Unhighlight Text",
         "category": "TextMarker"
       },
       {
