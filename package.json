@@ -29,6 +29,7 @@
   ],
   "activationEvents": [
     "onCommand:textmarker.clearAllHighlight",
+    "onCommand:textmarker.highlight",
     "onCommand:textmarker.highlightUsingRegex",
     "onCommand:textmarker.markText",
     "onCommand:textmarker.unhighlight"
@@ -78,6 +79,11 @@
         "category": "TextMarker"
       },
       {
+        "command": "textmarker.highlight",
+        "title": "Highlight Selected Text",
+        "category": "TextMarker"
+      },
+      {
         "command": "textmarker.highlightUsingRegex",
         "title": "Highlight Text Using Regex",
         "category": "TextMarker"
@@ -96,7 +102,7 @@
     "menus": {
       "editor/context": [
         {
-          "command": "textmarker.markText",
+          "command": "textmarker.highlight",
           "group": "2_textmarker",
           "when": "editorTextFocus"
         }

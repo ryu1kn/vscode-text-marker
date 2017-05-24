@@ -2,6 +2,7 @@
 ### 0.4.0: XX May 2017
 
 * Support regex to highlight text ([Issue #8](https://github.com/ryu1kn/vscode-text-marker/issues/8))
+* Put "Highlight selected text" command in the right click menu
 
 ### 0.3.0: 7 November 2016
 
