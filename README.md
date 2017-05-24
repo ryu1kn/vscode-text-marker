@@ -4,19 +4,29 @@
 
 ## Features
 
-Select text in your code and mark all matches. The marking colour is configurable
+* Highlight selected text
+* Highlight text using a regular expression
+* Highlighting colour is configurable
 
 ![Highlight and unhighlight text](https://raw.githubusercontent.com/ryu1kn/vscode-text-marker/master/images/animations/highlight-unhighlight-texts.gif)
 
 ## Commands
 
-* `TextMarker: Clear All Highlights` (**Command ID**: `textmarker.clearAllHighlight`)
-
-    Clear all highlights with one shot
-
 * `TextMarker: Mark Text to Highlight/Unhighlight` (**Command ID**: `textmarker.markText`)
 
     Mark the selected text for highlighting. If no text is selected, the word under cursor will be marked. Marking the already selected text will unhighlight the text.
+
+* `TextMarker: Highlight Text Using Regex` (**Command ID**: `textmarker.highlightUsingRegex`)
+
+    Highlight text that matches a given regular expression.
+
+* `TextMarker: Unhighlight Text` (**Command ID**: `textmarker.unhighlight`)
+
+    Remove a highlight from the list of highlights.
+
+* `TextMarker: Clear All Highlights` (**Command ID**: `textmarker.clearAllHighlight`)
+
+    Clear all highlights with one shot
 
 ## Extension Settings
 
