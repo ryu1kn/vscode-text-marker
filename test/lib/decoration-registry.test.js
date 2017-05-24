@@ -25,6 +25,19 @@ suite('DecorationRegistry', () => {
         });
     });
 
+    test('it does not register the same pattern multiple times', () => {
+        const window = {createTextEditorDecorationType: () => 'DECORATION_TYPE'};
+        const colourRegistry = {issue: sinon.spy()};
+        const generateUuid = createGenerateUuid();
+        const registry = new DecorationRegistry({generateUuid, colourRegistry, window});
+
+        registry.issue('PATTERN');
+        const secondResult = registry.issue('PATTERN');
+
+        expect(secondResult).to.be.null;
+        expect(colourRegistry.issue).to.have.been.calledOnce;
+    });
+
     test('it returns a registered decoration type for the passed decoration id', () => {
         const window = {createTextEditorDecorationType: () => 'DECORATION_TYPE'};
         const colourRegistry = {issue: () => 'pink'};

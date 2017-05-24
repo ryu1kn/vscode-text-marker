@@ -69,6 +69,18 @@ suite('DecorationOperator', () => {
                 }]
             );
         });
+
+        test('it does nothing if given pattern is already registered for highlight', () => {
+            const editors = ['EDITOR'];
+            const decorationRegistry = {
+                issue: stubWithArgs(['SELECTED_TEXT'], null)
+            };
+            const textDecorator = {decorate: sinon.spy()};
+            const operator = new DecorationOperator({editors, decorationRegistry, textDecorator});
+            operator.addDecoration('SELECTED_TEXT');
+
+            expect(textDecorator.decorate).to.have.been.not.called;
+        });
     });
 
     suite('#removeDecoration', () => {
