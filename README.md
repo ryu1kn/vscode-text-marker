@@ -12,21 +12,27 @@
 
 ## Commands
 
-* `TextMarker: Mark Text to Highlight/Unhighlight` (**Command ID**: `textmarker.markText`)
+* `Highlight Selected Text` (**Command ID**: `textmarker.highlight`)
 
     Mark the selected text for highlighting. If no text is selected, the word under cursor will be marked. Marking the already selected text will unhighlight the text.
 
-* `TextMarker: Highlight Text Using Regex` (**Command ID**: `textmarker.highlightUsingRegex`)
+* `Highlight Text Using Regex` (**Command ID**: `textmarker.highlightUsingRegex`)
 
     Highlight text that matches a given regular expression.
 
-* `TextMarker: Unhighlight Text` (**Command ID**: `textmarker.unhighlight`)
+* `Unhighlight Text` (**Command ID**: `textmarker.unhighlight`)
 
     Remove a highlight from the list of highlights.
 
-* `TextMarker: Clear All Highlights` (**Command ID**: `textmarker.clearAllHighlight`)
+* `Clear All Highlights` (**Command ID**: `textmarker.clearAllHighlight`)
 
     Clear all highlights with one shot
+
+* `(DEPRECATED) Mark Text to Highlight/Unhighlight` (**Command ID**: `textmarker.markText`)
+
+    Mark the selected text for highlighting. If no text is selected, the word under cursor will be marked. Marking the already selected text will unhighlight the text.
+
+    DEPRECATED. Please use `textmarker.highlight` and `textmarker.unhighlight` instead.
 
 ## Extension Settings
 

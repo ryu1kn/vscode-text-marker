@@ -74,11 +74,6 @@
     },
     "commands": [
       {
-        "command": "textmarker.markText",
-        "title": "Mark Text to Highlight/Unhighlight",
-        "category": "TextMarker"
-      },
-      {
         "command": "textmarker.highlight",
         "title": "Highlight Selected Text",
         "category": "TextMarker"
@@ -96,6 +91,11 @@
       {
         "command": "textmarker.clearAllHighlight",
         "title": "Clear All Highlights",
+        "category": "TextMarker"
+      },
+      {
+        "command": "textmarker.markText",
+        "title": "(DEPRECATED) Mark Text to Highlight/Unhighlight",
         "category": "TextMarker"
       }
     ],
