@@ -10,7 +10,8 @@ suite('DecorationRegistry', () => {
         const registry = new DecorationRegistry({generateUuid, colourRegistry, window});
         expect(registry.issue('TEXT')).to.eql({
             id: 'UUID_1',
-            decorationType: 'DECORATION_TYPE'
+            decorationType: 'DECORATION_TYPE',
+            pattern: 'TEXT'
         });
     });
 
@@ -21,7 +22,8 @@ suite('DecorationRegistry', () => {
         const registry = new DecorationRegistry({generateUuid, colourRegistry, window});
         expect(registry.issue(/REGEX/)).to.eql({
             id: 'UUID_1',
-            decorationType: 'DECORATION_TYPE'
+            decorationType: 'DECORATION_TYPE',
+            pattern: /REGEX/
         });
     });
 
@@ -48,7 +50,8 @@ suite('DecorationRegistry', () => {
 
         expect(registry.inquireById('UUID_1')).to.eql({
             id: 'UUID_1',
-            decorationType: 'DECORATION_TYPE'
+            decorationType: 'DECORATION_TYPE',
+            pattern: 'TEXT'
         });
     });
 
@@ -62,7 +65,8 @@ suite('DecorationRegistry', () => {
 
         expect(registry.inquireByPattern('TEXT')).to.eql({
             id: 'UUID_1',
-            decorationType: 'DECORATION_TYPE'
+            decorationType: 'DECORATION_TYPE',
+            pattern: 'TEXT'
         });
     });
 
@@ -136,6 +140,21 @@ suite('DecorationRegistry', () => {
                 overviewRulerLane: 2
             }]
         ]);
+    });
+
+    test('it toggles the case sensitivity of a pattern', () => {
+        const window = {createTextEditorDecorationType: () => 'DECORATION_TYPE'};
+        const colourRegistry = {issue: () => 'pink'};
+        const generateUuid = createGenerateUuid();
+        const registry = new DecorationRegistry({generateUuid, colourRegistry, window});
+
+        registry.issue('TEXT');
+
+        expect(registry.updatePattern('UUID_1', 'TEXT')).to.eql({
+            id: 'UUID_1',
+            decorationType: 'DECORATION_TYPE',
+            pattern: 'TEXT'
+        });
     });
 
     function createGenerateUuid() {
