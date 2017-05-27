@@ -6,15 +6,22 @@ suite('HighlightCommand', () => {
     test('it highlights the selected text', () => {
         const editor = 'EDITOR';
         const selectedTextFinder = {find: sinon.stub().returns('SELECTED')};
-        const vsWindow = fakeVscodeWindow(editor);
-        const logger = getLogger();
         const decorationOperator = {addDecoration: sinon.spy()};
         const decorationOperatorFactory = {create: sinon.stub().returns(decorationOperator)};
-        new HighlightCommand({decorationOperatorFactory, vsWindow, logger, selectedTextFinder}).execute(editor);
+        const patternFactory = {create: sinon.stub().returns('PATTERN')};
+        const command = new HighlightCommand({
+            decorationOperatorFactory,
+            vsWindow: fakeVscodeWindow(editor),
+            logger: getLogger(),
+            selectedTextFinder,
+            patternFactory
+        });
+        command.execute(editor);
 
         expect(selectedTextFinder.find).to.have.been.calledWith(editor);
         expect(decorationOperatorFactory.create).to.have.been.calledWith([editor]);
-        expect(decorationOperator.addDecoration).to.have.been.calledWith('SELECTED');
+        expect(patternFactory.create).to.have.been.calledWith({pattern: 'SELECTED'});
+        expect(decorationOperator.addDecoration).to.have.been.calledWith('PATTERN');
     });
 
     test('it does nothing if text is not selected', () => {
