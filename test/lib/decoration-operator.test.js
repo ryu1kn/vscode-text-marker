@@ -110,15 +110,15 @@ suite('DecorationOperator', () => {
         test('it toggles a case sensitivity of a decoration pattern', () => {
             const editors = ['EDITOR_1', 'EDITOR_2'];
             const decorationRegistry = {
-                updatePattern: stubWithArgs(['DECORATION_ID'], {
+                updatePattern: sinon.stub().returns({
                     id: 'DECORATION_ID',
                     decorationType: 'DECORATION_TYPE',
-                    pattern: /PATTERN/i
+                    pattern: 'NEW_PATTERN'
                 }),
                 inquireById: stubWithArgs(['DECORATION_ID'], {
                     id: 'DECORATION_ID',
                     decorationType: 'DECORATION_TYPE',
-                    pattern: /PATTERN/
+                    pattern: {toggleCaseSensitivity: () => 'NEW_PATTERN'}
                 })
             };
             const textDecorator = {
@@ -128,12 +128,12 @@ suite('DecorationOperator', () => {
             const operator = new DecorationOperator({editors, decorationRegistry, textDecorator});
             operator.updateDecoration('DECORATION_ID', {action: 'toggle-case-sensitivity'});
 
-            expect(decorationRegistry.updatePattern).to.have.been.calledWith('DECORATION_ID', /PATTERN/i);
+            expect(decorationRegistry.updatePattern).to.have.been.calledWith('DECORATION_ID', 'NEW_PATTERN');
             expect(textDecorator.undecorate).to.have.been.calledWith(editors, ['DECORATION_TYPE']);
             expect(textDecorator.decorate).to.have.been.calledWith(
                 editors,
                 [{
-                    pattern: /PATTERN/i,
+                    pattern: 'NEW_PATTERN',
                     decorationType: 'DECORATION_TYPE'
                 }]
             );
