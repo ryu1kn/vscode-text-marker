@@ -91,4 +91,13 @@ suite('StringPattern', () => {
         expect(pattern1.equalTo(pattern2)).to.be.false;
     });
 
+    test('it toggles case sensitivity', () => {
+        const patternFactory = new PatternFactory();
+        const pattern1 = patternFactory.create({
+            phrase: 'PHRASE'
+        });
+        const pattern2 = pattern1.toggleCaseSensitivity();
+        expect(pattern1.equalTo(pattern2)).to.be.false;
+    });
+
 });
