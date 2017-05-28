@@ -161,11 +161,9 @@ suite('DecorationOperator', () => {
                 revoke: sinon.spy(),
                 retrieveAll: () => [{
                     id: 'DECORATION_ID_1',
-                    pattern: 'text1',
                     decorationType: 'DECORATION_TYPE_1'
                 }, {
                     id: 'DECORATION_ID_2',
-                    pattern: /text2/,
                     decorationType: 'DECORATION_TYPE_2'
                 }]
             };

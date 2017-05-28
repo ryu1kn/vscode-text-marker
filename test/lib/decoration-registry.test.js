@@ -1,29 +1,20 @@
 
 const DecorationRegistry = require('../../lib/decoration-registry');
+const PatternFactory = require('../../lib/pattern-factory');
 
 suite('DecorationRegistry', () => {
 
-    test('it registers string patterns and returns registry information', () => {
+    test('it registers a pattern and returns registry information', () => {
         const window = {createTextEditorDecorationType: () => 'DECORATION_TYPE'};
         const colourRegistry = {issue: () => 'pink'};
         const generateUuid = createGenerateUuid();
         const registry = new DecorationRegistry({generateUuid, colourRegistry, window});
-        expect(registry.issue('TEXT')).to.eql({
-            id: 'UUID_1',
-            decorationType: 'DECORATION_TYPE',
-            pattern: 'TEXT'
-        });
-    });
 
-    test('it registers regex patterns and returns registry information', () => {
-        const window = {createTextEditorDecorationType: () => 'DECORATION_TYPE'};
-        const colourRegistry = {issue: () => 'pink'};
-        const generateUuid = createGenerateUuid();
-        const registry = new DecorationRegistry({generateUuid, colourRegistry, window});
-        expect(registry.issue(/REGEX/)).to.eql({
+        const pattern = createPattern('PATTERN');
+        expect(registry.issue(pattern)).to.eql({
             id: 'UUID_1',
             decorationType: 'DECORATION_TYPE',
-            pattern: /REGEX/
+            pattern
         });
     });
 
@@ -33,8 +24,8 @@ suite('DecorationRegistry', () => {
         const generateUuid = createGenerateUuid();
         const registry = new DecorationRegistry({generateUuid, colourRegistry, window});
 
-        registry.issue('PATTERN');
-        const secondResult = registry.issue('PATTERN');
+        registry.issue(createPattern('PATTERN'));
+        const secondResult = registry.issue(createPattern('PATTERN'));
 
         expect(secondResult).to.be.null;
         expect(colourRegistry.issue).to.have.been.calledOnce;
@@ -46,12 +37,13 @@ suite('DecorationRegistry', () => {
         const generateUuid = createGenerateUuid();
         const registry = new DecorationRegistry({generateUuid, colourRegistry, window});
 
-        registry.issue('TEXT');
+        const pattern = createPattern('PATTERN');
+        registry.issue(createPattern('PATTERN'));
 
         expect(registry.inquireById('UUID_1')).to.eql({
             id: 'UUID_1',
             decorationType: 'DECORATION_TYPE',
-            pattern: 'TEXT'
+            pattern
         });
     });
 
@@ -61,25 +53,14 @@ suite('DecorationRegistry', () => {
         const generateUuid = createGenerateUuid();
         const registry = new DecorationRegistry({generateUuid, colourRegistry, window});
 
-        registry.issue('TEXT');
+        const pattern = createPattern('PATTERN');
+        registry.issue(pattern);
 
-        expect(registry.inquireByPattern('TEXT')).to.eql({
+        expect(registry.inquireByPattern(pattern)).to.eql({
             id: 'UUID_1',
             decorationType: 'DECORATION_TYPE',
-            pattern: 'TEXT'
+            pattern: pattern
         });
-    });
-
-    test('it does not confuse with regex and text pattern', () => {
-        const window = {createTextEditorDecorationType: () => 'DECORATION_TYPE'};
-        const colourRegistry = {issue: () => 'pink'};
-        const generateUuid = createGenerateUuid();
-        const registry = new DecorationRegistry({generateUuid, colourRegistry, window});
-
-        const textPattern = '/PATTERN/';
-        const regexPattern = /PATTERN/;
-        registry.issue(textPattern);
-        expect(registry.inquireByPattern(regexPattern)).to.be.null;
     });
 
     test("it can remove given pattern and it's associated decoration type from the registry", () => {
@@ -90,9 +71,11 @@ suite('DecorationRegistry', () => {
         };
         const generateUuid = createGenerateUuid();
         const registry = new DecorationRegistry({generateUuid, colourRegistry, window});
-        const decorationId = registry.issue('TEXT').id;
+
+        const pattern = createPattern('PATTERN');
+        const decorationId = registry.issue(pattern).id;
         registry.revoke(decorationId);
-        expect(registry.inquireByPattern('TEXT')).to.be.null;
+        expect(registry.inquireByPattern(pattern)).to.be.null;
     });
 
     test('it can return all registered decorations at once', () => {
@@ -101,17 +84,19 @@ suite('DecorationRegistry', () => {
         const colourRegistry = {issue: () => 'pink'};
         const window = {createTextEditorDecorationType: () => decorationTypes.shift()};
         const registry = new DecorationRegistry({generateUuid, colourRegistry, window});
-        registry.issue('TEXT_1');
-        registry.issue(/TEXT_2/);
+        const pattern1 = createPattern('PATTERN_1');
+        const pattern2 = createPattern('PATTERN_2');
+        registry.issue(pattern1);
+        registry.issue(pattern2);
         expect(registry.retrieveAll()).to.eql([
             {
                 id: 'UUID_1',
-                pattern: 'TEXT_1',
+                pattern: pattern1,
                 decorationType: 'DECORATION_TYPE_1'
             },
             {
                 id: 'UUID_2',
-                pattern: /TEXT_2/,
+                pattern: pattern2,
                 decorationType: 'DECORATION_TYPE_2'
             }
         ]);
@@ -125,8 +110,8 @@ suite('DecorationRegistry', () => {
             colourRegistry,
             window
         });
-        registry.issue('TEXT_1');
-        registry.issue('TEXT_2');
+        registry.issue(createPattern('TEXT_1'));
+        registry.issue(createPattern('TEXT_2'));
 
         expect(window.createTextEditorDecorationType.args).to.eql([
             [{
@@ -148,7 +133,8 @@ suite('DecorationRegistry', () => {
         const generateUuid = createGenerateUuid();
         const registry = new DecorationRegistry({generateUuid, colourRegistry, window});
 
-        registry.issue('TEXT');
+        const pattern = createPattern('TEXT');
+        registry.issue(pattern);
 
         expect(registry.updatePattern('UUID_1', 'TEXT')).to.eql({
             id: 'UUID_1',
@@ -156,6 +142,10 @@ suite('DecorationRegistry', () => {
             pattern: 'TEXT'
         });
     });
+
+    function createPattern(phrase) {
+        return new PatternFactory().create({phrase});
+    }
 
     function createGenerateUuid() {
         let i = 1;

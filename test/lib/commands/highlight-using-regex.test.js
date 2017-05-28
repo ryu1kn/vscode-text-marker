@@ -8,12 +8,12 @@ suite('HighlightUsingRegexCommand', () => {
         const logger = getLogger();
         const decorationOperator = {addDecoration: sinon.spy()};
         const decorationOperatorFactory = {create: sinon.stub().returns(decorationOperator)};
-        const regexReader = {read: () => Promise.resolve(/pattern/)};
+        const regexReader = {read: () => Promise.resolve('PATTERN')};
         const command = new HighlightUsingRegexCommand({decorationOperatorFactory, regexReader, vsWindow, logger});
 
         return command.execute().then(() => {
             expect(decorationOperatorFactory.create).to.have.been.calledWith(['EDITOR_1', 'EDITOR_2']);
-            expect(decorationOperator.addDecoration).to.have.been.calledWith(/pattern/);
+            expect(decorationOperator.addDecoration).to.have.been.calledWith('PATTERN');
         });
     });
 
