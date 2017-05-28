@@ -16,7 +16,7 @@ suite('RegexReader', () => {
             expect(pattern).to.eql('PATTERN');
             expect(patternFactory.create).to.have.been.calledWith({
                 type: 'RegExp',
-                pattern: 'PATTERN_STRING'
+                phrase: 'PATTERN_STRING'
             });
             expect(vscodeWindow.showInputBox).to.have.been.calledWith({
                 placeHolder: 'Enter a regular expression to highlight text'

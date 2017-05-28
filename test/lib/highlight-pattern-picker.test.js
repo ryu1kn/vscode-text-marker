@@ -17,12 +17,12 @@ suite('HighlightPatternPicker', () => {
                 {
                     id: 'DECORATION_ID_1',
                     decorationType: 'DECORATION_TYPE_1',
-                    pattern: patternFactory.create({pattern: 'TEXT_1'})
+                    pattern: patternFactory.create({phrase: 'TEXT_1'})
                 },
                 {
                     id: 'DECORATION_ID_2',
                     decorationType: 'DECORATION_TYPE_2',
-                    pattern: patternFactory.create({pattern: 'TEXT_2', type: 'RegExp'})
+                    pattern: patternFactory.create({phrase: 'TEXT_2', type: 'RegExp'})
                 }
             ]
         };
@@ -45,7 +45,7 @@ suite('HighlightPatternPicker', () => {
         };
         const decorationRegistry = {
             retrieveAll: () => [
-                {id: 'DECORATION_ID_1', pattern: patternFactory.create({pattern: 'TEXT_1'}), decorationType: 'DECORATION_TYPE_1'}
+                {id: 'DECORATION_ID_1', pattern: patternFactory.create({phrase: 'TEXT_1'}), decorationType: 'DECORATION_TYPE_1'}
             ]
         };
         const picker = new HighlightPatternPicker({decorationRegistry, vsWindow: vscodeWindow});

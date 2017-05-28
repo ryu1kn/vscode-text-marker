@@ -20,7 +20,7 @@ suite('ToggleHighlightCommand', () => {
 
         expect(selectedTextFinder.find).to.have.been.calledWith(editor);
         expect(decorationOperatorFactory.create).to.have.been.calledWith([editor]);
-        expect(patternFactory.create).to.have.been.calledWith({pattern: 'SELECTED'});
+        expect(patternFactory.create).to.have.been.calledWith({phrase: 'SELECTED'});
         expect(decorationOperator.toggleDecoration).to.have.been.calledWith('PATTERN');
     });
 

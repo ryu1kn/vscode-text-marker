@@ -7,7 +7,7 @@ suite('PatternFactory', () => {
         const patternFactory = new PatternFactory();
         const pattern = patternFactory.create({
             type: 'String',
-            pattern: 'LONG',
+            phrase: 'LONG',
             caseSensitive: true
         });
         const ranges = pattern.locateIn('ENTIRE LONG LONG TEXT');
@@ -21,7 +21,7 @@ suite('PatternFactory', () => {
         const patternFactory = new PatternFactory();
         const pattern = patternFactory.create({
             type: 'RegExp',
-            pattern: 'Z+',
+            phrase: 'Z+',
             caseSensitive: true
         });
         const ranges = pattern.locateIn('ENTIRE TEXT Z ZZ');
@@ -35,7 +35,7 @@ suite('PatternFactory', () => {
         const patternFactory = new PatternFactory();
         const pattern = patternFactory.create({
             type: 'RegExp',
-            pattern: 'Z+',
+            phrase: 'Z+',
             caseSensitive: false
         });
         const ranges = pattern.locateIn('ENTIRE TEXT z ZZ');
@@ -49,7 +49,7 @@ suite('PatternFactory', () => {
         const patternFactory = new PatternFactory();
         const pattern = patternFactory.create({
             type: 'String',
-            pattern: 'TEXT',
+            phrase: 'TEXT',
             caseSensitive: true
         });
         const ranges = pattern.locateIn('ENTIRE TEXT text');
@@ -62,7 +62,7 @@ suite('PatternFactory', () => {
         const patternFactory = new PatternFactory();
         const pattern = patternFactory.create({
             type: 'String',
-            pattern: 'text',
+            phrase: 'text',
             caseSensitive: false
         });
         const ranges = pattern.locateIn('ENTIRE TEXT text');
@@ -76,7 +76,7 @@ suite('PatternFactory', () => {
         const patternFactory = new PatternFactory();
         const pattern = patternFactory.create({
             type: 'String',
-            pattern: 'Z+',
+            phrase: 'Z+',
             caseSensitive: true
         });
         const ranges = pattern.locateIn('ENTIRE TEXT Z+ ZZ');
@@ -89,7 +89,7 @@ suite('PatternFactory', () => {
         const patternFactory = new PatternFactory();
         const pattern = patternFactory.create({
             type: 'RegExp',
-            pattern: '.*',
+            phrase: '.*',
             caseSensitive: true
         });
         const ranges = pattern.locateIn('ENTIRE\n\nTEXT');

@@ -8,7 +8,7 @@ suite('TextLocator', () => {
         const textLocator = new TextLocator({Range: fakeRange});
         const pattern = new PatternFactory().create({
             type: 'String',
-            pattern: 'LONG',
+            phrase: 'LONG',
             caseSensitive: true
         });
         const ranges = textLocator.locate(fakeEditor('ENTIRE LONG LONG TEXT'), pattern);
