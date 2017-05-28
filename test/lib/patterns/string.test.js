@@ -1,7 +1,7 @@
 
-const PatternFactory = require('../../lib/pattern-factory');
+const PatternFactory = require('../../../lib/pattern-factory');
 
-suite('PatternFactory', () => {
+suite('StringPattern', () => {
 
     test('it returns list of Range s which locates all the strings equal to the given text', () => {
         const patternFactory = new PatternFactory();
@@ -13,33 +13,6 @@ suite('PatternFactory', () => {
         expect(ranges).to.eql([
             {startOffset: 7, endOffset: 11},
             {startOffset: 12, endOffset: 16}
-        ]);
-    });
-
-    test('it returns list of Range s which locates all the strings match the given regex', () => {
-        const patternFactory = new PatternFactory();
-        const pattern = patternFactory.create({
-            type: 'RegExp',
-            phrase: 'Z+'
-        });
-        const ranges = pattern.locateIn('ENTIRE TEXT Z ZZ');
-        expect(ranges).to.eql([
-            {startOffset: 12, endOffset: 13},
-            {startOffset: 14, endOffset: 16}
-        ]);
-    });
-
-    test('it returns list of Range s which locates all the strings match the given regex if ignore case', () => {
-        const patternFactory = new PatternFactory();
-        const pattern = patternFactory.create({
-            type: 'RegExp',
-            phrase: 'Z+',
-            ignoreCase: true
-        });
-        const ranges = pattern.locateIn('ENTIRE TEXT z ZZ');
-        expect(ranges).to.eql([
-            {startOffset: 12, endOffset: 13},
-            {startOffset: 14, endOffset: 16}
         ]);
     });
 
@@ -81,17 +54,41 @@ suite('PatternFactory', () => {
         ]);
     });
 
-    test('it does not get stuck with matching an empty string match', () => {
+    test('it recognise the same pattern', () => {
         const patternFactory = new PatternFactory();
-        const pattern = patternFactory.create({
-            type: 'RegExp',
-            phrase: '.*'
+        const pattern1 = patternFactory.create({
+            phrase: 'PHRASE'
         });
-        const ranges = pattern.locateIn('ENTIRE\n\nTEXT');
-        expect(ranges).to.eql([
-            {startOffset: 0, endOffset: 6},
-            {startOffset: 8, endOffset: 12}
-        ]);
+        const pattern2 = patternFactory.create({
+            phrase: 'PHRASE',
+            ignoreCase: false
+        });
+        expect(pattern1.equalTo(pattern2)).to.be.true;
+    });
+
+    test('it recognise the equality including case sensitivity', () => {
+        const patternFactory = new PatternFactory();
+        const pattern1 = patternFactory.create({
+            phrase: 'PHRASE'
+        });
+        const pattern2 = patternFactory.create({
+            phrase: 'PHRASE',
+            ignoreCase: true
+        });
+        expect(pattern1.equalTo(pattern2)).to.be.false;
+    });
+
+    test('it recognise the equality including the pattern type', () => {
+        const patternFactory = new PatternFactory();
+        const pattern1 = patternFactory.create({
+            type: 'RegExp',
+            phrase: 'PHRASE'
+        });
+        const pattern2 = patternFactory.create({
+            type: 'String',
+            phrase: 'PHRASE'
+        });
+        expect(pattern1.equalTo(pattern2)).to.be.false;
     });
 
 });
