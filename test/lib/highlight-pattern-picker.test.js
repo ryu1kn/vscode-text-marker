@@ -1,7 +1,10 @@
 
 const HighlightPatternPicker = require('../../lib/highlight-pattern-picker');
+const PatternFactory = require('../../lib/pattern-factory');
 
 suite('HighlightPatternPicker', () => {
+
+    const patternFactory = new PatternFactory();
 
     test('it lets user to pick a highlight pattern', () => {
         const vscodeWindow = {
@@ -11,8 +14,16 @@ suite('HighlightPatternPicker', () => {
         };
         const decorationRegistry = {
             retrieveAll: () => [
-                {id: 'DECORATION_ID_1', pattern: 'TEXT_1', decorationType: 'DECORATION_TYPE_1'},
-                {id: 'DECORATION_ID_2', pattern: /TEXT_2/, decorationType: 'DECORATION_TYPE_2'}
+                {
+                    id: 'DECORATION_ID_1',
+                    decorationType: 'DECORATION_TYPE_1',
+                    pattern: patternFactory.create({pattern: 'TEXT_1'})
+                },
+                {
+                    id: 'DECORATION_ID_2',
+                    decorationType: 'DECORATION_TYPE_2',
+                    pattern: patternFactory.create({pattern: 'TEXT_2', type: 'RegExp'})
+                }
             ]
         };
         const picker = new HighlightPatternPicker({decorationRegistry, vsWindow: vscodeWindow});
@@ -34,7 +45,7 @@ suite('HighlightPatternPicker', () => {
         };
         const decorationRegistry = {
             retrieveAll: () => [
-                {id: 'DECORATION_ID_1', pattern: 'TEXT_1', decorationType: 'DECORATION_TYPE_1'}
+                {id: 'DECORATION_ID_1', pattern: patternFactory.create({pattern: 'TEXT_1'}), decorationType: 'DECORATION_TYPE_1'}
             ]
         };
         const picker = new HighlightPatternPicker({decorationRegistry, vsWindow: vscodeWindow});
