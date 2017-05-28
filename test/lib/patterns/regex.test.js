@@ -11,8 +11,8 @@ suite('RegexPattern', () => {
         });
         const ranges = pattern.locateIn('ENTIRE TEXT Z ZZ');
         expect(ranges).to.eql([
-            {startOffset: 12, endOffset: 13},
-            {startOffset: 14, endOffset: 16}
+            {start: 12, end: 13},
+            {start: 14, end: 16}
         ]);
     });
 
@@ -25,8 +25,8 @@ suite('RegexPattern', () => {
         });
         const ranges = pattern.locateIn('ENTIRE TEXT z ZZ');
         expect(ranges).to.eql([
-            {startOffset: 12, endOffset: 13},
-            {startOffset: 14, endOffset: 16}
+            {start: 12, end: 13},
+            {start: 14, end: 16}
         ]);
     });
 
@@ -38,8 +38,8 @@ suite('RegexPattern', () => {
         });
         const ranges = pattern.locateIn('ENTIRE\n\nTEXT');
         expect(ranges).to.eql([
-            {startOffset: 0, endOffset: 6},
-            {startOffset: 8, endOffset: 12}
+            {start: 0, end: 6},
+            {start: 8, end: 12}
         ]);
     });
 

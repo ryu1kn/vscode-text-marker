@@ -11,8 +11,8 @@ suite('StringPattern', () => {
         });
         const ranges = pattern.locateIn('ENTIRE LONG LONG TEXT');
         expect(ranges).to.eql([
-            {startOffset: 7, endOffset: 11},
-            {startOffset: 12, endOffset: 16}
+            {start: 7, end: 11},
+            {start: 12, end: 16}
         ]);
     });
 
@@ -24,7 +24,7 @@ suite('StringPattern', () => {
         });
         const ranges = pattern.locateIn('ENTIRE TEXT text');
         expect(ranges).to.eql([
-            {startOffset: 7, endOffset: 11}
+            {start: 7, end: 11}
         ]);
     });
 
@@ -37,8 +37,8 @@ suite('StringPattern', () => {
         });
         const ranges = pattern.locateIn('ENTIRE TEXT text');
         expect(ranges).to.eql([
-            {startOffset: 7, endOffset: 11},
-            {startOffset: 12, endOffset: 16}
+            {start: 7, end: 11},
+            {start: 12, end: 16}
         ]);
     });
 
@@ -50,7 +50,7 @@ suite('StringPattern', () => {
         });
         const ranges = pattern.locateIn('ENTIRE TEXT Z+ ZZ');
         expect(ranges).to.eql([
-            {startOffset: 12, endOffset: 14}
+            {start: 12, end: 14}
         ]);
     });
 
