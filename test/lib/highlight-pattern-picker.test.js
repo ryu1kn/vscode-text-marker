@@ -27,14 +27,14 @@ suite('HighlightPatternPicker', () => {
             ]
         };
         const picker = new HighlightPatternPicker({decorationRegistry, vsWindow: vscodeWindow});
-        return picker.pick().then(decorationId => {
+        return picker.pick('PLACEHOLDER_MESSAGE').then(decorationId => {
             expect(decorationId).to.eql('DECORATION_ID_1');
             expect(vscodeWindow.showQuickPick).to.have.been.calledWith(
                 [
                     {label: 'TEXT_1', detail: 'String', id: 'DECORATION_ID_1'},
                     {label: '/TEXT_2/i', detail: 'RegExp', id: 'DECORATION_ID_2'}
                 ],
-                {placeHolder: 'Select a pattern to remove highlight'}
+                {placeHolder: 'PLACEHOLDER_MESSAGE'}
             );
         });
     });

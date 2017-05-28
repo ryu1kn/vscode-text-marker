@@ -7,12 +7,13 @@ suite('ToggleCaseSensitivityCommand', () => {
         const vsWindow = {visibleTextEditors: ['EDITOR_1', 'EDITOR_2']};
         const decorationOperator = {updateDecoration: sinon.spy()};
         const decorationOperatorFactory = {create: sinon.stub().returns(decorationOperator)};
-        const highlightPatternPicker = {pick: () => Promise.resolve('DECORATION_ID')};
+        const highlightPatternPicker = {pick: sinon.stub().returns(Promise.resolve('DECORATION_ID'))};
         const command = new ToggleCaseSensitivityCommand({decorationOperatorFactory, highlightPatternPicker, vsWindow});
 
         return command.execute().then(() => {
             expect(decorationOperatorFactory.create).to.have.been.calledWith(['EDITOR_1', 'EDITOR_2']);
             expect(decorationOperator.updateDecoration).to.have.been.calledWith('DECORATION_ID');
+            expect(highlightPatternPicker.pick).to.have.been.calledWith('Select a pattern to toggle case sensitivity');
         });
     });
 
