@@ -8,8 +8,7 @@ suite('TextLocator', () => {
         const textLocator = new TextLocator({Range: fakeRange});
         const pattern = new PatternFactory().create({
             type: 'String',
-            phrase: 'LONG',
-            caseSensitive: true
+            phrase: 'LONG'
         });
         const ranges = textLocator.locate(fakeEditor('ENTIRE LONG LONG TEXT'), pattern);
         expect(ranges).to.eql([

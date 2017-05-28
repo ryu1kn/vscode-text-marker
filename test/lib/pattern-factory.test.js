@@ -7,8 +7,7 @@ suite('PatternFactory', () => {
         const patternFactory = new PatternFactory();
         const pattern = patternFactory.create({
             type: 'String',
-            phrase: 'LONG',
-            caseSensitive: true
+            phrase: 'LONG'
         });
         const ranges = pattern.locateIn('ENTIRE LONG LONG TEXT');
         expect(ranges).to.eql([
@@ -21,8 +20,7 @@ suite('PatternFactory', () => {
         const patternFactory = new PatternFactory();
         const pattern = patternFactory.create({
             type: 'RegExp',
-            phrase: 'Z+',
-            caseSensitive: true
+            phrase: 'Z+'
         });
         const ranges = pattern.locateIn('ENTIRE TEXT Z ZZ');
         expect(ranges).to.eql([
@@ -36,7 +34,7 @@ suite('PatternFactory', () => {
         const pattern = patternFactory.create({
             type: 'RegExp',
             phrase: 'Z+',
-            caseSensitive: false
+            ignoreCase: true
         });
         const ranges = pattern.locateIn('ENTIRE TEXT z ZZ');
         expect(ranges).to.eql([
@@ -49,8 +47,7 @@ suite('PatternFactory', () => {
         const patternFactory = new PatternFactory();
         const pattern = patternFactory.create({
             type: 'String',
-            phrase: 'TEXT',
-            caseSensitive: true
+            phrase: 'TEXT'
         });
         const ranges = pattern.locateIn('ENTIRE TEXT text');
         expect(ranges).to.eql([
@@ -63,7 +60,7 @@ suite('PatternFactory', () => {
         const pattern = patternFactory.create({
             type: 'String',
             phrase: 'text',
-            caseSensitive: false
+            ignoreCase: true
         });
         const ranges = pattern.locateIn('ENTIRE TEXT text');
         expect(ranges).to.eql([
@@ -76,8 +73,7 @@ suite('PatternFactory', () => {
         const patternFactory = new PatternFactory();
         const pattern = patternFactory.create({
             type: 'String',
-            phrase: 'Z+',
-            caseSensitive: true
+            phrase: 'Z+'
         });
         const ranges = pattern.locateIn('ENTIRE TEXT Z+ ZZ');
         expect(ranges).to.eql([
@@ -89,8 +85,7 @@ suite('PatternFactory', () => {
         const patternFactory = new PatternFactory();
         const pattern = patternFactory.create({
             type: 'RegExp',
-            phrase: '.*',
-            caseSensitive: true
+            phrase: '.*'
         });
         const ranges = pattern.locateIn('ENTIRE\n\nTEXT');
         expect(ranges).to.eql([
