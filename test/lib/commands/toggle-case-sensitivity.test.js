@@ -1,18 +1,18 @@
 
-const UnhighlightCommand = require('../../../lib/commands/unhighlight');
+const ToggleCaseSensitivityCommand = require('../../../lib/commands/toggle-case-sensitivity');
 
-suite('UnhighlightCommand', () => {
+suite('ToggleCaseSensitivityCommand', () => {
 
-    test('it removes one specified highlight', () => {
+    test('it toggles case sensitivity of the decoration', () => {
         const vsWindow = {visibleTextEditors: ['EDITOR_1', 'EDITOR_2']};
-        const decorationOperator = {removeDecoration: sinon.spy()};
+        const decorationOperator = {updateDecoration: sinon.spy()};
         const decorationOperatorFactory = {create: sinon.stub().returns(decorationOperator)};
         const highlightPatternPicker = {pick: () => Promise.resolve('DECORATION_ID')};
-        const command = new UnhighlightCommand({decorationOperatorFactory, highlightPatternPicker, vsWindow});
+        const command = new ToggleCaseSensitivityCommand({decorationOperatorFactory, highlightPatternPicker, vsWindow});
 
         return command.execute().then(() => {
             expect(decorationOperatorFactory.create).to.have.been.calledWith(['EDITOR_1', 'EDITOR_2']);
-            expect(decorationOperator.removeDecoration).to.have.been.calledWith('DECORATION_ID');
+            expect(decorationOperator.updateDecoration).to.have.been.calledWith('DECORATION_ID');
         });
     });
 
@@ -20,7 +20,7 @@ suite('UnhighlightCommand', () => {
         const vsWindow = {visibleTextEditors: ['EDITOR_1', 'EDITOR_2']};
         const decorationOperatorFactory = {create: sinon.spy()};
         const highlightPatternPicker = {pick: () => Promise.resolve()};
-        const command = new UnhighlightCommand({decorationOperatorFactory, highlightPatternPicker, vsWindow});
+        const command = new ToggleCaseSensitivityCommand({decorationOperatorFactory, highlightPatternPicker, vsWindow});
 
         return command.execute().then(() => {
             expect(decorationOperatorFactory.create).to.have.been.not.called;
@@ -31,7 +31,7 @@ suite('UnhighlightCommand', () => {
         const vsWindow = {visibleTextEditors: ['EDITOR_1', 'EDITOR_2']};
         const logger = {error: sinon.spy()};
         const highlightPatternPicker = {pick: () => Promise.reject(new Error('UNEXPECTED_ERROR'))};
-        const command = new UnhighlightCommand({highlightPatternPicker, vsWindow, logger});
+        const command = new ToggleCaseSensitivityCommand({highlightPatternPicker, vsWindow, logger});
 
         return command.execute().then(() => {
             expect(logger.error.args[0][0]).to.have.string('Error: UNEXPECTED_ERROR');
