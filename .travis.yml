@@ -12,3 +12,7 @@ script:
   - npm run coverage  # coverage also runs unit tests internally
 after_script:
   - codeclimate-test-reporter < coverage/lcov.info
+notifications:
+  email:
+    on_success: change
+    on_failure: always
