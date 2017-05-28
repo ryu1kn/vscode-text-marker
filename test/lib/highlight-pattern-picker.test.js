@@ -68,8 +68,24 @@ suite('HighlightPatternPicker', () => {
             ]
         };
         const picker = new HighlightPatternPicker({decorationRegistry, vsWindow: vscodeWindow});
-        return picker.pick().then(pattern => {
-            expect(pattern).to.be.null;
+        return picker.pick().then(decorationId => {
+            expect(decorationId).to.be.null;
+        });
+    });
+
+    test('it shows a message instead of picker if no patterns are registered yet', () => {
+        const vscodeWindow = {
+            showQuickPick: sinon.spy(),
+            showInformationMessage: sinon.stub().returns(Promise.resolve())
+        };
+        const decorationRegistry = {
+            retrieveAll: () => []
+        };
+        const picker = new HighlightPatternPicker({decorationRegistry, vsWindow: vscodeWindow});
+        return picker.pick().then(decorationId => {
+            expect(decorationId).to.be.undefined;
+            expect(vscodeWindow.showInformationMessage).to.have.been.calledWith('No highlight is registered yet');
+            expect(vscodeWindow.showQuickPick).to.not.have.been.called;
         });
     });
 
