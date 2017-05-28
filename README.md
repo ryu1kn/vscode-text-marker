@@ -4,8 +4,9 @@
 
 ## Features
 
-* Highlight selected text
+* Highlight/Unhighlight selected text
 * Highlight text using a regular expression
+* Case sensitive/insensitive text matching
 * Highlighting colour is configurable
 
 ![Highlight and unhighlight text](https://raw.githubusercontent.com/ryu1kn/vscode-text-marker/master/images/animations/highlight-unhighlight-texts.gif)
@@ -26,7 +27,11 @@
 
 * `Clear All Highlights` (**Command ID**: `textmarker.clearAllHighlight`)
 
-    Clear all highlights with one shot
+    Clear all highlights with one shot.
+
+* `Toggle case sensitivity` (**Command ID**: `textmarker.toggleCaseSensitivity`)
+
+    Toggle the case sensitivity of a highlight.
 
 * `(DEPRECATED) Mark Text to Highlight/Unhighlight` (**Command ID**: `textmarker.markText`)
 
@@ -46,11 +51,10 @@
 
 ## Keyboard Shortcuts
 
-You can quickly toggle highlight of a selected text by registering the TextMarker command to your keyboard shortcut settings. For example:
+You can quickly invoke the above TextMarker commands by registering them to your keyboard shortcut settings. For example:
 
 ```json
-  { "key": "ctrl+h", "command": "textmarker.markText",
-                        "when": "editorTextFocus" }
+  { "key": "ctrl+h", "command": "textmarker.highlight", "when": "editorTextFocus" }
 ```
 
 ## Request Features or Report Bugs

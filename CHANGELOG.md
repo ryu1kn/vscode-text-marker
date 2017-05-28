@@ -1,4 +1,8 @@
 
+### 0.5.0: 28 May 2017
+
+* Support case insensitive text matching
+
 ### 0.4.0: 24 May 2017
 
 * Support regex to highlight text ([Issue #8](https://github.com/ryu1kn/vscode-text-marker/issues/8))
