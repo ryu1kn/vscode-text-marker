@@ -120,6 +120,7 @@
     "coverage": "istanbul cover ./node_modules/.bin/_mocha -- --opts ./test/cli-test-mocha.opts",
     "lint": "eslint .",
     "test": "mocha --opts ./test/cli-test-mocha.opts",
+    "acceptance-test": "mocha --opts ./test/cli-acceptance-test-mocha.opts",
     "test-mode": "mocha --opts ./test/cli-test-mocha.opts --watch"
   },
   "devDependencies": {
