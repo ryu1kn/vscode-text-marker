@@ -144,7 +144,10 @@ suite('DecorationRegistry', () => {
     });
 
     function createPattern(phrase) {
-        return new PatternFactory().create({phrase});
+        const matchingModeRegistry = {
+            mode: {ignoreCase: false}
+        };
+        return new PatternFactory({matchingModeRegistry}).create({phrase});
     }
 
     function createGenerateUuid() {

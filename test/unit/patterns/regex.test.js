@@ -1,12 +1,11 @@
 
-const PatternFactory = require('../../../lib/pattern-factory');
+const RegexPattern = require('../../../lib/patterns/regex');
+const StringPattern = require('../../../lib/patterns/string');
 
 suite('RegexPattern', () => {
 
     test('it returns list of Range s which locates all the strings match the given regex', () => {
-        const patternFactory = new PatternFactory();
-        const pattern = patternFactory.create({
-            type: 'RegExp',
+        const pattern = new RegexPattern({
             phrase: 'Z+'
         });
         const ranges = pattern.locateIn('ENTIRE TEXT Z ZZ');
@@ -17,9 +16,7 @@ suite('RegexPattern', () => {
     });
 
     test('it returns list of Range s which locates all the strings match the given regex if ignore case', () => {
-        const patternFactory = new PatternFactory();
-        const pattern = patternFactory.create({
-            type: 'RegExp',
+        const pattern = new RegexPattern({
             phrase: 'Z+',
             ignoreCase: true
         });
@@ -31,9 +28,7 @@ suite('RegexPattern', () => {
     });
 
     test('it does not get stuck with matching an empty string match', () => {
-        const patternFactory = new PatternFactory();
-        const pattern = patternFactory.create({
-            type: 'RegExp',
+        const pattern = new RegexPattern({
             phrase: '.*'
         });
         const ranges = pattern.locateIn('ENTIRE\n\nTEXT');
@@ -44,13 +39,10 @@ suite('RegexPattern', () => {
     });
 
     test('it recognise the same pattern', () => {
-        const patternFactory = new PatternFactory();
-        const pattern1 = patternFactory.create({
-            type: 'RegExp',
+        const pattern1 = new RegexPattern({
             phrase: 'PHRASE'
         });
-        const pattern2 = patternFactory.create({
-            type: 'RegExp',
+        const pattern2 = new RegexPattern({
             phrase: 'PHRASE',
             ignoreCase: false
         });
@@ -58,35 +50,28 @@ suite('RegexPattern', () => {
     });
 
     test('it recognise the equality including case sensitivity', () => {
-        const patternFactory = new PatternFactory();
-        const pattern1 = patternFactory.create({
-            type: 'RegExp',
+        const pattern1 = new RegexPattern({
             phrase: 'PHRASE'
         });
-        const pattern2 = patternFactory.create({
-            type: 'RegExp',
+        const pattern2 = new RegexPattern({
             phrase: 'PHRASE',
             ignoreCase: true
         });
         expect(pattern1.equalTo(pattern2)).to.be.false;
     });
 
-    test('it recognise the equality including the pattern type', () => {
-        const patternFactory = new PatternFactory();
-        const pattern1 = patternFactory.create({
-            type: 'RegExp',
+    test('it recognises the equality including the pattern type', () => {
+        const pattern1 = new RegexPattern({
             phrase: 'PHRASE'
         });
-        const pattern2 = patternFactory.create({
-            type: 'String',
+        const pattern2 = new StringPattern({
             phrase: 'PHRASE'
         });
         expect(pattern1.equalTo(pattern2)).to.be.false;
     });
 
     test('it toggles case sensitivity', () => {
-        const patternFactory = new PatternFactory();
-        const pattern1 = patternFactory.create({
+        const pattern1 = new RegexPattern({
             type: 'RegExp',
             phrase: 'PHRASE'
         });

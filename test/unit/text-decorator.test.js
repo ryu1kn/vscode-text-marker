@@ -9,7 +9,7 @@ suite('TextDecorator', () => {
             fakeEditor('ENTIRE LONG LONG TEXT'),
             fakeEditor('ANOTHER ENTIRE LONG TEXT')
         ];
-        const pattern = new PatternFactory().create({phrase: 'LONG'});
+        const pattern = createPattern('LONG');
         const textDecorator = new TextDecorator({VsRange: FakeRange});
         textDecorator.decorate(
             editors,
@@ -45,7 +45,7 @@ suite('TextDecorator', () => {
 
     test("it doesn't apply decorations if decorationType is not valid", () => {
         const editors = [fakeEditor('ENTIRE LONG LONG TEXT')];
-        const pattern = new PatternFactory().create({phrase: 'LONG'});
+        const pattern = createPattern('LONG');
         const textDecorator = new TextDecorator({VsRange: FakeRange});
         textDecorator.decorate(
             editors,
@@ -62,6 +62,13 @@ suite('TextDecorator', () => {
             [new FakeRange('p:7', 'p:11'), new FakeRange('p:12', 'p:16')]
         ]]);
     });
+
+    function createPattern(phrase) {
+        const matchingModeRegistry = {
+            mode: {ignoreCase: false}
+        };
+        return new PatternFactory({matchingModeRegistry}).create({phrase});
+    }
 
     function fakeEditor(entireText) {
         return {

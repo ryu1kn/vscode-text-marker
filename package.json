@@ -33,6 +33,7 @@
     "onCommand:textmarker.highlightUsingRegex",
     "onCommand:textmarker.markText",
     "onCommand:textmarker.toggleCaseSensitivity",
+    "onCommand:textmarker.toggleCaseSensitivityMode",
     "onCommand:textmarker.unhighlight"
   ],
   "main": "./extension",
@@ -92,6 +93,11 @@
       {
         "command": "textmarker.toggleCaseSensitivity",
         "title": "Toggle case sensitivity",
+        "category": "TextMarker"
+      },
+      {
+        "command": "textmarker.toggleCaseSensitivityMode",
+        "title": "Toggle mode for case sensitivity",
         "category": "TextMarker"
       },
       {

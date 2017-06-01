@@ -4,7 +4,7 @@ const PatternFactory = require('../../lib/pattern-factory');
 
 suite('HighlightPatternPicker', () => {
 
-    const patternFactory = new PatternFactory();
+    const patternFactory = new PatternFactory({matchingModeRegistry: {}});
 
     test('it lets user to pick a highlight pattern', () => {
         const vscodeWindow = {
