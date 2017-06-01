@@ -2,6 +2,7 @@ globals:
   expect: true
   sinon: true
   stubWithArgs: true
+  stubReturns: true
   suite: true
   test: true
 rules:

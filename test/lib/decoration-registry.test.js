@@ -152,11 +152,4 @@ suite('DecorationRegistry', () => {
         return () => `UUID_${i++}`;
     }
 
-    function stubReturns() {
-        const args = Array.prototype.slice.call(arguments);
-        return args.reduce((stub, arg, index) => {
-            stub.onCall(index).returns(arg);
-            return stub;
-        }, sinon.stub());
-    }
 });
