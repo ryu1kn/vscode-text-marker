@@ -2,4 +2,4 @@
 --ui tdd
 --require test/bootstrap.js
 --require test/stub-vscode.js
-test/unit
+test
