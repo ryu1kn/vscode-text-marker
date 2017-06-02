@@ -1,4 +1,9 @@
 
+### 0.6.0: 2 June 2017
+
+* Introduced the mode for case sensitivity. Whether text matching should be done by ignoring case is decided by the current mode.
+  The mode can be flipped with **Toggle Mode for Case Sensitivity** command accessible from the status bar.
+
 ### 0.5.0: 28 May 2017
 
 * Support case insensitive text matching

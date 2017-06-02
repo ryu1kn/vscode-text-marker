@@ -7,6 +7,7 @@
 * Highlight/Unhighlight selected text
 * Highlight text using a regular expression
 * Case sensitive/insensitive text matching
+  * Matching is done depending on the current mode for case sensitivity. You can toggle the mode from the status bar.
 * Highlighting colour is configurable
 
 ![Highlight and unhighlight text](https://raw.githubusercontent.com/ryu1kn/vscode-text-marker/master/images/animations/highlight-unhighlight-texts.gif)
@@ -29,9 +30,13 @@
 
     Clear all highlights with one shot.
 
-* `Toggle case sensitivity` (**Command ID**: `textmarker.toggleCaseSensitivity`)
+* `Toggle Case Sensitivity` (**Command ID**: `textmarker.toggleCaseSensitivity`)
 
     Toggle the case sensitivity of a highlight.
+
+* `Toggle Mode for Case Sensitivity` (**Command ID**: `textmarker.toggleModeForCaseSensitivity`)
+
+    Toggle mode for case sensitivity
 
 * `(DEPRECATED) Mark Text to Highlight/Unhighlight` (**Command ID**: `textmarker.markText`)
 
