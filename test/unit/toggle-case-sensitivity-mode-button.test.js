@@ -1,6 +1,7 @@
 
-const ToggleCaseSensitivityModeButton = require('../../lib/toggle-case-sensitivity-mode-button');
 const EventEmitter = require('events');
+const Const = require('../../lib/const');
+const ToggleCaseSensitivityModeButton = require('../../lib/toggle-case-sensitivity-mode-button');
 
 suite('ToggleCaseSensitivityModeButton', () => {
 
@@ -9,7 +10,7 @@ suite('ToggleCaseSensitivityModeButton', () => {
         const statusBarItem = {show: sinon.spy()};
         new ToggleCaseSensitivityModeButton({eventBus, statusBarItem}); // eslint-disable-line no-new
 
-        eventBus.on('MATCHING_MODE_INITIALISED', () => {
+        eventBus.on(Const.Event.MATCHING_MODE_INITIALISED, () => {
             expect(statusBarItem).to.contain({
                 command: 'textmarker.toggleCaseSensitivityMode',
                 text: 'Aa',
@@ -18,7 +19,7 @@ suite('ToggleCaseSensitivityModeButton', () => {
             expect(statusBarItem.show).to.have.been.called;
             done();
         });
-        eventBus.emit('MATCHING_MODE_INITIALISED', {ignoreCase: false});
+        eventBus.emit(Const.Event.MATCHING_MODE_INITIALISED, {ignoreCase: false});
     });
 
     test('it updates button appearance on receving case sensitivity mode change', done => {
@@ -26,15 +27,15 @@ suite('ToggleCaseSensitivityModeButton', () => {
         const statusBarItem = {show: sinon.spy()};
         new ToggleCaseSensitivityModeButton({eventBus, statusBarItem}); // eslint-disable-line no-new
 
-        eventBus.on('TOGGLED_CASE_SENSITIVITY', () => {
+        eventBus.on(Const.Event.TOGGLED_CASE_SENSITIVITY, () => {
             expect(statusBarItem).to.contain({
                 text: '[Aa]',
-                tooltip: 'TextMarker: ignore case mode'
+                tooltip: 'TextMarker: Ignore case mode'
             });
             expect(statusBarItem.show).to.not.have.been.called;
             done();
         });
-        eventBus.emit('TOGGLED_CASE_SENSITIVITY', {ignoreCase: true});
+        eventBus.emit(Const.Event.TOGGLED_CASE_SENSITIVITY, {ignoreCase: true});
     });
 
 });
