@@ -2,7 +2,8 @@
 //       return mock vscode module when `require`d
 
 const mockVscode = {
-    OverviewRulerLane: {Center: 2}
+    OverviewRulerLane: {Center: 2},
+    StatusBarAlignment: {Right: 2}
 };
 
 const moduleProto = Object.getPrototypeOf(module);

@@ -13,6 +13,7 @@ class FakeVscodeBuilder {
             },
             window: {
                 onDidChangeActiveTextEditor: () => {},
+                createStatusBarItem: () => ({show: () => {}}),
                 createTextEditorDecorationType: this._createTextEditorDecorationTypeStub,
                 visibleTextEditors: params.editors
             },
@@ -29,6 +30,7 @@ class FakeVscodeBuilder {
                     commands[commandName] = handler.bind(scope);
                 }
             },
+            StatusBarAlignment: {Right: 2},
             _commands: commands
         };
     }
