@@ -102,6 +102,30 @@ suite('DecorationRegistry', () => {
         ]);
     });
 
+    test('it does not return revoked decorations', () => {
+        const decorationTypes = ['DECORATION_TYPE_1', 'DECORATION_TYPE_2'];
+        const generateUuid = createGenerateUuid();
+        const colourRegistry = {
+            issue: () => 'pink',
+            revoke: () => {}
+        };
+        const window = {createTextEditorDecorationType: () => decorationTypes.shift()};
+        const registry = new DecorationRegistry({generateUuid, colourRegistry, window});
+        const pattern1 = createPattern('PATTERN_1');
+        const pattern2 = createPattern('PATTERN_2');
+        registry.issue(pattern1);
+        registry.issue(pattern2);
+        registry.revoke('UUID_1');
+
+        expect(registry.retrieveAll()).to.eql([
+            {
+                id: 'UUID_2',
+                pattern: pattern2,
+                decorationType: 'DECORATION_TYPE_2'
+            }
+        ]);
+    });
+
     test('it issues new decoration with new color', () => {
         const window = {createTextEditorDecorationType: sinon.stub().returns('DECORATION_TYPE')};
         const colourRegistry = {issue: stubReturns('pink', 'yellow')};

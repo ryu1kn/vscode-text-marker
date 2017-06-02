@@ -44,16 +44,24 @@ suite('HighlightPatternPicker', () => {
         const decorationRegistry = {
             retrieveAll: () => [
                 {
-                    id: 'DECORATION_ID',
-                    decorationType: 'DECORATION_TYPE',
-                    pattern: patternFactory.create({phrase: 'TEXT'})
+                    id: 'DECORATION_ID_1',
+                    decorationType: 'DECORATION_TYPE_1',
+                    pattern: patternFactory.create({phrase: 'TEXT_1'})
+                },
+                {
+                    id: 'DECORATION_ID_2',
+                    decorationType: 'DECORATION_TYPE_2',
+                    pattern: patternFactory.create({phrase: 'TEXT_2', type: 'RegExp'})
                 }
             ]
         };
         const picker = new HighlightPatternPicker({decorationRegistry, vsWindow: vscodeWindow});
         return picker.pick().then(_decorationId => {
             expect(vscodeWindow.showQuickPick).to.have.been.calledWith(
-                [{label: 'TEXT', detail: 'String [Aa]', id: 'DECORATION_ID'}]
+                [
+                    {label: 'TEXT_1', detail: 'String [Aa]', id: 'DECORATION_ID_1'},
+                    {label: '/TEXT_2/', detail: 'RegExp [Aa]', id: 'DECORATION_ID_2'}
+                ]
             );
         });
     });
