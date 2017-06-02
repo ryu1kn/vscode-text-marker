@@ -13,7 +13,7 @@ suite('ToggleCaseSensitivityModeButton', () => {
         eventBus.on(Const.Event.MATCHING_MODE_INITIALISED, () => {
             expect(statusBarItem).to.contain({
                 command: 'textmarker.toggleModeForCaseSensitivity',
-                text: 'Aa',
+                text: '[Aa]',
                 tooltip: 'TextMarker: Case Sensitive Mode'
             });
             expect(statusBarItem.show).to.have.been.called;
@@ -29,7 +29,7 @@ suite('ToggleCaseSensitivityModeButton', () => {
 
         eventBus.on(Const.Event.TOGGLED_CASE_SENSITIVITY, () => {
             expect(statusBarItem).to.contain({
-                text: '[Aa]',
+                text: 'Aa',
                 tooltip: 'TextMarker: Case Insensitive Mode'
             });
             expect(statusBarItem.show).to.not.have.been.called;

@@ -1,4 +1,8 @@
 
+### 0.6.1: 2 June 2017
+
+* Fixed the problem that the symbols for representing the current mode for case sensitivity were used in reverse
+
 ### 0.6.0: 2 June 2017
 
 * Introduced the mode for case sensitivity. Whether text matching should be done by ignoring case is decided by the current mode.
