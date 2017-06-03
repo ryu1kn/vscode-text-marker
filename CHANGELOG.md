@@ -1,4 +1,9 @@
 
+### 0.8.0: 4 June 2017
+
+* Introduced the mode for whole match. Whether text matching is done with whole match is decided by the current mode.
+  The mode can be flipped with **Toggle Mode for Whole/Partial Match** command accessible from the status bar.
+
 ### 0.7.0: 3 June 2017
 
 * Support "whole match" text matching ([Issue #7](https://github.com/ryu1kn/vscode-text-marker/issues/7))

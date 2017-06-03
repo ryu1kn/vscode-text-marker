@@ -8,14 +8,17 @@ suite('MatchingModeRegistry', () => {
     test('it holds current matching mode', () => {
         const eventBus = new EventEmitter();
         const registry = new MatchingModeRegistry({eventBus});
-        expect(registry.mode).to.eql({ignoreCase: false});
+        expect(registry.mode).to.eql({
+            ignoreCase: false,
+            wholeMatch: false
+        });
     });
 
     test('it reverses the case sensitivity', () => {
         const eventBus = new EventEmitter();
         const registry = new MatchingModeRegistry({eventBus});
         registry.toggleCaseSensitivity();
-        expect(registry.mode).to.eql({ignoreCase: true});
+        expect(registry.mode).to.contain({ignoreCase: true});
     });
 
     test('it broadcasts if case sensitivity has been updated', done => {
@@ -27,6 +30,24 @@ suite('MatchingModeRegistry', () => {
             done();
         });
         registry.toggleCaseSensitivity();
+    });
+
+    test('it reverses the whole/partial match', () => {
+        const eventBus = new EventEmitter();
+        const registry = new MatchingModeRegistry({eventBus});
+        registry.toggleWholeMatch();
+        expect(registry.mode).to.contain({wholeMatch: true});
+    });
+
+    test('it broadcasts if whole/partial match has been toggled', done => {
+        const eventBus = new EventEmitter();
+        const registry = new MatchingModeRegistry({eventBus});
+
+        eventBus.on(Event.WHOLE_MATCH_MODE_TOGGLED, mode => {
+            expect(mode).to.have.property('wholeMatch');
+            done();
+        });
+        registry.toggleWholeMatch();
     });
 
     test('after extension started, it broadcast if it is ready', done => {
