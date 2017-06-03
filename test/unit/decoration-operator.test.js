@@ -1,5 +1,6 @@
 
 const DecorationOperator = require('../../lib/decoration-operator');
+const PatternAction = require('../../lib/const').PatternAction;
 const PatternConverter = require('../../lib/pattern-converter');
 
 suite('DecorationOperator', () => {
@@ -132,7 +133,7 @@ suite('DecorationOperator', () => {
                 textDecorator,
                 patternConverter: new PatternConverter()
             });
-            operator.updateDecoration('DECORATION_ID', 'toggle-case-sensitivity');
+            operator.updateDecoration('DECORATION_ID', PatternAction.TOGGLE_CASE_SENSITIVITY);
 
             expect(decorationRegistry.updatePattern).to.have.been.calledWith('DECORATION_ID', 'NEW_PATTERN');
             expect(textDecorator.undecorate).to.have.been.calledWith(editors, ['DECORATION_TYPE']);

@@ -1,4 +1,5 @@
 
+const PatternAction = require('../../../lib/const').PatternAction;
 const ToggleCaseSensitivityCommand = require('../../../lib/commands/toggle-case-sensitivity');
 
 suite('ToggleCaseSensitivityCommand', () => {
@@ -12,7 +13,7 @@ suite('ToggleCaseSensitivityCommand', () => {
 
         return command.execute().then(() => {
             expect(decorationOperatorFactory.create).to.have.been.calledWith(['EDITOR_1', 'EDITOR_2']);
-            expect(decorationOperator.updateDecoration).to.have.been.calledWith('DECORATION_ID', 'toggle-case-sensitivity');
+            expect(decorationOperator.updateDecoration).to.have.been.calledWith('DECORATION_ID', PatternAction.TOGGLE_CASE_SENSITIVITY);
             expect(highlightPatternPicker.pick).to.have.been.calledWith('Select a pattern to toggle case sensitivity');
         });
     });

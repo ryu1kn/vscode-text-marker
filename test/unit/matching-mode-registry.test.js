@@ -1,6 +1,6 @@
 
 const EventEmitter = require('events');
-const Const = require('../../lib/const');
+const Event = require('../../lib/const').Event;
 const MatchingModeRegistry = require('../../lib/matching-mode-registry');
 
 suite('MatchingModeRegistry', () => {
@@ -22,7 +22,7 @@ suite('MatchingModeRegistry', () => {
         const eventBus = new EventEmitter();
         const registry = new MatchingModeRegistry({eventBus});
 
-        eventBus.on(Const.Event.TOGGLED_CASE_SENSITIVITY, mode => {
+        eventBus.on(Event.TOGGLED_CASE_SENSITIVITY, mode => {
             expect(mode).to.have.property('ignoreCase');
             done();
         });
@@ -33,11 +33,11 @@ suite('MatchingModeRegistry', () => {
         const eventBus = new EventEmitter();
         new MatchingModeRegistry({eventBus});       // eslint-disable-line no-new
 
-        eventBus.on(Const.Event.MATCHING_MODE_INITIALISED, mode => {
+        eventBus.on(Event.MATCHING_MODE_INITIALISED, mode => {
             expect(mode).to.have.property('ignoreCase');
             done();
         });
-        eventBus.emit(Const.Event.EXTENSION_READY);
+        eventBus.emit(Event.EXTENSION_READY);
     });
 
 });

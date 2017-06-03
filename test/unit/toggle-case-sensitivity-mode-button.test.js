@@ -1,6 +1,6 @@
 
 const EventEmitter = require('events');
-const Const = require('../../lib/const');
+const Event = require('../../lib/const').Event;
 const ToggleCaseSensitivityModeButton = require('../../lib/toggle-case-sensitivity-mode-button');
 
 suite('ToggleCaseSensitivityModeButton', () => {
@@ -10,7 +10,7 @@ suite('ToggleCaseSensitivityModeButton', () => {
         const statusBarItem = {show: sinon.spy()};
         new ToggleCaseSensitivityModeButton({eventBus, statusBarItem}); // eslint-disable-line no-new
 
-        eventBus.on(Const.Event.MATCHING_MODE_INITIALISED, () => {
+        eventBus.on(Event.MATCHING_MODE_INITIALISED, () => {
             expect(statusBarItem).to.contain({
                 command: 'textmarker.toggleModeForCaseSensitivity',
                 text: '[Aa]',
@@ -19,7 +19,7 @@ suite('ToggleCaseSensitivityModeButton', () => {
             expect(statusBarItem.show).to.have.been.called;
             done();
         });
-        eventBus.emit(Const.Event.MATCHING_MODE_INITIALISED, {ignoreCase: false});
+        eventBus.emit(Event.MATCHING_MODE_INITIALISED, {ignoreCase: false});
     });
 
     test('it updates button appearance on receving case sensitivity mode change', done => {
@@ -27,7 +27,7 @@ suite('ToggleCaseSensitivityModeButton', () => {
         const statusBarItem = {show: sinon.spy()};
         new ToggleCaseSensitivityModeButton({eventBus, statusBarItem}); // eslint-disable-line no-new
 
-        eventBus.on(Const.Event.TOGGLED_CASE_SENSITIVITY, () => {
+        eventBus.on(Event.TOGGLED_CASE_SENSITIVITY, () => {
             expect(statusBarItem).to.contain({
                 text: 'Aa',
                 tooltip: 'TextMarker: Case Insensitive Mode'
@@ -35,7 +35,7 @@ suite('ToggleCaseSensitivityModeButton', () => {
             expect(statusBarItem.show).to.not.have.been.called;
             done();
         });
-        eventBus.emit(Const.Event.TOGGLED_CASE_SENSITIVITY, {ignoreCase: true});
+        eventBus.emit(Event.TOGGLED_CASE_SENSITIVITY, {ignoreCase: true});
     });
 
 });

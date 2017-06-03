@@ -1,4 +1,5 @@
 
+const PatternAction = require('../../lib/const').PatternAction;
 const PatternConverter = require('../../lib/pattern-converter');
 const StringPattern = require('../../lib/patterns/string');
 
@@ -9,7 +10,7 @@ suite('PatternConverter', () => {
         const pattern = new StringPattern({phrase: 'text'});
         expect(pattern.ignoreCase).to.be.false;
 
-        const pattern2 = converter.convert(pattern, 'toggle-case-sensitivity');
+        const pattern2 = converter.convert(pattern, PatternAction.TOGGLE_CASE_SENSITIVITY);
         expect(pattern2.ignoreCase).to.be.true;
     });
 
@@ -18,7 +19,7 @@ suite('PatternConverter', () => {
         const pattern = new StringPattern({phrase: 'text'});
         expect(pattern.wholeMatch).to.be.false;
 
-        const pattern2 = converter.convert(pattern, 'toggle-whole-match');
+        const pattern2 = converter.convert(pattern, PatternAction.TOGGLE_WHOLE_MATCH);
         expect(pattern2.wholeMatch).to.be.true;
     });
 

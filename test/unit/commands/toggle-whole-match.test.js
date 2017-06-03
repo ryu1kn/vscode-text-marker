@@ -1,4 +1,5 @@
 
+const PatternAction = require('../../../lib/const').PatternAction;
 const ToggleWholeMatchCommand = require('../../../lib/commands/toggle-whole-match');
 
 suite('ToggleWholeMatchCommand', () => {
@@ -12,7 +13,7 @@ suite('ToggleWholeMatchCommand', () => {
 
         return command.execute().then(() => {
             expect(decorationOperatorFactory.create).to.have.been.calledWith(['EDITOR_1', 'EDITOR_2']);
-            expect(decorationOperator.updateDecoration).to.have.been.calledWith('DECORATION_ID', 'toggle-whole-match');
+            expect(decorationOperator.updateDecoration).to.have.been.calledWith('DECORATION_ID', PatternAction.TOGGLE_WHOLE_MATCH);
             expect(highlightPatternPicker.pick).to.have.been.calledWith('Select a pattern to toggle partial/whole match');
         });
     });
