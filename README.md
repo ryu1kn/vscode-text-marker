@@ -8,6 +8,7 @@
 * Highlight text using a regular expression
 * Case sensitive/insensitive text matching
   * Matching is done depending on the current mode for case sensitivity. You can toggle the mode from the status bar.
+* Whole/Partial text matching
 * Highlighting colour is configurable
 
 ![Highlight and unhighlight text](https://raw.githubusercontent.com/ryu1kn/vscode-text-marker/master/images/animations/highlight-unhighlight-texts.gif)
@@ -37,6 +38,10 @@
 * `Toggle Mode for Case Sensitivity` (**Command ID**: `textmarker.toggleModeForCaseSensitivity`)
 
     Toggle mode for case sensitivity
+
+* `Toggle Whole/Partial Match` (**Command ID**: `textmarker.toggleWholeMatch`)
+
+    Toggle whole match and partial match
 
 * `(DEPRECATED) Mark Text to Highlight/Unhighlight` (**Command ID**: `textmarker.markText`)
 

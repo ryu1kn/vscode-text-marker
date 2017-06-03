@@ -1,4 +1,8 @@
 
+### 0.7.0: 3 June 2017
+
+* Support "whole match" text matching ([Issue #7](https://github.com/ryu1kn/vscode-text-marker/issues/7))
+
 ### 0.6.1: 2 June 2017
 
 * Fixed the problem that the symbols for representing the current mode for case sensitivity were used in reverse

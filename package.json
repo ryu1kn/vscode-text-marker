@@ -2,7 +2,7 @@
   "name": "text-marker",
   "displayName": "Text Marker",
   "description": "Select text in your code and mark all matches. The marking colour is configurable",
-  "version": "0.6.1",
+  "version": "0.7.0",
   "publisher": "ryu1kn",
   "license": "SEE LICENSE IN LICENSE.txt",
   "icon": "images/text-marker.png",
@@ -90,13 +90,13 @@
         "category": "TextMarker"
       },
       {
-        "command": "textmarker.toggleWholeMatch",
-        "title": "Toggle Partial/Whole Match",
+        "command": "textmarker.toggleModeForCaseSensitivity",
+        "title": "Toggle Mode for Case Sensitivity",
         "category": "TextMarker"
       },
       {
-        "command": "textmarker.toggleModeForCaseSensitivity",
-        "title": "Toggle Mode for Case Sensitivity",
+        "command": "textmarker.toggleWholeMatch",
+        "title": "Toggle Whole/Partial Match",
         "category": "TextMarker"
       },
       {
