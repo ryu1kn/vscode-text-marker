@@ -4,7 +4,7 @@ const StringPattern = require('../../../lib/patterns/string');
 
 suite('StringPattern', () => {
 
-    test('it returns list of Range s which locates all the strings equal to the given text', () => {
+    test('it returns list of ranges which locates all the strings equal to the given text', () => {
         const pattern = new StringPattern({
             phrase: 'LONG'
         });
@@ -15,7 +15,7 @@ suite('StringPattern', () => {
         ]);
     });
 
-    test('it finds Range s which locates all the strings equal to the given text', () => {
+    test('it finds ranges which locates all the strings equal to the given text', () => {
         const pattern = new StringPattern({
             phrase: 'TEXT'
         });
@@ -25,7 +25,7 @@ suite('StringPattern', () => {
         ]);
     });
 
-    test('it returns list of Range s which locates all the strings match the given text if ignore case', () => {
+    test('it returns list of ranges which locates all the strings match the given text if ignore case', () => {
         const pattern = new StringPattern({
             phrase: 'text',
             ignoreCase: true
@@ -34,6 +34,53 @@ suite('StringPattern', () => {
         expect(ranges).to.eql([
             {start: 7, end: 11},
             {start: 12, end: 16}
+        ]);
+    });
+
+    test('it finds all matches with whole word search', () => {
+        const pattern = new StringPattern({
+            phrase: 'text',
+            wholeMatch: true
+        });
+        const ranges = pattern.locateIn('ENTIRE texta text');
+        expect(ranges).to.eql([
+            {start: 13, end: 17}
+        ]);
+    });
+
+    test('it finds all matches with whole word search - edge of the whole text', () => {
+        const pattern = new StringPattern({
+            phrase: 'text',
+            wholeMatch: true
+        });
+        const ranges = pattern.locateIn('text text');
+        expect(ranges).to.eql([
+            {start: 0, end: 4},
+            {start: 5, end: 9}
+        ]);
+    });
+
+    test('it finds all matches with whole word search - edge of the whole text', () => {
+        const pattern = new StringPattern({
+            phrase: 'text',
+            wholeMatch: true
+        });
+        const ranges = pattern.locateIn('text text');
+        expect(ranges).to.eql([
+            {start: 0, end: 4},
+            {start: 5, end: 9}
+        ]);
+    });
+
+    test('it finds all matches with whole word search - contains no word character at their edges', () => {
+        const pattern = new StringPattern({
+            phrase: '-text',
+            wholeMatch: true
+        });
+        const ranges = pattern.locateIn('a-text -textb --text-');
+        expect(ranges).to.eql([
+            {start: 1, end: 6},
+            {start: 15, end: 20}
         ]);
     });
 
@@ -65,6 +112,17 @@ suite('StringPattern', () => {
         const pattern2 = new StringPattern({
             phrase: 'PHRASE',
             ignoreCase: true
+        });
+        expect(pattern1.equalTo(pattern2)).to.be.false;
+    });
+
+    test('it recognise the equality including whether whole match is on/off', () => {
+        const pattern1 = new StringPattern({
+            phrase: 'PHRASE'
+        });
+        const pattern2 = new StringPattern({
+            phrase: 'PHRASE',
+            wholeMatch: true
         });
         expect(pattern1.equalTo(pattern2)).to.be.false;
     });

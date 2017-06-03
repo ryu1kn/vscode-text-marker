@@ -4,7 +4,7 @@ const StringPattern = require('../../../lib/patterns/string');
 
 suite('RegexPattern', () => {
 
-    test('it returns list of Range s which locates all the strings match the given regex', () => {
+    test('it returns list of ranges which locates all the strings match the given regex', () => {
         const pattern = new RegexPattern({
             phrase: 'Z+'
         });
@@ -15,7 +15,7 @@ suite('RegexPattern', () => {
         ]);
     });
 
-    test('it returns list of Range s which locates all the strings match the given regex if ignore case', () => {
+    test('it returns list of ranges which locates all the strings match the given regex if ignore case', () => {
         const pattern = new RegexPattern({
             phrase: 'Z+',
             ignoreCase: true
@@ -24,6 +24,53 @@ suite('RegexPattern', () => {
         expect(ranges).to.eql([
             {start: 12, end: 13},
             {start: 14, end: 16}
+        ]);
+    });
+
+    test('it finds all matches with whole word search', () => {
+        const pattern = new RegexPattern({
+            phrase: 'text',
+            wholeMatch: true
+        });
+        const ranges = pattern.locateIn('ENTIRE texta text');
+        expect(ranges).to.eql([
+            {start: 13, end: 17}
+        ]);
+    });
+
+    test('it finds all matches with whole word search - edge of the whole text', () => {
+        const pattern = new RegexPattern({
+            phrase: 'text',
+            wholeMatch: true
+        });
+        const ranges = pattern.locateIn('text text');
+        expect(ranges).to.eql([
+            {start: 0, end: 4},
+            {start: 5, end: 9}
+        ]);
+    });
+
+    test('it finds all matches with whole word search - edge of the whole text', () => {
+        const pattern = new RegexPattern({
+            phrase: 'text',
+            wholeMatch: true
+        });
+        const ranges = pattern.locateIn('text text');
+        expect(ranges).to.eql([
+            {start: 0, end: 4},
+            {start: 5, end: 9}
+        ]);
+    });
+
+    test('it finds all matches with whole word search - contains no word character at their edges', () => {
+        const pattern = new RegexPattern({
+            phrase: '-text',
+            wholeMatch: true
+        });
+        const ranges = pattern.locateIn('a-text -textb --text-');
+        expect(ranges).to.eql([
+            {start: 1, end: 6},
+            {start: 15, end: 20}
         ]);
     });
 
@@ -56,6 +103,17 @@ suite('RegexPattern', () => {
         const pattern2 = new RegexPattern({
             phrase: 'PHRASE',
             ignoreCase: true
+        });
+        expect(pattern1.equalTo(pattern2)).to.be.false;
+    });
+
+    test('it recognise the equality including whether whole match is on/off', () => {
+        const pattern1 = new RegexPattern({
+            phrase: 'PHRASE'
+        });
+        const pattern2 = new RegexPattern({
+            phrase: 'PHRASE',
+            wholeMatch: true
         });
         expect(pattern1.equalTo(pattern2)).to.be.false;
     });
