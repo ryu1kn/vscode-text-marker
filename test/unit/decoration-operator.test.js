@@ -1,5 +1,6 @@
 
 const DecorationOperator = require('../../lib/decoration-operator');
+const PatternConverter = require('../../lib/pattern-converter');
 
 suite('DecorationOperator', () => {
 
@@ -125,8 +126,13 @@ suite('DecorationOperator', () => {
                 decorate: sinon.spy(),
                 undecorate: sinon.spy()
             };
-            const operator = new DecorationOperator({editors, decorationRegistry, textDecorator});
-            operator.updateDecoration('DECORATION_ID', {action: 'toggle-case-sensitivity'});
+            const operator = new DecorationOperator({
+                editors,
+                decorationRegistry,
+                textDecorator,
+                patternConverter: new PatternConverter()
+            });
+            operator.updateDecoration('DECORATION_ID', 'toggle-case-sensitivity');
 
             expect(decorationRegistry.updatePattern).to.have.been.calledWith('DECORATION_ID', 'NEW_PATTERN');
             expect(textDecorator.undecorate).to.have.been.calledWith(editors, ['DECORATION_TYPE']);

@@ -145,4 +145,13 @@ suite('StringPattern', () => {
         expect(pattern1.equalTo(pattern2)).to.be.false;
     });
 
+    test('it toggles partial/whole match', () => {
+        const pattern1 = new StringPattern({
+            phrase: 'PHRASE',
+            wholeMatch: true
+        });
+        const pattern2 = pattern1.toggleWholeMatch();
+        expect(pattern1.equalTo(pattern2)).to.be.false;
+    });
+
 });

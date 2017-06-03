@@ -130,10 +130,18 @@ suite('RegexPattern', () => {
 
     test('it toggles case sensitivity', () => {
         const pattern1 = new RegexPattern({
-            type: 'RegExp',
             phrase: 'PHRASE'
         });
         const pattern2 = pattern1.toggleCaseSensitivity();
+        expect(pattern1.equalTo(pattern2)).to.be.false;
+    });
+
+    test('it toggles partial/whole match', () => {
+        const pattern1 = new RegexPattern({
+            phrase: 'PHRASE',
+            wholeMatch: true
+        });
+        const pattern2 = pattern1.toggleWholeMatch();
         expect(pattern1.equalTo(pattern2)).to.be.false;
     });
 

@@ -85,6 +85,27 @@ suite('HighlightPatternPicker', () => {
         });
     });
 
+    test('it shows "[Aal]" symbol if a pattern is case sensitive', () => {
+        const vscodeWindow = {showQuickPick: sinon.stub().returns(Promise.resolve())};
+        const decorationRegistry = {
+            retrieveAll: () => [
+                {
+                    id: 'DECORATION_ID',
+                    decorationType: 'DECORATION_TYPE',
+                    pattern: patternFactory.create({phrase: 'TEXT', wholeMatch: true})
+                }
+            ]
+        };
+        const picker = new HighlightPatternPicker({decorationRegistry, vsWindow: vscodeWindow});
+        return picker.pick().then(_decorationId => {
+            expect(vscodeWindow.showQuickPick).to.have.been.calledWith(
+                [
+                    {label: 'TEXT', detail: 'String [Aa] [Ab|]', id: 'DECORATION_ID'}
+                ]
+            );
+        });
+    });
+
     test('it returns null if nothing selected', () => {
         const vscodeWindow = {
             showQuickPick: () => Promise.resolve()

@@ -90,6 +90,11 @@
         "category": "TextMarker"
       },
       {
+        "command": "textmarker.toggleWholeMatch",
+        "title": "Toggle Partial/Whole Match",
+        "category": "TextMarker"
+      },
+      {
         "command": "textmarker.toggleModeForCaseSensitivity",
         "title": "Toggle Mode for Case Sensitivity",
         "category": "TextMarker"
