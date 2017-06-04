@@ -1,7 +1,7 @@
 
 const EventEmitter = require('events');
-const Event = require('../../lib/const').Event;
-const ToggleCaseSensitivityModeButton = require('../../lib/toggle-case-sensitivity-mode-button');
+const Event = require('../../../lib/const').Event;
+const ToggleCaseSensitivityModeButton = require('../../../lib/statusbar-buttons/toggle-case-sensitivity-mode');
 
 suite('ToggleCaseSensitivityModeButton', () => {
 

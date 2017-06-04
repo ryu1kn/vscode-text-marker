@@ -1,7 +1,7 @@
 
 const EventEmitter = require('events');
-const Event = require('../../lib/const').Event;
-const ToggleWholeMatchModeButton = require('../../lib/toggle-whole-match-mode-button');
+const Event = require('../../../lib/const').Event;
+const ToggleWholeMatchModeButton = require('../../../lib/statusbar-buttons/toggle-whole-match-mode');
 
 suite('ToggleWholeMatchModeButton', () => {
 
