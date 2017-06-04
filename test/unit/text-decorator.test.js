@@ -6,11 +6,17 @@ suite('TextDecorator', () => {
 
     test('it decorates the pattern in the editors', () => {
         const editors = [
-            fakeEditor('ENTIRE LONG LONG TEXT'),
-            fakeEditor('ANOTHER ENTIRE LONG TEXT')
+            {
+                wholeText: 'ENTIRE LONG LONG TEXT',
+                setDecorations: sinon.spy()
+            },
+            {
+                wholeText: 'ANOTHER ENTIRE LONG TEXT',
+                setDecorations: sinon.spy()
+            }
         ];
         const pattern = createPattern('LONG');
-        const textDecorator = new TextDecorator({VsRange: FakeRange});
+        const textDecorator = new TextDecorator();
         textDecorator.decorate(
             editors,
             [{
@@ -20,17 +26,17 @@ suite('TextDecorator', () => {
         );
         expect(editors[0].setDecorations).to.have.been.calledWith(
             'DECORATION_TYPE',
-            [new FakeRange('p:7', 'p:11'), new FakeRange('p:12', 'p:16')]
+            [{start: 7, end: 11}, {start: 12, end: 16}]
         );
         expect(editors[1].setDecorations).to.have.been.calledWith(
             'DECORATION_TYPE',
-            [new FakeRange('p:15', 'p:19')]
+            [{start: 15, end: 19}]
         );
     });
 
     test('it removes decorations from the pattern in the editors', () => {
         const editors = [{setDecorations: sinon.spy()}, {setDecorations: sinon.spy()}];
-        const textDecorator = new TextDecorator({});
+        const textDecorator = new TextDecorator();
         textDecorator.undecorate(editors, ['DECORATION_TYPE_1', 'DECORATION_TYPE_2']);
 
         expect(editors[0].setDecorations.args).to.eql([
@@ -44,9 +50,12 @@ suite('TextDecorator', () => {
     });
 
     test("it doesn't apply decorations if decorationType is not valid", () => {
-        const editors = [fakeEditor('ENTIRE LONG LONG TEXT')];
+        const editors = [{
+            wholeText: 'ENTIRE LONG LONG TEXT',
+            setDecorations: sinon.spy()
+        }];
         const pattern = createPattern('LONG');
-        const textDecorator = new TextDecorator({VsRange: FakeRange});
+        const textDecorator = new TextDecorator();
         textDecorator.decorate(
             editors,
             [{
@@ -59,7 +68,7 @@ suite('TextDecorator', () => {
         );
         expect(editors[0].setDecorations.args).to.eql([[
             'DECORATION_TYPE',
-            [new FakeRange('p:7', 'p:11'), new FakeRange('p:12', 'p:16')]
+            [{start: 7, end: 11}, {start: 12, end: 16}]
         ]]);
     });
 
@@ -70,17 +79,4 @@ suite('TextDecorator', () => {
         return new PatternFactory({matchingModeRegistry}).create({phrase});
     }
 
-    function fakeEditor(entireText) {
-        return {
-            document: {
-                getText: () => entireText,
-                positionAt: offset => `p:${offset}`
-            },
-            setDecorations: sinon.spy()
-        };
-    }
-
-    function FakeRange(position1, position2) {
-        return {start: position1, end: position2};
-    }
 });
