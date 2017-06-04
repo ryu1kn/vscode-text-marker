@@ -4,21 +4,21 @@ const ToggleHighlightCommand = require('../../../lib/commands/toggle-highlight')
 suite('ToggleHighlightCommand', () => {
 
     test('it toggles the decoration of selected text', () => {
-        const editor = 'EDITOR';
-        const selectedTextFinder = {find: sinon.stub().returns('SELECTED')};
+        const editor = {selectedText: 'SELECTED'};
+        const textEditorFactory = {create: sinon.stub().returns(editor)};
+        const windowComponent = {visibleTextEditors: [editor]};
         const decorationOperator = {toggleDecoration: sinon.spy()};
         const decorationOperatorFactory = {create: sinon.stub().returns(decorationOperator)};
         const patternFactory = {create: sinon.stub().returns('PATTERN')};
         const command = new ToggleHighlightCommand({
             decorationOperatorFactory,
-            vsWindow: fakeVscodeWindow(editor),
             logger: getLogger(),
-            selectedTextFinder,
-            patternFactory
+            patternFactory,
+            textEditorFactory,
+            windowComponent
         });
         command.execute(editor);
 
-        expect(selectedTextFinder.find).to.have.been.calledWith(editor);
         expect(decorationOperatorFactory.create).to.have.been.calledWith([editor]);
         expect(patternFactory.create).to.have.been.calledWith({phrase: 'SELECTED'});
         expect(decorationOperator.toggleDecoration).to.have.been.calledWith('PATTERN');
@@ -26,28 +26,21 @@ suite('ToggleHighlightCommand', () => {
 
     test('it does nothing if text is not selected', () => {
         const editor = 'EDITOR';
-        const selectedTextFinder = {find: sinon.spy()};
         const decorationOperatorFactory = {create: sinon.spy()};
-        new ToggleHighlightCommand({decorationOperatorFactory, selectedTextFinder}).execute(editor);
+        const textEditorFactory = {create: () => ({selectedText: null})};
+        new ToggleHighlightCommand({decorationOperatorFactory, textEditorFactory}).execute(editor);
         expect(decorationOperatorFactory.create).to.have.been.not.called;
     });
 
     test('it logs error if an exception occurred', () => {
         const logger = {error: sinon.spy()};
-        const selectedTextFinder = {
-            find: () => {throw new Error('UNEXPECTED_ERROR');}
+        const textEditorFactory = {
+            create: () => {throw new Error('UNEXPECTED_ERROR');}
         };
         const editor = 'EDITOR';
-        new ToggleHighlightCommand({logger, selectedTextFinder}).execute(editor);
+        new ToggleHighlightCommand({logger, textEditorFactory}).execute(editor);
         expect(logger.error.args[0][0]).to.have.string('Error: UNEXPECTED_ERROR');
     });
-
-    function fakeVscodeWindow(editor) {
-        return {
-            visibleTextEditors: editor ? [editor] : [],
-            activeTextEditor: editor
-        };
-    }
 
     function getLogger() {
         return console;

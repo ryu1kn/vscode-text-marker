@@ -6,12 +6,12 @@ suite('DecorationRefresher', () => {
     suite('#refresh', () => {
 
         test('it lets DecorationOperator to refresh decorations', () => {
-            const editor = 'EDITOR';
-            const vsWindow = fakeVscodeWindow(editor);
+            const editor = {selectedText: 'SELECTED'};
+            const textEditorFactory = {create: sinon.stub().returns(editor)};
             const logger = getLogger();
             const decorationOperator = {refreshDecorations: sinon.spy()};
             const decorationOperatorFactory = {create: sinon.stub().returns(decorationOperator)};
-            new DecorationRefresher({decorationOperatorFactory, vsWindow, logger}).refresh(editor);
+            new DecorationRefresher({decorationOperatorFactory, textEditorFactory, logger}).refresh(editor);
 
             expect(decorationOperatorFactory.create).to.have.been.calledWith([editor]);
             expect(decorationOperator.refreshDecorations).to.have.been.calledWith();
@@ -27,10 +27,10 @@ suite('DecorationRefresher', () => {
 
         test('it logs error if an exception occurred', () => {
             const logger = {error: sinon.spy()};
-            const decorationOperatorFactory = {
+            const textEditorFactory = {
                 create: () => {throw new Error('UNEXPECTED_ERROR');}
             };
-            new DecorationRefresher({decorationOperatorFactory, logger}).refresh('EDITOR');
+            new DecorationRefresher({textEditorFactory, logger}).refresh('EDITOR');
             expect(logger.error.args[0][0]).to.have.string('Error: UNEXPECTED_ERROR');
         });
     });
@@ -39,12 +39,12 @@ suite('DecorationRefresher', () => {
 
         test('it refreshes text markups but debounce the execution', () => {
             const editor = 'EDITOR';
-            const vsWindow = fakeVscodeWindow(editor);
+            const windowComponent = {activeTextEditor: editor};
             const logger = getLogger();
             const decorationOperator = {refreshDecorations: sinon.spy()};
             const decorationOperatorFactory = {create: sinon.stub().returns(decorationOperator)};
             const debouncer = {debounce: sinon.stub().callsArg(0)};
-            const refresher = new DecorationRefresher({debouncer, decorationOperatorFactory, logger, vsWindow});
+            const refresher = new DecorationRefresher({debouncer, decorationOperatorFactory, logger, windowComponent});
 
             refresher.refreshWithDelay('DOCUMENT_CHANGE_EVENT');
 
@@ -54,32 +54,25 @@ suite('DecorationRefresher', () => {
 
         test('it does nothing if editor is not given when invoked', () => {
             const editor = undefined;
-            const vsWindow = fakeVscodeWindow(editor);
+            const windowComponent = {activeTextEditor: editor};
             const logger = {error: sinon.spy()};
             const decorationOperatorFactory = {create: sinon.spy()};
             const debouncer = {debounce: callback => callback()};
-            new DecorationRefresher({decorationOperatorFactory, logger, debouncer, vsWindow}).refreshWithDelay('DOCUMENT_CHANGE_EVENT');
+            new DecorationRefresher({decorationOperatorFactory, logger, debouncer, windowComponent}).refreshWithDelay('DOCUMENT_CHANGE_EVENT');
             expect(decorationOperatorFactory.create).to.have.been.not.called;
         });
 
         test('it logs error if an exception occurred', () => {
             const editor = 'EDITOR';
-            const vsWindow = fakeVscodeWindow(editor);
+            const windowComponent = {activeTextEditor: editor};
             const debouncer = {
                 debounce: () => {throw new Error('UNEXPECTED_ERROR');}
             };
             const logger = {error: sinon.spy()};
-            new DecorationRefresher({logger, debouncer, vsWindow}).refreshWithDelay(editor);
+            new DecorationRefresher({logger, debouncer, windowComponent}).refreshWithDelay(editor);
             expect(logger.error.args[0][0]).to.have.string('Error: UNEXPECTED_ERROR');
         });
     });
-
-    function fakeVscodeWindow(editor) {
-        return {
-            visibleTextEditors: editor ? [editor] : [],
-            activeTextEditor: editor
-        };
-    }
 
     function getLogger() {
         return console;

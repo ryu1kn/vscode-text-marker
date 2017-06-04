@@ -12,13 +12,12 @@ suite('HighlightCommand', () => {
         const patternFactory = {create: sinon.stub().returns('PATTERN')};
         const command = new HighlightCommand({
             decorationOperatorFactory,
-            vsWindow: fakeVscodeWindow(editor),
             logger: getLogger(),
             textEditorFactory,
             windowComponent,
             patternFactory
         });
-        command.execute('EDITOR');
+        command.execute(editor);
 
         expect(decorationOperatorFactory.create).to.have.been.calledWith([editor]);
         expect(patternFactory.create).to.have.been.calledWith({phrase: 'SELECTED'});
@@ -42,13 +41,6 @@ suite('HighlightCommand', () => {
         new HighlightCommand({logger, textEditorFactory}).execute(editor);
         expect(logger.error.args[0][0]).to.have.string('Error: UNEXPECTED_ERROR');
     });
-
-    function fakeVscodeWindow(editor) {
-        return {
-            visibleTextEditors: editor ? [editor] : [],
-            activeTextEditor: editor
-        };
-    }
 
     function getLogger() {
         return console;
