@@ -4,12 +4,12 @@ const HighlightUsingRegexCommand = require('../../../lib/commands/highlight-usin
 suite('HighlightUsingRegexCommand', () => {
 
     test('it decorates text that matches to the specified regex', () => {
-        const vsWindow = {visibleTextEditors: ['EDITOR_1', 'EDITOR_2']};
+        const windowComponent = {visibleTextEditors: ['EDITOR_1', 'EDITOR_2']};
         const logger = getLogger();
         const decorationOperator = {addDecoration: sinon.spy()};
         const decorationOperatorFactory = {create: sinon.stub().returns(decorationOperator)};
         const regexReader = {read: () => Promise.resolve('PATTERN')};
-        const command = new HighlightUsingRegexCommand({decorationOperatorFactory, regexReader, vsWindow, logger});
+        const command = new HighlightUsingRegexCommand({decorationOperatorFactory, regexReader, windowComponent, logger});
 
         return command.execute().then(() => {
             expect(decorationOperatorFactory.create).to.have.been.calledWith(['EDITOR_1', 'EDITOR_2']);
