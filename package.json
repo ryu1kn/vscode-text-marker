@@ -80,6 +80,11 @@
         "category": "TextMarker"
       },
       {
+        "command": "textmarker.toggleHighlight",
+        "title": "Toggle Highlight",
+        "category": "TextMarker"
+      },
+      {
         "command": "textmarker.unhighlight",
         "title": "Unhighlight Text",
         "category": "TextMarker"
@@ -118,7 +123,7 @@
     "menus": {
       "editor/context": [
         {
-          "command": "textmarker.highlight",
+          "command": "textmarker.toggleHighlight",
           "group": "2_textmarker",
           "when": "editorTextFocus"
         }

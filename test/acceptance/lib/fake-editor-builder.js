@@ -6,7 +6,8 @@ class FakeEditorBuilder {
         return {
             document: {
                 getText: selection => selection ? params.selectedText : params.wholeText,
-                positionAt: position => `POSITION:${position}`
+                positionAt: position => `POSITION:${position}`,
+                uri: 'EDITOR_ID'
             },
             selection,
             setDecorations: sinon.spy()

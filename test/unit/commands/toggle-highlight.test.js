@@ -3,11 +3,12 @@ const ToggleHighlightCommand = require('../../../lib/commands/toggle-highlight')
 
 suite('ToggleHighlightCommand', () => {
 
-    test('it toggles the decoration of selected text', () => {
+    test('it decorates a selected text if the cursor is not on highlight', () => {
         const editor = {selectedText: 'SELECTED'};
         const textEditorFactory = {create: sinon.stub().returns(editor)};
+        const textLocationRegistry = {queryDecorationId: () => null};
         const windowComponent = {visibleTextEditors: [editor]};
-        const decorationOperator = {toggleDecoration: sinon.spy()};
+        const decorationOperator = {addDecoration: sinon.spy()};
         const decorationOperatorFactory = {create: sinon.stub().returns(decorationOperator)};
         const patternFactory = {create: sinon.stub().returns('PATTERN')};
         const command = new ToggleHighlightCommand({
@@ -15,20 +16,46 @@ suite('ToggleHighlightCommand', () => {
             logger: getLogger(),
             patternFactory,
             textEditorFactory,
+            textLocationRegistry,
             windowComponent
         });
         command.execute(editor);
 
         expect(decorationOperatorFactory.create).to.have.been.calledWith([editor]);
         expect(patternFactory.create).to.have.been.calledWith({phrase: 'SELECTED'});
-        expect(decorationOperator.toggleDecoration).to.have.been.calledWith('PATTERN');
+        expect(decorationOperator.addDecoration).to.have.been.calledWith('PATTERN');
+    });
+
+    test('it remove decoration if the cursor is on highlight', () => {
+        const editor = {selectedText: null};
+        const textEditorFactory = {create: sinon.stub().returns(editor)};
+        const textLocationRegistry = {queryDecorationId: () => 'DECORATION_ID'};
+        const windowComponent = {visibleTextEditors: [editor]};
+        const decorationOperator = {removeDecoration: sinon.spy()};
+        const decorationOperatorFactory = {create: sinon.stub().returns(decorationOperator)};
+        const patternFactory = {create: sinon.stub().returns('PATTERN')};
+        const command = new ToggleHighlightCommand({
+            decorationOperatorFactory,
+            logger: getLogger(),
+            patternFactory,
+            textEditorFactory,
+            textLocationRegistry,
+            windowComponent
+        });
+        command.execute(editor);
+
+        expect(decorationOperatorFactory.create).to.have.been.calledWith([editor]);
+        expect(decorationOperator.removeDecoration).to.have.been.calledWith('DECORATION_ID');
     });
 
     test('it does nothing if text is not selected', () => {
         const editor = 'EDITOR';
         const decorationOperatorFactory = {create: sinon.spy()};
+        const textLocationRegistry = {queryDecorationId: () => null};
         const textEditorFactory = {create: () => ({selectedText: null})};
-        new ToggleHighlightCommand({decorationOperatorFactory, textEditorFactory}).execute(editor);
+        const command = new ToggleHighlightCommand({decorationOperatorFactory, textEditorFactory, textLocationRegistry});
+        command.execute(editor);
+
         expect(decorationOperatorFactory.create).to.have.been.not.called;
     });
 

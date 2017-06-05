@@ -1,7 +1,5 @@
 
 const DecorationOperator = require('../../lib/decoration-operator');
-const PatternAction = require('../../lib/const').PatternAction;
-const PatternConverter = require('../../lib/pattern-converter');
 
 suite('DecorationOperator', () => {
 
@@ -11,10 +9,7 @@ suite('DecorationOperator', () => {
             const editors = ['EDITOR'];
             const decorationRegistry = {
                 inquireByPattern: () => null,
-                issue: stubWithArgs(['SELECTED_TEXT'], {
-                    id: 'DECORATION_ID',
-                    decorationType: 'DECORATION_TYPE'
-                })
+                issue: stubWithArgs(['SELECTED_TEXT'], 'DECORATION')
             };
             const textDecorator = {decorate: sinon.spy()};
             const operator = new DecorationOperator({editors, decorationRegistry, textDecorator});
@@ -22,10 +17,7 @@ suite('DecorationOperator', () => {
 
             expect(textDecorator.decorate).to.have.been.calledWith(
                 editors,
-                [{
-                    pattern: 'SELECTED_TEXT',
-                    decorationType: 'DECORATION_TYPE'
-                }]
+                ['DECORATION']
             );
         });
 
@@ -44,7 +36,11 @@ suite('DecorationOperator', () => {
 
             expect(decorationRegistry.revoke).to.have.been.calledWith('DECORATION_ID');
             expect(textDecorator.undecorate).to.have.been.calledWith(
-                editors, ['DECORATION_TYPE']
+                editors,
+                [{
+                    id: 'DECORATION_ID',
+                    decorationType: 'DECORATION_TYPE'
+                }]
             );
         });
     });
@@ -54,10 +50,7 @@ suite('DecorationOperator', () => {
         test('it highlights all the strings match to the given pattern', () => {
             const editors = ['EDITOR'];
             const decorationRegistry = {
-                issue: stubWithArgs(['SELECTED_TEXT'], {
-                    id: 'DECORATION_ID',
-                    decorationType: 'DECORATION_TYPE'
-                })
+                issue: stubWithArgs(['SELECTED_TEXT'], 'DECORATION')
             };
             const textDecorator = {decorate: sinon.spy()};
             const operator = new DecorationOperator({editors, decorationRegistry, textDecorator});
@@ -65,10 +58,7 @@ suite('DecorationOperator', () => {
 
             expect(textDecorator.decorate).to.have.been.calledWith(
                 editors,
-                [{
-                    pattern: 'SELECTED_TEXT',
-                    decorationType: 'DECORATION_TYPE'
-                }]
+                ['DECORATION']
             );
         });
 
@@ -102,7 +92,11 @@ suite('DecorationOperator', () => {
 
             expect(decorationRegistry.revoke).to.have.been.calledWith('DECORATION_ID');
             expect(textDecorator.undecorate).to.have.been.calledWith(
-                editors, ['DECORATION_TYPE']
+                editors,
+                [{
+                    id: 'DECORATION_ID',
+                    decorationType: 'DECORATION_TYPE'
+                }]
             );
         });
     });
@@ -112,37 +106,38 @@ suite('DecorationOperator', () => {
         test('it toggles a case sensitivity of a decoration pattern', () => {
             const editors = ['EDITOR_1', 'EDITOR_2'];
             const decorationRegistry = {
-                updatePattern: sinon.stub().returns({
-                    id: 'DECORATION_ID',
-                    decorationType: 'DECORATION_TYPE',
-                    pattern: 'NEW_PATTERN'
-                }),
+                updatePattern: sinon.stub().returns('NEW_DECORATION'),
                 inquireById: stubWithArgs(['DECORATION_ID'], {
                     id: 'DECORATION_ID',
                     decorationType: 'DECORATION_TYPE',
-                    pattern: {toggleCaseSensitivity: () => 'NEW_PATTERN'}
+                    pattern: 'OLD_PATTERN'
                 })
             };
             const textDecorator = {
                 decorate: sinon.spy(),
                 undecorate: sinon.spy()
             };
+            const patternConverter = {
+                convert: sinon.stub().returns('NEW_PATTERN')
+            };
             const operator = new DecorationOperator({
                 editors,
                 decorationRegistry,
                 textDecorator,
-                patternConverter: new PatternConverter()
+                patternConverter
             });
-            operator.updateDecoration('DECORATION_ID', PatternAction.TOGGLE_CASE_SENSITIVITY);
+            operator.updateDecoration('DECORATION_ID', 'PATTERN_CONVERT_ACTION');
 
+            expect(patternConverter.convert).to.have.been.calledWith('OLD_PATTERN', 'PATTERN_CONVERT_ACTION');
             expect(decorationRegistry.updatePattern).to.have.been.calledWith('DECORATION_ID', 'NEW_PATTERN');
-            expect(textDecorator.undecorate).to.have.been.calledWith(editors, ['DECORATION_TYPE']);
+            expect(textDecorator.undecorate).to.have.been.calledWith(editors, [{
+                id: 'DECORATION_ID',
+                decorationType: 'DECORATION_TYPE',
+                pattern: 'OLD_PATTERN'
+            }]);
             expect(textDecorator.decorate).to.have.been.calledWith(
                 editors,
-                [{
-                    pattern: 'NEW_PATTERN',
-                    decorationType: 'DECORATION_TYPE'
-                }]
+                ['NEW_DECORATION']
             );
         });
     });
@@ -183,7 +178,13 @@ suite('DecorationOperator', () => {
             ]);
             expect(textDecorator.undecorate).to.have.been.calledWith(
                 ['EDITOR_1', 'EDITOR_2'],
-                ['DECORATION_TYPE_1', 'DECORATION_TYPE_2']
+                [{
+                    id: 'DECORATION_ID_1',
+                    decorationType: 'DECORATION_TYPE_1'
+                }, {
+                    id: 'DECORATION_ID_2',
+                    decorationType: 'DECORATION_TYPE_2'
+                }]
             );
         });
     });
