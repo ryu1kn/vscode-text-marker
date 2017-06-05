@@ -21,9 +21,18 @@ suite('TextLocationRegistry', () => {
         expect(decorationId).to.be.null;
     });
 
+    test('it deregisters a decoration id and their positions', () => {
+        const registry = createRegistry();
+        const decorationId = registry.queryDecorationId({editorId: 'EDITOR_ID', offset: 1});
+        expect(decorationId).to.eql('DECORATION_ID');
+        registry.deregister(decorationId);
+        const decorationId2 = registry.queryDecorationId({editorId: 'EDITOR_ID', offset: 1});
+        expect(decorationId2).to.be.null;
+    });
+
     function createRegistry() {
         const registry = new TextLocationRegistry();
-        registry.record({
+        registry.register({
             editorId: 'EDITOR_ID',
             decorationId: 'DECORATION_ID',
             ranges: [{start: 0, end: 3}]
