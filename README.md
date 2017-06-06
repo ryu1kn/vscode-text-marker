@@ -1,10 +1,10 @@
 [![Build Status](https://travis-ci.org/ryu1kn/vscode-text-marker.svg?branch=master)](https://travis-ci.org/ryu1kn/vscode-text-marker) [![Code Climate](https://codeclimate.com/github/ryu1kn/vscode-text-marker/badges/gpa.svg)](https://codeclimate.com/github/ryu1kn/vscode-text-marker)
 
-# Text Marker
+# Text Marker (Highlighter)
 
 ## Features
 
-* Highlight/Unhighlight selected text
+* Highlight/Unhighlight text from both command palette or right-click menu
 * Highlight text using a regular expression
 * Case sensitive/insensitive text matching
   * Matching is done depending on the current mode for case sensitivity. You can toggle the mode from the status bar.
@@ -15,6 +15,11 @@
 ![Highlight and unhighlight text](https://raw.githubusercontent.com/ryu1kn/vscode-text-marker/master/images/animations/highlight-unhighlight-texts.gif)
 
 ## Commands
+
+* `Toggle Highlight` (**Command ID**: `textmarker.toggleHighlight`)
+
+    Highlight selected text, if no text is selected, the word under cursor will be highlighted.
+    Issueing this command on a highlight without selecting any text will remove the highlight.
 
 * `Highlight Selected Text` (**Command ID**: `textmarker.highlight`)
 
@@ -50,9 +55,10 @@
 
 * `(DEPRECATED) Mark Text to Highlight/Unhighlight` (**Command ID**: `textmarker.markText`)
 
-    Mark the selected text for highlighting. If no text is selected, the word under cursor will be marked. Marking the already selected text will unhighlight the text.
+    Mark the selected text for highlighting. If no text is selected, the word under cursor will be marked.
+    Marking the already selected text will unhighlight the text.
 
-    DEPRECATED. Please use `textmarker.highlight` and `textmarker.unhighlight` instead.
+    DEPRECATED. Please use Toggle Highlight (`textmarker.toggleHighlight`) command instead.
 
 ## Extension Settings
 
@@ -69,7 +75,7 @@
 You can quickly invoke the above TextMarker commands by registering them to your keyboard shortcut settings. For example:
 
 ```json
-  { "key": "ctrl+h", "command": "textmarker.highlight", "when": "editorTextFocus" }
+  { "key": "ctrl+h", "command": "textmarker.toggleHighlight", "when": "editorTextFocus" }
 ```
 
 ## Request Features or Report Bugs

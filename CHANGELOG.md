@@ -1,4 +1,9 @@
 
+### 0.9.0: 6 June 2017
+
+* Introduced **Toggle Highlight** command. When you remove highlight with this command, it works not only string type highlight but also regex type highlight. ([Issue #6](https://github.com/ryu1kn/vscode-text-marker/issues/6))
+* Right click menu **Highlight Selected Text** has been replaced with **Toggle Highlight** command.
+
 ### 0.8.0: 4 June 2017
 
 * Introduced the mode for whole match. Whether text matching is done with whole match is decided by the current mode.
