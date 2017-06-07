@@ -27,21 +27,22 @@ suite('Highlight command', () => {
         });
         new AppIntegrator({commandFactory, vscode: fakeVscode}).integrate(fakeContext);
         const command = fakeVscode._commands['textmarker.highlight'];
-        command(editors[0]);
 
-        expect(editors[0].setDecorations).to.have.been.calledWith(
-            'DECORATION_TYPE_1',
-            [
-                new fakeVscode.Range('POSITION:2', 'POSITION:6'),
-                new fakeVscode.Range('POSITION:9', 'POSITION:13')
-            ]
-        );
-        expect(editors[1].setDecorations).to.have.been.calledWith(
-            'DECORATION_TYPE_1',
-            [
-                new fakeVscode.Range('POSITION:2', 'POSITION:6')
-            ]
-        );
+        return command(editors[0]).then(() => {
+            expect(editors[0].setDecorations).to.have.been.calledWith(
+                'DECORATION_TYPE_1',
+                [
+                    new fakeVscode.Range('POSITION:2', 'POSITION:6'),
+                    new fakeVscode.Range('POSITION:9', 'POSITION:13')
+                ]
+            );
+            expect(editors[1].setDecorations).to.have.been.calledWith(
+                'DECORATION_TYPE_1',
+                [
+                    new fakeVscode.Range('POSITION:2', 'POSITION:6')
+                ]
+            );
+        });
     });
 
 });

@@ -13,7 +13,6 @@ suite('ToggleHighlightCommand', () => {
         const patternFactory = {create: sinon.stub().returns('PATTERN')};
         const command = new ToggleHighlightCommand({
             decorationOperatorFactory,
-            logger: getLogger(),
             patternFactory,
             textEditorFactory,
             textLocationRegistry,
@@ -36,7 +35,6 @@ suite('ToggleHighlightCommand', () => {
         const patternFactory = {create: sinon.stub().returns('PATTERN')};
         const command = new ToggleHighlightCommand({
             decorationOperatorFactory,
-            logger: getLogger(),
             patternFactory,
             textEditorFactory,
             textLocationRegistry,
@@ -59,17 +57,4 @@ suite('ToggleHighlightCommand', () => {
         expect(decorationOperatorFactory.create).to.have.been.not.called;
     });
 
-    test('it logs error if an exception occurred', () => {
-        const logger = {error: sinon.spy()};
-        const textEditorFactory = {
-            create: () => {throw new Error('UNEXPECTED_ERROR');}
-        };
-        const editor = 'EDITOR';
-        new ToggleHighlightCommand({logger, textEditorFactory}).execute(editor);
-        expect(logger.error.args[0][0]).to.have.string('Error: UNEXPECTED_ERROR');
-    });
-
-    function getLogger() {
-        return console;
-    }
 });

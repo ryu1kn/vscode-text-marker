@@ -12,7 +12,6 @@ suite('MarkTextCommand', () => {
         const patternFactory = {create: sinon.stub().returns('PATTERN')};
         const command = new MarkTextCommand({
             decorationOperatorFactory,
-            logger: getLogger(),
             patternFactory,
             textEditorFactory,
             windowComponent
@@ -32,17 +31,4 @@ suite('MarkTextCommand', () => {
         expect(decorationOperatorFactory.create).to.have.been.not.called;
     });
 
-    test('it logs error if an exception occurred', () => {
-        const logger = {error: sinon.spy()};
-        const textEditorFactory = {
-            create: () => {throw new Error('UNEXPECTED_ERROR');}
-        };
-        const editor = 'EDITOR';
-        new MarkTextCommand({logger, textEditorFactory}).execute(editor);
-        expect(logger.error.args[0][0]).to.have.string('Error: UNEXPECTED_ERROR');
-    });
-
-    function getLogger() {
-        return console;
-    }
 });

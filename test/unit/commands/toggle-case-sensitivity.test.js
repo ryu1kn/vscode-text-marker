@@ -29,15 +29,4 @@ suite('ToggleCaseSensitivityCommand', () => {
         });
     });
 
-    test('it logs error if an exception occurred', () => {
-        const windowComponent = {visibleTextEditors: ['EDITOR_1', 'EDITOR_2']};
-        const logger = {error: sinon.spy()};
-        const highlightPatternPicker = {pick: () => Promise.reject(new Error('UNEXPECTED_ERROR'))};
-        const command = new ToggleCaseSensitivityCommand({highlightPatternPicker, windowComponent, logger});
-
-        return command.execute().then(() => {
-            expect(logger.error.args[0][0]).to.have.string('Error: UNEXPECTED_ERROR');
-        });
-    });
-
 });

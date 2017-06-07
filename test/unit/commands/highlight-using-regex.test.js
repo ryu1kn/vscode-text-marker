@@ -5,11 +5,10 @@ suite('HighlightUsingRegexCommand', () => {
 
     test('it decorates text that matches to the specified regex', () => {
         const windowComponent = {visibleTextEditors: ['EDITOR_1', 'EDITOR_2']};
-        const logger = getLogger();
         const decorationOperator = {addDecoration: sinon.spy()};
         const decorationOperatorFactory = {create: sinon.stub().returns(decorationOperator)};
         const regexReader = {read: () => Promise.resolve('PATTERN')};
-        const command = new HighlightUsingRegexCommand({decorationOperatorFactory, regexReader, windowComponent, logger});
+        const command = new HighlightUsingRegexCommand({decorationOperatorFactory, regexReader, windowComponent});
 
         return command.execute().then(() => {
             expect(decorationOperatorFactory.create).to.have.been.calledWith(['EDITOR_1', 'EDITOR_2']);
@@ -26,19 +25,5 @@ suite('HighlightUsingRegexCommand', () => {
             expect(decorationOperatorFactory.create).to.have.been.not.called;
         });
     });
-
-    test('it logs error if an exception occurred', () => {
-        const logger = {error: sinon.spy()};
-        const regexReader = {read: () => Promise.reject(new Error('UNEXPECTED_ERROR'))};
-        const command = new HighlightUsingRegexCommand({logger, regexReader});
-
-        return command.execute().then(() => {
-            expect(logger.error.args[0][0]).to.have.string('Error: UNEXPECTED_ERROR');
-        });
-    });
-
-    function getLogger() {
-        return console;
-    }
 
 });
