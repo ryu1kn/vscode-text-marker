@@ -12,7 +12,13 @@
   * Matching is done depending on the current mode for whole match. You can toggle the mode from the status bar.
 * Highlighting colour is configurable
 
+Highlight/Unhighlight text. Regular expression can also be used. It highlights your text as you type.
+
 ![Highlight and unhighlight text](https://raw.githubusercontent.com/ryu1kn/vscode-text-marker/master/images/animations/highlight-unhighlight-texts.gif)
+
+Switch matching mode. Case sensitive match, Whole match are available. From command palette, you can even change the matching mode after you specified a highlight.
+
+![Ignore Case and Whole Match](https://raw.githubusercontent.com/ryu1kn/vscode-text-marker/master/images/animations/ignore-case-and-whole-match.gif)
 
 ## Commands
 
