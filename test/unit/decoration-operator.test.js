@@ -9,11 +9,11 @@ suite('DecorationOperator', () => {
             const editors = ['EDITOR'];
             const decorationRegistry = {
                 inquireByPattern: () => null,
-                issue: stubWithArgs(['SELECTED_TEXT'], 'DECORATION')
+                issue: stubWithArgs(['PATTERN'], 'DECORATION')
             };
             const textDecorator = {decorate: sinon.spy()};
             const operator = new DecorationOperator({editors, decorationRegistry, textDecorator});
-            operator.toggleDecoration('SELECTED_TEXT');
+            operator.toggleDecoration('PATTERN');
 
             expect(textDecorator.decorate).to.have.been.calledWith(
                 editors,
@@ -24,7 +24,7 @@ suite('DecorationOperator', () => {
         test('Selecting already selected text is de-highlights the selected strings', () => {
             const editors = ['EDITOR_1', 'EDITOR_2'];
             const decorationRegistry = {
-                inquireByPattern: stubWithArgs(['SELECTED_TEXT'], {
+                inquireByPattern: stubWithArgs(['PATTERN'], {
                     id: 'DECORATION_ID',
                     decorationType: 'DECORATION_TYPE'
                 }),
@@ -32,7 +32,7 @@ suite('DecorationOperator', () => {
             };
             const textDecorator = {undecorate: sinon.spy()};
             const operator = new DecorationOperator({editors, decorationRegistry, textDecorator});
-            operator.toggleDecoration('SELECTED_TEXT');
+            operator.toggleDecoration('PATTERN');
 
             expect(decorationRegistry.revoke).to.have.been.calledWith('DECORATION_ID');
             expect(textDecorator.undecorate).to.have.been.calledWith(
@@ -50,11 +50,11 @@ suite('DecorationOperator', () => {
         test('it highlights all the strings match to the given pattern', () => {
             const editors = ['EDITOR'];
             const decorationRegistry = {
-                issue: stubWithArgs(['SELECTED_TEXT'], 'DECORATION')
+                issue: stubWithArgs(['PATTERN'], 'DECORATION')
             };
             const textDecorator = {decorate: sinon.spy()};
             const operator = new DecorationOperator({editors, decorationRegistry, textDecorator});
-            operator.addDecoration('SELECTED_TEXT');
+            operator.addDecoration('PATTERN');
 
             expect(textDecorator.decorate).to.have.been.calledWith(
                 editors,
@@ -65,11 +65,11 @@ suite('DecorationOperator', () => {
         test('it does nothing if given pattern is already registered for highlight', () => {
             const editors = ['EDITOR'];
             const decorationRegistry = {
-                issue: stubWithArgs(['SELECTED_TEXT'], null)
+                issue: stubWithArgs(['PATTERN'], null)
             };
             const textDecorator = {decorate: sinon.spy()};
             const operator = new DecorationOperator({editors, decorationRegistry, textDecorator});
-            operator.addDecoration('SELECTED_TEXT');
+            operator.addDecoration('PATTERN');
 
             expect(textDecorator.decorate).to.have.been.not.called;
         });
