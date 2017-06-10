@@ -60,3 +60,5 @@ rules:
   - error
   - anonymous: always
     named: never
+  capitalized-comments:
+  - off

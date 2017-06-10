@@ -101,7 +101,7 @@ suite('DecorationOperator', () => {
         });
     });
 
-    suite('#updateDecoration', () => {
+    suite('#updateDecorationPattern', () => {
 
         test('it toggles a case sensitivity of a decoration pattern', () => {
             const editors = ['EDITOR_1', 'EDITOR_2'];
@@ -126,7 +126,7 @@ suite('DecorationOperator', () => {
                 textDecorator,
                 patternConverter
             });
-            operator.updateDecoration('DECORATION_ID', 'PATTERN_CONVERT_ACTION');
+            operator.updateDecorationPattern('DECORATION_ID', 'PATTERN_CONVERT_ACTION');
 
             expect(patternConverter.convert).to.have.been.calledWith('OLD_PATTERN', 'PATTERN_CONVERT_ACTION');
             expect(decorationRegistry.updatePattern).to.have.been.calledWith('DECORATION_ID', 'NEW_PATTERN');

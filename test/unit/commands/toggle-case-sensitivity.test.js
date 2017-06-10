@@ -5,13 +5,13 @@ const ToggleCaseSensitivityCommand = require('../../../lib/commands/toggle-case-
 suite('ToggleCaseSensitivityCommand', () => {
 
     test('it toggles case sensitivity of the decoration', () => {
-        const decorationOperator = {updateDecoration: sinon.spy()};
+        const decorationOperator = {updateDecorationPattern: sinon.spy()};
         const decorationOperatorFactory = {createForVisibleEditors: () => decorationOperator};
         const highlightPatternPicker = {pick: sinon.stub().returns(Promise.resolve('DECORATION_ID'))};
         const command = new ToggleCaseSensitivityCommand({decorationOperatorFactory, highlightPatternPicker});
 
         return command.execute().then(() => {
-            expect(decorationOperator.updateDecoration).to.have.been.calledWith('DECORATION_ID', PatternAction.TOGGLE_CASE_SENSITIVITY);
+            expect(decorationOperator.updateDecorationPattern).to.have.been.calledWith('DECORATION_ID', PatternAction.TOGGLE_CASE_SENSITIVITY);
             expect(highlightPatternPicker.pick).to.have.been.calledWith('Select a pattern to toggle case sensitivity');
         });
     });
