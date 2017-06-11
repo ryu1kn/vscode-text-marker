@@ -5,13 +5,13 @@ const ToggleWholeMatchCommand = require('../../../lib/commands/toggle-whole-matc
 suite('ToggleWholeMatchCommand', () => {
 
     test('it toggles partial/whole match of the decoration', () => {
-        const decorationOperator = {updateDecorationPattern: sinon.spy()};
+        const decorationOperator = {updateDecorationWithPatternAction: sinon.spy()};
         const decorationOperatorFactory = {createForVisibleEditors: () => decorationOperator};
         const highlightPatternPicker = {pick: sinon.stub().returns(Promise.resolve('DECORATION_ID'))};
         const command = new ToggleWholeMatchCommand({decorationOperatorFactory, highlightPatternPicker});
 
         return command.execute().then(() => {
-            expect(decorationOperator.updateDecorationPattern).to.have.been.calledWith('DECORATION_ID', PatternAction.TOGGLE_WHOLE_MATCH);
+            expect(decorationOperator.updateDecorationWithPatternAction).to.have.been.calledWith('DECORATION_ID', PatternAction.TOGGLE_WHOLE_MATCH);
             expect(highlightPatternPicker.pick).to.have.been.calledWith('Select a pattern to toggle partial/whole match');
         });
     });
