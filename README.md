@@ -5,6 +5,7 @@
 ## Features
 
 * Highlight/Unhighlight text from both command palette or right-click menu
+* Update existing highlight rules from the right-click menu
 * Highlight text using a regular expression
 * Case sensitive/insensitive text matching
   * Matching is done depending on the current mode for case sensitivity. You can toggle the mode from the status bar.
@@ -26,10 +27,12 @@ Switch matching mode. Case sensitive match, Whole match are available. From comm
 
     Highlight selected text, if no text is selected, the word under cursor will be highlighted.
     Issueing this command on a highlight without selecting any text will remove the highlight.
+    Available on right-click menu.
 
-* `Highlight Selected Text` (**Command ID**: `textmarker.highlight`)
+* `Update Highlight` (**Command ID**: `textmarker.updateHighlight`)
 
-    Mark the selected text for highlighting. If no text is selected, the word under cursor will be marked. Marking the already selected text will unhighlight the text.
+    Update the existing highlight (Toggle case sensitivity, whole/partial match, pattern text).
+    Available on right-click menu.
 
 * `Highlight Text Using Regex` (**Command ID**: `textmarker.highlightUsingRegex`)
 
@@ -49,15 +52,24 @@ Switch matching mode. Case sensitive match, Whole match are available. From comm
 
 * `Toggle Mode for Case Sensitivity` (**Command ID**: `textmarker.toggleModeForCaseSensitivity`)
 
-    Toggle mode for case sensitivity
+    Toggle mode for case sensitivity.
+    Available on Status bar.
 
 * `Toggle Whole/Partial Match` (**Command ID**: `textmarker.toggleWholeMatch`)
 
-    Toggle whole match and partial match
+    Toggle whole match and partial match.
 
 * `Toggle Mode for Whole/Partial Match` (**Command ID**: `textmarker.toggleModeForWholeMatch`)
 
-    Toggle mode for whole match and partial match
+    Toggle mode for whole match and partial match.
+    Available on Status bar.
+
+* `(DEPRECATED) Highlight Selected Text` (**Command ID**: `textmarker.highlight`)
+
+    Mark the selected text for highlighting. If no text is selected, the word under cursor will be marked.
+    Marking the already selected text will unhighlight the text.
+
+    DEPRECATED. Please use Toggle Highlight (`textmarker.toggleHighlight`) command instead.
 
 * `(DEPRECATED) Mark Text to Highlight/Unhighlight` (**Command ID**: `textmarker.markText`)
 

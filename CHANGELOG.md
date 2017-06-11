@@ -1,4 +1,9 @@
 
+### 0.10.0: 11 June 2017
+
+* Introduced **Update Highlight** command. You can change the pattern, case sensitivity or whole/partial match of an existing highlight, available as a right-click menu.
+* Deprecated **Highlight Selected Text** command in favour of **Toggle Highlight** commands.
+
 ### 0.9.0: 6 June 2017
 
 * Introduced **Toggle Highlight** command. When you remove highlight with this command, it works not only string type highlight but also regex type highlight. ([Issue #6](https://github.com/ryu1kn/vscode-text-marker/issues/6))
@@ -29,8 +34,8 @@
 ### 0.4.0: 24 May 2017
 
 * Support regex to highlight text ([Issue #8](https://github.com/ryu1kn/vscode-text-marker/issues/8))
-* Put "Highlight Selected Text" command in the right click menu
-* Deprecated "Mark Text to Highlight/Unhighlight" command in favour of "Highlight Selected Text" and "Unhighlight Text" commands (See [Issue #8](https://github.com/ryu1kn/vscode-text-marker/issues/8))
+* Put **Highlight Selected Text** command in the right click menu
+* Deprecated **Mark Text to Highlight/Unhighlight** command in favour of **Highlight Selected Text** and **Unhighlight Text** commands (See [Issue #8](https://github.com/ryu1kn/vscode-text-marker/issues/8))
 
 ### 0.3.0: 7 November 2016
 
