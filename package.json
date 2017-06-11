@@ -115,6 +115,11 @@
         "category": "TextMarker"
       },
       {
+        "command": "textmarker.updateHighlight",
+        "title": "Update Highlight",
+        "category": "TextMarker"
+      },
+      {
         "command": "textmarker.markText",
         "title": "(DEPRECATED) Mark Text to Highlight/Unhighlight",
         "category": "TextMarker"
@@ -124,6 +129,11 @@
       "editor/context": [
         {
           "command": "textmarker.toggleHighlight",
+          "group": "2_textmarker",
+          "when": "editorTextFocus"
+        },
+        {
+          "command": "textmarker.updateHighlight",
           "group": "2_textmarker",
           "when": "editorTextFocus"
         }
