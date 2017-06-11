@@ -21,6 +21,11 @@ Switch matching mode. Case sensitive match, Whole match are available. From comm
 
 ![Ignore Case and Whole Match](https://raw.githubusercontent.com/ryu1kn/vscode-text-marker/master/images/animations/ignore-case-and-whole-match.gif)
 
+You can update a highlight rule after you set it.
+
+![Update Existing Highlight](https://raw.githubusercontent.com/ryu1kn/vscode-text-marker/master/images/animations/update-highlight.gif)
+
+
 ## Commands
 
 * `Toggle Highlight` (**Command ID**: `textmarker.toggleHighlight`)
