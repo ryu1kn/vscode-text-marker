@@ -21,3 +21,7 @@ global.stubReturns = (...args) =>
         },
         sinon.stub()
     );
+
+global.throwIfCalled = () => {
+    throw new Error('Should not have been called');
+};

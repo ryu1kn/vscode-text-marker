@@ -5,6 +5,7 @@ globals:
   stubReturns: true
   suite: true
   test: true
+  throwIfCalled: true
 rules:
   max-len: off
   no-unused-expressions: off
