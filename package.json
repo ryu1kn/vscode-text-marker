@@ -142,7 +142,7 @@
   },
   "scripts": {
     "postinstall": "node ./node_modules/vscode/bin/install",
-    "coverage": "istanbul cover ./node_modules/.bin/_mocha -- --opts ./test/cli-all-test-mocha.opts",
+    "coverage": "istanbul cover --include-all-sources --root ./lib ./node_modules/.bin/_mocha -- --opts ./test/cli-all-test-mocha.opts",
     "lint": "eslint .",
     "test": "mocha --opts ./test/cli-all-test-mocha.opts",
     "unit-test": "mocha --opts ./test/cli-unit-test-mocha.opts",
