@@ -1,4 +1,8 @@
 
+### 0.10.1: 14 September 2017
+
+* Fixed the link to the gif animation
+
 ### 0.10.0: 11 June 2017
 
 * Introduced **Update Highlight** command. You can change the pattern, case sensitivity or whole/partial match of an existing highlight, available as a right-click menu.
