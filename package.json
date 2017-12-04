@@ -65,6 +65,10 @@
             "null"
           ],
           "default": 300
+        },
+        "textmarker.savedHighlights": {
+          "description": "Highlights that get applied when opening editor",
+          "type": "object"
         }
       }
     },
@@ -112,6 +116,11 @@
       {
         "command": "textmarker.clearAllHighlight",
         "title": "Clear All Highlights",
+        "category": "TextMarker"
+      },
+      {
+        "command": "textmarker.saveAllHighlights",
+        "title": "Save All Highlights",
         "category": "TextMarker"
       },
       {
