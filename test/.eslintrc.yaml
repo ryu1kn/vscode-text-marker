@@ -5,6 +5,7 @@ globals:
   stubReturns: true
   suite: true
   test: true
+  beforeEach: true
   throwIfCalled: true
 rules:
   max-len: off
