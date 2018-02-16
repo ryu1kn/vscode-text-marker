@@ -9,7 +9,7 @@ suite('Highlight command', () => {
     const editorBuilder = new FakeEditorBuilder();
     const vscodeBuilder = new FakeVscodeBuilder();
 
-    test('highlights selected text', () => {
+    test('highlights selected text', async () => {
         const editors = [
             editorBuilder.build({
                 wholeText: 'A TEXT B TEXT C',
@@ -28,21 +28,21 @@ suite('Highlight command', () => {
         new AppIntegrator({commandFactory, vscode: fakeVscode}).integrate(fakeContext);
         const command = fakeVscode._commands['textmarker.highlight'];
 
-        return command(editors[0]).then(() => {
-            expect(editors[0].setDecorations).to.have.been.calledWith(
-                'DECORATION_TYPE_1',
-                [
-                    new fakeVscode.Range('POSITION:2', 'POSITION:6'),
-                    new fakeVscode.Range('POSITION:9', 'POSITION:13')
-                ]
-            );
-            expect(editors[1].setDecorations).to.have.been.calledWith(
-                'DECORATION_TYPE_1',
-                [
-                    new fakeVscode.Range('POSITION:2', 'POSITION:6')
-                ]
-            );
-        });
+        await command(editors[0]);
+
+        expect(editors[0].setDecorations).to.have.been.calledWith(
+            'DECORATION_TYPE_1',
+            [
+                new fakeVscode.Range('POSITION:2', 'POSITION:6'),
+                new fakeVscode.Range('POSITION:9', 'POSITION:13')
+            ]
+        );
+        expect(editors[1].setDecorations).to.have.been.calledWith(
+            'DECORATION_TYPE_1',
+            [
+                new fakeVscode.Range('POSITION:2', 'POSITION:6')
+            ]
+        );
     });
 
 });

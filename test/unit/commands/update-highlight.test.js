@@ -3,7 +3,7 @@ const UpdateHighlightCommand = require('../../../lib/commands/update-highlight')
 
 suite('UpdateHighlightCommand', () => {
 
-    test('it update decoration if the cursor is on highlight', () => {
+    test('it update decoration if the cursor is on highlight', async () => {
         const editor = {selectedText: null};
         const textEditorFactory = {create: () => editor};
         const textLocationRegistry = {queryDecorationId: () => 'DECORATION_ID'};
@@ -19,13 +19,13 @@ suite('UpdateHighlightCommand', () => {
             textLocationRegistry
         });
 
-        return command.execute(editor).then(() => {
-            expect(patternVariationReader.read).to.have.been.calledWith('PATTERN');
-            expect(decorationOperator.updateDecorationPattern).to.have.been.calledWith('DECORATION_ID', 'NEW_PATTERN');
-        });
+        await command.execute(editor);
+
+        expect(patternVariationReader.read).to.have.been.calledWith('PATTERN');
+        expect(decorationOperator.updateDecorationPattern).to.have.been.calledWith('DECORATION_ID', 'NEW_PATTERN');
     });
 
-    test('it does nothing if the cursor is not on highlight', () => {
+    test('it does nothing if the cursor is not on highlight', async () => {
         const editor = {selectedText: null};
         const textEditorFactory = {create: () => editor};
         const textLocationRegistry = {queryDecorationId: () => null};
@@ -36,11 +36,12 @@ suite('UpdateHighlightCommand', () => {
             textLocationRegistry
         });
 
-        command.execute(editor);
+        await command.execute(editor);
+
         expect(decorationRegistry.inquireById).to.not.have.been.called;
     });
 
-    test('it does nothing if a new pattern is not given by user', () => {
+    test('it does nothing if a new pattern is not given by user', async () => {
         const editor = {selectedText: null};
         const textEditorFactory = {create: () => editor};
         const textLocationRegistry = {queryDecorationId: () => 'DECORATION_ID'};
@@ -55,9 +56,9 @@ suite('UpdateHighlightCommand', () => {
             textLocationRegistry
         });
 
-        return command.execute(editor).then(() => {
-            expect(decorationOperatorFactory.createForVisibleEditors).to.not.have.been.called;
-        });
+        await command.execute(editor);
+
+        expect(decorationOperatorFactory.createForVisibleEditors).to.not.have.been.called;
     });
 
 });

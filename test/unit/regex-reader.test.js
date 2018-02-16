@@ -3,21 +3,21 @@ const RegexReader = require('../../lib/regex-reader');
 
 suite('RegexReader', () => {
 
-    test('shows inputBox to let user enter regex', () => {
+    test('shows inputBox to let user enter regex', async () => {
         const patternFactory = {create: sinon.stub().returns('PATTERN')};
         const windowComponent = {
             showInputBox: sinon.stub().returns(Promise.resolve('PATTERN_STRING'))
         };
         const reader = new RegexReader({patternFactory, windowComponent});
-        return reader.read().then(pattern => {
-            expect(pattern).to.eql('PATTERN');
-            expect(patternFactory.create).to.have.been.calledWith({
-                type: 'RegExp',
-                phrase: 'PATTERN_STRING'
-            });
-            expect(windowComponent.showInputBox).to.have.been.calledWith({
-                placeHolder: 'Enter a regular expression to highlight text'
-            });
+        const pattern = await reader.read();
+
+        expect(pattern).to.eql('PATTERN');
+        expect(patternFactory.create).to.have.been.calledWith({
+            type: 'RegExp',
+            phrase: 'PATTERN_STRING'
+        });
+        expect(windowComponent.showInputBox).to.have.been.calledWith({
+            placeHolder: 'Enter a regular expression to highlight text'
         });
     });
 
