@@ -13,6 +13,7 @@ suite('DecorationRegistry', () => {
         const pattern = createPattern('PATTERN');
         expect(registry.issue(pattern)).to.eql({
             id: 'UUID_1',
+            colour: 'pink',
             decorationType: 'DECORATION_TYPE',
             pattern
         });
@@ -42,6 +43,7 @@ suite('DecorationRegistry', () => {
 
         expect(registry.inquireById('UUID_1')).to.eql({
             id: 'UUID_1',
+            colour: 'pink',
             decorationType: 'DECORATION_TYPE',
             pattern
         });
@@ -58,6 +60,7 @@ suite('DecorationRegistry', () => {
 
         expect(registry.inquireByPattern(pattern)).to.eql({
             id: 'UUID_1',
+            colour: 'pink',
             decorationType: 'DECORATION_TYPE',
             pattern: pattern
         });
@@ -81,7 +84,7 @@ suite('DecorationRegistry', () => {
     test('it can return all registered decorations at once', () => {
         const decorationTypes = ['DECORATION_TYPE_1', 'DECORATION_TYPE_2'];
         const generateUuid = createGenerateUuid();
-        const colourRegistry = {issue: () => 'pink'};
+        const colourRegistry = {issue: stubReturns('pink', 'yellow')};
         const window = {createTextEditorDecorationType: () => decorationTypes.shift()};
         const registry = new DecorationRegistry({generateUuid, colourRegistry, window});
         const pattern1 = createPattern('PATTERN_1');
@@ -91,11 +94,13 @@ suite('DecorationRegistry', () => {
         expect(registry.retrieveAll()).to.eql([
             {
                 id: 'UUID_1',
+                colour: 'pink',
                 pattern: pattern1,
                 decorationType: 'DECORATION_TYPE_1'
             },
             {
                 id: 'UUID_2',
+                colour: 'yellow',
                 pattern: pattern2,
                 decorationType: 'DECORATION_TYPE_2'
             }
@@ -120,6 +125,7 @@ suite('DecorationRegistry', () => {
         expect(registry.retrieveAll()).to.eql([
             {
                 id: 'UUID_2',
+                colour: 'pink',
                 pattern: pattern2,
                 decorationType: 'DECORATION_TYPE_2'
             }
@@ -162,6 +168,7 @@ suite('DecorationRegistry', () => {
 
         expect(registry.updatePattern('UUID_1', 'TEXT')).to.eql({
             id: 'UUID_1',
+            colour: 'pink',
             decorationType: 'DECORATION_TYPE',
             pattern: 'TEXT'
         });
