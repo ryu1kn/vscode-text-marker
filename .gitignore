@@ -1,4 +1,6 @@
+/.idea
 /.vscode/settings.json
+/.nyc_output
 /node_modules
 /typings
 /coverage

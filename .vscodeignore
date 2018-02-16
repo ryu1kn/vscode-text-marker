@@ -8,7 +8,10 @@ coverage/**
 .editorconfig
 .eslintrc.yaml
 .eslintignore
+.idea
 .nvmrc
+.nycrc
+.nyc_output
 .travis.yml
 jsconfig.json
 vsc-extension-quickstart.md
