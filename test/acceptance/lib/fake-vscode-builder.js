@@ -4,7 +4,8 @@ class FakeVscodeBuilder {
     build(params) {
         const commands = {};
         const textMarkerConfig = {
-            highlightColors: ['COLOUR_A', 'COLOUR_B']
+            highlightColors: ['COLOUR_A', 'COLOUR_B'],
+            savedHighlights: []
         };
         return {
             Range: function (startPos, endPos) {
