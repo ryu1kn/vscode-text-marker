@@ -1,4 +1,8 @@
 
+### 0.11.0: 17 February 2018
+
+* Introduced **Save All Highlights** command. Saved highlights are restored next time you open the editor. ([Issue #5](https://github.com/ryu1kn/vscode-text-marker/issues/5))
+
 ### 0.10.1: 14 September 2017
 
 * Fixed the link to the gif animation

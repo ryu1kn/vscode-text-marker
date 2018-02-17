@@ -103,6 +103,8 @@ You can update a highlight rule after you set it.
     List of highlights that will get applied when opening editor.
     This value is typically set/updated by "**Save All Highlights**" command.
 
+    Different levels of settings (user settings, workspace settings) are not merged; so the most specific settings wins.
+
     Sample `savedHighlights`:
 
     ```
