@@ -26,7 +26,6 @@ suite('SaveAllHighlightsCommand', () => {
         expect(configStore.set.args[0]).to.eql([
             'savedHighlights',
             [{
-                color: 'COLOUR',
                 pattern: {
                     type: 'TYPE',
                     phrase: 'PHRASE',
