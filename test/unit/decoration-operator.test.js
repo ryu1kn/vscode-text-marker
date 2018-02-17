@@ -142,6 +142,42 @@ suite('DecorationOperator', () => {
         });
     });
 
+    suite('#updateDecorationPattern', () => {
+
+        test('it updates a pattern of a decoration', () => {
+            const editors = ['EDITOR_1', 'EDITOR_2'];
+            const decorationRegistry = {
+                updatePattern: sinon.stub().returns('NEW_DECORATION'),
+                inquireById: stubWithArgs(['DECORATION_ID'], {
+                    id: 'DECORATION_ID',
+                    decorationType: 'DECORATION_TYPE',
+                    pattern: 'OLD_PATTERN'
+                })
+            };
+            const textDecorator = {
+                decorate: sinon.spy(),
+                undecorate: sinon.spy()
+            };
+            const operator = new DecorationOperator({
+                editors,
+                decorationRegistry,
+                textDecorator
+            });
+            operator.updateDecorationPattern('DECORATION_ID', 'NEW_PATTERN');
+
+            expect(decorationRegistry.updatePattern).to.have.been.calledWith('DECORATION_ID', 'NEW_PATTERN');
+            expect(textDecorator.undecorate).to.have.been.calledWith(editors, [{
+                id: 'DECORATION_ID',
+                decorationType: 'DECORATION_TYPE',
+                pattern: 'OLD_PATTERN'
+            }]);
+            expect(textDecorator.decorate).to.have.been.calledWith(
+                editors,
+                ['NEW_DECORATION']
+            );
+        });
+    });
+
     suite('#refreshDecorations', () => {
 
         test('it sets all currently active decorations to visible the given editor', () => {
