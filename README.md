@@ -12,6 +12,7 @@
 * Whole/Partial text matching
   * Matching is done depending on the current mode for whole match. You can toggle the mode from the status bar.
 * Highlighting colour is configurable
+* Save highlights that will be restored next time you open the editor
 
 Highlight/Unhighlight text. Regular expression can also be used. It highlights your text as you type.
 
@@ -50,6 +51,10 @@ You can update a highlight rule after you set it.
 * `Clear All Highlights` (**Command ID**: `textmarker.clearAllHighlight`)
 
     Clear all highlights with one shot.
+
+* `Save All Highlights` (**Command ID**: `textmarker.saveAllHighlights`)
+
+    Save all highlights that will be restored when opening an editor.
 
 * `Toggle Case Sensitivity` (**Command ID**: `textmarker.toggleCaseSensitivity`)
 
@@ -92,6 +97,35 @@ You can update a highlight rule after you set it.
 * `textmarker.delayForRefreshingHighlight`
 
     Number of milliseconds to wait before refreshing the highlights on editor contents change. `null` for no refresh.
+
+* `textmarker.savedHighlights`
+
+    List of highlights that will get applied when opening editor.
+    This value is typically set/updated by "**Save All Highlights**" command.
+
+    Sample `savedHighlights`:
+
+    ```
+    "textmarker.savedHighlights": [
+      {
+        "pattern": {
+          "type": "regex",
+          "expression": "(TODO|XXX|HACK): .*",
+          "ignoreCase": false,
+          "wholeMatch": true
+        }
+      },
+      {
+        "pattern": {
+          "type": "string",
+          "expression": "NOTE",
+          "ignoreCase": false,
+          "wholeMatch": false
+        }
+      },
+      ...
+    ]
+    ```
 
 ## Keyboard Shortcuts
 
