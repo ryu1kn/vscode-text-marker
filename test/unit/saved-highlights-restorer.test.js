@@ -7,10 +7,25 @@ suite('SavedHighlightsRestorer', () => {
 
     test('it restores saved highlights', done => {
         const eventBus = new EventEmitter();
-        const configStore = {get: stubWithArgs(['savedHighlights'], [{pattern: 'PATTERN_DATA'}])};
+        const savedDecorations = [{
+            pattern: {
+                type: 'string',
+                expression: 'PHRASE',
+                ignoreCase: false,
+                wholeMatch: false
+            }
+        }];
+        const configStore = {get: stubWithArgs(['savedHighlights'], savedDecorations)};
         const decorationOperator = {addDecoration: sinon.spy()};
         const decorationOperatorFactory = {createForVisibleEditors: () => decorationOperator};
-        const patternFactory = {create: stubWithArgs(['PATTERN_DATA'], 'PATTERN')};
+        const patternFactory = {
+            create: stubWithArgs([{
+                type: 'String',
+                phrase: 'PHRASE',
+                ignoreCase: false,
+                wholeMatch: false
+            }], 'PATTERN')
+        };
         new SavedHighlightsRestorer({eventBus, configStore, decorationOperatorFactory, patternFactory}); // eslint-disable-line no-new
 
         eventBus.on(Event.EXTENSION_READY, () => {
