@@ -68,7 +68,32 @@
         },
         "textmarker.savedHighlights": {
           "description": "Highlights that get applied when opening editor",
-          "type": "object"
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "pattern": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": ["string", "regex"]
+                  },
+                  "expression": {
+                    "type": "string"
+                  },
+                  "ignoreCase": {
+                    "type": "boolean"
+                  },
+                  "wholeMatch": {
+                    "type": "boolean"
+                  }
+                },
+                "required": ["type", "expression", "ignoreCase", "wholeMatch"]
+              }
+            },
+            "required": ["pattern"]
+          }
         }
       }
     },
