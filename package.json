@@ -77,7 +77,10 @@
                 "type": "object",
                 "properties": {
                   "type": {
-                    "enum": ["string", "regex"]
+                    "enum": [
+                      "string",
+                      "regex"
+                    ]
                   },
                   "expression": {
                     "type": "string"
@@ -89,10 +92,17 @@
                     "type": "boolean"
                   }
                 },
-                "required": ["type", "expression", "ignoreCase", "wholeMatch"]
+                "required": [
+                  "type",
+                  "expression",
+                  "ignoreCase",
+                  "wholeMatch"
+                ]
               }
             },
-            "required": ["pattern"]
+            "required": [
+              "pattern"
+            ]
           }
         }
       }
@@ -195,7 +205,7 @@
     "vscode": "^1.1.9"
   },
   "dependencies": {
-    "lodash": "^4.17.4",
+    "lodash.isnumber": "^3.0.3",
     "uuid": "^3.1.0"
   }
 }
