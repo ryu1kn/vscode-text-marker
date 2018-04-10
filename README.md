@@ -92,7 +92,7 @@ You can update a highlight rule after you set it.
 
 * `textmarker.highlightColors`
 
-    List of colours to be used to highlight the selected text. The colours are used with respect to the order in the list.
+    List of colours to be used to highlight the selected text. The colours are used with respect to the order in the list. If it runs out of the colours, it highlights all the subsequent text with `gray`.
 
 * `textmarker.delayForRefreshingHighlight`
 

@@ -37,7 +37,7 @@
       "title": "Text Marker (Highlighter) configurations",
       "properties": {
         "textmarker.highlightColors": {
-          "description": "List of colors to be used to highlight the selected text",
+          "description": "List of colors to be used to highlight the selected text. When exhausted, gray will be used",
           "type": "array",
           "items": {
             "type": "string"
