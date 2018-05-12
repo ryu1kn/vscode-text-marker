@@ -1,4 +1,8 @@
 
+### Unreleased
+
+* Introduced a configuration to use the highlight color on the ruler. ([Issue #12](https://github.com/ryu1kn/vscode-text-marker/issues/12))
+
 ### 0.11.0: 17 February 2018
 
 * Introduced **Save All Highlights** command. Saved highlights are restored next time you open the editor. ([Issue #5](https://github.com/ryu1kn/vscode-text-marker/issues/5))

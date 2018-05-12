@@ -58,6 +58,11 @@
             "darkseagreen"
           ]
         },
+        "textmarker.useHighlightColorOnRuler": {
+          "description": "Use the highlight color on the ruler instead of the default color",
+          "type": "boolean",
+          "default": false
+        },
         "textmarker.delayForRefreshingHighlight": {
           "description": "Number of milliseconds to wait before refreshing the highlights on editor contents change. null for no refresh",
           "type": [
