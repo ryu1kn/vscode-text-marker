@@ -114,15 +114,13 @@ suite('DecorationRegistry', () => {
         expect(window.createTextEditorDecorationType.args).to.eql([
             [{
                 backgroundColor: 'pink',
-                borderRadius: '3px',
-                color: '#545454',
+                borderRadius: '.2em',
                 overviewRulerColor: 'violet',
                 overviewRulerLane: 2
             }],
             [{
                 backgroundColor: 'yellow',
-                borderRadius: '3px',
-                color: '#616161',
+                borderRadius: '.2em',
                 overviewRulerColor: 'violet',
                 overviewRulerLane: 2
             }]
@@ -145,7 +143,7 @@ suite('DecorationRegistry', () => {
 
     test('it use the text highlight colour on the ruler', () => {
         const window = {createTextEditorDecorationType: stubReturns('DECORATION_TYPE_1')};
-        const configStore = {get: key => key === 'useHighlightColorOnRuler'};
+        const configStore = createConfigStore({useHighlightColorOnRuler: true});
         const registry = createDecorationRegistry({configStore, window});
 
         const pattern = createPattern('TEXT');
@@ -154,9 +152,27 @@ suite('DecorationRegistry', () => {
         expect(window.createTextEditorDecorationType.args).to.eql([
             [{
                 backgroundColor: 'pink',
-                borderRadius: '3px',
-                color: '#545454',
+                borderRadius: '.2em',
                 overviewRulerColor: 'pink',
+                overviewRulerLane: 2
+            }]
+        ]);
+    });
+
+    test('it use the high contrast colour for text with highlights', () => {
+        const window = {createTextEditorDecorationType: stubReturns('DECORATION_TYPE_1')};
+        const configStore = createConfigStore({autoSelectDistinctiveTextColor: true});
+        const registry = createDecorationRegistry({configStore, window});
+
+        const pattern = createPattern('TEXT');
+        registry.issue(pattern);
+
+        expect(window.createTextEditorDecorationType.args).to.eql([
+            [{
+                backgroundColor: 'pink',
+                borderRadius: '.2em',
+                color: '#545454',
+                overviewRulerColor: 'violet',
                 overviewRulerLane: 2
             }]
         ]);
@@ -171,8 +187,15 @@ suite('DecorationRegistry', () => {
             revoke: () => {}
         };
         const generateUuid = createGenerateUuid();
-        const configStore = options.configStore || {get: () => false};
+        const configStore = options.configStore || createConfigStore();
         return new DecorationRegistry({generateUuid, colourRegistry, window, configStore});
+    }
+
+    function createConfigStore({useHighlightColorOnRuler, autoSelectDistinctiveTextColor} = {}) {
+        return {get: key => {
+            if (key === 'useHighlightColorOnRuler') return !!useHighlightColorOnRuler;
+            if (key === 'autoSelectDistinctiveTextColor') return !!autoSelectDistinctiveTextColor;
+        }};
     }
 
     function createPattern(phrase) {
