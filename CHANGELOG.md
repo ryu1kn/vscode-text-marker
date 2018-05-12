@@ -2,6 +2,7 @@
 ### Unreleased
 
 * Introduced a configuration to use the highlight color on the ruler. ([Issue #12](https://github.com/ryu1kn/vscode-text-marker/issues/12))
+* Removed deprecated commands: **Highlight Selected Text** and **Mark Text to Highlight/Unhighlight**
 
 ### 0.11.0: 17 February 2018
 

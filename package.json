@@ -114,11 +114,6 @@
     },
     "commands": [
       {
-        "command": "textmarker.highlight",
-        "title": "(DEPRECATED) Highlight Selected Text",
-        "category": "TextMarker"
-      },
-      {
         "command": "textmarker.highlightUsingRegex",
         "title": "Highlight Text Using Regex",
         "category": "TextMarker"
@@ -166,11 +161,6 @@
       {
         "command": "textmarker.updateHighlight",
         "title": "Update Highlight",
-        "category": "TextMarker"
-      },
-      {
-        "command": "textmarker.markText",
-        "title": "(DEPRECATED) Mark Text to Highlight/Unhighlight",
         "category": "TextMarker"
       }
     ],

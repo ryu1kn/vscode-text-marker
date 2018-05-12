@@ -26,7 +26,7 @@ suite('Highlight command', () => {
             logger: console
         });
         new AppIntegrator({commandFactory, vscode: fakeVscode}).integrate(fakeContext);
-        const command = fakeVscode._commands['textmarker.highlight'];
+        const command = fakeVscode._commands['textmarker.toggleHighlight'];
 
         await command(editors[0]);
 
