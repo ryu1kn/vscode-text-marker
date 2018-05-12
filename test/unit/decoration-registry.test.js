@@ -17,7 +17,7 @@ suite('DecorationRegistry', () => {
     });
 
     test('it does not register the same pattern multiple times', () => {
-        const colourRegistry = {issue: sinon.spy()};
+        const colourRegistry = {issue: stubReturns('pink', 'yellow')};
         const registry = createDecorationRegistry({colourRegistry});
 
         registry.issue(createPattern('PATTERN'));
@@ -114,11 +114,15 @@ suite('DecorationRegistry', () => {
         expect(window.createTextEditorDecorationType.args).to.eql([
             [{
                 backgroundColor: 'pink',
+                borderRadius: '3px',
+                color: '#545454',
                 overviewRulerColor: 'violet',
                 overviewRulerLane: 2
             }],
             [{
                 backgroundColor: 'yellow',
+                borderRadius: '3px',
+                color: '#616161',
                 overviewRulerColor: 'violet',
                 overviewRulerLane: 2
             }]
@@ -150,6 +154,8 @@ suite('DecorationRegistry', () => {
         expect(window.createTextEditorDecorationType.args).to.eql([
             [{
                 backgroundColor: 'pink',
+                borderRadius: '3px',
+                color: '#545454',
                 overviewRulerColor: 'pink',
                 overviewRulerLane: 2
             }]
