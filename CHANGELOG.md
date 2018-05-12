@@ -5,16 +5,16 @@ All notable changes to "Text Marker (Highlighter)" extension will be documented 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## [1.0.0] - 2018-05-12
 ### Added
-- Introduced a configuration to use the highlight color on the ruler. ([Issue #12](https://github.com/ryu1kn/vscode-text-marker/issues/12))
+- Introduced a configuration to use the highlight color on the ruler. [#12](https://github.com/ryu1kn/vscode-text-marker/issues/12)
 
 ### Removed
 - Removed deprecated commands: **Highlight Selected Text** and **Mark Text to Highlight/Unhighlight**
 
 ## [0.11.0] - 2018-02-17
 ### Added
-- Introduced **Save All Highlights** command. Saved highlights are restored next time you open the editor. ([Issue #5](https://github.com/ryu1kn/vscode-text-marker/issues/5))
+- Introduced **Save All Highlights** command. Saved highlights are restored next time you open the editor. [#5](https://github.com/ryu1kn/vscode-text-marker/issues/5)
 
 ## [0.10.1] - 2017-09-14
 ### Fixed
@@ -29,7 +29,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [0.9.0] - 2017-06-06
 ### Added
-- Introduced **Toggle Highlight** command. When you remove highlight with this command, it works not only string type highlight but also regex type highlight. ([Issue #6](https://github.com/ryu1kn/vscode-text-marker/issues/6))
+- Introduced **Toggle Highlight** command. When you remove highlight with this command, it works not only string type highlight but also regex type highlight. [#6](https://github.com/ryu1kn/vscode-text-marker/issues/6)
 
 ### Changed
 - Right click menu **Highlight Selected Text** has been replaced with **Toggle Highlight** command.
@@ -41,7 +41,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [0.7.0] - 2017-06-03
 ### Added
-- Support "whole match" text matching ([Issue #7](https://github.com/ryu1kn/vscode-text-marker/issues/7))
+- Support "whole match" text matching. [#7](https://github.com/ryu1kn/vscode-text-marker/issues/7)
 
 ## [0.6.1] - 2017-06-02
 ### Fixed
@@ -58,19 +58,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [0.4.0] - 2017-05-24
 ### Added
-- Support regex to highlight text ([Issue #8](https://github.com/ryu1kn/vscode-text-marker/issues/8))
+- Support regex to highlight text. [#8](https://github.com/ryu1kn/vscode-text-marker/issues/8)
 - Put **Highlight Selected Text** command in the right click menu
 
 ### Changed
-- Deprecated **Mark Text to Highlight/Unhighlight** command in favour of **Highlight Selected Text** and **Unhighlight Text** commands (See [Issue #8](https://github.com/ryu1kn/vscode-text-marker/issues/8))
+- Deprecated **Mark Text to Highlight/Unhighlight** command in favour of **Highlight Selected Text** and **Unhighlight Text** commands. [#8](https://github.com/ryu1kn/vscode-text-marker/issues/8)
 
 ## [0.3.0] - 2016-11-07
 ### Added
-- Select the word under the cursor if no text is selected when triggering mark text command ([Issue #3](https://github.com/ryu1kn/vscode-text-marker/issues/3))
+- Select the word under the cursor if no text is selected when triggering mark text command. [#3](https://github.com/ryu1kn/vscode-text-marker/issues/3)
 
 ## [0.2.0] - 2016-11-04
 ### Added
-- Utilised `OverviewRuler` to help users easily find where in the file highlighted texts can be found ([Issue #4](https://github.com/ryu1kn/vscode-text-marker/issues/4))
+- Utilised `OverviewRuler` to help users easily find where in the file highlighted texts can be found. [#4](https://github.com/ryu1kn/vscode-text-marker/issues/4)
 
 ## [0.1.0] - 2016-09-13
 ### Added
