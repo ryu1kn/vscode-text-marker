@@ -5,25 +5,20 @@ const PatternFactory = require('../../lib/pattern-factory');
 suite('DecorationRegistry', () => {
 
     test('it registers a pattern and returns registry information', () => {
-        const window = {createTextEditorDecorationType: () => 'DECORATION_TYPE'};
-        const colourRegistry = {issue: () => 'pink'};
-        const generateUuid = createGenerateUuid();
-        const registry = new DecorationRegistry({generateUuid, colourRegistry, window});
+        const registry = createDecorationRegistry();
 
         const pattern = createPattern('PATTERN');
         expect(registry.issue(pattern)).to.eql({
             id: 'UUID_1',
             colour: 'pink',
-            decorationType: 'DECORATION_TYPE',
+            decorationType: 'DECORATION_TYPE_1',
             pattern
         });
     });
 
     test('it does not register the same pattern multiple times', () => {
-        const window = {createTextEditorDecorationType: () => 'DECORATION_TYPE'};
         const colourRegistry = {issue: sinon.spy()};
-        const generateUuid = createGenerateUuid();
-        const registry = new DecorationRegistry({generateUuid, colourRegistry, window});
+        const registry = createDecorationRegistry({colourRegistry});
 
         registry.issue(createPattern('PATTERN'));
         const secondResult = registry.issue(createPattern('PATTERN'));
@@ -33,10 +28,7 @@ suite('DecorationRegistry', () => {
     });
 
     test('it returns a registered decoration type for the passed decoration id', () => {
-        const window = {createTextEditorDecorationType: () => 'DECORATION_TYPE'};
-        const colourRegistry = {issue: () => 'pink'};
-        const generateUuid = createGenerateUuid();
-        const registry = new DecorationRegistry({generateUuid, colourRegistry, window});
+        const registry = createDecorationRegistry();
 
         const pattern = createPattern('PATTERN');
         registry.issue(createPattern('PATTERN'));
@@ -44,16 +36,13 @@ suite('DecorationRegistry', () => {
         expect(registry.inquireById('UUID_1')).to.eql({
             id: 'UUID_1',
             colour: 'pink',
-            decorationType: 'DECORATION_TYPE',
+            decorationType: 'DECORATION_TYPE_1',
             pattern
         });
     });
 
     test('it returns a registered decoration type for the passed regex', () => {
-        const window = {createTextEditorDecorationType: () => 'DECORATION_TYPE'};
-        const colourRegistry = {issue: () => 'pink'};
-        const generateUuid = createGenerateUuid();
-        const registry = new DecorationRegistry({generateUuid, colourRegistry, window});
+        const registry = createDecorationRegistry();
 
         const pattern = createPattern('PATTERN');
         registry.issue(pattern);
@@ -61,19 +50,13 @@ suite('DecorationRegistry', () => {
         expect(registry.inquireByPattern(pattern)).to.eql({
             id: 'UUID_1',
             colour: 'pink',
-            decorationType: 'DECORATION_TYPE',
+            decorationType: 'DECORATION_TYPE_1',
             pattern: pattern
         });
     });
 
     test("it can remove given pattern and it's associated decoration type from the registry", () => {
-        const window = {createTextEditorDecorationType: () => 'DECORATION_TYPE'};
-        const colourRegistry = {
-            issue: () => 'pink',
-            revoke: () => {}
-        };
-        const generateUuid = createGenerateUuid();
-        const registry = new DecorationRegistry({generateUuid, colourRegistry, window});
+        const registry = createDecorationRegistry();
 
         const pattern = createPattern('PATTERN');
         const decorationId = registry.issue(pattern).id;
@@ -82,11 +65,7 @@ suite('DecorationRegistry', () => {
     });
 
     test('it can return all registered decorations at once', () => {
-        const decorationTypes = ['DECORATION_TYPE_1', 'DECORATION_TYPE_2'];
-        const generateUuid = createGenerateUuid();
-        const colourRegistry = {issue: stubReturns('pink', 'yellow')};
-        const window = {createTextEditorDecorationType: () => decorationTypes.shift()};
-        const registry = new DecorationRegistry({generateUuid, colourRegistry, window});
+        const registry = createDecorationRegistry();
         const pattern1 = createPattern('PATTERN_1');
         const pattern2 = createPattern('PATTERN_2');
         registry.issue(pattern1);
@@ -108,14 +87,7 @@ suite('DecorationRegistry', () => {
     });
 
     test('it does not return revoked decorations', () => {
-        const decorationTypes = ['DECORATION_TYPE_1', 'DECORATION_TYPE_2'];
-        const generateUuid = createGenerateUuid();
-        const colourRegistry = {
-            issue: () => 'pink',
-            revoke: () => {}
-        };
-        const window = {createTextEditorDecorationType: () => decorationTypes.shift()};
-        const registry = new DecorationRegistry({generateUuid, colourRegistry, window});
+        const registry = createDecorationRegistry();
         const pattern1 = createPattern('PATTERN_1');
         const pattern2 = createPattern('PATTERN_2');
         registry.issue(pattern1);
@@ -125,7 +97,7 @@ suite('DecorationRegistry', () => {
         expect(registry.retrieveAll()).to.eql([
             {
                 id: 'UUID_2',
-                colour: 'pink',
+                colour: 'yellow',
                 pattern: pattern2,
                 decorationType: 'DECORATION_TYPE_2'
             }
@@ -133,13 +105,9 @@ suite('DecorationRegistry', () => {
     });
 
     test('it issues new decoration with new color', () => {
-        const window = {createTextEditorDecorationType: sinon.stub().returns('DECORATION_TYPE')};
-        const colourRegistry = {issue: stubReturns('pink', 'yellow')};
-        const registry = new DecorationRegistry({
-            generateUuid: createGenerateUuid(),
-            colourRegistry,
-            window
-        });
+        const window = {createTextEditorDecorationType: stubReturns('DECORATION_TYPE_1', 'DECORATION_TYPE_2')};
+        const registry = createDecorationRegistry({window});
+
         registry.issue(createPattern('TEXT_1'));
         registry.issue(createPattern('TEXT_2'));
 
@@ -158,10 +126,7 @@ suite('DecorationRegistry', () => {
     });
 
     test('it toggles the case sensitivity of a pattern', () => {
-        const window = {createTextEditorDecorationType: () => 'DECORATION_TYPE'};
-        const colourRegistry = {issue: () => 'pink'};
-        const generateUuid = createGenerateUuid();
-        const registry = new DecorationRegistry({generateUuid, colourRegistry, window});
+        const registry = createDecorationRegistry();
 
         const pattern = createPattern('TEXT');
         registry.issue(pattern);
@@ -169,10 +134,40 @@ suite('DecorationRegistry', () => {
         expect(registry.updatePattern('UUID_1', 'TEXT')).to.eql({
             id: 'UUID_1',
             colour: 'pink',
-            decorationType: 'DECORATION_TYPE',
+            decorationType: 'DECORATION_TYPE_1',
             pattern: 'TEXT'
         });
     });
+
+    test('it use the text highlight colour on the ruler', () => {
+        const window = {createTextEditorDecorationType: stubReturns('DECORATION_TYPE_1')};
+        const configStore = {get: key => key === 'useHighlightColorOnRuler'};
+        const registry = createDecorationRegistry({configStore, window});
+
+        const pattern = createPattern('TEXT');
+        registry.issue(pattern);
+
+        expect(window.createTextEditorDecorationType.args).to.eql([
+            [{
+                backgroundColor: 'pink',
+                overviewRulerColor: 'pink',
+                overviewRulerLane: 2
+            }]
+        ]);
+    });
+
+    function createDecorationRegistry(options = {}) {
+        const window = options.window || {
+            createTextEditorDecorationType: stubReturns('DECORATION_TYPE_1', 'DECORATION_TYPE_2')
+        };
+        const colourRegistry = options.colourRegistry || {
+            issue: stubReturns('pink', 'yellow'),
+            revoke: () => {}
+        };
+        const generateUuid = createGenerateUuid();
+        const configStore = options.configStore || {get: () => false};
+        return new DecorationRegistry({generateUuid, colourRegistry, window, configStore});
+    }
 
     function createPattern(phrase) {
         const matchingModeRegistry = {

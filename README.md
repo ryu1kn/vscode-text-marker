@@ -74,25 +74,17 @@ You can update a highlight rule after you set it.
     Toggle mode for whole match and partial match.
     Available on Status bar.
 
-* `(DEPRECATED) Highlight Selected Text` (**Command ID**: `textmarker.highlight`)
-
-    Mark the selected text for highlighting. If no text is selected, the word under cursor will be marked.
-    Marking the already selected text will unhighlight the text.
-
-    DEPRECATED. Please use Toggle Highlight (`textmarker.toggleHighlight`) command instead.
-
-* `(DEPRECATED) Mark Text to Highlight/Unhighlight` (**Command ID**: `textmarker.markText`)
-
-    Mark the selected text for highlighting. If no text is selected, the word under cursor will be marked.
-    Marking the already selected text will unhighlight the text.
-
-    DEPRECATED. Please use Toggle Highlight (`textmarker.toggleHighlight`) command instead.
-
 ## Extension Settings
 
 * `textmarker.highlightColors`
 
-    List of colours to be used to highlight the selected text. The colours are used with respect to the order in the list. If it runs out of the colours, it highlights all the subsequent text with `gray`.
+    List of colours to be used to highlight the selected text. The colours are used with respect to the order in the list.
+    If it runs out of the colours, it highlights all the subsequent text with `gray`.
+
+* `textmarker.useHighlightColorOnRuler` (default: `false`)
+
+    Use the same color for both highlighting a text and showing the location on the ruler.
+    If you have multiple highlights on the same line, the corresponding ruler color will be one of theirs.
 
 * `textmarker.delayForRefreshingHighlight`
 
