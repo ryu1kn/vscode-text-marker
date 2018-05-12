@@ -139,6 +139,23 @@ suite('DecorationRegistry', () => {
         });
     });
 
+    test('it use the text highlight colour on the ruler', () => {
+        const window = {createTextEditorDecorationType: stubReturns('DECORATION_TYPE_1')};
+        const configStore = {get: key => key === 'useHighlightColorOnRuler'};
+        const registry = createDecorationRegistry({configStore, window});
+
+        const pattern = createPattern('TEXT');
+        registry.issue(pattern);
+
+        expect(window.createTextEditorDecorationType.args).to.eql([
+            [{
+                backgroundColor: 'pink',
+                overviewRulerColor: 'pink',
+                overviewRulerLane: 2
+            }]
+        ]);
+    });
+
     function createDecorationRegistry(options = {}) {
         const window = options.window || {
             createTextEditorDecorationType: stubReturns('DECORATION_TYPE_1', 'DECORATION_TYPE_2')
@@ -148,7 +165,8 @@ suite('DecorationRegistry', () => {
             revoke: () => {}
         };
         const generateUuid = createGenerateUuid();
-        return new DecorationRegistry({generateUuid, colourRegistry, window});
+        const configStore = options.configStore || {get: () => false};
+        return new DecorationRegistry({generateUuid, colourRegistry, window, configStore});
     }
 
     function createPattern(phrase) {
