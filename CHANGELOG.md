@@ -5,6 +5,10 @@ All notable changes to "Text Marker (Highlighter)" extension will be documented 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2018-05-15
+### Added
+- Introduced a configuration to change the default highlight color. [#16](https://github.com/ryu1kn/vscode-text-marker/issues/16)
+
 ## [1.0.0] - 2018-05-12
 ### Added
 - Introduced a configuration to use the highlight color on the ruler. [#12](https://github.com/ryu1kn/vscode-text-marker/issues/12)
