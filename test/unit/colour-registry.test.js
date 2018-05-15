@@ -19,9 +19,12 @@ suite('ColourRegistry', () => {
         expect(colourRegistry.issue()).to.eql('COLOUR_1');
     });
 
-    test('it issues "gray" if it already used all the colours given in the settings', () => {
-        const configStore = {get: stubWithArgs(['highlightColors'], [])};
+    test('it issues the user specified default colour if it used all the colours user given', () => {
+        const configStore = {get: stubWithArgs(
+            ['highlightColors'], [],
+            ['defaultHighlightColor'], 'DEFAULT_COLOUR'
+        )};
         const colourRegistry = new ColourRegistry({configStore});
-        expect(colourRegistry.issue()).to.eql('gray');
+        expect(colourRegistry.issue()).to.eql('DEFAULT_COLOUR');
     });
 });

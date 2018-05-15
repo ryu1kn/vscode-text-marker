@@ -37,7 +37,7 @@
       "title": "Text Marker (Highlighter) configurations",
       "properties": {
         "textmarker.highlightColors": {
-          "description": "List of colors to be used to highlight the selected text. When exhausted, gray will be used",
+          "description": "List of colors to be used to highlight the selected text",
           "type": "array",
           "items": {
             "type": "string"
@@ -57,6 +57,11 @@
             "darksalmon",
             "darkseagreen"
           ]
+        },
+        "textmarker.defaultHighlightColor": {
+          "description": "Color to be used once all colors listed in `textmarker.highlightColors` are used",
+          "type": "string",
+          "default": "gray"
         },
         "textmarker.useHighlightColorOnRuler": {
           "description": "Use the highlight color on the ruler instead of the default color",

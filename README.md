@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.org/ryu1kn/vscode-text-marker.svg?branch=master)](https://travis-ci.org/ryu1kn/vscode-text-marker) [![Code Climate](https://codeclimate.com/github/ryu1kn/vscode-text-marker/badges/gpa.svg)](https://codeclimate.com/github/ryu1kn/vscode-text-marker)
+[![Build Status](https://travis-ci.org/ryu1kn/vscode-text-marker.svg?branch=master)](https://travis-ci.org/ryu1kn/vscode-text-marker)
+[![Code Climate](https://codeclimate.com/github/ryu1kn/vscode-text-marker/badges/gpa.svg)](https://codeclimate.com/github/ryu1kn/vscode-text-marker)
 
 # Text Marker (Highlighter)
 
@@ -79,7 +80,11 @@ You can update a highlight rule after you set it.
 * `textmarker.highlightColors`
 
     List of colours to be used to highlight the selected text. The colours are used with respect to the order in the list.
-    If it runs out of the colours, it highlights all the subsequent text with `gray`.
+    If it runs out of the colours, it uses the colour specified at `textmarker.defaultHighlightColor`.
+
+* `textmarker.defaultHighlightColor` (default: `"gray"`)
+
+    Once all the colours given in `textmarker.highlightColors` is used, texts are highlighted with this colour.
 
 * `textmarker.useHighlightColorOnRuler` (default: `false`)
 
