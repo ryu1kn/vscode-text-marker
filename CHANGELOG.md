@@ -5,9 +5,10 @@ All notable changes to "Text Marker (Highlighter)" extension will be documented 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## [1.2.0] - 2018-06-21
 ### Added
-- Text colour can be automatically chosen so that it stands out from the background highlight. Thanks to @Kronuz ! [#15](https://github.com/ryu1kn/vscode-text-marker/issues/15)
+- Text colour can be automatically chosen so that it stands out from the background highlight. Thanks to @Kronuz !
+  [#15](https://github.com/ryu1kn/vscode-text-marker/issues/15) & [#17](https://github.com/ryu1kn/vscode-text-marker/issues/17)
 
 ## [1.1.0] - 2018-05-15
 ### Added
