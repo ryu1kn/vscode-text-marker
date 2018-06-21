@@ -64,9 +64,14 @@
           "default": "gray"
         },
         "textmarker.useHighlightColorOnRuler": {
-          "description": "Use the highlight color on the ruler instead of the default color",
+          "description": "Use the highlight colour on the ruler instead of the default colour",
           "type": "boolean",
           "default": false
+        },
+        "textmarker.autoSelectDistinctiveTextColor": {
+          "description": "Text colour will be chosen to be distinctive from the background highlight colour",
+          "type": "boolean",
+          "default": true
         },
         "textmarker.delayForRefreshingHighlight": {
           "description": "Number of milliseconds to wait before refreshing the highlights on editor contents change. null for no refresh",
@@ -205,6 +210,7 @@
     "vscode": "^1.1.17"
   },
   "dependencies": {
+    "color-name": "^1.1.3",
     "lodash.isnumber": "^3.0.3",
     "uuid": "^3.2.1"
   }
