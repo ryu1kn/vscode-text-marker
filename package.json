@@ -71,7 +71,7 @@
         "textmarker.autoSelectDistinctiveTextColor": {
           "description": "Text colour will be chosen to be distinctive from the background highlight colour",
           "type": "boolean",
-          "default": true
+          "default": false
         },
         "textmarker.delayForRefreshingHighlight": {
           "description": "Number of milliseconds to wait before refreshing the highlights on editor contents change. null for no refresh",

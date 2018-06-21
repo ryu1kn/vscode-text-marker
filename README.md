@@ -91,7 +91,7 @@ You can update a highlight rule after you set it.
     Use the same colour for both highlighting a text and showing the location on the ruler.
     If you have multiple highlights on the same line, the corresponding ruler colour will be one of theirs.
 
-* `textmarker.autoSelectDistinctiveTextColor` (default: `true`)
+* `textmarker.autoSelectDistinctiveTextColor` (default: `false`)
 
     Text colour will be chosen to be distinctive from the background highlight colour.
     This will hide the text colour given by syntax highlighting; if this is not desirable, set it `false`.
