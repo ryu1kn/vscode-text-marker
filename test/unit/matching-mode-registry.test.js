@@ -4,27 +4,31 @@ const Event = require('../../lib/const').Event;
 const MatchingModeRegistry = require('../../lib/matching-mode-registry');
 
 suite('MatchingModeRegistry', () => {
+    let eventBus;
+    let registry;
+
+    beforeEach(() => {
+        eventBus = new EventEmitter();
+        registry = new MatchingModeRegistry({
+            eventBus,
+            ignoreCase: true,
+            wholeMatch: false
+        });
+    });
 
     test('it holds current matching mode', () => {
-        const eventBus = new EventEmitter();
-        const registry = new MatchingModeRegistry({eventBus});
         expect(registry.mode).to.eql({
-            ignoreCase: false,
+            ignoreCase: true,
             wholeMatch: false
         });
     });
 
     test('it reverses the case sensitivity', () => {
-        const eventBus = new EventEmitter();
-        const registry = new MatchingModeRegistry({eventBus});
         registry.toggleCaseSensitivity();
-        expect(registry.mode).to.contain({ignoreCase: true});
+        expect(registry.mode).to.contain({ignoreCase: false});
     });
 
     test('it broadcasts if case sensitivity has been updated', done => {
-        const eventBus = new EventEmitter();
-        const registry = new MatchingModeRegistry({eventBus});
-
         eventBus.on(Event.TOGGLED_CASE_SENSITIVITY, mode => {
             expect(mode).to.have.property('ignoreCase');
             done();
@@ -33,16 +37,11 @@ suite('MatchingModeRegistry', () => {
     });
 
     test('it reverses the whole/partial match', () => {
-        const eventBus = new EventEmitter();
-        const registry = new MatchingModeRegistry({eventBus});
         registry.toggleWholeMatch();
         expect(registry.mode).to.contain({wholeMatch: true});
     });
 
     test('it broadcasts if whole/partial match has been toggled', done => {
-        const eventBus = new EventEmitter();
-        const registry = new MatchingModeRegistry({eventBus});
-
         eventBus.on(Event.WHOLE_MATCH_MODE_TOGGLED, mode => {
             expect(mode).to.have.property('wholeMatch');
             done();
@@ -51,9 +50,6 @@ suite('MatchingModeRegistry', () => {
     });
 
     test('after extension started, it broadcast if it is ready', done => {
-        const eventBus = new EventEmitter();
-        new MatchingModeRegistry({eventBus});       // eslint-disable-line no-new
-
         eventBus.on(Event.MATCHING_MODE_INITIALISED, mode => {
             expect(mode).to.have.property('ignoreCase');
             done();

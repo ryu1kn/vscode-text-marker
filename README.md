@@ -85,6 +85,14 @@ You can update a highlight rule after you set it.
 * `textmarker.defaultHighlightColor` (default: `"gray"`)
 
     Once all the colours given in `textmarker.highlightColors` is used, texts are highlighted with this colour.
+    
+* `textmarker.enableIgnoreCase` (default: `false`)
+
+    Enable ignore case mode on startup
+    
+* `textmarker.enableWholeMatch` (default: `false`)
+
+    Enable whole match mode on startup
 
 * `textmarker.useHighlightColorOnRuler` (default: `false`)
 

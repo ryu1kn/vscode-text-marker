@@ -63,6 +63,16 @@
           "type": "string",
           "default": "gray"
         },
+        "textmarker.enableIgnoreCase": {
+          "description": "Enable ignore case mode on startup",
+          "type": "boolean",
+          "default": false
+        },
+        "textmarker.enableWholeMatch": {
+          "description": "Enable whole match mode on startup",
+          "type": "boolean",
+          "default": false
+        },
         "textmarker.useHighlightColorOnRuler": {
           "description": "Use the highlight colour on the ruler instead of the default colour",
           "type": "boolean",
