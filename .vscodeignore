@@ -16,4 +16,5 @@ coverage/**/*
 jsconfig.json
 yarn.lock
 *.log
-**/__*
+__*
+__*/**/*
