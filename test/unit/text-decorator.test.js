@@ -49,7 +49,7 @@ suite('TextDecorator', () => {
     });
 
     test('it removes decorations from the pattern in the editors', () => {
-        const editors = [{setDecorations: sinon.spy()}, {setDecorations: sinon.spy()}];
+        const editors = [{unsetDecorations: sinon.spy()}, {unsetDecorations: sinon.spy()}];
         const textLocationRegistry = {deregister: sinon.spy()};
         const textDecorator = new TextDecorator({textLocationRegistry});
         textDecorator.undecorate(editors, [{
@@ -60,13 +60,13 @@ suite('TextDecorator', () => {
             decorationType: 'DECORATION_TYPE_2'
         }]);
 
-        expect(editors[0].setDecorations.args).to.eql([
-            ['DECORATION_TYPE_1', []],
-            ['DECORATION_TYPE_2', []]
+        expect(editors[0].unsetDecorations.args).to.eql([
+            ['DECORATION_TYPE_1'],
+            ['DECORATION_TYPE_2']
         ]);
-        expect(editors[1].setDecorations.args).to.eql([
-            ['DECORATION_TYPE_1', []],
-            ['DECORATION_TYPE_2', []]
+        expect(editors[1].unsetDecorations.args).to.eql([
+            ['DECORATION_TYPE_1'],
+            ['DECORATION_TYPE_2']
         ]);
         expect(textLocationRegistry.deregister.args).to.eql([
             ['DECORATION_ID_1'], ['DECORATION_ID_2']
