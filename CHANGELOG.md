@@ -5,6 +5,11 @@ All notable changes to "Text Marker (Highlighter)" extension will be documented 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.3.1] - 2018-07-22
+### Fixed
+- Fixed the issue that a string pattern highlight could not be toggled off by selecting the exact same text.
+  [#18](https://github.com/ryu1kn/vscode-text-marker/issues/18)
+
 ## [1.3.0] - 2018-06-22
 ### Added
 - New configurations to set default modes for case sensitivity and whole match. [#19](https://github.com/ryu1kn/vscode-text-marker/issues/19)
