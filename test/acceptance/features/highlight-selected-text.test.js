@@ -1,7 +1,7 @@
 
 const AppIntegrator = require('../../../lib/app-integrator');
-const FakeEditorBuilder = require('../lib/fake-editor-builder');
-const FakeVscodeBuilder = require('../lib/fake-vscode-builder');
+const {createFakeEditor} = require('../helpers/fake-editor');
+const {createFakeVsCode, EXECUTION_CONTEXT} = require('../helpers/fake-vscode');
 
 suite('Highlight command', () => {
 
@@ -11,19 +11,11 @@ suite('Highlight command', () => {
     let fakeVscode;
 
     beforeEach(() => {
-        const editorBuilder = new FakeEditorBuilder();
-        const vscodeBuilder = new FakeVscodeBuilder();
-        editor1 = editorBuilder.build({
-            wholeText: 'A TEXT B TEXT C',
-            selectedText: 'TEXT'
-        });
-        editor2 = editorBuilder.build({
-            wholeText: 'a TEXT'
-        });
-        const fakeContext = {subscriptions: []};
-        fakeVscode = vscodeBuilder.build({editors: [editor1, editor2]});
+        editor1 = createFakeEditor({wholeText: 'A TEXT B TEXT C', selectedText: 'TEXT'});
+        editor2 = createFakeEditor({wholeText: 'a TEXT'});
+        fakeVscode = createFakeVsCode({editors: [editor1, editor2]});
 
-        AppIntegrator.create(fakeVscode, console).integrate(fakeContext);
+        AppIntegrator.create(fakeVscode, console).integrate(EXECUTION_CONTEXT);
 
         command = fakeVscode._commands['textmarker.toggleHighlight'];
     });
