@@ -7,13 +7,15 @@ suite('Highlight command', () => {
 
     let editor1;
     let editor2;
+    let editor3;
     let command;
     let fakeVscode;
 
     beforeEach(() => {
         editor1 = createFakeEditor({wholeText: 'A TEXT B TEXT C', selectedText: 'TEXT'});
         editor2 = createFakeEditor({wholeText: 'a TEXT'});
-        fakeVscode = createFakeVsCode({editors: [editor1, editor2]});
+        editor3 = createFakeEditor({wholeText: 'a TEXT', selectedText: 'TEX'});
+        fakeVscode = createFakeVsCode({editors: [editor1, editor2, editor3]});
 
         AppIntegrator.create(fakeVscode, console).integrate(EXECUTION_CONTEXT);
 
@@ -38,11 +40,30 @@ suite('Highlight command', () => {
         ]]);
     });
 
-    test.skip('unhighlight selected text if the exact text is already selected', async () => {
+    test('add another highlight to the substring of already selected text', async () => {
+        await command(editor1);
+        await command(editor3);
+
+        expect(editor1.setDecorations.args[1]).to.eql([
+            'DECORATION_TYPE_2',
+            [
+                new fakeVscode.Range('POSITION:2', 'POSITION:5'),
+                new fakeVscode.Range('POSITION:9', 'POSITION:12')
+            ]
+        ]);
+        expect(editor3.setDecorations.args[1]).to.eql([
+            'DECORATION_TYPE_2',
+            [
+                new fakeVscode.Range('POSITION:2', 'POSITION:5')
+            ]
+        ]);
+    });
+
+    test('unhighlight selected text if the exact text is already selected', async () => {
         await command(editor1);
         await command(editor1);
 
-        expect(editor1.setDecorations.args[1]).to.eql([['DECORATION_TYPE_1', []]]);
-        expect(editor2.setDecorations.args[1]).to.eql([['DECORATION_TYPE_1', []]]);
+        expect(editor1.setDecorations.args[1]).to.eql(['DECORATION_TYPE_1', []]);
+        expect(editor2.setDecorations.args[1]).to.eql(['DECORATION_TYPE_1', []]);
     });
 });
