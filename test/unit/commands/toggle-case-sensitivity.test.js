@@ -1,3 +1,4 @@
+const {expect, sinon} = require('../../helpers/helper');
 
 const PatternAction = require('../../../lib/const').PatternAction;
 const ToggleCaseSensitivityCommand = require('../../../lib/commands/toggle-case-sensitivity');

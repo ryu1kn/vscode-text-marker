@@ -1,3 +1,4 @@
+const {expect, stubReturns} = require('../helpers/helper');
 
 const DecorationRegistry = require('../../lib/decoration-registry');
 const PatternFactory = require('../../lib/pattern-factory');

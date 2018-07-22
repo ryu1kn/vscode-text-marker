@@ -1,3 +1,4 @@
+const {sinon} = require('../../helpers/helper');
 
 exports.createFakeEditor = ({selectedText, wholeText} = {}) => {
     return {

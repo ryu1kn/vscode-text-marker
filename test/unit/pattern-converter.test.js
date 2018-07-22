@@ -1,3 +1,4 @@
+const {expect} = require('../helpers/helper');
 
 const PatternAction = require('../../lib/const').PatternAction;
 const PatternConverter = require('../../lib/pattern-converter');

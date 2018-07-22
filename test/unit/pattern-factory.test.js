@@ -1,3 +1,4 @@
+const {expect} = require('../helpers/helper');
 
 const PatternFactory = require('../../lib/pattern-factory');
 const StringPattern = require('../../lib/patterns/string');

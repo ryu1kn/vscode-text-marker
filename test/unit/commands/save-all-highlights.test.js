@@ -1,3 +1,4 @@
+const {expect, sinon} = require('../../helpers/helper');
 
 const SaveAllHighlightsCommand = require('../../../lib/commands/save-all-highlights');
 

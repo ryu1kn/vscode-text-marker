@@ -1,3 +1,4 @@
+const {expect} = require('../helpers/helper');
 
 const TextLocationRegistry = require('../../lib/text-location-registry');
 

@@ -1,3 +1,4 @@
+const {expect, sinon, stubWithArgs} = require('../../helpers/helper');
 
 const UpdateHighlightCommand = require('../../../lib/commands/update-highlight');
 

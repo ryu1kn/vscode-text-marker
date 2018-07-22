@@ -1,3 +1,4 @@
+const {expect, sinon} = require('../helpers/helper');
 
 const DecorationRefresher = require('../../lib/decoration-refresher');
 

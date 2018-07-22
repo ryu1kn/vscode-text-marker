@@ -1,3 +1,4 @@
+const {expect, sinon} = require('../helpers/helper');
 
 const RegexReader = require('../../lib/regex-reader');
 

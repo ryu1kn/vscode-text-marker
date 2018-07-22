@@ -1,3 +1,4 @@
+const {expect, stubWithArgs} = require('../helpers/helper');
 
 const ColourRegistry = require('../../lib/colour-registry');
 

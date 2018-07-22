@@ -1,3 +1,4 @@
+const {expect, sinon, stubWithArgs} = require('../helpers/helper');
 
 const DecorationOperator = require('../../lib/decoration-operator');
 

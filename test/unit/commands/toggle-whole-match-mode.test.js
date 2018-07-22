@@ -1,3 +1,4 @@
+const {expect, sinon} = require('../../helpers/helper');
 
 const ToggleWholeMatchModeCommand = require('../../../lib/commands/toggle-whole-match-mode');
 

@@ -1,3 +1,4 @@
+const {stubReturns} = require('../../helpers/helper');
 
 exports.createFakeVsCode = ({editors} = {}) => {
     const commands = {};

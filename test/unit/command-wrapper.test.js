@@ -1,3 +1,4 @@
+const {expect, sinon} = require('../helpers/helper');
 
 const CommandWrapper = require('../../lib/command-wrapper');
 

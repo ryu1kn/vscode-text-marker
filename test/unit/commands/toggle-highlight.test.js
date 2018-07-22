@@ -1,3 +1,4 @@
+const {expect, sinon} = require('../../helpers/helper');
 
 const ToggleHighlightCommand = require('../../../lib/commands/toggle-highlight');
 

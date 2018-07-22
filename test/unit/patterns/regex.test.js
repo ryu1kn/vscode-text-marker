@@ -1,3 +1,4 @@
+const {expect} = require('../../helpers/helper');
 
 const RegexPattern = require('../../../lib/patterns/regex');
 const StringPattern = require('../../../lib/patterns/string');

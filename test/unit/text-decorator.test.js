@@ -1,3 +1,4 @@
+const {expect, sinon} = require('../helpers/helper');
 
 const TextDecorator = require('../../lib/text-decorator');
 const PatternFactory = require('../../lib/pattern-factory');

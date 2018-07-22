@@ -1,3 +1,4 @@
+const {expect} = require('../helpers/helper');
 
 const EventEmitter = require('events');
 const Event = require('../../lib/const').Event;

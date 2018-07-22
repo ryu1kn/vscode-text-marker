@@ -1,12 +1,7 @@
 globals:
-  expect: true
-  sinon: true
-  stubWithArgs: true
-  stubReturns: true
   suite: true
   test: true
   beforeEach: true
-  throwIfCalled: true
 rules:
   max-len: off
   no-unused-expressions: off

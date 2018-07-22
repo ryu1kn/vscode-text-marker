@@ -1,3 +1,4 @@
+const {expect, sinon} = require('../../helpers/helper');
 
 const UnhighlightCommand = require('../../../lib/commands/unhighlight');
 

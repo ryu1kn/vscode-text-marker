@@ -1,3 +1,4 @@
+const {expect, sinon} = require('../helpers/helper');
 
 const SelectedTextFinder = require('../../lib/selected-text-finder');
 

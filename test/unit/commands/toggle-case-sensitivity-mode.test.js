@@ -1,3 +1,4 @@
+const {expect, sinon} = require('../../helpers/helper');
 
 const ToggleCaseSensitivityModeCommand = require('../../../lib/commands/toggle-case-sensitivity-mode');
 

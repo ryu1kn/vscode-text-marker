@@ -1,3 +1,4 @@
+const {expect, stubWithArgs} = require('../helpers/helper');
 
 const ConfigTargetPicker = require('../../lib/config-target-picker');
 

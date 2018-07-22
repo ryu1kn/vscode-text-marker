@@ -1,3 +1,4 @@
+const {expect} = require('../../helpers/helper');
 
 const AppIntegrator = require('../../../lib/app-integrator');
 const {createFakeEditor} = require('../helpers/fake-editor');

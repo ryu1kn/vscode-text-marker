@@ -1,3 +1,4 @@
+const {expect, sinon} = require('../../helpers/helper');
 
 const HighlightUsingRegexCommand = require('../../../lib/commands/highlight-using-regex');
 

@@ -1,3 +1,4 @@
+const {expect, sinon} = require('../../helpers/helper');
 
 const RemoveAllHighlightsCommand = require('../../../lib/commands/remove-all-highlights');
 
