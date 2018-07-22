@@ -1,9 +1,8 @@
-
-const AppIntegratorFactory = require('./lib/app-integrator-factory');
+const vscode = require('vscode');
+const AppIntegrator = require('./lib/app-integrator');
 
 exports.activate = context => {
-    const appIntegrator = new AppIntegratorFactory().create();
-    appIntegrator.integrate(context);
+    AppIntegrator.create(vscode, console).integrate(context);
 };
 
 exports.deactivate = () => {};
