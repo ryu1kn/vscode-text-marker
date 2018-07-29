@@ -30,7 +30,7 @@
   "activationEvents": [
     "*"
   ],
-  "main": "./extension",
+  "main": "./out/extension",
   "contributes": {
     "configuration": {
       "type": "object",
@@ -200,23 +200,30 @@
     }
   },
   "scripts": {
+    "vscode:prepublish": "yarn run compile",
+    "vscode:postpublish": "./tag-release.sh",
     "postinstall": "node ./node_modules/vscode/bin/install",
     "coverage": "nyc yarn test",
-    "lint": "eslint .",
-    "test": "mocha --opts ./test/cli-all-test-mocha.opts",
-    "unit-test": "mocha --opts ./test/cli-unit-test-mocha.opts",
-    "acceptance-test": "mocha --opts ./test/cli-acceptance-test-mocha.opts",
-    "test-mode": "mocha --opts ./test/cli-unit-test-mocha.opts --watch"
+    "compile": "tsc -p ./",
+    "lint": "tslint -p .",
+    "watch": "tsc -watch -p ./",
+    "test": "yarn run compile && mocha --opts ./mocha-opts/cli-all-test-mocha.opts",
+    "unit-test": "yarn run compile && mocha --opts ./mocha-opts/cli-unit-test-mocha.opts",
+    "acceptance-test": "yarn run compile && mocha --opts ./mocha-opts/cli-acceptance-test-mocha.opts",
+    "test-mode": "yarn run compile && mocha --opts ./mocha-opts/cli-unit-test-mocha.opts --watch"
   },
   "devDependencies": {
+    "@types/mocha": "^5.2.5",
+    "@types/node": "^7.0.67",
     "chai": "^4.1.2",
     "codeclimate-test-reporter": "^0.5.0",
-    "eslint": "^4.19.1",
-    "eslint-config-xo": "^0.22.2",
     "mocha": "^5.2.0",
     "nyc": "^12.0.2",
     "sinon": "^6.0.0",
     "sinon-chai": "^3.2.0",
+    "ts-node": "^7.0.0",
+    "tslint": "^5.11.0",
+    "typescript": "^2.9.2",
     "vscode": "^1.1.18"
   },
   "dependencies": {

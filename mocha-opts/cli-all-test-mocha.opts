@@ -1,0 +1,4 @@
+--recursive
+--ui tdd
+--require out/test/stub-vscode.js
+out/test

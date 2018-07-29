@@ -1,0 +1,14 @@
+
+export default class RemoveAllHighlightsCommand {
+    private _decorationOperatorFactory: any;
+
+    constructor(params) {
+        this._decorationOperatorFactory = params.decorationOperatorFactory;
+    }
+
+    execute() {
+        const decorationOperator = this._decorationOperatorFactory.createForVisibleEditors();
+        decorationOperator.removeAllDecorations();
+    }
+
+}

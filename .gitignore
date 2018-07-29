@@ -2,7 +2,7 @@
 /.vscode/settings.json
 /.nyc_output
 /node_modules
-/typings
+/out
 /coverage
 *.log
 __*

@@ -1,4 +1,0 @@
---recursive
---ui tdd
---require test/stub-vscode.js
-test/acceptance

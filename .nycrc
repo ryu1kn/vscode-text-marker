@@ -1,10 +1,10 @@
 {
   "exclude": [
     "**/__*",
-    "coverage",
-    "test"
+    "coverage/**",
+    "src/test/**",
+    "out/test/**"
   ],
-  "all": true,
   "reporter": [
     "lcov",
     "text-summary"

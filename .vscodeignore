@@ -1,6 +1,6 @@
 .vscode/**/*
+.vscode-test/**/*
 typings/**/*
-test/**/*
 images/animations/**/*
 coverage/**/*
 .codeclimate.yml
@@ -19,3 +19,12 @@ yarn.lock
 *.log
 __*
 __*/**/*
+.DS_Store
+*.vsix
+tslint.json
+mocha-opts/**
+out/test/**
+out/**/*.map
+src/**/*
+tsconfig.json
+yarn-error.log
