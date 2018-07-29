@@ -149,19 +149,13 @@ export default class CommandFactory {
     createToggleCaseSensitivityModeButton() {
         const alignment = this.vscode.StatusBarAlignment.Right;
         const priority = BASE_STATUS_BAR_PRIORITY + 1;
-        return new ToggleCaseSensitivityModeButton({
-            eventBus: this.getEventBus(),
-            statusBarItem: this.vscode.window.createStatusBarItem(alignment, priority)
-        });
+        return new ToggleCaseSensitivityModeButton(this.getEventBus(), this.vscode.window.createStatusBarItem(alignment, priority));
     }
 
     createToggleWholeMatchModeButton() {
         const alignment = this.vscode.StatusBarAlignment.Right;
         const priority = BASE_STATUS_BAR_PRIORITY;
-        return new ToggleWholeMatchModeButton({
-            eventBus: this.getEventBus(),
-            statusBarItem: this.vscode.window.createStatusBarItem(alignment, priority)
-        });
+        return new ToggleWholeMatchModeButton(this.getEventBus(), this.vscode.window.createStatusBarItem(alignment, priority));
     }
 
     getEventBus() {
@@ -274,10 +268,7 @@ export default class CommandFactory {
     }
 
     private createWindowComponent() {
-        return new WindowComponent({
-            window: this.vscode.window,
-            textEditorFactory: this.getTextEditorFactory()
-        });
+        return new WindowComponent(this.vscode.window, this.getTextEditorFactory());
     }
 
 }

@@ -1,6 +1,6 @@
 
 export default abstract class AbstractPattern {
-    public readonly phrase: any;
+    public readonly phrase: string;
     public readonly ignoreCase: boolean;
     public readonly wholeMatch: boolean;
 

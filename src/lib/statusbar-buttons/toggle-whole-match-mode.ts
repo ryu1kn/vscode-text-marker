@@ -1,13 +1,16 @@
 import * as Const from '../const';
+import EventEmitter = NodeJS.EventEmitter;
+import {StatusBarItem} from 'vscode';
+
 const Event = Const.Event;
 
 export default class ToggleWholeMatchModeButton {
-    private readonly eventBus: any;
-    private readonly statusBarItem: any;
+    private readonly eventBus: EventEmitter;
+    private readonly statusBarItem: StatusBarItem;
 
-    constructor(params) {
-        this.eventBus = params.eventBus;
-        this.statusBarItem = params.statusBarItem;
+    constructor(eventBus, statusBarItem) {
+        this.eventBus = eventBus;
+        this.statusBarItem = statusBarItem;
         this.registerListeners();
     }
 

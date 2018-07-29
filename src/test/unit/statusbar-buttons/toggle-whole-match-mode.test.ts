@@ -9,7 +9,7 @@ suite('ToggleWholeMatchModeButton', () => {
     test('it initialises and shows the button once matching mode is prepared', done => {
         const eventBus = new EventEmitter();
         const statusBarItem = {show: sinon.spy()};
-        new ToggleWholeMatchModeButton({eventBus, statusBarItem}); // eslint-disable-line no-new
+        new ToggleWholeMatchModeButton(eventBus, statusBarItem);
 
         eventBus.on(Event.MATCHING_MODE_INITIALISED, () => {
             expect(statusBarItem).to.contain({
@@ -26,7 +26,7 @@ suite('ToggleWholeMatchModeButton', () => {
     test('it updates button appearance on receving whole match mode change', done => {
         const eventBus = new EventEmitter();
         const statusBarItem = {show: sinon.spy()};
-        new ToggleWholeMatchModeButton({eventBus, statusBarItem}); // eslint-disable-line no-new
+        new ToggleWholeMatchModeButton(eventBus, statusBarItem);
 
         eventBus.on(Event.WHOLE_MATCH_MODE_TOGGLED, () => {
             expect(statusBarItem).to.contain({

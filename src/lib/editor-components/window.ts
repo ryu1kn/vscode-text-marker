@@ -1,11 +1,12 @@
+import TextEditorFactory from '../text-editor-factory';
 
 export default class WindowComponent {
     private readonly window: any;
-    private readonly textEditorFactory: any;
+    private readonly textEditorFactory: TextEditorFactory;
 
-    constructor(params) {
-        this.window = params.window;
-        this.textEditorFactory = params.textEditorFactory;
+    constructor(window, textEditorFactory) {
+        this.window = window;
+        this.textEditorFactory = textEditorFactory;
     }
 
     get visibleTextEditors() {

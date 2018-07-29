@@ -9,7 +9,7 @@ suite('ToggleCaseSensitivityModeButton', () => {
     test('it initialises and shows the button once matching mode is prepared', done => {
         const eventBus = new EventEmitter();
         const statusBarItem = {show: sinon.spy()};
-        new ToggleCaseSensitivityModeButton({eventBus, statusBarItem}); // eslint-disable-line no-new
+        new ToggleCaseSensitivityModeButton(eventBus, statusBarItem);
 
         eventBus.on(Event.MATCHING_MODE_INITIALISED, () => {
             expect(statusBarItem).to.contain({
@@ -26,7 +26,7 @@ suite('ToggleCaseSensitivityModeButton', () => {
     test('it updates button appearance on receving case sensitivity mode change', done => {
         const eventBus = new EventEmitter();
         const statusBarItem = {show: sinon.spy()};
-        new ToggleCaseSensitivityModeButton({eventBus, statusBarItem}); // eslint-disable-line no-new
+        new ToggleCaseSensitivityModeButton(eventBus, statusBarItem);
 
         eventBus.on(Event.TOGGLED_CASE_SENSITIVITY, () => {
             expect(statusBarItem).to.contain({
