@@ -8,7 +8,7 @@ suite('UnhighlightCommand', () => {
         const decorationOperator = {removeDecoration: sinon.spy()};
         const decorationOperatorFactory = {createForVisibleEditors: () => decorationOperator};
         const highlightPatternPicker = {pick: sinon.stub().returns(Promise.resolve('DECORATION_ID'))};
-        const command = new UnhighlightCommand({decorationOperatorFactory, highlightPatternPicker});
+        const command = new UnhighlightCommand(decorationOperatorFactory, highlightPatternPicker);
 
         await command.execute();
 
@@ -19,7 +19,7 @@ suite('UnhighlightCommand', () => {
     test('it does nothing if text is not selected', async () => {
         const decorationOperatorFactory = {createForVisibleEditors: sinon.spy()};
         const highlightPatternPicker = {pick: () => Promise.resolve()};
-        const command = new UnhighlightCommand({decorationOperatorFactory, highlightPatternPicker});
+        const command = new UnhighlightCommand(decorationOperatorFactory, highlightPatternPicker);
 
         await command.execute();
 

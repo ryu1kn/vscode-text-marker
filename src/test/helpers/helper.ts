@@ -28,6 +28,8 @@ export const when = td.when;
 
 export const verify = td.verify;
 
+export const any = td.matchers.anything;
+
 export function mock<T>(c: new (...args: any[]) => T): T {
     return new (td.constructor(c));
 }

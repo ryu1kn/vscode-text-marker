@@ -1,9 +1,10 @@
+import MatchingModeRegistry from '../matching-mode-registry';
 
 export default class ToggleWholeMatchModeCommand {
-    private readonly matchingModeRegistry: any;
+    private readonly matchingModeRegistry: MatchingModeRegistry;
 
-    constructor(params) {
-        this.matchingModeRegistry = params.matchingModeRegistry;
+    constructor(matchingModeRegistry: MatchingModeRegistry) {
+        this.matchingModeRegistry = matchingModeRegistry;
     }
 
     execute() {

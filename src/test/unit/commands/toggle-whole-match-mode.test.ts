@@ -1,15 +1,16 @@
-import {expect, sinon} from '../../helpers/helper';
+import {mock, verify} from '../../helpers/helper';
 
 import ToggleWholeMatchModeCommand from '../../../lib/commands/toggle-whole-match-mode';
+import MatchingModeRegistry from '../../../lib/matching-mode-registry';
 
 suite('ToggleWholeMatchModeCommand', () => {
 
-    test('it toggles case sensitivity mode', () => {
-        const matchingModeRegistry = {toggleWholeMatch: sinon.spy()};
-        const command = new ToggleWholeMatchModeCommand({matchingModeRegistry});
+    const matchingModeRegistry = mock(MatchingModeRegistry);
+    const command = new ToggleWholeMatchModeCommand(matchingModeRegistry);
 
+    test('it toggles case sensitivity mode', () => {
         command.execute();
-        expect(matchingModeRegistry.toggleWholeMatch).to.have.been.called;
+        verify(matchingModeRegistry.toggleWholeMatch());
     });
 
 });

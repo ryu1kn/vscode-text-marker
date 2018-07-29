@@ -1,17 +1,22 @@
+import DecorationOperatorFactory from '../decoration-operator-factory';
+import DecorationRegistry from '../decoration-registry';
+import PatternVariationReader from '../pattern-variation-reader';
+import TextEditorFactory from '../text-editor-factory';
+import TextLocationRegistry from '../text-location-registry';
 
 export default class UpdateHighlightCommand {
-    private readonly decorationOperatorFactory: any;
-    private readonly decorationRegistry: any;
-    private readonly patternVariationReader: any;
-    private readonly textEditorFactory: any;
-    private readonly textLocationRegistry: any;
+    private readonly decorationOperatorFactory: DecorationOperatorFactory;
+    private readonly decorationRegistry: DecorationRegistry;
+    private readonly patternVariationReader: PatternVariationReader;
+    private readonly textEditorFactory: TextEditorFactory;
+    private readonly textLocationRegistry: TextLocationRegistry;
 
-    constructor(params) {
-        this.decorationOperatorFactory = params.decorationOperatorFactory;
-        this.decorationRegistry = params.decorationRegistry;
-        this.patternVariationReader = params.patternVariationReader;
-        this.textEditorFactory = params.textEditorFactory;
-        this.textLocationRegistry = params.textLocationRegistry;
+    constructor(decorationOperatorFactory, decorationRegistry, patternVariationReader, textEditorFactory, textLocationRegistry) {
+        this.decorationOperatorFactory = decorationOperatorFactory;
+        this.decorationRegistry = decorationRegistry;
+        this.patternVariationReader = patternVariationReader;
+        this.textEditorFactory = textEditorFactory;
+        this.textLocationRegistry = textLocationRegistry;
     }
 
     async execute(editor) {

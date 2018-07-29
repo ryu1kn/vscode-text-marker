@@ -73,10 +73,7 @@ export default class CommandFactory {
     }
 
     createUnhighlightCommand() {
-        const command = new UnhighlightCommand({
-            decorationOperatorFactory: this.getDecorationOperatorFactory(),
-            highlightPatternPicker: this.getHighlightPatternPicker()
-        });
+        const command = new UnhighlightCommand(this.getDecorationOperatorFactory(), this.getHighlightPatternPicker());
         return this._wrapCommand(command);
     }
 
@@ -106,22 +103,20 @@ export default class CommandFactory {
     }
 
     createToggleWholeMatchModeCommand() {
-        const command = new ToggleWholeMatchModeCommand({
-            matchingModeRegistry: this.getMatchingModeRegistry()
-        });
+        const command = new ToggleWholeMatchModeCommand(this.getMatchingModeRegistry());
         return this._wrapCommand(command);
     }
 
     createUpdateHighlightCommand() {
-        const command = new UpdateHighlightCommand({
-            decorationOperatorFactory: this.getDecorationOperatorFactory(),
-            decorationRegistry: this.getDecorationRegistry(),
-            patternVariationReader: new PatternVariationReader({
+        const command = new UpdateHighlightCommand(
+            this.getDecorationOperatorFactory(),
+            this.getDecorationRegistry(),
+            new PatternVariationReader({
                 windowComponent: this.getWindowComponent()
             }),
-            textEditorFactory: this.getTextEditorFactory(),
-            textLocationRegistry: this.getTextLocationRegistry()
-        });
+            this.getTextEditorFactory(),
+            this.getTextLocationRegistry()
+        );
         return this._wrapCommand(command);
     }
 
