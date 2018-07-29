@@ -1,23 +1,23 @@
 
 export default class RegexReader {
-    private readonly _patternFactory: any;
-    private readonly _windowComponent: any;
+    private readonly patternFactory: any;
+    private readonly windowComponent: any;
 
     constructor(params) {
-        this._patternFactory = params.patternFactory;
-        this._windowComponent = params.windowComponent;
+        this.patternFactory = params.patternFactory;
+        this.windowComponent = params.windowComponent;
     }
 
     async read() {
-        const options = this._getInputBoxOption();
-        const phrase = await this._windowComponent.showInputBox(options);
-        return this._patternFactory.create({
+        const options = this.getInputBoxOption();
+        const phrase = await this.windowComponent.showInputBox(options);
+        return this.patternFactory.create({
             type: 'RegExp',
             phrase
         });
     }
 
-    private _getInputBoxOption() {
+    private getInputBoxOption() {
         return {placeHolder: 'Enter a regular expression to highlight text'};
     }
 

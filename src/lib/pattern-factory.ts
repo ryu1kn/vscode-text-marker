@@ -2,14 +2,14 @@ import RegexPattern from './patterns/regex';
 import StringPattern from './patterns/string';
 
 export default class PatternFactory {
-    private readonly _matchingModeRegistry: any;
+    private readonly matchingModeRegistry: any;
 
     constructor({matchingModeRegistry}) {
-        this._matchingModeRegistry = matchingModeRegistry;
+        this.matchingModeRegistry = matchingModeRegistry;
     }
 
     create(params) {
-        const finalParams = Object.assign({}, this._matchingModeRegistry.mode, params);
+        const finalParams = Object.assign({}, this.matchingModeRegistry.mode, params);
         return params.type === 'RegExp' ?
             new RegexPattern(finalParams) :
             new StringPattern(finalParams);

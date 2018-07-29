@@ -6,75 +6,75 @@ const getColorContrast = require('../../lib-3rd-party/dynamic-contrast');
 const OVERVIEW_RULER_COLOUR = 'violet';
 
 export default class DecorationRegistry {
-    private readonly _colourRegistry: any;
-    private readonly _configStore: any;
-    private readonly _window: any;
-    private readonly _textDecorationMap: any;
+    private readonly colourRegistry: any;
+    private readonly configStore: any;
+    private readonly window: any;
+    private readonly textDecorationMap: any;
 
     constructor(params) {
-        this._colourRegistry = params.colourRegistry;
-        this._configStore = params.configStore;
-        this._window = params.window;
+        this.colourRegistry = params.colourRegistry;
+        this.configStore = params.configStore;
+        this.window = params.window;
 
-        this._textDecorationMap = new TextDecorationCollection({
+        this.textDecorationMap = new TextDecorationCollection({
             generateUuid: params.generateUuid
         });
     }
 
     inquireById(decorationId) {
-        return this._textDecorationMap.get(decorationId);
+        return this.textDecorationMap.get(decorationId);
     }
 
     inquireByPattern(pattern) {
         const isSamePattern = decoration => decoration.pattern.equalTo(pattern);
-        return this._textDecorationMap.find(isSamePattern);
+        return this.textDecorationMap.find(isSamePattern);
     }
 
     issue(pattern) {
         const decoration = this.inquireByPattern(pattern);
         if (decoration) return null;
 
-        const colour = this._colourRegistry.issue();
-        const decorationType = this._generateDecorationType(colour);
-        return this._textDecorationMap.add({pattern, colour, decorationType});
+        const colour = this.colourRegistry.issue();
+        const decorationType = this.generateDecorationType(colour);
+        return this.textDecorationMap.add({pattern, colour, decorationType});
     }
 
     updatePattern(decorationId, newPattern) {
-        const decoration = this._textDecorationMap.get(decorationId);
+        const decoration = this.textDecorationMap.get(decorationId);
         decoration.pattern = newPattern;
         return decoration;
     }
 
     revoke(decorationId) {
-        const decoration = this._textDecorationMap.get(decorationId);
-        this._colourRegistry.revoke(decoration.colour);
-        this._textDecorationMap.remove(decorationId);
+        const decoration = this.textDecorationMap.get(decorationId);
+        this.colourRegistry.revoke(decoration.colour);
+        this.textDecorationMap.remove(decorationId);
     }
 
     retrieveAll() {
-        return this._textDecorationMap.toList();
+        return this.textDecorationMap.toList();
     }
 
-    private _generateDecorationType(colour) {
-        return this._window.createTextEditorDecorationType(
+    private generateDecorationType(colour) {
+        return this.window.createTextEditorDecorationType(
             Object.assign(
                 {
                     backgroundColor: colour,
                     borderRadius: '.2em',
-                    overviewRulerColor: this._useHighlightColorOnRuler ? colour : OVERVIEW_RULER_COLOUR,
+                    overviewRulerColor: this.useHighlightColorOnRuler ? colour : OVERVIEW_RULER_COLOUR,
                     overviewRulerLane: OverviewRulerLane.Center
                 },
-                this._autoSelectDistinctiveTextColor && {color: getColorContrast(colour)}
+                this.autoSelectDistinctiveTextColor && {color: getColorContrast(colour)}
             )
         );
     }
 
-    private get _useHighlightColorOnRuler() {
-        return this._configStore.get('useHighlightColorOnRuler');
+    private get useHighlightColorOnRuler() {
+        return this.configStore.get('useHighlightColorOnRuler');
     }
 
-    private get _autoSelectDistinctiveTextColor() {
-        return this._configStore.get('autoSelectDistinctiveTextColor');
+    private get autoSelectDistinctiveTextColor() {
+        return this.configStore.get('autoSelectDistinctiveTextColor');
     }
 
 }

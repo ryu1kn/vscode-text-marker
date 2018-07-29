@@ -4,20 +4,20 @@ const ConfigurationTarget = {
 };
 
 export default class ConfigurationTargetPicker {
-    private readonly _windowComponent: any;
+    private readonly windowComponent: any;
 
     constructor(params) {
-        this._windowComponent = params.windowComponent;
+        this.windowComponent = params.windowComponent;
     }
 
     async pick() {
-        const selectItems = this._buildQuickPickItems();
+        const selectItems = this.buildQuickPickItems();
         const options = {placeHolder: 'Select which scope of settings to save highlights to'};
-        const item = await this._windowComponent.showQuickPick(selectItems, options);
+        const item = await this.windowComponent.showQuickPick(selectItems, options);
         return item ? item.value : null;
     }
 
-    private _buildQuickPickItems() {
+    private buildQuickPickItems() {
         return [
             {
                 label: 'Global',

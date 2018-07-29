@@ -1,32 +1,32 @@
 
 export default class WindowComponent {
-    private readonly _window: any;
-    private readonly _textEditorFactory: any;
+    private readonly window: any;
+    private readonly textEditorFactory: any;
 
     constructor(params) {
-        this._window = params.window;
-        this._textEditorFactory = params.textEditorFactory;
+        this.window = params.window;
+        this.textEditorFactory = params.textEditorFactory;
     }
 
     get visibleTextEditors() {
-        return this._window.visibleTextEditors
-            .map(editor => this._textEditorFactory.create(editor));
+        return this.window.visibleTextEditors
+            .map(editor => this.textEditorFactory.create(editor));
     }
 
     get activeTextEditor() {
-        return this._textEditorFactory.create(this._window.activeTextEditor);
+        return this.textEditorFactory.create(this.window.activeTextEditor);
     }
 
     showInputBox(options) {
-        return this._window.showInputBox(options);
+        return this.window.showInputBox(options);
     }
 
     showInformationMessage(message) {
-        return this._window.showInformationMessage(message);
+        return this.window.showInformationMessage(message);
     }
 
     showQuickPick(selectItems, options) {
-        return this._window.showQuickPick(selectItems, options);
+        return this.window.showQuickPick(selectItems, options);
     }
 
 }

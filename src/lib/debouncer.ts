@@ -1,20 +1,20 @@
 
-const _isNumber = require('lodash.isnumber');
+const isNumber = require('lodash.isnumber');
 
 export default class Debouncer {
-    private readonly _configStore: any;
-    private _timeout: any;
+    private readonly configStore: any;
+    private timeout: any;
 
     constructor(params) {
-        this._configStore = params.configStore;
+        this.configStore = params.configStore;
     }
 
     debounce(callback) {
-        if (this._timeout) clearTimeout(this._timeout);
+        if (this.timeout) clearTimeout(this.timeout);
 
-        const waitTime = this._configStore.get('delayForRefreshingHighlight');
-        if (_isNumber(waitTime)) {
-            this._timeout = setTimeout(callback, waitTime);
+        const waitTime = this.configStore.get('delayForRefreshingHighlight');
+        if (isNumber(waitTime)) {
+            this.timeout = setTimeout(callback, waitTime);
         }
     }
 

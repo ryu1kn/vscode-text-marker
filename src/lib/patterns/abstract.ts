@@ -1,49 +1,37 @@
 
 export default abstract class AbstractPattern {
-    private readonly _phrase: any;
-    private readonly _ignoreCase: boolean;
-    private readonly _wholeMatch: boolean;
+    public readonly phrase: any;
+    public readonly ignoreCase: boolean;
+    public readonly wholeMatch: boolean;
 
-    protected abstract _create(params);
-    protected abstract _findCandidateRanges(text);
-    abstract type;
+    public abstract type;
+    protected abstract create(params);
+    protected abstract findCandidateRanges(text);
 
     constructor(params) {
-        this._phrase = params.phrase;
-        this._ignoreCase = params.ignoreCase || false;
-        this._wholeMatch = params.wholeMatch || false;
-    }
-
-    get phrase() {
-        return this._phrase;
-    }
-
-    get ignoreCase() {
-        return this._ignoreCase;
-    }
-
-    get wholeMatch() {
-        return this._wholeMatch;
+        this.phrase = params.phrase;
+        this.ignoreCase = params.ignoreCase || false;
+        this.wholeMatch = params.wholeMatch || false;
     }
 
     toggleCaseSensitivity() {
-        return this._create({
-            phrase: this._phrase,
+        return this.create({
+            phrase: this.phrase,
             ignoreCase: !this.ignoreCase,
             wholeMatch: this.wholeMatch
         });
     }
 
     toggleWholeMatch() {
-        return this._create({
-            phrase: this._phrase,
+        return this.create({
+            phrase: this.phrase,
             ignoreCase: this.ignoreCase,
             wholeMatch: !this.wholeMatch
         });
     }
 
     updatePhrase(newPhrase) {
-        return this._create({
+        return this.create({
             phrase: newPhrase,
             ignoreCase: this.ignoreCase,
             wholeMatch: this.wholeMatch
@@ -52,17 +40,17 @@ export default abstract class AbstractPattern {
 
     equalTo(other) {
         return this.type === other.type &&
-                this._phrase === other._phrase &&
+                this.phrase === other.phrase &&
                 this.ignoreCase === other.ignoreCase &&
                 this.wholeMatch === other.wholeMatch;
     }
 
     locateIn(text) {
-        const candidateRanges = this._findCandidateRanges(text);
-        return this.wholeMatch ? this._filterwholeMatchMatch(text, candidateRanges) : candidateRanges;
+        const candidateRanges = this.findCandidateRanges(text);
+        return this.wholeMatch ? this.filterwholeMatchMatch(text, candidateRanges) : candidateRanges;
     }
 
-    private _filterwholeMatchMatch(text, ranges) {
+    private filterwholeMatchMatch(text, ranges) {
         return ranges.filter(range =>
             !/\w\w/.test(text.substring(range.start - 1, range.start + 1)) &&
             !/\w\w/.test(text.substring(range.end - 1, range.end + 1))

@@ -1,13 +1,13 @@
 
 export default class ToggleWholeMatchModeCommand {
-    private readonly _matchingModeRegistry: any;
+    private readonly matchingModeRegistry: any;
 
     constructor(params) {
-        this._matchingModeRegistry = params.matchingModeRegistry;
+        this.matchingModeRegistry = params.matchingModeRegistry;
     }
 
     execute() {
-        this._matchingModeRegistry.toggleWholeMatch();
+        this.matchingModeRegistry.toggleWholeMatch();
     }
 
 }

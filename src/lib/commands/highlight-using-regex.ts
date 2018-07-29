@@ -1,18 +1,18 @@
 
 export default class HighlightUsingRegexCommand {
-    private readonly _decorationOperatorFactory: any;
-    private readonly _regexReader: any;
+    private readonly decorationOperatorFactory: any;
+    private readonly regexReader: any;
 
     constructor(params) {
-        this._decorationOperatorFactory = params.decorationOperatorFactory;
-        this._regexReader = params.regexReader;
+        this.decorationOperatorFactory = params.decorationOperatorFactory;
+        this.regexReader = params.regexReader;
     }
 
     async execute() {
-        const regex = await this._regexReader.read();
+        const regex = await this.regexReader.read();
         if (!regex) return;
 
-        const decorationOperator = this._decorationOperatorFactory.createForVisibleEditors();
+        const decorationOperator = this.decorationOperatorFactory.createForVisibleEditors();
         decorationOperator.addDecoration(regex);
     }
 

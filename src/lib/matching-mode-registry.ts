@@ -1,37 +1,37 @@
 import {Event} from './const';
 
 export default class MatchingModeRegistry {
-    private readonly _eventBus: any;
-    private _ignoreCase: any;
-    private _wholeMatch: any;
+    private readonly eventBus: any;
+    private ignoreCase: any;
+    private wholeMatch: any;
 
     constructor({eventBus, ignoreCase, wholeMatch}) {
-        this._eventBus = eventBus;
-        this._ignoreCase = ignoreCase;
-        this._wholeMatch = wholeMatch;
-        this._broadcastReady();
+        this.eventBus = eventBus;
+        this.ignoreCase = ignoreCase;
+        this.wholeMatch = wholeMatch;
+        this.broadcastReady();
     }
 
-    private _broadcastReady() {
-        this._eventBus.once(Event.EXTENSION_READY, () => {
-            this._eventBus.emit(Event.MATCHING_MODE_INITIALISED, this.mode);
+    private broadcastReady() {
+        this.eventBus.once(Event.EXTENSION_READY, () => {
+            this.eventBus.emit(Event.MATCHING_MODE_INITIALISED, this.mode);
         });
     }
 
     toggleCaseSensitivity() {
-        this._ignoreCase = !this._ignoreCase;
-        this._eventBus.emit(Event.TOGGLED_CASE_SENSITIVITY, {ignoreCase: this._ignoreCase});
+        this.ignoreCase = !this.ignoreCase;
+        this.eventBus.emit(Event.TOGGLED_CASE_SENSITIVITY, {ignoreCase: this.ignoreCase});
     }
 
     toggleWholeMatch() {
-        this._wholeMatch = !this._wholeMatch;
-        this._eventBus.emit(Event.WHOLE_MATCH_MODE_TOGGLED, {wholeMatch: this._wholeMatch});
+        this.wholeMatch = !this.wholeMatch;
+        this.eventBus.emit(Event.WHOLE_MATCH_MODE_TOGGLED, {wholeMatch: this.wholeMatch});
     }
 
     get mode() {
         return {
-            ignoreCase: this._ignoreCase,
-            wholeMatch: this._wholeMatch
+            ignoreCase: this.ignoreCase,
+            wholeMatch: this.wholeMatch
         };
     }
 

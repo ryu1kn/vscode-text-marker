@@ -2,17 +2,15 @@ import AbstractPattern from './abstract';
 
 export default class RegexPattern extends AbstractPattern {
 
-    get type() {
-        return 'RegExp';
-    }
+    public type = 'RegExp';
 
     get displayText() {
         const caseFlag = this.ignoreCase ? 'i' : '';
         return new RegExp(this.phrase, caseFlag).toString();
     }
 
-    protected _findCandidateRanges(text) {
-        const adjustedPattern = this._getAdjustedRegex();
+    protected findCandidateRanges(text) {
+        const adjustedPattern = this.getAdjustedRegex();
         const ranges = [];
 
         text.replace(adjustedPattern, (match, ...args) => {
@@ -29,11 +27,11 @@ export default class RegexPattern extends AbstractPattern {
         return ranges;
     }
 
-    protected _create(params) {
+    protected create(params) {
         return new RegexPattern(params);
     }
 
-    private _getAdjustedRegex() {
+    private getAdjustedRegex() {
         const flags = this.ignoreCase ? 'gi' : 'g';
         return new RegExp(this.phrase, flags);
     }

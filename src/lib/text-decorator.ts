@@ -1,16 +1,16 @@
 
 export default class TextDecorator {
-    private readonly _textLocationRegistry: any;
+    private readonly textLocationRegistry: any;
 
     constructor(params) {
-        this._textLocationRegistry = params.textLocationRegistry;
+        this.textLocationRegistry = params.textLocationRegistry;
     }
 
     decorate(editors, decorations) {
         editors.forEach(visibleEditor => {
             decorations.forEach(decoration => {
                 if (decoration.decorationType) {
-                    this._addDecoration(visibleEditor, decoration);
+                    this.addDecoration(visibleEditor, decoration);
                 }
             });
         });
@@ -21,14 +21,14 @@ export default class TextDecorator {
             editors.forEach(visibleEditor => {
                 visibleEditor.unsetDecorations(decoration.decorationType);
             });
-            this._textLocationRegistry.deregister(decoration.id);
+            this.textLocationRegistry.deregister(decoration.id);
         });
     }
 
-    private _addDecoration(editor, decoration) {
+    private addDecoration(editor, decoration) {
         const ranges = decoration.pattern.locateIn(editor.wholeText);
         editor.setDecorations(decoration.decorationType, ranges);
-        this._textLocationRegistry.register({
+        this.textLocationRegistry.register({
             editorId: editor.id,
             decorationId: decoration.id,
             ranges

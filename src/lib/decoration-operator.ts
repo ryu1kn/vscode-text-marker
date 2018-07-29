@@ -1,19 +1,19 @@
 
 export default class DecorationOperator {
-    private readonly _editors: any;
-    private readonly _decorationRegistry: any;
-    private readonly _textDecorator: any;
-    private readonly _patternConverter: any;
+    private readonly editors: any;
+    private readonly decorationRegistry: any;
+    private readonly textDecorator: any;
+    private readonly patternConverter: any;
 
     constructor(params) {
-        this._editors = params.editors;
-        this._decorationRegistry = params.decorationRegistry;
-        this._textDecorator = params.textDecorator;
-        this._patternConverter = params.patternConverter;
+        this.editors = params.editors;
+        this.decorationRegistry = params.decorationRegistry;
+        this.textDecorator = params.textDecorator;
+        this.patternConverter = params.patternConverter;
     }
 
     toggleDecoration(pattern) {
-        const decoration = this._decorationRegistry.inquireByPattern(pattern);
+        const decoration = this.decorationRegistry.inquireByPattern(pattern);
         if (decoration) {
             this._removeDecoration(decoration);
         } else {
@@ -22,51 +22,51 @@ export default class DecorationOperator {
     }
 
     addDecoration(pattern) {
-        const decoration = this._decorationRegistry.issue(pattern);
+        const decoration = this.decorationRegistry.issue(pattern);
         if (!decoration) return;
 
-        this._textDecorator.decorate(this._editors, [decoration]);
+        this.textDecorator.decorate(this.editors, [decoration]);
     }
 
     removeDecoration(decorationId) {
-        const decoration = this._decorationRegistry.inquireById(decorationId);
+        const decoration = this.decorationRegistry.inquireById(decorationId);
         this._removeDecoration(decoration);
     }
 
     private _removeDecoration(decoration) {
-        this._decorationRegistry.revoke(decoration.id);
-        this._textDecorator.undecorate(this._editors, [decoration]);
+        this.decorationRegistry.revoke(decoration.id);
+        this.textDecorator.undecorate(this.editors, [decoration]);
     }
 
     updateDecorationWithPatternAction(decorationId, convertAction) {
-        const decoration = this._decorationRegistry.inquireById(decorationId);
-        const newPattern = this._patternConverter.convert(decoration.pattern, convertAction);
+        const decoration = this.decorationRegistry.inquireById(decorationId);
+        const newPattern = this.patternConverter.convert(decoration.pattern, convertAction);
         this._updateDecorationWithPattern(decoration, newPattern);
     }
 
     updateDecorationPattern(decorationId, newPattern) {
-        const decoration = this._decorationRegistry.inquireById(decorationId);
+        const decoration = this.decorationRegistry.inquireById(decorationId);
         this._updateDecorationWithPattern(decoration, newPattern);
     }
 
     private _updateDecorationWithPattern(decoration, newPattern) {
-        this._textDecorator.undecorate(this._editors, [decoration]);
+        this.textDecorator.undecorate(this.editors, [decoration]);
 
-        const newDecoration = this._decorationRegistry.updatePattern(decoration.id, newPattern);
-        this._textDecorator.decorate(this._editors, [newDecoration]);
+        const newDecoration = this.decorationRegistry.updatePattern(decoration.id, newPattern);
+        this.textDecorator.decorate(this.editors, [newDecoration]);
     }
 
     removeAllDecorations() {
-        const decorations = this._decorationRegistry.retrieveAll();
+        const decorations = this.decorationRegistry.retrieveAll();
         decorations.forEach(decoration => {
-            this._decorationRegistry.revoke(decoration.id);
+            this.decorationRegistry.revoke(decoration.id);
         });
-        this._textDecorator.undecorate(this._editors, decorations);
+        this.textDecorator.undecorate(this.editors, decorations);
     }
 
     refreshDecorations() {
-        const decorations = this._decorationRegistry.retrieveAll();
-        this._textDecorator.decorate(this._editors, decorations);
+        const decorations = this.decorationRegistry.retrieveAll();
+        this.textDecorator.decorate(this.editors, decorations);
     }
 
 }

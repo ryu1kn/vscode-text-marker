@@ -3,15 +3,15 @@
 export default class SelectedTextFinder {
 
     find(editor) {
-        const selectedText = this._getSelectedText(editor);
-        return selectedText ? selectedText : this._getWordUnderCursor(editor);
+        const selectedText = this.getSelectedText(editor);
+        return selectedText ? selectedText : this.getWordUnderCursor(editor);
     }
 
-    private _getSelectedText(editor) {
+    private getSelectedText(editor) {
         return editor.document.getText(editor.selection);
     }
 
-    private _getWordUnderCursor(editor) {
+    private getWordUnderCursor(editor) {
         const wordRange = editor.document.getWordRangeAtPosition(editor.selection.active);
         return wordRange && editor.document.getText(wordRange);
     }

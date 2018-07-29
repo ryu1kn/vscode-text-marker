@@ -1,22 +1,22 @@
 import * as Const from './const';
 
 export default class ConfigStore {
-    private readonly _workspace: any;
-    private readonly _configTargetPicker: any;
+    private readonly workspace: any;
+    private readonly configTargetPicker: any;
 
     constructor(params) {
-        this._workspace = params.workspace;
-        this._configTargetPicker = params.configTargetPicker;
+        this.workspace = params.workspace;
+        this.configTargetPicker = params.configTargetPicker;
     }
 
     get(configName) {
-        const extensionConfig = this._workspace.getConfiguration(Const.EXTENSION_ID);
+        const extensionConfig = this.workspace.getConfiguration(Const.EXTENSION_ID);
         return extensionConfig.get(configName);
     }
 
     async set(configName, configValue) {
-        const configTarget = await this._configTargetPicker.pick();
-        const extensionConfig = this._workspace.getConfiguration(Const.EXTENSION_ID);
+        const configTarget = await this.configTargetPicker.pick();
+        const extensionConfig = this.workspace.getConfiguration(Const.EXTENSION_ID);
         return extensionConfig.update(configName, configValue, configTarget);
     }
 

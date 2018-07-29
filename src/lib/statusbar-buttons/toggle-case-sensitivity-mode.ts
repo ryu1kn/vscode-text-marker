@@ -2,29 +2,29 @@ import * as Const from '../const';
 const Event = Const.Event;
 
 export default class ToggleCaseSensitivityModeButton {
-    private readonly _eventBus: any;
-    private readonly _statusBarItem: any;
+    private readonly eventBus: any;
+    private readonly statusBarItem: any;
 
     constructor(params) {
-        this._eventBus = params.eventBus;
-        this._statusBarItem = params.statusBarItem;
-        this._registerListeners();
+        this.eventBus = params.eventBus;
+        this.statusBarItem = params.statusBarItem;
+        this.registerListeners();
     }
 
-    private _registerListeners() {
-        this._eventBus.on(Event.MATCHING_MODE_INITIALISED, this._initialiseButton.bind(this));
-        this._eventBus.on(Event.TOGGLED_CASE_SENSITIVITY, this._updateButton.bind(this));
+    private registerListeners() {
+        this.eventBus.on(Event.MATCHING_MODE_INITIALISED, this.initialiseButton.bind(this));
+        this.eventBus.on(Event.TOGGLED_CASE_SENSITIVITY, this.updateButton.bind(this));
     }
 
-    private _initialiseButton(params) {
-        this._updateButton(params);
+    private initialiseButton(params) {
+        this.updateButton(params);
 
-        this._statusBarItem.command = `${Const.EXTENSION_ID}.toggleModeForCaseSensitivity`;
-        this._statusBarItem.show();
+        this.statusBarItem.command = `${Const.EXTENSION_ID}.toggleModeForCaseSensitivity`;
+        this.statusBarItem.show();
     }
 
-    private _updateButton({ignoreCase}) {
-        const statusBarItem = this._statusBarItem;
+    private updateButton({ignoreCase}) {
+        const statusBarItem = this.statusBarItem;
         if (ignoreCase) {
             statusBarItem.text = 'Aa';
             statusBarItem.tooltip = `${Const.EXTENSION_NAME}: Case Insensitive Mode`;

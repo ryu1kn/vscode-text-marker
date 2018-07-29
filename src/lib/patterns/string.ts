@@ -2,21 +2,19 @@ import AbstractPattern from './abstract';
 
 export default class StringPattern extends AbstractPattern {
 
-    get type() {
-        return 'String';
-    }
+    public type = 'String';
 
     get displayText() {
         return this.phrase;
     }
 
-    protected _findCandidateRanges(text) {
+    protected findCandidateRanges(text) {
         const memo = {
             ranges: [],
             lastOffset: 0
         };
-        const textInFrontOfSelectedText = this._getTextForComparison(text)
-            .split(this._getPhraseForComparison())
+        const textInFrontOfSelectedText = this.getTextForComparison(text)
+            .split(this.getPhraseForComparison())
             .slice(0, -1);
         const finalMemo = textInFrontOfSelectedText.reduce((memo, textInFront) => {
             const start = memo.lastOffset + textInFront.length;
@@ -29,15 +27,15 @@ export default class StringPattern extends AbstractPattern {
         return finalMemo.ranges;
     }
 
-    private _getPhraseForComparison() {
+    private getPhraseForComparison() {
         return this.ignoreCase ? this.phrase.toLowerCase() : this.phrase;
     }
 
-    private _getTextForComparison(text) {
+    private getTextForComparison(text) {
         return this.ignoreCase ? text.toLowerCase() : text;
     }
 
-    protected _create(params) {
+    protected create(params) {
         return new StringPattern(params);
     }
 

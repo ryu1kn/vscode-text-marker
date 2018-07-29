@@ -2,8 +2,8 @@ import * as Const from './const';
 import CommandFactory from './command-factory';
 
 export default class AppIntegrator {
-    private readonly _commandFactory: CommandFactory;
-    private readonly _vscode: any;
+    private readonly commandFactory: CommandFactory;
+    private readonly vscode: any;
 
     static create(vscode, logger) {
         const commandFactory = new CommandFactory({vscode, logger});
@@ -11,28 +11,28 @@ export default class AppIntegrator {
     }
 
     constructor(params) {
-        this._commandFactory = params.commandFactory;
-        this._vscode = params.vscode;
+        this.commandFactory = params.commandFactory;
+        this.vscode = params.vscode;
     }
 
     integrate(context) {
-        this._registerCommands(context);
-        this._registerTextEditorCommands(context);
-        this._registerEventListeners(context);
-        this._prepareExtensionEventsDrivenItems();
-        this._broadcastReady();
+        this.registerCommands(context);
+        this.registerTextEditorCommands(context);
+        this.registerEventListeners(context);
+        this.prepareExtensionEventsDrivenItems();
+        this.broadcastReady();
     }
 
-    private _registerEventListeners(context) {
-        const decorationRefresher = this._commandFactory.createDecorationRefresher();
-        this._vscode.window.onDidChangeActiveTextEditor(
+    private registerEventListeners(context) {
+        const decorationRefresher = this.commandFactory.createDecorationRefresher();
+        this.vscode.window.onDidChangeActiveTextEditor(
             decorationRefresher.refresh, decorationRefresher, context.subscriptions);
-        this._vscode.workspace.onDidChangeTextDocument(
+        this.vscode.workspace.onDidChangeTextDocument(
             decorationRefresher.refreshWithDelay, decorationRefresher, context.subscriptions);
     }
 
-    private _registerCommands(context) {
-        const factory = this._commandFactory;
+    private registerCommands(context) {
+        const factory = this.commandFactory;
         const commandMap = new Map([
             [`${Const.EXTENSION_ID}.highlightUsingRegex`, factory.createHighlightUsingRegex()],
             [`${Const.EXTENSION_ID}.clearAllHighlight`, factory.createRemoveAllHighlightsCommand()],
@@ -44,31 +44,31 @@ export default class AppIntegrator {
             [`${Const.EXTENSION_ID}.unhighlight`, factory.createUnhighlightCommand()]
         ]);
         commandMap.forEach((command, commandName) => {
-            const disposable = this._vscode.commands.registerCommand(commandName, command.execute, command);
+            const disposable = this.vscode.commands.registerCommand(commandName, command.execute, command);
             context.subscriptions.push(disposable);
         });
     }
 
-    private _registerTextEditorCommands(context) {
-        const factory = this._commandFactory;
+    private registerTextEditorCommands(context) {
+        const factory = this.commandFactory;
         const commandMap = new Map([
             [`${Const.EXTENSION_ID}.toggleHighlight`, factory.createToggleHighlightCommand()],
             [`${Const.EXTENSION_ID}.updateHighlight`, factory.createUpdateHighlightCommand()]
         ]);
         commandMap.forEach((command, commandName) => {
-            const disposable = this._vscode.commands.registerTextEditorCommand(commandName, command.execute, command);
+            const disposable = this.vscode.commands.registerTextEditorCommand(commandName, command.execute, command);
             context.subscriptions.push(disposable);
         });
     }
 
-    private _prepareExtensionEventsDrivenItems() {
-        this._commandFactory.createSavedHighlightsRestorer();
-        this._commandFactory.createToggleCaseSensitivityModeButton();
-        this._commandFactory.createToggleWholeMatchModeButton();
+    private prepareExtensionEventsDrivenItems() {
+        this.commandFactory.createSavedHighlightsRestorer();
+        this.commandFactory.createToggleCaseSensitivityModeButton();
+        this.commandFactory.createToggleWholeMatchModeButton();
     }
 
-    private _broadcastReady() {
-        this._commandFactory.getEventBus().emit(Const.Event.EXTENSION_READY);
+    private broadcastReady() {
+        this.commandFactory.getEventBus().emit(Const.Event.EXTENSION_READY);
     }
 
 }

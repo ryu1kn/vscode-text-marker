@@ -1,16 +1,16 @@
 import {PatternAction} from './const';
 
 export default class PatternVariationReader {
-    private readonly _windowComponent: any;
+    private readonly windowComponent: any;
 
     constructor(params) {
-        this._windowComponent = params.windowComponent;
+        this.windowComponent = params.windowComponent;
     }
 
     async read(currentPattern) {
-        const items = this._buildSelectItems(currentPattern);
+        const items = this.buildSelectItems(currentPattern);
         const options = {placeHolder: 'Select how to update the highlight'};
-        const item = await this._windowComponent.showQuickPick(items, options);
+        const item = await this.windowComponent.showQuickPick(items, options);
         if (!item) return null;
 
         switch (item.actionId) {    // eslint-disable-line default-case
@@ -23,21 +23,21 @@ export default class PatternVariationReader {
                 value: currentPattern.phrase,
                 prompt: 'Enter a new pattern.'
             };
-            const newPhrase = await this._windowComponent.showInputBox(options);
+            const newPhrase = await this.windowComponent.showInputBox(options);
             return newPhrase ? currentPattern.updatePhrase(newPhrase) : null;
         }
         }
     }
 
-    private _buildSelectItems(pattern) {
+    private buildSelectItems(pattern) {
         return [
-            this._getToggleCaseSensitivityOption(pattern),
-            this._getToggleWholeMatchOption(pattern),
-            this._getUpdatePhraseOption(pattern)
+            this.getToggleCaseSensitivityOption(pattern),
+            this.getToggleWholeMatchOption(pattern),
+            this.getUpdatePhraseOption(pattern)
         ];
     }
 
-    private _getToggleCaseSensitivityOption(pattern) {
+    private getToggleCaseSensitivityOption(pattern) {
         const label = pattern.ignoreCase ? 'Case Sensitive' : 'Case Insensitive';
         return {
             label: `Change to ${label}`,
@@ -45,7 +45,7 @@ export default class PatternVariationReader {
         };
     }
 
-    private _getToggleWholeMatchOption(pattern) {
+    private getToggleWholeMatchOption(pattern) {
         const label = pattern.wholeMatch ? 'Partial Match' : 'Whole Match';
         return {
             label: `Change to ${label}`,
@@ -53,7 +53,7 @@ export default class PatternVariationReader {
         };
     }
 
-    private _getUpdatePhraseOption(pattern) {
+    private getUpdatePhraseOption(pattern) {
         const label = pattern.type === 'RegExp' ? 'RegExp Pattern' : 'Text Pattern';
         return {
             label: `Update ${label}`,

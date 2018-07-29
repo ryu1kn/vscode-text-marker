@@ -1,20 +1,20 @@
 
 export default class ToggleHighlightCommand {
-    private readonly _decorationOperatorFactory: any;
-    private readonly _patternFactory: any;
-    private readonly _textEditorFactory: any;
-    private readonly _textLocationRegistry: any;
+    private readonly decorationOperatorFactory: any;
+    private readonly patternFactory: any;
+    private readonly textEditorFactory: any;
+    private readonly textLocationRegistry: any;
 
     constructor(params) {
-        this._decorationOperatorFactory = params.decorationOperatorFactory;
-        this._patternFactory = params.patternFactory;
-        this._textEditorFactory = params.textEditorFactory;
-        this._textLocationRegistry = params.textLocationRegistry;
+        this.decorationOperatorFactory = params.decorationOperatorFactory;
+        this.patternFactory = params.patternFactory;
+        this.textEditorFactory = params.textEditorFactory;
+        this.textLocationRegistry = params.textLocationRegistry;
     }
 
     execute(editor) {
-        const textEditor = this._textEditorFactory.create(editor);
-        const decorationId = this._textLocationRegistry.queryDecorationId({
+        const textEditor = this.textEditorFactory.create(editor);
+        const decorationId = this.textLocationRegistry.queryDecorationId({
             editorId: textEditor.id,
             flatRange: textEditor.flatRange
         });
@@ -26,14 +26,14 @@ export default class ToggleHighlightCommand {
     }
 
     private removeDecoration(decorationId) {
-        const decorationOperator = this._decorationOperatorFactory.createForVisibleEditors();
+        const decorationOperator = this.decorationOperatorFactory.createForVisibleEditors();
         decorationOperator.removeDecoration(decorationId);
     }
 
     private addDecoration(textEditor) {
         if (!textEditor.selectedText) return;
-        const decorationOperator = this._decorationOperatorFactory.createForVisibleEditors();
-        const pattern = this._patternFactory.create({phrase: textEditor.selectedText});
+        const decorationOperator = this.decorationOperatorFactory.createForVisibleEditors();
+        const pattern = this.patternFactory.create({phrase: textEditor.selectedText});
         decorationOperator.addDecoration(pattern);
     }
 

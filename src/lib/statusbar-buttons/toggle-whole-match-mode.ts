@@ -2,29 +2,29 @@ import * as Const from '../const';
 const Event = Const.Event;
 
 export default class ToggleWholeMatchModeButton {
-    private readonly _eventBus: any;
-    private readonly _statusBarItem: any;
+    private readonly eventBus: any;
+    private readonly statusBarItem: any;
 
     constructor(params) {
-        this._eventBus = params.eventBus;
-        this._statusBarItem = params.statusBarItem;
-        this._registerListeners();
+        this.eventBus = params.eventBus;
+        this.statusBarItem = params.statusBarItem;
+        this.registerListeners();
     }
 
-    private _registerListeners() {
-        this._eventBus.on(Event.MATCHING_MODE_INITIALISED, this._initialiseButton.bind(this));
-        this._eventBus.on(Event.WHOLE_MATCH_MODE_TOGGLED, this._updateButton.bind(this));
+    private registerListeners() {
+        this.eventBus.on(Event.MATCHING_MODE_INITIALISED, this.initialiseButton.bind(this));
+        this.eventBus.on(Event.WHOLE_MATCH_MODE_TOGGLED, this.updateButton.bind(this));
     }
 
-    private _initialiseButton(params) {
-        this._updateButton(params);
+    private initialiseButton(params) {
+        this.updateButton(params);
 
-        this._statusBarItem.command = `${Const.EXTENSION_ID}.toggleModeForWholeMatch`;
-        this._statusBarItem.show();
+        this.statusBarItem.command = `${Const.EXTENSION_ID}.toggleModeForWholeMatch`;
+        this.statusBarItem.show();
     }
 
-    private _updateButton({wholeMatch}) {
-        const statusBarItem = this._statusBarItem;
+    private updateButton({wholeMatch}) {
+        const statusBarItem = this.statusBarItem;
         if (wholeMatch) {
             statusBarItem.text = '[Ab|]';
             statusBarItem.tooltip = `${Const.EXTENSION_NAME}: Whole Match Mode`;

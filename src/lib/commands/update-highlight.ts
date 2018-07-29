@@ -1,32 +1,32 @@
 
 export default class UpdateHighlightCommand {
-    private readonly _decorationOperatorFactory: any;
-    private readonly _decorationRegistry: any;
-    private readonly _patternVariationReader: any;
-    private readonly _textEditorFactory: any;
-    private readonly _textLocationRegistry: any;
+    private readonly decorationOperatorFactory: any;
+    private readonly decorationRegistry: any;
+    private readonly patternVariationReader: any;
+    private readonly textEditorFactory: any;
+    private readonly textLocationRegistry: any;
 
     constructor(params) {
-        this._decorationOperatorFactory = params.decorationOperatorFactory;
-        this._decorationRegistry = params.decorationRegistry;
-        this._patternVariationReader = params.patternVariationReader;
-        this._textEditorFactory = params.textEditorFactory;
-        this._textLocationRegistry = params.textLocationRegistry;
+        this.decorationOperatorFactory = params.decorationOperatorFactory;
+        this.decorationRegistry = params.decorationRegistry;
+        this.patternVariationReader = params.patternVariationReader;
+        this.textEditorFactory = params.textEditorFactory;
+        this.textLocationRegistry = params.textLocationRegistry;
     }
 
     async execute(editor) {
-        const textEditor = this._textEditorFactory.create(editor);
-        const decorationId = this._textLocationRegistry.queryDecorationId({
+        const textEditor = this.textEditorFactory.create(editor);
+        const decorationId = this.textLocationRegistry.queryDecorationId({
             editorId: textEditor.id,
             flatRange: textEditor.flatRange
         });
         if (!decorationId) return;
 
-        const pattern = this._decorationRegistry.inquireById(decorationId).pattern;
-        const newPattern = await this._patternVariationReader.read(pattern);
+        const pattern = this.decorationRegistry.inquireById(decorationId).pattern;
+        const newPattern = await this.patternVariationReader.read(pattern);
         if (!newPattern) return;
 
-        const decorationOperator = this._decorationOperatorFactory.createForVisibleEditors();
+        const decorationOperator = this.decorationOperatorFactory.createForVisibleEditors();
         decorationOperator.updateDecorationPattern(decorationId, newPattern);
     }
 
