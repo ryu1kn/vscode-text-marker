@@ -64,13 +64,11 @@ export default class CommandFactory {
     }
 
     createHighlightUsingRegex() {
-        const command = new HighlightUsingRegexCommand({
-            decorationOperatorFactory: this.getDecorationOperatorFactory(),
-            regexReader: new RegexReader({
-                patternFactory: this.getPatternFactory(),
-                windowComponent: this.getWindowComponent()
-            })
+        const regexReader = new RegexReader({
+            patternFactory: this.getPatternFactory(),
+            windowComponent: this.getWindowComponent()
         });
+        const command = new HighlightUsingRegexCommand(this.getDecorationOperatorFactory(), regexReader);
         return this._wrapCommand(command);
     }
 

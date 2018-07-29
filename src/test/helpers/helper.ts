@@ -1,3 +1,5 @@
+import * as td from 'testdouble';
+
 const chai = require('chai');
 chai.use(require('sinon-chai'));
 
@@ -21,3 +23,15 @@ export const stubReturns = (...args) =>
         },
         sinon.stub()
     );
+
+export const when = td.when;
+
+export const verify = td.verify;
+
+export function mock<T>(c: new (...args: any[]) => T): T {
+    return new (td.constructor(c));
+}
+
+export function mockObject(...propNames: string[]) {
+    return td.object(propNames);
+}

@@ -1,27 +1,40 @@
-import {expect, sinon} from '../../helpers/helper';
+import {mock, when, verify} from '../../helpers/helper';
 import HighlightUsingRegexCommand from '../../../lib/commands/highlight-using-regex';
+import DecorationOperatorFactory from "../../../lib/decoration-operator-factory";
+import RegexReader from "../../../lib/regex-reader";
+import DecorationOperator from "../../../lib/decoration-operator";
 
 suite('HighlightUsingRegexCommand', () => {
 
-    test('it decorates text that matches to the specified regex', async () => {
-        const decorationOperator = {addDecoration: sinon.spy()};
-        const decorationOperatorFactory = {createForVisibleEditors: () => decorationOperator};
-        const regexReader = {read: () => Promise.resolve('PATTERN')};
-        const command = new HighlightUsingRegexCommand({decorationOperatorFactory, regexReader});
+    suite('When regex is given', () => {
+        const decorationOperator = mock(DecorationOperator);
+        const decorationOperatorFactory = mock(DecorationOperatorFactory);
+        when(decorationOperatorFactory.createForVisibleEditors()).thenReturn(decorationOperator);
 
-        await command.execute();
+        const regexReader = mock(RegexReader);
+        when(regexReader.read()).thenResolve('PATTERN');
 
-        expect(decorationOperator.addDecoration).to.have.been.calledWith('PATTERN');
+        const command = new HighlightUsingRegexCommand(decorationOperatorFactory, regexReader);
+
+        test('it decorates text that matches to the specified regex', async () => {
+            await command.execute();
+
+            verify(decorationOperator.addDecoration('PATTERN'));
+        });
+    })
+
+    suite('When regex is NOT given', () => {
+        const decorationOperatorFactory = mock(DecorationOperatorFactory);
+
+        const regexReader = mock(RegexReader);
+        when(regexReader.read()).thenResolve();
+
+        const command = new HighlightUsingRegexCommand(decorationOperatorFactory, regexReader);
+
+        test('it does nothing if regex is not given', async () => {
+            await command.execute();
+
+            verify(decorationOperatorFactory.createForVisibleEditors(), {times: 0});
+        });
     });
-
-    test('it does nothing if regex is not given', async () => {
-        const decorationOperatorFactory = {createForVisibleEditors: sinon.spy()};
-        const regexReader = {read: () => Promise.resolve()};
-        const command = new HighlightUsingRegexCommand({decorationOperatorFactory, regexReader});
-
-        await command.execute();
-
-        expect(decorationOperatorFactory.createForVisibleEditors).to.have.been.not.called;
-    });
-
 });

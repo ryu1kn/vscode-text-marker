@@ -1,11 +1,13 @@
+import DecorationOperatorFactory from '../decoration-operator-factory';
+import RegexReader from '../regex-reader';
 
 export default class HighlightUsingRegexCommand {
-    private readonly decorationOperatorFactory: any;
-    private readonly regexReader: any;
+    private readonly decorationOperatorFactory: DecorationOperatorFactory;
+    private readonly regexReader: RegexReader;
 
-    constructor(params) {
-        this.decorationOperatorFactory = params.decorationOperatorFactory;
-        this.regexReader = params.regexReader;
+    constructor(decorationOperatorFactory: DecorationOperatorFactory, regexReader: RegexReader) {
+        this.decorationOperatorFactory = decorationOperatorFactory;
+        this.regexReader = regexReader;
     }
 
     async execute() {
