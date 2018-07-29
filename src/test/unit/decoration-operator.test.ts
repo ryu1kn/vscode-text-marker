@@ -1,8 +1,11 @@
-import {expect, sinon, stubWithArgs} from '../helpers/helper';
+import {expect, mock, sinon, stubWithArgs} from '../helpers/helper';
 
 import DecorationOperator from '../../lib/decoration-operator';
+import PatternConverter from '../../lib/pattern-converter';
 
 suite('DecorationOperator', () => {
+
+    const patternConverter = mock(PatternConverter);
 
     suite('#toggleDecoration', () => {
 
@@ -13,7 +16,7 @@ suite('DecorationOperator', () => {
                 issue: stubWithArgs(['PATTERN'], 'DECORATION')
             };
             const textDecorator = {decorate: sinon.spy()};
-            const operator = new DecorationOperator({editors, decorationRegistry, textDecorator});
+            const operator = new DecorationOperator(editors, decorationRegistry, textDecorator, patternConverter);
             operator.toggleDecoration('PATTERN');
 
             expect(textDecorator.decorate).to.have.been.calledWith(
@@ -32,7 +35,7 @@ suite('DecorationOperator', () => {
                 revoke: sinon.spy()
             };
             const textDecorator = {undecorate: sinon.spy()};
-            const operator = new DecorationOperator({editors, decorationRegistry, textDecorator});
+            const operator = new DecorationOperator(editors, decorationRegistry, textDecorator, patternConverter);
             operator.toggleDecoration('PATTERN');
 
             expect(decorationRegistry.revoke).to.have.been.calledWith('DECORATION_ID');
@@ -54,7 +57,7 @@ suite('DecorationOperator', () => {
                 issue: stubWithArgs(['PATTERN'], 'DECORATION')
             };
             const textDecorator = {decorate: sinon.spy()};
-            const operator = new DecorationOperator({editors, decorationRegistry, textDecorator});
+            const operator = new DecorationOperator(editors, decorationRegistry, textDecorator, patternConverter);
             operator.addDecoration('PATTERN');
 
             expect(textDecorator.decorate).to.have.been.calledWith(
@@ -69,7 +72,7 @@ suite('DecorationOperator', () => {
                 issue: stubWithArgs(['PATTERN'], null)
             };
             const textDecorator = {decorate: sinon.spy()};
-            const operator = new DecorationOperator({editors, decorationRegistry, textDecorator});
+            const operator = new DecorationOperator(editors, decorationRegistry, textDecorator, patternConverter);
             operator.addDecoration('PATTERN');
 
             expect(textDecorator.decorate).to.have.been.not.called;
@@ -88,7 +91,7 @@ suite('DecorationOperator', () => {
                 revoke: sinon.spy()
             };
             const textDecorator = {undecorate: sinon.spy()};
-            const operator = new DecorationOperator({editors, decorationRegistry, textDecorator});
+            const operator = new DecorationOperator(editors, decorationRegistry, textDecorator, patternConverter);
             operator.removeDecoration('DECORATION_ID');
 
             expect(decorationRegistry.revoke).to.have.been.calledWith('DECORATION_ID');
@@ -121,12 +124,7 @@ suite('DecorationOperator', () => {
             const patternConverter = {
                 convert: sinon.stub().returns('NEW_PATTERN')
             };
-            const operator = new DecorationOperator({
-                editors,
-                decorationRegistry,
-                textDecorator,
-                patternConverter
-            });
+            const operator = new DecorationOperator(editors, decorationRegistry, textDecorator, patternConverter);
             operator.updateDecorationWithPatternAction('DECORATION_ID', 'PATTERN_CONVERT_ACTION');
 
             expect(patternConverter.convert).to.have.been.calledWith('OLD_PATTERN', 'PATTERN_CONVERT_ACTION');
@@ -159,11 +157,7 @@ suite('DecorationOperator', () => {
                 decorate: sinon.spy(),
                 undecorate: sinon.spy()
             };
-            const operator = new DecorationOperator({
-                editors,
-                decorationRegistry,
-                textDecorator
-            });
+            const operator = new DecorationOperator(editors, decorationRegistry, textDecorator, patternConverter);
             operator.updateDecorationPattern('DECORATION_ID', 'NEW_PATTERN');
 
             expect(decorationRegistry.updatePattern).to.have.been.calledWith('DECORATION_ID', 'NEW_PATTERN');
@@ -185,7 +179,7 @@ suite('DecorationOperator', () => {
             const editors = ['EDITOR'];
             const decorationRegistry = {retrieveAll: () => 'DECORATIONS'};
             const textDecorator = {decorate: sinon.spy()};
-            const operator = new DecorationOperator({editors, decorationRegistry, textDecorator});
+            const operator = new DecorationOperator(editors, decorationRegistry, textDecorator, patternConverter);
             operator.refreshDecorations();
 
             expect(textDecorator.decorate.args).to.eql([[editors, 'DECORATIONS']]);
@@ -207,7 +201,7 @@ suite('DecorationOperator', () => {
                 }]
             };
             const textDecorator = {undecorate: sinon.spy()};
-            const operator = new DecorationOperator({decorationRegistry, textDecorator, editors});
+            const operator = new DecorationOperator(editors, decorationRegistry, textDecorator, patternConverter);
             operator.removeAllDecorations();
 
             expect(decorationRegistry.revoke.args).to.eql([

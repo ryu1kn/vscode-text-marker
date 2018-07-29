@@ -1,12 +1,13 @@
+import ConfigStore from './config-store';
 
 const isNumber = require('lodash.isnumber');
 
 export default class Debouncer {
-    private readonly configStore: any;
-    private timeout: any;
+    private readonly configStore: ConfigStore;
+    private timeout: NodeJS.Timer;
 
-    constructor(params) {
-        this.configStore = params.configStore;
+    constructor(configStore) {
+        this.configStore = configStore;
     }
 
     debounce(callback) {

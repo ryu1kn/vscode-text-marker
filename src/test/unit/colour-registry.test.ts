@@ -6,13 +6,13 @@ suite('ColourRegistry', () => {
 
     test('it returns a color which has not been used', () => {
         const configStore = {get: stubWithArgs(['highlightColors'], ['COLOUR_1'])};
-        const colourRegistry = new ColourRegistry({configStore});
+        const colourRegistry = new ColourRegistry(configStore);
         expect(colourRegistry.issue()).to.eql('COLOUR_1');
     });
 
     test('it releases the given colour and make it available', () => {
         const configStore = {get: stubWithArgs(['highlightColors'], ['COLOUR_1'])};
-        const colourRegistry = new ColourRegistry({configStore});
+        const colourRegistry = new ColourRegistry(configStore);
 
         colourRegistry.issue();
         colourRegistry.revoke('COLOUR_1');
@@ -25,7 +25,7 @@ suite('ColourRegistry', () => {
             ['highlightColors'], [],
             ['defaultHighlightColor'], 'DEFAULT_COLOUR'
         )};
-        const colourRegistry = new ColourRegistry({configStore});
+        const colourRegistry = new ColourRegistry(configStore);
         expect(colourRegistry.issue()).to.eql('DEFAULT_COLOUR');
     });
 });

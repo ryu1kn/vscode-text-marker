@@ -18,14 +18,14 @@ suite('ConfigTargetPicker', () => {
             ],
             Promise.resolve({label: 'Global', value: 1})
         )};
-        const picker = new ConfigTargetPicker({windowComponent});
+        const picker = new ConfigTargetPicker(windowComponent);
 
         expect(await picker.pick()).to.eql(1);
     });
 
     test('it returns null if user didn\'t select anything', async () => {
         const windowComponent = {showQuickPick: () => {}};
-        const picker = new ConfigTargetPicker({windowComponent});
+        const picker = new ConfigTargetPicker(windowComponent);
 
         expect(await picker.pick()).to.eql(null);
     });

@@ -1,15 +1,19 @@
+import DecorationRegistry from './decoration-registry';
+import TextDecorator from './text-decorator';
+import PatternConverter from './pattern-converter';
+import TextEditor from './text-editor';
 
 export default class DecorationOperator {
-    private readonly editors: any;
-    private readonly decorationRegistry: any;
-    private readonly textDecorator: any;
-    private readonly patternConverter: any;
+    private readonly editors: TextEditor[];
+    private readonly decorationRegistry: DecorationRegistry;
+    private readonly textDecorator: TextDecorator;
+    private readonly patternConverter: PatternConverter;
 
-    constructor(params) {
-        this.editors = params.editors;
-        this.decorationRegistry = params.decorationRegistry;
-        this.textDecorator = params.textDecorator;
-        this.patternConverter = params.patternConverter;
+    constructor(editors, decorationRegistry, textDecorator, patternConverter) {
+        this.editors = editors;
+        this.decorationRegistry = decorationRegistry;
+        this.textDecorator = textDecorator;
+        this.patternConverter = patternConverter;
     }
 
     toggleDecoration(pattern) {

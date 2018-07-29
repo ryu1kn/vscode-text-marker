@@ -1,12 +1,13 @@
 import * as Const from './const';
+import ConfigurationTargetPicker from './config-target-picker';
 
 export default class ConfigStore {
     private readonly workspace: any;
-    private readonly configTargetPicker: any;
+    private readonly configTargetPicker: ConfigurationTargetPicker;
 
-    constructor(params) {
-        this.workspace = params.workspace;
-        this.configTargetPicker = params.configTargetPicker;
+    constructor(workspace, configTargetPicker) {
+        this.workspace = workspace;
+        this.configTargetPicker = configTargetPicker;
     }
 
     get(configName) {

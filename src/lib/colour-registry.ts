@@ -1,15 +1,16 @@
+import ConfigStore from './config-store';
 
 export default class ColourRegistry {
-    private readonly configStore: any;
-    private inUseColours: any[];
+    private readonly configStore: ConfigStore;
+    private inUseColours: string[];
 
-    constructor(params) {
-        this.configStore = params.configStore;
+    constructor(configStore) {
+        this.configStore = configStore;
         this.inUseColours = [];
     }
 
     issue() {
-        const colours = this.configStore.get('highlightColors');
+        const colours = this.configStore.get('highlightColors') as string[];
         const availableColour = colours.find(colour => !this.inUseColours.includes(colour));
         const newColour = availableColour || this.configStore.get('defaultHighlightColor');
         this.inUseColours = this.inUseColours.concat(newColour);

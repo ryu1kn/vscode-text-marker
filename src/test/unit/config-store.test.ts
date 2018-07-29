@@ -13,7 +13,7 @@ suite('ConfigStore', () => {
         };
         const workspace = {getConfiguration: stubWithArgs(['textmarker'], extensionConfig)};
         const configTargetPicker = {pick: () => 'CONFIG_TARGET'};
-        configStore = new ConfigStore({workspace, configTargetPicker});
+        configStore = new ConfigStore(workspace, configTargetPicker);
     });
 
     test('it returns the current config from vscode.workspace', () => {

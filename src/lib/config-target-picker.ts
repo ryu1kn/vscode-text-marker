@@ -1,13 +1,15 @@
+import WindowComponent from './editor-components/window';
+
 const ConfigurationTarget = {
     Global: 1,
     Workspace: 2
 };
 
 export default class ConfigurationTargetPicker {
-    private readonly windowComponent: any;
+    private readonly windowComponent: WindowComponent;
 
-    constructor(params) {
-        this.windowComponent = params.windowComponent;
+    constructor(windowComponent) {
+        this.windowComponent = windowComponent;
     }
 
     async pick() {

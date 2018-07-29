@@ -28,25 +28,25 @@ import ToggleWholeMatchModeCommand from './commands/toggle-whole-match-mode';
 import UnhighlightCommand from './commands/unhighlight';
 import UpdateHighlightCommand from './commands/update-highlight';
 import WindowComponent from './editor-components/window';
+import {EventEmitter} from 'events';
 
 const generateUuid = require('uuid/v4');
-const EventEmitter = require('events');
 const BASE_STATUS_BAR_PRIORITY = 100;
 
 export default class CommandFactory {
     private readonly vscode: any;
     private readonly logger: any;
-    private eventBus: any;
-    private decorationOperatorFactory: any;
-    private configStore: any;
-    private configTargetPicker: any;
-    private decorationRegistry: any;
-    private highlightPatternPicker: any;
-    private matchingModeRegistry: any;
-    private patternFactory: any;
-    private textEditorFactory: any;
-    private textLocationRegistry: any;
-    private windowComponent: any;
+    private eventBus: EventEmitter;
+    private decorationOperatorFactory: DecorationOperatorFactory;
+    private configStore: ConfigStore;
+    private configTargetPicker: ConfigTargetPicker;
+    private decorationRegistry: DecorationRegistry;
+    private highlightPatternPicker: HighlightPatternPicker;
+    private matchingModeRegistry: MatchingModeRegistry;
+    private patternFactory: PatternFactory;
+    private textEditorFactory: TextEditorFactory;
+    private textLocationRegistry: TextLocationRegistry;
+    private windowComponent: WindowComponent;
 
     constructor({vscode, logger}) {
         this.vscode = vscode;
@@ -129,7 +129,7 @@ export default class CommandFactory {
 
     createDecorationRefresher() {
         return new DecorationRefresher({
-            debouncer: new Debouncer({configStore: this.getConfigStore()}),
+            debouncer: new Debouncer(this.getConfigStore()),
             decorationOperatorFactory: this.getDecorationOperatorFactory(),
             logger: this.logger,
             textEditorFactory: this.getTextEditorFactory(),
@@ -174,10 +174,7 @@ export default class CommandFactory {
     }
 
     private createConfigStore() {
-        return new ConfigStore({
-            workspace: this.vscode.workspace,
-            configTargetPicker: this.getConfigTargetPicker()
-        });
+        return new ConfigStore(this.vscode.workspace, this.getConfigTargetPicker());
     }
 
     private getConfigTargetPicker() {
@@ -186,7 +183,7 @@ export default class CommandFactory {
     }
 
     private createConfigTargetPicker() {
-        return new ConfigTargetPicker({windowComponent: this.getWindowComponent()});
+        return new ConfigTargetPicker(this.getWindowComponent());
     }
 
     private getDecorationRegistry() {
@@ -195,18 +192,18 @@ export default class CommandFactory {
     }
 
     private createDecorationOperatorFactory() {
-        return new DecorationOperatorFactory({
-            textDecorator: new TextDecorator({
+        return new DecorationOperatorFactory(
+            this.getDecorationRegistry(),
+            new TextDecorator({
                 textLocationRegistry: this.getTextLocationRegistry()
             }),
-            decorationRegistry: this.getDecorationRegistry(),
-            windowComponent: this.getWindowComponent()
-        });
+            this.getWindowComponent()
+        );
     }
 
     private createDecorationRegistry() {
         const configStore = this.getConfigStore();
-        const colourRegistry = new ColourRegistry({configStore});
+        const colourRegistry = new ColourRegistry(configStore);
         return new DecorationRegistry({
             colourRegistry,
             configStore,
