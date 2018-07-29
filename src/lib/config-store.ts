@@ -1,8 +1,8 @@
 import * as Const from './const';
 
 export default class ConfigStore {
-    private _workspace: any;
-    private _configTargetPicker: any;
+    private readonly _workspace: any;
+    private readonly _configTargetPicker: any;
 
     constructor(params) {
         this._workspace = params.workspace;

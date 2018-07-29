@@ -2,11 +2,11 @@ import {Event} from './const';
 import DecorationEntryParser from './decoration-entry-parser';
 
 export default class SavedHighlightsRestorer {
-    private _configStore: any;
-    private _decorationOperatorFactory: any;
-    private _patternFactory: any;
-    private _eventBus: any;
-    private _decorationEntryParser: any;
+    private readonly _configStore: any;
+    private readonly _decorationOperatorFactory: any;
+    private readonly _patternFactory: any;
+    private readonly _eventBus: any;
+    private readonly _decorationEntryParser: any;
 
     constructor(params) {
         this._configStore = params.configStore;
@@ -18,17 +18,17 @@ export default class SavedHighlightsRestorer {
         this._registerListeners();
     }
 
-    _registerListeners() {
+    private _registerListeners() {
         this._eventBus.on(Event.EXTENSION_READY, this._restore.bind(this));
     }
 
-    _restore() {
+    private _restore() {
         const decorationsData = this._configStore.get('savedHighlights');
         const decorationOperator = this._decorationOperatorFactory.createForVisibleEditors();
         decorationsData.forEach(decorationData => this._addDecoration(decorationData, decorationOperator));
     }
 
-    _addDecoration(decorationData, decorationOperator) {
+    private _addDecoration(decorationData, decorationOperator) {
         const patternData = this._decorationEntryParser.getPattern(decorationData);
         const pattern = this._patternFactory.create(patternData);
         decorationOperator.addDecoration(pattern);

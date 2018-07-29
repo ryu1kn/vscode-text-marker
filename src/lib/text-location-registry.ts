@@ -1,6 +1,6 @@
 
 export default class TextLocationRegistry {
-    private _recordMap: Map<any, any>;
+    private readonly _recordMap: Map<any, any>;
 
     constructor() {
         this._recordMap = new Map();
@@ -27,7 +27,7 @@ export default class TextLocationRegistry {
         return decorationId || null;
     }
 
-    _isPointingRange(range2) {
+    private _isPointingRange(range2) {
         return range1 => {
             if (range2.start < range1.start || range2.end > range1.end) return false;
             return range2.start === range2.end ||

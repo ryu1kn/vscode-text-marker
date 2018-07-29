@@ -1,6 +1,6 @@
 
 export default class TextDecorator {
-    private _textLocationRegistry: any;
+    private readonly _textLocationRegistry: any;
 
     constructor(params) {
         this._textLocationRegistry = params.textLocationRegistry;
@@ -25,7 +25,7 @@ export default class TextDecorator {
         });
     }
 
-    _addDecoration(editor, decoration) {
+    private _addDecoration(editor, decoration) {
         const ranges = decoration.pattern.locateIn(editor.wholeText);
         editor.setDecorations(decoration.decorationType, ranges);
         this._textLocationRegistry.register({

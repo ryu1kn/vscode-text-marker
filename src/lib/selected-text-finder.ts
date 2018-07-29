@@ -7,11 +7,11 @@ export default class SelectedTextFinder {
         return selectedText ? selectedText : this._getWordUnderCursor(editor);
     }
 
-    _getSelectedText(editor) {
+    private _getSelectedText(editor) {
         return editor.document.getText(editor.selection);
     }
 
-    _getWordUnderCursor(editor) {
+    private _getWordUnderCursor(editor) {
         const wordRange = editor.document.getWordRangeAtPosition(editor.selection.active);
         return wordRange && editor.document.getText(wordRange);
     }

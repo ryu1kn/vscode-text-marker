@@ -1,7 +1,7 @@
 
 export default class HighlightUsingRegexCommand {
-    private _decorationOperatorFactory: any;
-    private _regexReader: any;
+    private readonly _decorationOperatorFactory: any;
+    private readonly _regexReader: any;
 
     constructor(params) {
         this._decorationOperatorFactory = params.decorationOperatorFactory;

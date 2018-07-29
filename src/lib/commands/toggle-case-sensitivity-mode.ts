@@ -1,6 +1,6 @@
 
 export default class ToggleCaseSensitivityModeCommand {
-    private _matchingModeRegistry: any;
+    private readonly _matchingModeRegistry: any;
 
     constructor(params) {
         this._matchingModeRegistry = params.matchingModeRegistry;

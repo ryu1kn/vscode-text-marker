@@ -34,8 +34,8 @@ const EventEmitter = require('events');
 const BASE_STATUS_BAR_PRIORITY = 100;
 
 export default class CommandFactory {
-    private _vscode: any;
-    private _logger: any;
+    private readonly _vscode: any;
+    private readonly _logger: any;
     private _eventBus: any;
     private _decorationOperatorFactory: any;
     private _configStore: any;
@@ -141,7 +141,7 @@ export default class CommandFactory {
         return this._wrapCommand(command);
     }
 
-    _wrapCommand(command) {
+    private _wrapCommand(command) {
         return new CommandWrapper({
             command,
             logger: this._logger
@@ -190,38 +190,38 @@ export default class CommandFactory {
         return this._eventBus;
     }
 
-    _getDecorationOperatorFactory() {
+    private _getDecorationOperatorFactory() {
         this._decorationOperatorFactory = this._decorationOperatorFactory || this._createDecorationOperatorFactory();
         return this._decorationOperatorFactory;
     }
 
-    _getConfigStore() {
+    private _getConfigStore() {
         this._configStore = this._configStore || this._createConfigStore();
         return this._configStore;
     }
 
-    _createConfigStore() {
+    private _createConfigStore() {
         return new ConfigStore({
             workspace: this._vscode.workspace,
             configTargetPicker: this._getConfigTargetPicker()
         });
     }
 
-    _getConfigTargetPicker() {
+    private _getConfigTargetPicker() {
         this._configTargetPicker = this._configTargetPicker || this._createConfigTargetPicker();
         return this._configTargetPicker;
     }
 
-    _createConfigTargetPicker() {
+    private _createConfigTargetPicker() {
         return new ConfigTargetPicker({windowComponent: this._getWindowComponent()});
     }
 
-    _getDecorationRegistry() {
+    private _getDecorationRegistry() {
         this._decorationRegistry = this._decorationRegistry || this._createDecorationRegistry();
         return this._decorationRegistry;
     }
 
-    _createDecorationOperatorFactory() {
+    private _createDecorationOperatorFactory() {
         return new DecorationOperatorFactory({
             textDecorator: new TextDecorator({
                 textLocationRegistry: this._getTextLocationRegistry()
@@ -231,7 +231,7 @@ export default class CommandFactory {
         });
     }
 
-    _createDecorationRegistry() {
+    private _createDecorationRegistry() {
         const configStore = this._getConfigStore();
         const colourRegistry = new ColourRegistry({configStore});
         return new DecorationRegistry({
@@ -242,24 +242,24 @@ export default class CommandFactory {
         });
     }
 
-    _getHighlightPatternPicker() {
+    private _getHighlightPatternPicker() {
         this._highlightPatternPicker = this._highlightPatternPicker || this._createHighlightPatternPicker();
         return this._highlightPatternPicker;
     }
 
-    _createHighlightPatternPicker() {
+    private _createHighlightPatternPicker() {
         return new HighlightPatternPicker({
             decorationRegistry: this._getDecorationRegistry(),
             windowComponent: this._getWindowComponent()
         });
     }
 
-    _getMatchingModeRegistry() {
+    private _getMatchingModeRegistry() {
         this._matchingModeRegistry = this._matchingModeRegistry || this._createMatchingModeRegistry();
         return this._matchingModeRegistry;
     }
 
-    _createMatchingModeRegistry() {
+    private _createMatchingModeRegistry() {
         const configStore = this._getConfigStore();
         return new MatchingModeRegistry({
             eventBus: this.getEventBus(),
@@ -268,33 +268,33 @@ export default class CommandFactory {
         });
     }
 
-    _getPatternFactory() {
+    private _getPatternFactory() {
         this._patternFactory = this._patternFactory || new PatternFactory({matchingModeRegistry: this._getMatchingModeRegistry()});
         return this._patternFactory;
     }
 
-    _getTextEditorFactory() {
+    private _getTextEditorFactory() {
         this._textEditorFactory = this._textEditorFactory || this._createTextEditorFactory();
         return this._textEditorFactory;
     }
 
-    _createTextEditorFactory() {
+    private _createTextEditorFactory() {
         return new TextEditorFactory({
             VsRange: this._vscode.Range
         });
     }
 
-    _getTextLocationRegistry() {
+    private _getTextLocationRegistry() {
         this._textLocationRegistry = this._textLocationRegistry || new TextLocationRegistry();
         return this._textLocationRegistry;
     }
 
-    _getWindowComponent() {
+    private _getWindowComponent() {
         this._windowComponent = this._windowComponent || this._createWindowComponent();
         return this._windowComponent;
     }
 
-    _createWindowComponent() {
+    private _createWindowComponent() {
         return new WindowComponent({
             window: this._vscode.window,
             textEditorFactory: this._getTextEditorFactory()

@@ -1,10 +1,10 @@
 
 export default class UpdateHighlightCommand {
-    private _decorationOperatorFactory: any;
-    private _decorationRegistry: any;
-    private _patternVariationReader: any;
-    private _textEditorFactory: any;
-    private _textLocationRegistry: any;
+    private readonly _decorationOperatorFactory: any;
+    private readonly _decorationRegistry: any;
+    private readonly _patternVariationReader: any;
+    private readonly _textEditorFactory: any;
+    private readonly _textLocationRegistry: any;
 
     constructor(params) {
         this._decorationOperatorFactory = params.decorationOperatorFactory;

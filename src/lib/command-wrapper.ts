@@ -1,7 +1,7 @@
 
 export default class CommandWrapper {
-    private _command: any;
-    private _logger: any;
+    private readonly _command: any;
+    private readonly _logger: any;
 
     constructor({command, logger}) {
         this._command = command;

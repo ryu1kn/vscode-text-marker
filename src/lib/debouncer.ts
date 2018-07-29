@@ -2,7 +2,7 @@
 const _isNumber = require('lodash.isnumber');
 
 export default class Debouncer {
-    private _configStore: any;
+    private readonly _configStore: any;
     private _timeout: any;
 
     constructor(params) {

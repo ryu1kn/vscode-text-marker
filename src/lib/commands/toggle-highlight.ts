@@ -1,9 +1,9 @@
 
 export default class ToggleHighlightCommand {
-    private _decorationOperatorFactory: any;
-    private _patternFactory: any;
-    private _textEditorFactory: any;
-    private _textLocationRegistry: any;
+    private readonly _decorationOperatorFactory: any;
+    private readonly _patternFactory: any;
+    private readonly _textEditorFactory: any;
+    private readonly _textLocationRegistry: any;
 
     constructor(params) {
         this._decorationOperatorFactory = params.decorationOperatorFactory;
@@ -19,18 +19,18 @@ export default class ToggleHighlightCommand {
             flatRange: textEditor.flatRange
         });
         if (decorationId) {
-            this._removeDecoration(decorationId);
+            this.removeDecoration(decorationId);
         } else {
-            this._addDecoration(textEditor);
+            this.addDecoration(textEditor);
         }
     }
 
-    _removeDecoration(decorationId) {
+    private removeDecoration(decorationId) {
         const decorationOperator = this._decorationOperatorFactory.createForVisibleEditors();
         decorationOperator.removeDecoration(decorationId);
     }
 
-    _addDecoration(textEditor) {
+    private addDecoration(textEditor) {
         if (!textEditor.selectedText) return;
         const decorationOperator = this._decorationOperatorFactory.createForVisibleEditors();
         const pattern = this._patternFactory.create({phrase: textEditor.selectedText});

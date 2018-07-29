@@ -1,11 +1,11 @@
 
 export default abstract class AbstractPattern {
-    private _phrase: any;
-    private _ignoreCase: boolean;
-    private _wholeMatch: boolean;
+    private readonly _phrase: any;
+    private readonly _ignoreCase: boolean;
+    private readonly _wholeMatch: boolean;
 
-    abstract _create(params);
-    abstract _findCandidateRanges(text);
+    protected abstract _create(params);
+    protected abstract _findCandidateRanges(text);
     abstract type;
 
     constructor(params) {
@@ -62,7 +62,7 @@ export default abstract class AbstractPattern {
         return this.wholeMatch ? this._filterwholeMatchMatch(text, candidateRanges) : candidateRanges;
     }
 
-    _filterwholeMatchMatch(text, ranges) {
+    private _filterwholeMatchMatch(text, ranges) {
         return ranges.filter(range =>
             !/\w\w/.test(text.substring(range.start - 1, range.start + 1)) &&
             !/\w\w/.test(text.substring(range.end - 1, range.end + 1))

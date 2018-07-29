@@ -1,6 +1,6 @@
 
 export default class ColourRegistry {
-    private _configStore: any;
+    private readonly _configStore: any;
     private _inUseColours: any[];
 
     constructor(params) {

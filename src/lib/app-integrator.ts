@@ -2,8 +2,8 @@ import * as Const from './const';
 import CommandFactory from './command-factory';
 
 export default class AppIntegrator {
-    private _commandFactory: CommandFactory;
-    private _vscode: any;
+    private readonly _commandFactory: CommandFactory;
+    private readonly _vscode: any;
 
     static create(vscode, logger) {
         const commandFactory = new CommandFactory({vscode, logger});
@@ -23,7 +23,7 @@ export default class AppIntegrator {
         this._broadcastReady();
     }
 
-    _registerEventListeners(context) {
+    private _registerEventListeners(context) {
         const decorationRefresher = this._commandFactory.createDecorationRefresher();
         this._vscode.window.onDidChangeActiveTextEditor(
             decorationRefresher.refresh, decorationRefresher, context.subscriptions);
@@ -31,7 +31,7 @@ export default class AppIntegrator {
             decorationRefresher.refreshWithDelay, decorationRefresher, context.subscriptions);
     }
 
-    _registerCommands(context) {
+    private _registerCommands(context) {
         const factory = this._commandFactory;
         const commandMap = new Map([
             [`${Const.EXTENSION_ID}.highlightUsingRegex`, factory.createHighlightUsingRegex()],
@@ -49,7 +49,7 @@ export default class AppIntegrator {
         });
     }
 
-    _registerTextEditorCommands(context) {
+    private _registerTextEditorCommands(context) {
         const factory = this._commandFactory;
         const commandMap = new Map([
             [`${Const.EXTENSION_ID}.toggleHighlight`, factory.createToggleHighlightCommand()],
@@ -61,13 +61,13 @@ export default class AppIntegrator {
         });
     }
 
-    _prepareExtensionEventsDrivenItems() {
+    private _prepareExtensionEventsDrivenItems() {
         this._commandFactory.createSavedHighlightsRestorer();
         this._commandFactory.createToggleCaseSensitivityModeButton();
         this._commandFactory.createToggleWholeMatchModeButton();
     }
 
-    _broadcastReady() {
+    private _broadcastReady() {
         this._commandFactory.getEventBus().emit(Const.Event.EXTENSION_READY);
     }
 

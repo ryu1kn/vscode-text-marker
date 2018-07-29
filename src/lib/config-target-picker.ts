@@ -4,7 +4,7 @@ const ConfigurationTarget = {
 };
 
 export default class ConfigurationTargetPicker {
-    private _windowComponent: any;
+    private readonly _windowComponent: any;
 
     constructor(params) {
         this._windowComponent = params.windowComponent;
@@ -17,7 +17,7 @@ export default class ConfigurationTargetPicker {
         return item ? item.value : null;
     }
 
-    _buildQuickPickItems() {
+    private _buildQuickPickItems() {
         return [
             {
                 label: 'Global',

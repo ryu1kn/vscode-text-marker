@@ -1,7 +1,7 @@
 import {Event} from './const';
 
 export default class MatchingModeRegistry {
-    private _eventBus: any;
+    private readonly _eventBus: any;
     private _ignoreCase: any;
     private _wholeMatch: any;
 
@@ -12,7 +12,7 @@ export default class MatchingModeRegistry {
         this._broadcastReady();
     }
 
-    _broadcastReady() {
+    private _broadcastReady() {
         this._eventBus.once(Event.EXTENSION_READY, () => {
             this._eventBus.emit(Event.MATCHING_MODE_INITIALISED, this.mode);
         });

@@ -2,10 +2,10 @@ import DecorationOperator from './decoration-operator';
 import PatternConverter from './pattern-converter';
 
 export default class DecorationOperatorFactory {
-    private _decorationRegistry: any;
-    private _textDecorator: any;
-    private _patternConverter: any;
-    private _windowComponent: any;
+    private readonly _decorationRegistry: any;
+    private readonly _textDecorator: any;
+    private readonly _patternConverter: any;
+    private readonly _windowComponent: any;
 
     constructor(params) {
         this._decorationRegistry = params.decorationRegistry;

@@ -1,9 +1,9 @@
 
 export default class DecorationOperator {
-    private _editors: any;
-    private _decorationRegistry: any;
-    private _textDecorator: any;
-    private _patternConverter: any;
+    private readonly _editors: any;
+    private readonly _decorationRegistry: any;
+    private readonly _textDecorator: any;
+    private readonly _patternConverter: any;
 
     constructor(params) {
         this._editors = params.editors;
@@ -33,7 +33,7 @@ export default class DecorationOperator {
         this._removeDecoration(decoration);
     }
 
-    _removeDecoration(decoration) {
+    private _removeDecoration(decoration) {
         this._decorationRegistry.revoke(decoration.id);
         this._textDecorator.undecorate(this._editors, [decoration]);
     }
@@ -49,7 +49,7 @@ export default class DecorationOperator {
         this._updateDecorationWithPattern(decoration, newPattern);
     }
 
-    _updateDecorationWithPattern(decoration, newPattern) {
+    private _updateDecorationWithPattern(decoration, newPattern) {
         this._textDecorator.undecorate(this._editors, [decoration]);
 
         const newDecoration = this._decorationRegistry.updatePattern(decoration.id, newPattern);

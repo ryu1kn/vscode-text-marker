@@ -6,10 +6,10 @@ const getColorContrast = require('../../lib-3rd-party/dynamic-contrast');
 const OVERVIEW_RULER_COLOUR = 'violet';
 
 export default class DecorationRegistry {
-    private _colourRegistry: any;
-    private _configStore: any;
-    private _window: any;
-    private _textDecorationMap: any;
+    private readonly _colourRegistry: any;
+    private readonly _configStore: any;
+    private readonly _window: any;
+    private readonly _textDecorationMap: any;
 
     constructor(params) {
         this._colourRegistry = params.colourRegistry;
@@ -55,7 +55,7 @@ export default class DecorationRegistry {
         return this._textDecorationMap.toList();
     }
 
-    _generateDecorationType(colour) {
+    private _generateDecorationType(colour) {
         return this._window.createTextEditorDecorationType(
             Object.assign(
                 {
@@ -69,11 +69,11 @@ export default class DecorationRegistry {
         );
     }
 
-    get _useHighlightColorOnRuler() {
+    private get _useHighlightColorOnRuler() {
         return this._configStore.get('useHighlightColorOnRuler');
     }
 
-    get _autoSelectDistinctiveTextColor() {
+    private get _autoSelectDistinctiveTextColor() {
         return this._configStore.get('autoSelectDistinctiveTextColor');
     }
 

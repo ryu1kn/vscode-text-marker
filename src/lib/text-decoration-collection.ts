@@ -1,7 +1,7 @@
 
 export default class TextDecorationCollection {
-    private _generateUuid: any;
-    private _map: any;
+    private readonly _generateUuid: any;
+    private readonly _map: any;
 
     constructor({generateUuid}) {
         this._generateUuid = generateUuid;

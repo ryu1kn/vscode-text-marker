@@ -1,6 +1,6 @@
 
 export default class RemoveAllHighlightsCommand {
-    private _decorationOperatorFactory: any;
+    private readonly _decorationOperatorFactory: any;
 
     constructor(params) {
         this._decorationOperatorFactory = params.decorationOperatorFactory;

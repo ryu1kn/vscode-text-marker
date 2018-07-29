@@ -1,10 +1,10 @@
 
 export default class DecorationRefresher {
-    private _logger: any;
-    private _decorationOperatorFactory: any;
-    private _debouncer: any;
-    private _textEditorFactory: any;
-    private _windowComponent: any;
+    private readonly _logger: any;
+    private readonly _decorationOperatorFactory: any;
+    private readonly _debouncer: any;
+    private readonly _textEditorFactory: any;
+    private readonly _windowComponent: any;
 
     constructor(params) {
         this._logger = params.logger;
@@ -24,7 +24,7 @@ export default class DecorationRefresher {
         }
     }
 
-    _refresh(editor) {
+    private _refresh(editor) {
         const decorationOperator = this._decorationOperatorFactory.create([editor]);
         decorationOperator.refreshDecorations();
     }
@@ -44,7 +44,7 @@ export default class DecorationRefresher {
         }
     }
 
-    _handleError(e) {
+    private _handleError(e) {
         this._logger.error(e.stack);
     }
 

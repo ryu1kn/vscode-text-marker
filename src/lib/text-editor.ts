@@ -1,9 +1,9 @@
 import SelectedTextFinder from './selected-text-finder';
 
 export default class TextEditor {
-    private _editor: any;
-    private _selectedTextFinder: any;
-    private _VsRange: any;
+    private readonly _editor: any;
+    private readonly _selectedTextFinder: any;
+    private readonly _VsRange: any;
 
     constructor(params) {
         this._editor = params.editor;
@@ -31,7 +31,7 @@ export default class TextEditor {
         };
     }
 
-    _getFlatPosition(position) {
+    private _getFlatPosition(position) {
         return this._editor.document.offsetAt(position);
     }
 

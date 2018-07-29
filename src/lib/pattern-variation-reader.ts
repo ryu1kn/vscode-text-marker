@@ -1,7 +1,7 @@
 import {PatternAction} from './const';
 
 export default class PatternVariationReader {
-    private _windowComponent: any;
+    private readonly _windowComponent: any;
 
     constructor(params) {
         this._windowComponent = params.windowComponent;
@@ -29,7 +29,7 @@ export default class PatternVariationReader {
         }
     }
 
-    _buildSelectItems(pattern) {
+    private _buildSelectItems(pattern) {
         return [
             this._getToggleCaseSensitivityOption(pattern),
             this._getToggleWholeMatchOption(pattern),
@@ -37,7 +37,7 @@ export default class PatternVariationReader {
         ];
     }
 
-    _getToggleCaseSensitivityOption(pattern) {
+    private _getToggleCaseSensitivityOption(pattern) {
         const label = pattern.ignoreCase ? 'Case Sensitive' : 'Case Insensitive';
         return {
             label: `Change to ${label}`,
@@ -45,7 +45,7 @@ export default class PatternVariationReader {
         };
     }
 
-    _getToggleWholeMatchOption(pattern) {
+    private _getToggleWholeMatchOption(pattern) {
         const label = pattern.wholeMatch ? 'Partial Match' : 'Whole Match';
         return {
             label: `Change to ${label}`,
@@ -53,7 +53,7 @@ export default class PatternVariationReader {
         };
     }
 
-    _getUpdatePhraseOption(pattern) {
+    private _getUpdatePhraseOption(pattern) {
         const label = pattern.type === 'RegExp' ? 'RegExp Pattern' : 'Text Pattern';
         return {
             label: `Update ${label}`,

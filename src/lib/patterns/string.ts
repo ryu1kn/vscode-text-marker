@@ -10,7 +10,7 @@ export default class StringPattern extends AbstractPattern {
         return this.phrase;
     }
 
-    _findCandidateRanges(text) {
+    protected _findCandidateRanges(text) {
         const memo = {
             ranges: [],
             lastOffset: 0
@@ -29,15 +29,15 @@ export default class StringPattern extends AbstractPattern {
         return finalMemo.ranges;
     }
 
-    _getPhraseForComparison() {
+    private _getPhraseForComparison() {
         return this.ignoreCase ? this.phrase.toLowerCase() : this.phrase;
     }
 
-    _getTextForComparison(text) {
+    private _getTextForComparison(text) {
         return this.ignoreCase ? text.toLowerCase() : text;
     }
 
-    _create(params) {
+    protected _create(params) {
         return new StringPattern(params);
     }
 

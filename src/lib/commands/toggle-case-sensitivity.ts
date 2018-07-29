@@ -1,8 +1,8 @@
 import {PatternAction} from '../const';
 
 export default class ToggleCaseSensitivityCommand {
-    private _decorationOperatorFactory: any;
-    private _highlightPatternPicker: any;
+    private readonly _decorationOperatorFactory: any;
+    private readonly _highlightPatternPicker: any;
 
     constructor(params) {
         this._decorationOperatorFactory = params.decorationOperatorFactory;

@@ -1,9 +1,9 @@
 import DecorationEntryFormatter from '../decoration-entry-formatter';
 
 export default class SaveAllHighlightsCommand {
-    private _configStore: any;
-    private _decorationRegistry: any;
-    private _decorationEntryFormatter: DecorationEntryFormatter;
+    private readonly _configStore: any;
+    private readonly _decorationRegistry: any;
+    private readonly _decorationEntryFormatter: DecorationEntryFormatter;
 
     constructor(params) {
         this._configStore = params.configStore;

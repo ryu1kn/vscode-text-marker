@@ -1,7 +1,7 @@
 
 export default class RegexReader {
-    private _patternFactory: any;
-    private _windowComponent: any;
+    private readonly _patternFactory: any;
+    private readonly _windowComponent: any;
 
     constructor(params) {
         this._patternFactory = params.patternFactory;
@@ -17,7 +17,7 @@ export default class RegexReader {
         });
     }
 
-    _getInputBoxOption() {
+    private _getInputBoxOption() {
         return {placeHolder: 'Enter a regular expression to highlight text'};
     }
 

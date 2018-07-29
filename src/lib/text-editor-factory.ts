@@ -1,7 +1,7 @@
 import TextEditor from './text-editor';
 
 export default class TextEditorFactory {
-    private _VsRange: any;
+    private readonly _VsRange: any;
 
     constructor(params) {
         this._VsRange = params.VsRange;

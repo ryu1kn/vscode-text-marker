@@ -11,7 +11,7 @@ export default class RegexPattern extends AbstractPattern {
         return new RegExp(this.phrase, caseFlag).toString();
     }
 
-    _findCandidateRanges(text) {
+    protected _findCandidateRanges(text) {
         const adjustedPattern = this._getAdjustedRegex();
         const ranges = [];
 
@@ -29,11 +29,11 @@ export default class RegexPattern extends AbstractPattern {
         return ranges;
     }
 
-    _create(params) {
+    protected _create(params) {
         return new RegexPattern(params);
     }
 
-    _getAdjustedRegex() {
+    private _getAdjustedRegex() {
         const flags = this.ignoreCase ? 'gi' : 'g';
         return new RegExp(this.phrase, flags);
     }

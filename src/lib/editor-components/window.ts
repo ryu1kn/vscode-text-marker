@@ -1,7 +1,7 @@
 
 export default class WindowComponent {
-    private _window: any;
-    private _textEditorFactory: any;
+    private readonly _window: any;
+    private readonly _textEditorFactory: any;
 
     constructor(params) {
         this._window = params.window;
