@@ -91,10 +91,7 @@ export default class CommandFactory {
     }
 
     createToggleCaseSensitivityCommand() {
-        const command = new ToggleCaseSensitivityCommand({
-            decorationOperatorFactory: this.getDecorationOperatorFactory(),
-            highlightPatternPicker: this.getHighlightPatternPicker()
-        });
+        const command = new ToggleCaseSensitivityCommand(this.getDecorationOperatorFactory(), this.getHighlightPatternPicker());
         return this._wrapCommand(command);
     }
 

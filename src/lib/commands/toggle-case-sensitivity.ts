@@ -1,12 +1,14 @@
 import {PatternAction} from '../const';
+import DecorationOperatorFactory from '../decoration-operator-factory';
+import HighlightPatternPicker from '../highlight-pattern-picker';
 
 export default class ToggleCaseSensitivityCommand {
-    private readonly decorationOperatorFactory: any;
-    private readonly highlightPatternPicker: any;
+    private readonly decorationOperatorFactory: DecorationOperatorFactory;
+    private readonly highlightPatternPicker: HighlightPatternPicker;
 
-    constructor(params) {
-        this.decorationOperatorFactory = params.decorationOperatorFactory;
-        this.highlightPatternPicker = params.highlightPatternPicker;
+    constructor(decorationOperatorFactory: DecorationOperatorFactory, highlightPatternPicker: HighlightPatternPicker) {
+        this.decorationOperatorFactory = decorationOperatorFactory;
+        this.highlightPatternPicker = highlightPatternPicker;
     }
 
     async execute() {

@@ -1,29 +1,39 @@
-import {expect, sinon} from '../../helpers/helper';
+import {mock, verify, when} from '../../helpers/helper';
 import {PatternAction} from '../../../lib/const';
 import ToggleCaseSensitivityCommand from '../../../lib/commands/toggle-case-sensitivity';
+import HighlightPatternPicker from "../../../lib/highlight-pattern-picker";
+import DecorationOperatorFactory from "../../../lib/decoration-operator-factory";
+import DecorationOperator from "../../../lib/decoration-operator";
 
 suite('ToggleCaseSensitivityCommand', () => {
 
-    test('it toggles case sensitivity of the decoration', async () => {
-        const decorationOperator = {updateDecorationWithPatternAction: sinon.spy()};
-        const decorationOperatorFactory = {createForVisibleEditors: () => decorationOperator};
-        const highlightPatternPicker = {pick: sinon.stub().returns(Promise.resolve('DECORATION_ID'))};
-        const command = new ToggleCaseSensitivityCommand({decorationOperatorFactory, highlightPatternPicker});
+    suite('When text is selected', () => {
+        const decorationOperator = mock(DecorationOperator);
+        const decorationOperatorFactory = mock(DecorationOperatorFactory);
+        when(decorationOperatorFactory.createForVisibleEditors()).thenReturn(decorationOperator);
 
-        await command.execute();
+        const highlightPatternPicker = mock(HighlightPatternPicker);
+        when(highlightPatternPicker.pick('Select a pattern to toggle case sensitivity')).thenResolve('DECORATION_ID');
 
-        expect(decorationOperator.updateDecorationWithPatternAction).to.have.been.calledWith('DECORATION_ID', PatternAction.TOGGLE_CASE_SENSITIVITY);
-        expect(highlightPatternPicker.pick).to.have.been.calledWith('Select a pattern to toggle case sensitivity');
-    });
+        const command = new ToggleCaseSensitivityCommand(decorationOperatorFactory, highlightPatternPicker);
 
-    test('it does nothing if text is not selected', async () => {
-        const decorationOperatorFactory = {createForVisibleEditors: sinon.spy()};
-        const highlightPatternPicker = {pick: () => Promise.resolve()};
-        const command = new ToggleCaseSensitivityCommand({decorationOperatorFactory, highlightPatternPicker});
+        test('it toggles case sensitivity of the decoration', async () => {
+            await command.execute();
 
-        await command.execute();
+            verify(decorationOperator.updateDecorationWithPatternAction('DECORATION_ID', PatternAction.TOGGLE_CASE_SENSITIVITY));
+        });
+    })
 
-        expect(decorationOperatorFactory.createForVisibleEditors).to.have.been.not.called;
+    suite('When text is NOT selected', () => {
+        const decorationOperatorFactory = mock(DecorationOperatorFactory);
+        const highlightPatternPicker = mock(HighlightPatternPicker);
+        const command = new ToggleCaseSensitivityCommand(decorationOperatorFactory, highlightPatternPicker);
+
+        test('it does nothing if text is not selected', async () => {
+            await command.execute();
+
+            verify(decorationOperatorFactory.createForVisibleEditors(), {times: 0});
+        });
     });
 
 });
