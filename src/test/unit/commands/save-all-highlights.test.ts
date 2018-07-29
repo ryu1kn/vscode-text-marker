@@ -1,5 +1,7 @@
-import {expect, sinon} from '../../helpers/helper';
+import {mock, verify, when} from '../../helpers/helper';
 import SaveAllHighlightsCommand from '../../../lib/commands/save-all-highlights';
+import DecorationRegistry from "../../../lib/decoration-registry";
+import ConfigStore from "../../../lib/config-store";
 
 suite('SaveAllHighlightsCommand', () => {
     let command;
@@ -24,34 +26,30 @@ suite('SaveAllHighlightsCommand', () => {
         }
     }];
 
-    setup(() => {
-        const decorationRegistry = {retrieveAll: () => decorations};
-        configStore = {set: sinon.stub().returns(Promise.resolve())};
-        command = new SaveAllHighlightsCommand({decorationRegistry, configStore});
-    });
+    const decorationRegistry = mock(DecorationRegistry);
+    when(decorationRegistry.retrieveAll()).thenReturn(decorations);
+
+    configStore = mock(ConfigStore);
+
+    command = new SaveAllHighlightsCommand(configStore, decorationRegistry);
 
     test('it saves highlight into config', async () => {
         await command.execute();
-        expect(configStore.set.args[0][0]).to.eql('savedHighlights');
-        expect(configStore.set.args[0][1][0]).to.eql({
+
+        verify(configStore.set('savedHighlights', [{
             pattern: {
                 type: 'string',
                 expression: 'PHRASE',
                 ignoreCase: 'IGNORE_CASE',
                 wholeMatch: 'WHOLE_MATCH'
             }
-        });
-    });
-
-    test('it encodes regular expression pattern as "regex"', async () => {
-        await command.execute();
-        expect(configStore.set.args[0][1][1]).to.eql({
+        }, {
             pattern: {
                 type: 'regex',
                 expression: 'PHRASE',
                 ignoreCase: 'IGNORE_CASE',
                 wholeMatch: 'WHOLE_MATCH'
             }
-        });
+        }]));
     });
 });

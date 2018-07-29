@@ -1,13 +1,15 @@
 import DecorationEntryFormatter from '../decoration-entry-formatter';
+import ConfigStore from '../config-store';
+import DecorationRegistry from '../decoration-registry';
 
 export default class SaveAllHighlightsCommand {
-    private readonly configStore: any;
-    private readonly decorationRegistry: any;
+    private readonly configStore: ConfigStore;
+    private readonly decorationRegistry: DecorationRegistry;
     private readonly decorationEntryFormatter: DecorationEntryFormatter;
 
-    constructor(params) {
-        this.configStore = params.configStore;
-        this.decorationRegistry = params.decorationRegistry;
+    constructor(configStore: ConfigStore, decorationRegistry: DecorationRegistry) {
+        this.configStore = configStore;
+        this.decorationRegistry = decorationRegistry;
 
         this.decorationEntryFormatter = new DecorationEntryFormatter();
     }

@@ -81,18 +81,12 @@ export default class CommandFactory {
     }
 
     createRemoveAllHighlightsCommand() {
-        const command = new RemoveAllHighlightsCommand({
-            decorationOperatorFactory: this.getDecorationOperatorFactory()
-        });
+        const command = new RemoveAllHighlightsCommand(this.getDecorationOperatorFactory());
         return this._wrapCommand(command);
     }
 
     createSaveAllHighlightsCommand() {
-        const command = new SaveAllHighlightsCommand({
-            configStore: this.getConfigStore(),
-            configTargetPicker: this.getConfigTargetPicker(),
-            decorationRegistry: this.getDecorationRegistry()
-        });
+        const command = new SaveAllHighlightsCommand(this.getConfigStore(), this.getDecorationRegistry());
         return this._wrapCommand(command);
     }
 

@@ -1,9 +1,10 @@
+import DecorationOperatorFactory from '../decoration-operator-factory';
 
 export default class RemoveAllHighlightsCommand {
-    private readonly decorationOperatorFactory: any;
+    private readonly decorationOperatorFactory: DecorationOperatorFactory;
 
-    constructor(params) {
-        this.decorationOperatorFactory = params.decorationOperatorFactory;
+    constructor(decorationOperatorFactory: DecorationOperatorFactory) {
+        this.decorationOperatorFactory = decorationOperatorFactory;
     }
 
     execute() {
