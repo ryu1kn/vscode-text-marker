@@ -9,7 +9,7 @@ suite('ToggleWholeMatchCommand', () => {
         const decorationOperator = {updateDecorationWithPatternAction: sinon.spy()};
         const decorationOperatorFactory = {createForVisibleEditors: () => decorationOperator};
         const highlightPatternPicker = {pick: sinon.stub().returns(Promise.resolve('DECORATION_ID'))};
-        const command = new ToggleWholeMatchCommand({decorationOperatorFactory, highlightPatternPicker});
+        const command = new ToggleWholeMatchCommand(decorationOperatorFactory, highlightPatternPicker);
 
         await command.execute();
 
@@ -20,7 +20,7 @@ suite('ToggleWholeMatchCommand', () => {
     test('it does nothing if text is not selected', async () => {
         const decorationOperatorFactory = {createForVisibleEditors: sinon.spy()};
         const highlightPatternPicker = {pick: () => Promise.resolve()};
-        const command = new ToggleWholeMatchCommand({decorationOperatorFactory, highlightPatternPicker});
+        const command = new ToggleWholeMatchCommand(decorationOperatorFactory, highlightPatternPicker);
 
         await command.execute();
 

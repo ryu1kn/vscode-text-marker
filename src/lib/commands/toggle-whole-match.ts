@@ -1,12 +1,14 @@
 import {PatternAction} from '../const';
+import HighlightPatternPicker from '../highlight-pattern-picker';
+import DecorationOperatorFactory from '../decoration-operator-factory';
 
 export default class ToggleWholeMatchCommand {
-    private readonly decorationOperatorFactory: any;
-    private readonly highlightPatternPicker: any;
+    private readonly decorationOperatorFactory: DecorationOperatorFactory;
+    private readonly highlightPatternPicker: HighlightPatternPicker;
 
-    constructor(params) {
-        this.decorationOperatorFactory = params.decorationOperatorFactory;
-        this.highlightPatternPicker = params.highlightPatternPicker;
+    constructor(decorationOperatorFactory, highlightPatternPicker) {
+        this.decorationOperatorFactory = decorationOperatorFactory;
+        this.highlightPatternPicker = highlightPatternPicker;
     }
 
     async execute() {

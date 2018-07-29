@@ -54,12 +54,12 @@ export default class CommandFactory {
     }
 
     createToggleHighlightCommand() {
-        const command = new ToggleHighlightCommand({
-            decorationOperatorFactory: this.getDecorationOperatorFactory(),
-            patternFactory: this.getPatternFactory(),
-            textEditorFactory: this.getTextEditorFactory(),
-            textLocationRegistry: this.getTextLocationRegistry()
-        });
+        const command = new ToggleHighlightCommand(
+            this.getDecorationOperatorFactory(),
+            this.getPatternFactory(),
+            this.getTextEditorFactory(),
+            this.getTextLocationRegistry()
+        );
         return this._wrapCommand(command);
     }
 
@@ -96,17 +96,12 @@ export default class CommandFactory {
     }
 
     createToggleCaseSensitivityModeCommand() {
-        const command = new ToggleCaseSensitivityModeCommand({
-            matchingModeRegistry: this.getMatchingModeRegistry()
-        });
+        const command = new ToggleCaseSensitivityModeCommand(this.getMatchingModeRegistry());
         return this._wrapCommand(command);
     }
 
     createToggleWholeMatchCommand() {
-        const command = new ToggleWholeMatchCommand({
-            decorationOperatorFactory: this.getDecorationOperatorFactory(),
-            highlightPatternPicker: this.getHighlightPatternPicker()
-        });
+        const command = new ToggleWholeMatchCommand(this.getDecorationOperatorFactory(), this.getHighlightPatternPicker());
         return this._wrapCommand(command);
     }
 

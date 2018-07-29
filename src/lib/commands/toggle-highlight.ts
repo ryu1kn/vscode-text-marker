@@ -1,15 +1,19 @@
+import DecorationOperatorFactory from '../decoration-operator-factory';
+import PatternFactory from '../pattern-factory';
+import TextEditorFactory from '../text-editor-factory';
+import TextLocationRegistry from '../text-location-registry';
 
 export default class ToggleHighlightCommand {
-    private readonly decorationOperatorFactory: any;
-    private readonly patternFactory: any;
-    private readonly textEditorFactory: any;
-    private readonly textLocationRegistry: any;
+    private readonly decorationOperatorFactory: DecorationOperatorFactory;
+    private readonly patternFactory: PatternFactory;
+    private readonly textEditorFactory: TextEditorFactory;
+    private readonly textLocationRegistry: TextLocationRegistry;
 
-    constructor(params) {
-        this.decorationOperatorFactory = params.decorationOperatorFactory;
-        this.patternFactory = params.patternFactory;
-        this.textEditorFactory = params.textEditorFactory;
-        this.textLocationRegistry = params.textLocationRegistry;
+    constructor(decorationOperatorFactory, patternFactory, textEditorFactory, textLocationRegistry) {
+        this.decorationOperatorFactory = decorationOperatorFactory;
+        this.patternFactory = patternFactory;
+        this.textEditorFactory = textEditorFactory;
+        this.textLocationRegistry = textLocationRegistry;
     }
 
     execute(editor) {
