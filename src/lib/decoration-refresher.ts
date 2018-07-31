@@ -1,17 +1,21 @@
+import DecorationOperatorFactory from './decoration-operator-factory';
+import Debouncer from './debouncer';
+import TextEditorFactory from './text-editor-factory';
+import WindowComponent from './editor-components/window';
 
 export default class DecorationRefresher {
-    private readonly logger: any;
-    private readonly decorationOperatorFactory: any;
-    private readonly debouncer: any;
-    private readonly textEditorFactory: any;
-    private readonly windowComponent: any;
+    private readonly logger: Logger;
+    private readonly decorationOperatorFactory: DecorationOperatorFactory;
+    private readonly debouncer: Debouncer;
+    private readonly textEditorFactory: TextEditorFactory;
+    private readonly windowComponent: WindowComponent;
 
-    constructor(params) {
-        this.logger = params.logger;
-        this.decorationOperatorFactory = params.decorationOperatorFactory;
-        this.debouncer = params.debouncer;
-        this.textEditorFactory = params.textEditorFactory;
-        this.windowComponent = params.windowComponent;
+    constructor(decorationOperatorFactory, debouncer, textEditorFactory, windowComponent, logger) {
+        this.logger = logger;
+        this.decorationOperatorFactory = decorationOperatorFactory;
+        this.debouncer = debouncer;
+        this.textEditorFactory = textEditorFactory;
+        this.windowComponent = windowComponent;
     }
 
     refresh(editor) {

@@ -1,7 +1,7 @@
 
 export default class CommandWrapper {
     private readonly command: {execute(editor?): Promise<void> | void};
-    private readonly logger: {error(...args: string[]): void};
+    private readonly logger: Logger;
 
     constructor({command, logger}) {
         this.command = command;

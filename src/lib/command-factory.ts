@@ -128,13 +128,13 @@ export default class CommandFactory {
     }
 
     createDecorationRefresher() {
-        return new DecorationRefresher({
-            debouncer: new Debouncer(this.getConfigStore()),
-            decorationOperatorFactory: this.getDecorationOperatorFactory(),
-            logger: this.logger,
-            textEditorFactory: this.getTextEditorFactory(),
-            windowComponent: this.getWindowComponent()
-        });
+        return new DecorationRefresher(
+            this.getDecorationOperatorFactory(),
+            new Debouncer(this.getConfigStore()),
+            this.getTextEditorFactory(),
+            this.getWindowComponent(),
+            this.logger
+        );
     }
 
     createSavedHighlightsRestorer() {

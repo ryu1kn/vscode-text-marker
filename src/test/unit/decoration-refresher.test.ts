@@ -1,6 +1,10 @@
-import {expect, sinon} from '../helpers/helper';
+import {expect, mock, sinon} from '../helpers/helper';
 
 import DecorationRefresher from '../../lib/decoration-refresher';
+import WindowComponent from '../../lib/editor-components/window';
+import Debouncer from '../../lib/debouncer';
+import TextEditorFactory from '../../lib/text-editor-factory';
+import DecorationOperatorFactory from '../../lib/decoration-operator-factory';
 
 suite('DecorationRefresher', () => {
 
@@ -12,7 +16,9 @@ suite('DecorationRefresher', () => {
             const logger = getLogger();
             const decorationOperator = {refreshDecorations: sinon.spy()};
             const decorationOperatorFactory = {create: sinon.stub().returns(decorationOperator)};
-            new DecorationRefresher({decorationOperatorFactory, textEditorFactory, logger}).refresh(editor);
+            const debouncer = mock(Debouncer);
+            const windowComponent = mock(WindowComponent);
+            new DecorationRefresher(decorationOperatorFactory, debouncer, textEditorFactory, windowComponent, logger).refresh(editor);
 
             expect(decorationOperatorFactory.create).to.have.been.calledWith([editor]);
             expect(decorationOperator.refreshDecorations).to.have.been.calledWith();
@@ -22,7 +28,10 @@ suite('DecorationRefresher', () => {
             const editor = undefined;
             const logger = {error: sinon.spy()};
             const decorationOperatorFactory = {create: sinon.spy()};
-            new DecorationRefresher({decorationOperatorFactory, logger}).refresh(editor);
+            const debouncer = mock(Debouncer);
+            const textEditorFactory = mock(TextEditorFactory);
+            const windowComponent = mock(WindowComponent);
+            new DecorationRefresher(decorationOperatorFactory, debouncer, textEditorFactory, windowComponent, logger).refresh(editor);
             expect(decorationOperatorFactory.create).to.have.been.not.called;
         });
 
@@ -31,7 +40,10 @@ suite('DecorationRefresher', () => {
             const textEditorFactory = {
                 create: () => {throw new Error('UNEXPECTED_ERROR');}
             };
-            new DecorationRefresher({textEditorFactory, logger}).refresh('EDITOR');
+            const decorationOperatorFactory = mock(DecorationOperatorFactory);
+            const debouncer = mock(Debouncer);
+            const windowComponent = mock(WindowComponent);
+            new DecorationRefresher(decorationOperatorFactory, debouncer, textEditorFactory, windowComponent, logger).refresh('EDITOR');
             expect(logger.error.args[0][0]).to.have.string('Error: UNEXPECTED_ERROR');
         });
     });
@@ -45,7 +57,8 @@ suite('DecorationRefresher', () => {
             const decorationOperator = {refreshDecorations: sinon.spy()};
             const decorationOperatorFactory = {create: sinon.stub().returns(decorationOperator)};
             const debouncer = {debounce: sinon.stub().callsArg(0)};
-            const refresher = new DecorationRefresher({debouncer, decorationOperatorFactory, logger, windowComponent});
+            const textEditorFactory = mock(TextEditorFactory);
+            const refresher = new DecorationRefresher(decorationOperatorFactory, debouncer, textEditorFactory, windowComponent, logger);
 
             refresher.refreshWithDelay('DOCUMENT_CHANGE_EVENT');
 
@@ -59,7 +72,8 @@ suite('DecorationRefresher', () => {
             const logger = {error: sinon.spy()};
             const decorationOperatorFactory = {create: sinon.spy()};
             const debouncer = {debounce: callback => callback()};
-            new DecorationRefresher({decorationOperatorFactory, logger, debouncer, windowComponent}).refreshWithDelay('DOCUMENT_CHANGE_EVENT');
+            const textEditorFactory = mock(TextEditorFactory);
+            new DecorationRefresher(decorationOperatorFactory, debouncer, textEditorFactory, windowComponent, logger).refreshWithDelay('DOCUMENT_CHANGE_EVENT');
             expect(decorationOperatorFactory.create).to.have.been.not.called;
         });
 
@@ -69,8 +83,10 @@ suite('DecorationRefresher', () => {
             const debouncer = {
                 debounce: () => {throw new Error('UNEXPECTED_ERROR');}
             };
+            const decorationOperatorFactory = mock(DecorationOperatorFactory);
+            const textEditorFactory = mock(TextEditorFactory);
             const logger = {error: sinon.spy()};
-            new DecorationRefresher({logger, debouncer, windowComponent}).refreshWithDelay(editor);
+            new DecorationRefresher(decorationOperatorFactory, debouncer, textEditorFactory, windowComponent, logger).refreshWithDelay(editor);
             expect(logger.error.args[0][0]).to.have.string('Error: UNEXPECTED_ERROR');
         });
     });
