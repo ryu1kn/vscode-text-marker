@@ -1,7 +1,8 @@
 import TextEditorFactory from '../text-editor-factory';
+import * as vscode from 'vscode';
 
 export default class WindowComponent {
-    private readonly window: any;
+    private readonly window: typeof vscode.window;
     private readonly textEditorFactory: TextEditorFactory;
 
     constructor(window, textEditorFactory) {
@@ -26,8 +27,8 @@ export default class WindowComponent {
         return this.window.showInformationMessage(message);
     }
 
-    showQuickPick(selectItems, options) {
-        return this.window.showQuickPick(selectItems, options);
+    showQuickPick<T extends vscode.QuickPickItem>(selectItems, options) {
+        return this.window.showQuickPick<T>(selectItems, options);
     }
 
 }

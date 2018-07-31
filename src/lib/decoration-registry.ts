@@ -2,6 +2,7 @@ import {OverviewRulerLane} from 'vscode';
 import TextDecorationCollection from './text-decoration-collection';
 import ConfigStore from './config-store';
 import ColourRegistry from './colour-registry';
+import * as vscode from 'vscode';
 
 const getColorContrast = require('../../lib-3rd-party/dynamic-contrast');
 
@@ -10,7 +11,7 @@ const OVERVIEW_RULER_COLOUR = 'violet';
 export default class DecorationRegistry {
     private readonly colourRegistry: ColourRegistry;
     private readonly configStore: ConfigStore;
-    private readonly window: any;
+    private readonly window: typeof vscode.window;
     private readonly textDecorationMap: TextDecorationCollection;
 
     constructor(configStore, colourRegistry, window, generateUuid) {

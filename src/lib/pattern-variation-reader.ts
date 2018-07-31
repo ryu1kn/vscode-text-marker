@@ -1,5 +1,10 @@
 import {PatternAction} from './const';
 import WindowComponent from './editor-components/window';
+import {QuickPickItem} from 'vscode';
+
+interface PatternUpdateActionQuickPickItem extends QuickPickItem {
+    actionId: symbol;
+}
 
 export default class PatternVariationReader {
     private readonly windowComponent: WindowComponent;
@@ -11,7 +16,7 @@ export default class PatternVariationReader {
     async read(currentPattern) {
         const items = this.buildSelectItems(currentPattern);
         const options = {placeHolder: 'Select how to update the highlight'};
-        const item = await this.windowComponent.showQuickPick(items, options);
+        const item = await this.windowComponent.showQuickPick<PatternUpdateActionQuickPickItem>(items, options);
         if (!item) return null;
 
         switch (item.actionId) {    // eslint-disable-line default-case
@@ -30,7 +35,7 @@ export default class PatternVariationReader {
         }
     }
 
-    private buildSelectItems(pattern) {
+    private buildSelectItems(pattern): PatternUpdateActionQuickPickItem[] {
         return [
             this.getToggleCaseSensitivityOption(pattern),
             this.getToggleWholeMatchOption(pattern),
@@ -42,7 +47,8 @@ export default class PatternVariationReader {
         const label = pattern.ignoreCase ? 'Case Sensitive' : 'Case Insensitive';
         return {
             label: `Change to ${label}`,
-            actionId: PatternAction.TOGGLE_CASE_SENSITIVITY
+            actionId: PatternAction.TOGGLE_CASE_SENSITIVITY,
+            description: null
         };
     }
 
@@ -50,7 +56,8 @@ export default class PatternVariationReader {
         const label = pattern.wholeMatch ? 'Partial Match' : 'Whole Match';
         return {
             label: `Change to ${label}`,
-            actionId: PatternAction.TOGGLE_WHOLE_MATCH
+            actionId: PatternAction.TOGGLE_WHOLE_MATCH,
+            description: null
         };
     }
 
@@ -58,7 +65,8 @@ export default class PatternVariationReader {
         const label = pattern.type === 'RegExp' ? 'RegExp Pattern' : 'Text Pattern';
         return {
             label: `Update ${label}`,
-            actionId: PatternAction.UPDATE_PHRASE
+            actionId: PatternAction.UPDATE_PHRASE,
+            description: null
         };
     }
 

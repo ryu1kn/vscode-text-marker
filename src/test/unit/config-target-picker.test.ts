@@ -9,18 +9,20 @@ suite('ConfigTargetPicker', () => {
             [
                 [{
                     label: 'Global',
-                    value: 1
+                    value: true,
+                    description: null
                 }, {
                     label: 'Workspace',
-                    value: 2
+                    value: false,
+                    description: null
                 }],
                 {placeHolder: 'Select which scope of settings to save highlights to'}
             ],
-            Promise.resolve({label: 'Global', value: 1})
+            Promise.resolve({label: 'Global', value: true})
         )};
         const picker = new ConfigTargetPicker(windowComponent);
 
-        expect(await picker.pick()).to.eql(1);
+        expect(await picker.pick()).to.eql(true);
     });
 
     test('it returns null if user didn\'t select anything', async () => {
