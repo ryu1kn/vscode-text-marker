@@ -1,14 +1,15 @@
 import SelectedTextFinder from './selected-text-finder';
+import {TextEditor as VsTextEditor} from 'vscode';
 
 export default class TextEditor {
-    private readonly editor: any;
-    private readonly selectedTextFinder: any;
+    private readonly editor: VsTextEditor;
+    private readonly selectedTextFinder: SelectedTextFinder;
     private readonly VsRange: any;
 
-    constructor(params) {
-        this.editor = params.editor;
+    constructor(editor, VsRange) {
+        this.editor = editor;
         this.selectedTextFinder = new SelectedTextFinder();
-        this.VsRange = params.VsRange;
+        this.VsRange = VsRange;
     }
 
     get id() {

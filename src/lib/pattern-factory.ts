@@ -1,10 +1,11 @@
 import RegexPattern from './patterns/regex';
 import StringPattern from './patterns/string';
+import MatchingModeRegistry from './matching-mode-registry';
 
 export default class PatternFactory {
-    private readonly matchingModeRegistry: any;
+    private readonly matchingModeRegistry: MatchingModeRegistry;
 
-    constructor({matchingModeRegistry}) {
+    constructor(matchingModeRegistry) {
         this.matchingModeRegistry = matchingModeRegistry;
     }
 

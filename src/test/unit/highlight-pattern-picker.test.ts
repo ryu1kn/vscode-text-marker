@@ -5,7 +5,7 @@ import PatternFactory from '../../lib/pattern-factory';
 
 suite('HighlightPatternPicker', () => {
 
-    const patternFactory = new PatternFactory({matchingModeRegistry: {}});
+    const patternFactory = new PatternFactory({});
 
     test('it lets user to pick a highlight pattern', async () => {
         const windowComponent = {
@@ -27,7 +27,7 @@ suite('HighlightPatternPicker', () => {
                 }
             ]
         };
-        const picker = new HighlightPatternPicker({decorationRegistry, windowComponent});
+        const picker = new HighlightPatternPicker(decorationRegistry, windowComponent);
         const decorationId = await picker.pick('PLACEHOLDER_MESSAGE');
 
         expect(decorationId).to.eql('DECORATION_ID_1');
@@ -56,7 +56,7 @@ suite('HighlightPatternPicker', () => {
                 }
             ]
         };
-        const picker = new HighlightPatternPicker({decorationRegistry, windowComponent});
+        const picker = new HighlightPatternPicker(decorationRegistry, windowComponent);
         await picker.pick('PLACE_HOLDER_TEXT');
 
         expect(windowComponent.showQuickPick).to.have.been.calledWith(
@@ -78,7 +78,7 @@ suite('HighlightPatternPicker', () => {
                 }
             ]
         };
-        const picker = new HighlightPatternPicker({decorationRegistry, windowComponent});
+        const picker = new HighlightPatternPicker(decorationRegistry, windowComponent);
 
         await picker.pick('PLACE_HOLDER_TEXT');
 
@@ -98,7 +98,7 @@ suite('HighlightPatternPicker', () => {
                 }
             ]
         };
-        const picker = new HighlightPatternPicker({decorationRegistry, windowComponent});
+        const picker = new HighlightPatternPicker(decorationRegistry, windowComponent);
         await picker.pick('PLACE_HOLDER_TEXT');
 
         expect(windowComponent.showQuickPick).to.have.been.calledWith(
@@ -117,7 +117,7 @@ suite('HighlightPatternPicker', () => {
                 {id: 'DECORATION_ID_1', pattern: patternFactory.create({phrase: 'TEXT_1'}), decorationType: 'DECORATION_TYPE_1'}
             ]
         };
-        const picker = new HighlightPatternPicker({decorationRegistry, windowComponent});
+        const picker = new HighlightPatternPicker(decorationRegistry, windowComponent);
         const decorationId = await picker.pick('PLACE_HOLDER_TEXT');
 
         expect(decorationId).to.be.null;
@@ -131,7 +131,7 @@ suite('HighlightPatternPicker', () => {
         const decorationRegistry = {
             retrieveAll: () => []
         };
-        const picker = new HighlightPatternPicker({decorationRegistry, windowComponent});
+        const picker = new HighlightPatternPicker(decorationRegistry, windowComponent);
         const decorationId = await picker.pick('PLACE_HOLDER_TEXT');
 
         expect(decorationId).to.be.undefined;

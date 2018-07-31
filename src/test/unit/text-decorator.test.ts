@@ -17,7 +17,7 @@ suite('TextDecorator', () => {
         }];
         const pattern = createPattern('LONG');
         const textLocationRegistry = {register: sinon.spy()};
-        const textDecorator = new TextDecorator({textLocationRegistry});
+        const textDecorator = new TextDecorator(textLocationRegistry);
         textDecorator.decorate(
             editors,
             [{
@@ -51,7 +51,7 @@ suite('TextDecorator', () => {
     test('it removes decorations from the pattern in the editors', () => {
         const editors = [{unsetDecorations: sinon.spy()}, {unsetDecorations: sinon.spy()}];
         const textLocationRegistry = {deregister: sinon.spy()};
-        const textDecorator = new TextDecorator({textLocationRegistry});
+        const textDecorator = new TextDecorator(textLocationRegistry);
         textDecorator.undecorate(editors, [{
             id: 'DECORATION_ID_1',
             decorationType: 'DECORATION_TYPE_1'
@@ -80,7 +80,7 @@ suite('TextDecorator', () => {
         }];
         const pattern = createPattern('LONG');
         const textLocationRegistry = {register: () => {}};
-        const textDecorator = new TextDecorator({textLocationRegistry});
+        const textDecorator = new TextDecorator(textLocationRegistry);
         textDecorator.decorate(
             editors,
             [{
@@ -101,7 +101,7 @@ suite('TextDecorator', () => {
         const matchingModeRegistry = {
             mode: {ignoreCase: false}
         };
-        return new PatternFactory({matchingModeRegistry}).create({phrase});
+        return new PatternFactory(matchingModeRegistry).create({phrase});
     }
 
 });

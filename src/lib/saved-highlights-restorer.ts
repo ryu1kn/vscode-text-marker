@@ -1,18 +1,22 @@
 import {Event} from './const';
 import DecorationEntryParser from './decoration-entry-parser';
+import ConfigStore from './config-store';
+import DecorationOperatorFactory from './decoration-operator-factory';
+import EventEmitter = NodeJS.EventEmitter;
+import PatternFactory from './pattern-factory';
 
 export default class SavedHighlightsRestorer {
-    private readonly configStore: any;
-    private readonly decorationOperatorFactory: any;
-    private readonly patternFactory: any;
-    private readonly eventBus: any;
-    private readonly decorationEntryParser: any;
+    private readonly configStore: ConfigStore;
+    private readonly decorationOperatorFactory: DecorationOperatorFactory;
+    private readonly patternFactory: PatternFactory;
+    private readonly eventBus: EventEmitter;
+    private readonly decorationEntryParser: DecorationEntryParser;
 
-    constructor(params) {
-        this.configStore = params.configStore;
-        this.decorationOperatorFactory = params.decorationOperatorFactory;
-        this.patternFactory = params.patternFactory;
-        this.eventBus = params.eventBus;
+    constructor(configStore, decorationOperatorFactory, patternFactory, eventBus) {
+        this.configStore = configStore;
+        this.decorationOperatorFactory = decorationOperatorFactory;
+        this.patternFactory = patternFactory;
+        this.eventBus = eventBus;
 
         this.decorationEntryParser = new DecorationEntryParser();
         this.registerListeners();

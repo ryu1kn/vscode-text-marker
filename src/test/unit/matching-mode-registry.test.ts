@@ -10,11 +10,7 @@ suite('MatchingModeRegistry', () => {
 
     setup(() => {
         eventBus = new EventEmitter();
-        registry = new MatchingModeRegistry({
-            eventBus,
-            ignoreCase: true,
-            wholeMatch: false
-        });
+        registry = new MatchingModeRegistry(true, false, eventBus);
     });
 
     test('it holds current matching mode', () => {

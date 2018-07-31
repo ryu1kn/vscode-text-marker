@@ -1,10 +1,11 @@
 import {PatternAction} from './const';
+import WindowComponent from './editor-components/window';
 
 export default class PatternVariationReader {
-    private readonly windowComponent: any;
+    private readonly windowComponent: WindowComponent;
 
-    constructor(params) {
-        this.windowComponent = params.windowComponent;
+    constructor(windowComponent) {
+        this.windowComponent = windowComponent;
     }
 
     async read(currentPattern) {

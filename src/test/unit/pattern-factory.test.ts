@@ -7,7 +7,7 @@ import RegexPattern from '../../lib/patterns/regex';
 suite('PatternFactory', () => {
 
     test('it creates a string pattern', () => {
-        const patternFactory = new PatternFactory({matchingModeRegistry: fakeMatchingModeRegistry()});
+        const patternFactory = new PatternFactory(fakeMatchingModeRegistry());
         const pattern = patternFactory.create({
             phrase: 'PHRASE'
         });
@@ -16,7 +16,7 @@ suite('PatternFactory', () => {
     });
 
     test('it creates a regex pattern', () => {
-        const patternFactory = new PatternFactory({matchingModeRegistry: fakeMatchingModeRegistry()});
+        const patternFactory = new PatternFactory(fakeMatchingModeRegistry());
         const pattern = patternFactory.create({
             type: 'RegExp',
             phrase: 'PHRASE'
@@ -25,7 +25,7 @@ suite('PatternFactory', () => {
     });
 
     test('it uses the current matching mode', () => {
-        const patternFactory = new PatternFactory({matchingModeRegistry: fakeMatchingModeRegistry(true)});
+        const patternFactory = new PatternFactory(fakeMatchingModeRegistry(true));
         const pattern = patternFactory.create({
             phrase: 'PHRASE'
         });
@@ -33,7 +33,7 @@ suite('PatternFactory', () => {
     });
 
     test('it honours the specified matching mode rather than current mode', () => {
-        const patternFactory = new PatternFactory({matchingModeRegistry: fakeMatchingModeRegistry(true)});
+        const patternFactory = new PatternFactory(fakeMatchingModeRegistry(true));
         const pattern = patternFactory.create({
             phrase: 'PHRASE',
             ignoreCase: false

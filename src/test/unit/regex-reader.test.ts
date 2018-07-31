@@ -9,7 +9,7 @@ suite('RegexReader', () => {
         const windowComponent = {
             showInputBox: sinon.stub().returns(Promise.resolve('PATTERN_STRING'))
         };
-        const reader = new RegexReader({patternFactory, windowComponent});
+        const reader = new RegexReader(patternFactory, windowComponent);
         const pattern = await reader.read();
 
         expect(pattern).to.eql('PATTERN');

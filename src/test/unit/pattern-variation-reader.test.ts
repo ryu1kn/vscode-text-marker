@@ -10,7 +10,7 @@ suite('PatternVariationReader', () => {
             showQuickPick: items =>
                 Promise.resolve(items.find(item => item.label.includes('Case')))
         };
-        const patternVariationReader = new PatternVariationReader({windowComponent});
+        const patternVariationReader = new PatternVariationReader(windowComponent);
 
         const currentPattern = createPattern();
         const newPattern = await patternVariationReader.read(currentPattern);
@@ -23,7 +23,7 @@ suite('PatternVariationReader', () => {
             showQuickPick: items =>
                 Promise.resolve(items.find(item => item.label.includes('Whole')))
         };
-        const patternVariationReader = new PatternVariationReader({windowComponent});
+        const patternVariationReader = new PatternVariationReader(windowComponent);
 
         const currentPattern = createPattern();
         const newPattern = await patternVariationReader.read(currentPattern);
@@ -37,7 +37,7 @@ suite('PatternVariationReader', () => {
                 Promise.resolve(items.find(item => item.label.includes('Pattern'))),
             showInputBox: () => Promise.resolve('NEW_PHRASE')
         };
-        const patternVariationReader = new PatternVariationReader({windowComponent});
+        const patternVariationReader = new PatternVariationReader(windowComponent);
 
         const currentPattern = createPattern();
         const newPattern = await patternVariationReader.read(currentPattern);
@@ -50,7 +50,7 @@ suite('PatternVariationReader', () => {
         const windowComponent = {
             showQuickPick: _items => Promise.resolve()
         };
-        const patternVariationReader = new PatternVariationReader({windowComponent});
+        const patternVariationReader = new PatternVariationReader(windowComponent);
 
         const currentPattern = createPattern();
         const newPattern = await patternVariationReader.read(currentPattern);
@@ -64,7 +64,7 @@ suite('PatternVariationReader', () => {
                 Promise.resolve(items.find(item => item.label.includes('Pattern'))),
             showInputBox: () => Promise.resolve()
         };
-        const patternVariationReader = new PatternVariationReader({windowComponent});
+        const patternVariationReader = new PatternVariationReader(windowComponent);
 
         const currentPattern = createPattern();
         const newPattern = await patternVariationReader.read(currentPattern);
@@ -73,7 +73,7 @@ suite('PatternVariationReader', () => {
     });
 
     function createPattern({phrase}: any = {}) {
-        const patternFactory = new PatternFactory({matchingModeRegistry: {}});
+        const patternFactory = new PatternFactory({});
         return patternFactory.create({
             phrase: phrase || 'PHRASE'
         });

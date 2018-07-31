@@ -27,7 +27,7 @@ suite('SavedHighlightsRestorer', () => {
                 wholeMatch: false
             }], 'PATTERN')
         };
-        new SavedHighlightsRestorer({eventBus, configStore, decorationOperatorFactory, patternFactory}); // eslint-disable-line no-new
+        new SavedHighlightsRestorer(configStore, decorationOperatorFactory, patternFactory, eventBus); // eslint-disable-line no-new
 
         eventBus.on(Event.EXTENSION_READY, () => {
             expect(decorationOperator.addDecoration).to.have.been.calledWith('PATTERN');

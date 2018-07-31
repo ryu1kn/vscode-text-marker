@@ -1,11 +1,13 @@
+import DecorationRegistry from './decoration-registry';
+import WindowComponent from './editor-components/window';
 
 export default class HighlightPatternPicker {
-    private readonly decorationRegistry: any;
-    private readonly windowComponent: any;
+    private readonly decorationRegistry: DecorationRegistry;
+    private readonly windowComponent: WindowComponent;
 
-    constructor(params) {
-        this.decorationRegistry = params.decorationRegistry;
-        this.windowComponent = params.windowComponent;
+    constructor(decorationRegistry, windowComponent) {
+        this.decorationRegistry = decorationRegistry;
+        this.windowComponent = windowComponent;
     }
 
     pick(placeHolderText) {

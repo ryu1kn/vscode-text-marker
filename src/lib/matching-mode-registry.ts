@@ -1,11 +1,12 @@
 import {Event} from './const';
+import EventEmitter = NodeJS.EventEmitter;
 
 export default class MatchingModeRegistry {
-    private readonly eventBus: any;
-    private ignoreCase: any;
-    private wholeMatch: any;
+    private readonly eventBus: EventEmitter;
+    private ignoreCase: boolean;
+    private wholeMatch: boolean;
 
-    constructor({eventBus, ignoreCase, wholeMatch}) {
+    constructor(ignoreCase, wholeMatch, eventBus) {
         this.eventBus = eventBus;
         this.ignoreCase = ignoreCase;
         this.wholeMatch = wholeMatch;

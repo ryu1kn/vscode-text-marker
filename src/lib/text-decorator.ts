@@ -1,9 +1,10 @@
+import TextLocationRegistry from './text-location-registry';
 
 export default class TextDecorator {
-    private readonly textLocationRegistry: any;
+    private readonly textLocationRegistry: TextLocationRegistry;
 
-    constructor(params) {
-        this.textLocationRegistry = params.textLocationRegistry;
+    constructor(textLocationRegistry) {
+        this.textLocationRegistry = textLocationRegistry;
     }
 
     decorate(editors, decorations) {

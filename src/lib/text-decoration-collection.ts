@@ -1,9 +1,9 @@
 
 export default class TextDecorationCollection {
-    private readonly generateUuid: any;
-    private readonly map: any;
+    private readonly generateUuid: () => string;
+    private readonly map: Map<any, any>;
 
-    constructor({generateUuid}) {
+    constructor(generateUuid) {
         this.generateUuid = generateUuid;
 
         this.map = new Map();
@@ -31,7 +31,7 @@ export default class TextDecorationCollection {
 
     toList() {
         return Array.from(this.map.values())
-            .reduce((result: any[], decoration) => [...result, decoration], []);
+            .reduce((result: any[], decoration) => [...result, decoration], []) as any[];
     }
 
 }

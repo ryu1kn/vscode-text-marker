@@ -189,7 +189,7 @@ suite('DecorationRegistry', () => {
         };
         const generateUuid = createGenerateUuid();
         const configStore = options.configStore || createConfigStore();
-        return new DecorationRegistry({generateUuid, colourRegistry, window, configStore});
+        return new DecorationRegistry(configStore, colourRegistry, window, generateUuid);
     }
 
     function createConfigStore({useHighlightColorOnRuler, autoSelectDistinctiveTextColor}: any = {}) {
@@ -203,7 +203,7 @@ suite('DecorationRegistry', () => {
         const matchingModeRegistry = {
             mode: {ignoreCase: false}
         };
-        return new PatternFactory({matchingModeRegistry}).create({phrase});
+        return new PatternFactory(matchingModeRegistry).create({phrase});
     }
 
     function createGenerateUuid() {

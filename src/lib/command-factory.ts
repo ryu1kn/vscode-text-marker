@@ -35,7 +35,7 @@ const BASE_STATUS_BAR_PRIORITY = 100;
 
 export default class CommandFactory {
     private readonly vscode: any;
-    private readonly logger: any;
+    private readonly logger: Logger;
     private eventBus: EventEmitter;
     private decorationOperatorFactory: DecorationOperatorFactory;
     private configStore: ConfigStore;
@@ -64,10 +64,7 @@ export default class CommandFactory {
     }
 
     createHighlightUsingRegex() {
-        const regexReader = new RegexReader({
-            patternFactory: this.getPatternFactory(),
-            windowComponent: this.getWindowComponent()
-        });
+        const regexReader = new RegexReader(this.getPatternFactory(), this.getWindowComponent());
         const command = new HighlightUsingRegexCommand(this.getDecorationOperatorFactory(), regexReader);
         return this._wrapCommand(command);
     }
@@ -111,9 +108,7 @@ export default class CommandFactory {
         const command = new UpdateHighlightCommand(
             this.getDecorationOperatorFactory(),
             this.getDecorationRegistry(),
-            new PatternVariationReader({
-                windowComponent: this.getWindowComponent()
-            }),
+            new PatternVariationReader(this.getWindowComponent()),
             this.getTextEditorFactory(),
             this.getTextLocationRegistry()
         );
@@ -138,12 +133,12 @@ export default class CommandFactory {
     }
 
     createSavedHighlightsRestorer() {
-        return new SavedHighlightsRestorer({
-            configStore: this.getConfigStore(),
-            decorationOperatorFactory: this.getDecorationOperatorFactory(),
-            eventBus: this.getEventBus(),
-            patternFactory: this.getPatternFactory()
-        });
+        return new SavedHighlightsRestorer(
+            this.getConfigStore(),
+            this.getDecorationOperatorFactory(),
+            this.getPatternFactory(),
+            this.getEventBus()
+        );
     }
 
     createToggleCaseSensitivityModeButton() {
@@ -194,9 +189,7 @@ export default class CommandFactory {
     private createDecorationOperatorFactory() {
         return new DecorationOperatorFactory(
             this.getDecorationRegistry(),
-            new TextDecorator({
-                textLocationRegistry: this.getTextLocationRegistry()
-            }),
+            new TextDecorator(this.getTextLocationRegistry()),
             this.getWindowComponent()
         );
     }
@@ -204,12 +197,7 @@ export default class CommandFactory {
     private createDecorationRegistry() {
         const configStore = this.getConfigStore();
         const colourRegistry = new ColourRegistry(configStore);
-        return new DecorationRegistry({
-            colourRegistry,
-            configStore,
-            generateUuid,
-            window: this.vscode.window
-        });
+        return new DecorationRegistry(configStore, colourRegistry, this.vscode.window, generateUuid);
     }
 
     private getHighlightPatternPicker() {
@@ -218,10 +206,7 @@ export default class CommandFactory {
     }
 
     private createHighlightPatternPicker() {
-        return new HighlightPatternPicker({
-            decorationRegistry: this.getDecorationRegistry(),
-            windowComponent: this.getWindowComponent()
-        });
+        return new HighlightPatternPicker(this.getDecorationRegistry(), this.getWindowComponent());
     }
 
     private getMatchingModeRegistry() {
@@ -231,15 +216,11 @@ export default class CommandFactory {
 
     private createMatchingModeRegistry() {
         const configStore = this.getConfigStore();
-        return new MatchingModeRegistry({
-            eventBus: this.getEventBus(),
-            ignoreCase: configStore.get('enableIgnoreCase'),
-            wholeMatch: configStore.get('enableWholeMatch')
-        });
+        return new MatchingModeRegistry(configStore.get('enableIgnoreCase'), configStore.get('enableWholeMatch'), this.getEventBus());
     }
 
     private getPatternFactory() {
-        this.patternFactory = this.patternFactory || new PatternFactory({matchingModeRegistry: this.getMatchingModeRegistry()});
+        this.patternFactory = this.patternFactory || new PatternFactory(this.getMatchingModeRegistry());
         return this.patternFactory;
     }
 
@@ -249,9 +230,7 @@ export default class CommandFactory {
     }
 
     private createTextEditorFactory() {
-        return new TextEditorFactory({
-            VsRange: this.vscode.Range
-        });
+        return new TextEditorFactory(this.vscode.Range);
     }
 
     private getTextLocationRegistry() {
