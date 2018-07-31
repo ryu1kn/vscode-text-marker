@@ -1,15 +1,17 @@
 import SelectedTextFinder from './selected-text-finder';
 import {TextEditor as VsTextEditor} from 'vscode';
+import {FlatRange} from './models/flat-range';
+import {CreateRange} from './editor-components/range';
 
 export default class TextEditor {
     private readonly editor: VsTextEditor;
     private readonly selectedTextFinder: SelectedTextFinder;
-    private readonly VsRange: any;
+    private readonly createRange: CreateRange;
 
-    constructor(editor, VsRange) {
+    constructor(editor, createRange) {
         this.editor = editor;
         this.selectedTextFinder = new SelectedTextFinder();
-        this.VsRange = VsRange;
+        this.createRange = createRange;
     }
 
     get id() {
@@ -24,7 +26,7 @@ export default class TextEditor {
         return this.editor.document.getText();
     }
 
-    get flatRange() {
+    get flatRange(): FlatRange {
         const selection = this.editor.selection;
         return {
             start: this.getFlatPosition(selection.start),
@@ -38,7 +40,7 @@ export default class TextEditor {
 
     setDecorations(decorationType, ranges) {
         const vsRanges = ranges.map(range =>
-            new this.VsRange(
+            this.createRange(
                 this.editor.document.positionAt(range.start),
                 this.editor.document.positionAt(range.end)
             )

@@ -1,14 +1,15 @@
 import TextEditor from './text-editor';
+import {CreateRange} from './editor-components/range';
 
 export default class TextEditorFactory {
-    private readonly VsRange: any;
+    private readonly createRange: CreateRange;
 
-    constructor(VsRange) {
-        this.VsRange = VsRange;
+    constructor(createRange) {
+        this.createRange = createRange;
     }
 
     create(editor) {
-        return new TextEditor(editor, this.VsRange);
+        return new TextEditor(editor, this.createRange);
     }
 
 }

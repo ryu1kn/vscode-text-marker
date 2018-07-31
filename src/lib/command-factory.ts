@@ -230,7 +230,8 @@ export default class CommandFactory {
     }
 
     private createTextEditorFactory() {
-        return new TextEditorFactory(this.vscode.Range);
+        const createRange = (p1, p2) => new this.vscode.Range(p1, p2);
+        return new TextEditorFactory(createRange);
     }
 
     private getTextLocationRegistry() {
