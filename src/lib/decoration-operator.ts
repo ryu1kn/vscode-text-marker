@@ -16,15 +16,6 @@ export default class DecorationOperator {
         this.patternConverter = patternConverter;
     }
 
-    toggleDecoration(pattern) {
-        const decoration = this.decorationRegistry.inquireByPattern(pattern);
-        if (decoration) {
-            this._removeDecoration(decoration);
-        } else {
-            this.addDecoration(pattern);
-        }
-    }
-
     addDecoration(pattern) {
         const decoration = this.decorationRegistry.issue(pattern);
         if (!decoration) return;

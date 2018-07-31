@@ -1,7 +1,8 @@
+import {Decoration} from './entities/decoration';
 
 export default class TextDecorationCollection {
     private readonly generateUuid: () => string;
-    private readonly map: Map<any, any>;
+    private readonly map: Map<string, Decoration>;
 
     constructor(generateUuid) {
         this.generateUuid = generateUuid;

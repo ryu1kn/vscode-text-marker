@@ -1,7 +1,8 @@
+import {PatternType} from './entities/highlight';
 
-const PATTERN_TYPE_MAP = new Map([
-    ['String', 'string'],
-    ['RegExp', 'regex']
+const PATTERN_TYPE_MAP: Map<string, PatternType> = new Map([
+    ['String', PatternType.STRING],
+    ['RegExp', PatternType.REGEX]
 ]);
 
 export const getExternalName = internalName => PATTERN_TYPE_MAP.get(internalName);

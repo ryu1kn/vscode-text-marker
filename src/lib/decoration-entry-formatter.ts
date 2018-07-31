@@ -1,8 +1,9 @@
 import {getExternalName} from './pattern-type-name';
+import {Highlight} from './entities/highlight';
 
 export default class DecorationEntryFormatter {
 
-    format(decoration) {
+    format(decoration): Highlight {
         const pattern = decoration.pattern;
         return {
             pattern: {

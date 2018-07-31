@@ -1,6 +1,6 @@
 
 export default class TextLocationRegistry {
-    private readonly recordMap: Map<any, any>;
+    private readonly recordMap: Map<string, any>;
 
     constructor() {
         this.recordMap = new Map();

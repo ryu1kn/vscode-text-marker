@@ -7,48 +7,6 @@ suite('DecorationOperator', () => {
 
     const patternConverter = mock(PatternConverter);
 
-    suite('#toggleDecoration', () => {
-
-        test('it highlights all the strings equal to the selected string', () => {
-            const editors = ['EDITOR'];
-            const decorationRegistry = {
-                inquireByPattern: () => null,
-                issue: stubWithArgs(['PATTERN'], 'DECORATION')
-            };
-            const textDecorator = {decorate: sinon.spy()};
-            const operator = new DecorationOperator(editors, decorationRegistry, textDecorator, patternConverter);
-            operator.toggleDecoration('PATTERN');
-
-            expect(textDecorator.decorate).to.have.been.calledWith(
-                editors,
-                ['DECORATION']
-            );
-        });
-
-        test('Selecting already selected text is de-highlights the selected strings', () => {
-            const editors = ['EDITOR_1', 'EDITOR_2'];
-            const decorationRegistry = {
-                inquireByPattern: stubWithArgs(['PATTERN'], {
-                    id: 'DECORATION_ID',
-                    decorationType: 'DECORATION_TYPE'
-                }),
-                revoke: sinon.spy()
-            };
-            const textDecorator = {undecorate: sinon.spy()};
-            const operator = new DecorationOperator(editors, decorationRegistry, textDecorator, patternConverter);
-            operator.toggleDecoration('PATTERN');
-
-            expect(decorationRegistry.revoke).to.have.been.calledWith('DECORATION_ID');
-            expect(textDecorator.undecorate).to.have.been.calledWith(
-                editors,
-                [{
-                    id: 'DECORATION_ID',
-                    decorationType: 'DECORATION_TYPE'
-                }]
-            );
-        });
-    });
-
     suite('#addDecoration', () => {
 
         test('it highlights all the strings match to the given pattern', () => {

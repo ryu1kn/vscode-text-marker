@@ -1,6 +1,7 @@
 import * as Const from './const';
 import ConfigurationTargetPicker from './config-target-picker';
 import * as vscode from 'vscode';
+import {Highlight} from './entities/highlight';
 
 export default class ConfigStore {
     private readonly workspace: typeof vscode.workspace;
@@ -20,7 +21,7 @@ export default class ConfigStore {
     }
 
     get savedHighlights() {
-        return this.get<any[]>('savedHighlights');
+        return this.get<Highlight[]>('savedHighlights');
     }
 
     get delayForRefreshingHighlight() {
