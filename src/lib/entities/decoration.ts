@@ -1,7 +1,12 @@
+import {TextEditorDecorationType} from 'vscode';
+import Pattern from '../patterns/pattern';
 
-export type Decoration = {
-    id: string;
-    pattern: string;
+export interface PreRegisteredDecoration {
+    pattern: Pattern;
     colour: string;
-    decorationType: any
-};
+    decorationType: TextEditorDecorationType;
+}
+
+export interface Decoration extends PreRegisteredDecoration {
+    id: string;
+}

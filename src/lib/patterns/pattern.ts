@@ -1,12 +1,13 @@
+import {FlatRange} from '../models/flat-range';
 
-export default abstract class AbstractPattern {
+export default abstract class Pattern {
     public readonly phrase: string;
     public readonly ignoreCase: boolean;
     public readonly wholeMatch: boolean;
 
     public abstract type;
-    protected abstract create(params);
-    protected abstract findCandidateRanges(text);
+    protected abstract create(params): Pattern;
+    protected abstract findCandidateRanges(text): FlatRange[];
 
     constructor(params) {
         this.phrase = params.phrase;
@@ -45,7 +46,7 @@ export default abstract class AbstractPattern {
                 this.wholeMatch === other.wholeMatch;
     }
 
-    locateIn(text) {
+    locateIn(text): FlatRange {
         const candidateRanges = this.findCandidateRanges(text);
         return this.wholeMatch ? this.filterwholeMatchMatch(text, candidateRanges) : candidateRanges;
     }

@@ -1,6 +1,7 @@
+import {FlatRange} from './models/flat-range';
 
 export default class TextLocationRegistry {
-    private readonly recordMap: Map<string, any>;
+    private readonly recordMap: Map<string, Map<string, FlatRange[]>>;
 
     constructor() {
         this.recordMap = new Map();
@@ -19,7 +20,7 @@ export default class TextLocationRegistry {
     }
 
     queryDecorationId({editorId, flatRange}) {
-        const decorationMap = this.recordMap.get(editorId) as Map<any, any>;
+        const decorationMap = this.recordMap.get(editorId);
         if (!decorationMap) return null;
 
         const [decorationId = null] = Array.from(decorationMap.entries())

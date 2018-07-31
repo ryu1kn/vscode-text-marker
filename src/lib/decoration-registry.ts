@@ -1,8 +1,9 @@
-import {OverviewRulerLane} from 'vscode';
+import {OverviewRulerLane, TextEditorDecorationType} from 'vscode';
 import TextDecorationCollection from './text-decoration-collection';
 import ConfigStore from './config-store';
 import ColourRegistry from './colour-registry';
 import * as vscode from 'vscode';
+import Pattern from './patterns/pattern';
 
 const getColorContrast = require('../../lib-3rd-party/dynamic-contrast');
 
@@ -31,7 +32,7 @@ export default class DecorationRegistry {
         return this.textDecorationMap.find(isSamePattern);
     }
 
-    issue(pattern) {
+    issue(pattern: Pattern) {
         const decoration = this.inquireByPattern(pattern);
         if (decoration) return null;
 
@@ -56,7 +57,7 @@ export default class DecorationRegistry {
         return this.textDecorationMap.toList();
     }
 
-    private generateDecorationType(colour) {
+    private generateDecorationType(colour): TextEditorDecorationType {
         return this.window.createTextEditorDecorationType(
             Object.assign(
                 {

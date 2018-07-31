@@ -32,7 +32,7 @@ export default class TextDecorationCollection {
 
     toList() {
         return Array.from(this.map.values())
-            .reduce((result: any[], decoration) => [...result, decoration], []) as any[];
+            .reduce((result, decoration) => [...result, decoration], []);
     }
 
 }

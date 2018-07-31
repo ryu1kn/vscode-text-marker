@@ -1,6 +1,6 @@
-import AbstractPattern from './abstract';
+import Pattern from './pattern';
 
-export default class RegexPattern extends AbstractPattern {
+export default class RegexPattern extends Pattern {
 
     public type = 'RegExp';
 

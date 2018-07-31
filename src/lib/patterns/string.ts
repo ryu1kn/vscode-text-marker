@@ -1,6 +1,6 @@
-import AbstractPattern from './abstract';
+import Pattern from './pattern';
 
-export default class StringPattern extends AbstractPattern {
+export default class StringPattern extends Pattern {
 
     public type = 'String';
 
