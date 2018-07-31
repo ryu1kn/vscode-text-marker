@@ -1,21 +1,22 @@
 import * as Const from './const';
 import CommandFactory from './command-factory';
+import {ExtensionContextLike} from './editor-components/vscode';
 
 export default class AppIntegrator {
     private readonly commandFactory: CommandFactory;
     private readonly vscode: any;
 
-    static create(vscode, logger) {
-        const commandFactory = new CommandFactory({vscode, logger});
-        return new AppIntegrator({commandFactory, vscode});
+    static create(vscode: any, logger: Logger) {
+        const commandFactory = new CommandFactory(vscode, logger);
+        return new AppIntegrator(commandFactory, vscode);
     }
 
-    constructor(params) {
-        this.commandFactory = params.commandFactory;
-        this.vscode = params.vscode;
+    constructor(commandFactory: CommandFactory, vscode: any) {
+        this.commandFactory = commandFactory;
+        this.vscode = vscode;
     }
 
-    integrate(context) {
+    integrate(context: ExtensionContextLike) {
         this.registerCommands(context);
         this.registerTextEditorCommands(context);
         this.registerEventListeners(context);
@@ -23,7 +24,7 @@ export default class AppIntegrator {
         this.broadcastReady();
     }
 
-    private registerEventListeners(context) {
+    private registerEventListeners(context: ExtensionContextLike) {
         const decorationRefresher = this.commandFactory.createDecorationRefresher();
         this.vscode.window.onDidChangeActiveTextEditor(
             decorationRefresher.refresh, decorationRefresher, context.subscriptions);
@@ -31,7 +32,7 @@ export default class AppIntegrator {
             decorationRefresher.refreshWithDelay, decorationRefresher, context.subscriptions);
     }
 
-    private registerCommands(context) {
+    private registerCommands(context: ExtensionContextLike) {
         const factory = this.commandFactory;
         const commandMap = new Map([
             [`${Const.EXTENSION_ID}.highlightUsingRegex`, factory.createHighlightUsingRegex()],
@@ -49,7 +50,7 @@ export default class AppIntegrator {
         });
     }
 
-    private registerTextEditorCommands(context) {
+    private registerTextEditorCommands(context: ExtensionContextLike) {
         const factory = this.commandFactory;
         const commandMap = new Map([
             [`${Const.EXTENSION_ID}.toggleHighlight`, factory.createToggleHighlightCommand()],

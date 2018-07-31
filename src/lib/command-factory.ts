@@ -36,19 +36,19 @@ const BASE_STATUS_BAR_PRIORITY = 100;
 export default class CommandFactory {
     private readonly vscode: any;
     private readonly logger: Logger;
-    private eventBus: EventEmitter;
-    private decorationOperatorFactory: DecorationOperatorFactory;
-    private configStore: ConfigStore;
-    private configTargetPicker: ConfigTargetPicker;
-    private decorationRegistry: DecorationRegistry;
-    private highlightPatternPicker: HighlightPatternPicker;
-    private matchingModeRegistry: MatchingModeRegistry;
-    private patternFactory: PatternFactory;
-    private textEditorFactory: TextEditorFactory;
-    private textLocationRegistry: TextLocationRegistry;
-    private windowComponent: WindowComponent;
+    private eventBus?: EventEmitter;
+    private decorationOperatorFactory?: DecorationOperatorFactory;
+    private configStore?: ConfigStore;
+    private configTargetPicker?: ConfigTargetPicker;
+    private decorationRegistry?: DecorationRegistry;
+    private highlightPatternPicker?: HighlightPatternPicker;
+    private matchingModeRegistry?: MatchingModeRegistry;
+    private patternFactory?: PatternFactory;
+    private textEditorFactory?: TextEditorFactory;
+    private textLocationRegistry?: TextLocationRegistry;
+    private windowComponent?: WindowComponent;
 
-    constructor({vscode, logger}) {
+    constructor(vscode: any, logger: Logger) {
         this.vscode = vscode;
         this.logger = logger;
     }
@@ -115,7 +115,7 @@ export default class CommandFactory {
         return this._wrapCommand(command);
     }
 
-    private _wrapCommand(command) {
+    private _wrapCommand(command: any) {
         return new CommandWrapper({
             command,
             logger: this.logger
@@ -230,7 +230,7 @@ export default class CommandFactory {
     }
 
     private createTextEditorFactory() {
-        const createRange = (p1, p2) => new this.vscode.Range(p1, p2);
+        const createRange = (p1: any, p2: any) => new this.vscode.Range(p1, p2);
         return new TextEditorFactory(createRange);
     }
 

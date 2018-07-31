@@ -4,7 +4,7 @@ export default class ColourRegistry {
     private readonly configStore: ConfigStore;
     private inUseColours: string[];
 
-    constructor(configStore) {
+    constructor(configStore: ConfigStore) {
         this.configStore = configStore;
         this.inUseColours = [];
     }
@@ -17,7 +17,7 @@ export default class ColourRegistry {
         return newColour;
     }
 
-    revoke(colour) {
+    revoke(colour: string) {
         this.inUseColours = this.inUseColours.filter(c => c !== colour);
     }
 

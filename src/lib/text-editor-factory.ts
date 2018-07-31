@@ -1,5 +1,5 @@
 import TextEditor from './text-editor';
-import {CreateRange} from './editor-components/range';
+import {CreateRange} from './editor-components/vscode';
 
 export default class TextEditorFactory {
     private readonly createRange: CreateRange;

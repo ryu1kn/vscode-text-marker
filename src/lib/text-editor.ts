@@ -1,7 +1,7 @@
 import SelectedTextFinder from './selected-text-finder';
 import {TextEditor as VsTextEditor} from 'vscode';
 import {FlatRange} from './models/flat-range';
-import {CreateRange} from './editor-components/range';
+import {CreateRange} from './editor-components/vscode';
 
 export default class TextEditor {
     private readonly editor: VsTextEditor;
