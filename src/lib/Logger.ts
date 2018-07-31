@@ -1,3 +1,3 @@
-interface Logger {
+export interface Logger {
     error(...args: string[]): void;
 }

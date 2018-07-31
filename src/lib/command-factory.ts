@@ -29,6 +29,7 @@ import UnhighlightCommand from './commands/unhighlight';
 import UpdateHighlightCommand from './commands/update-highlight';
 import WindowComponent from './editor-components/window';
 import {EventEmitter} from 'events';
+import {Logger} from './Logger';
 
 const generateUuid = require('uuid/v4');
 const BASE_STATUS_BAR_PRIORITY = 100;
@@ -116,10 +117,7 @@ export default class CommandFactory {
     }
 
     private _wrapCommand(command: any) {
-        return new CommandWrapper({
-            command,
-            logger: this.logger
-        });
+        return new CommandWrapper(command, this.logger);
     }
 
     createDecorationRefresher() {

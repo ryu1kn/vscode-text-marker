@@ -1,6 +1,7 @@
 import * as Const from './const';
 import CommandFactory from './command-factory';
 import {ExtensionContextLike} from './editor-components/vscode';
+import {Logger} from './Logger';
 
 export default class AppIntegrator {
     private readonly commandFactory: CommandFactory;

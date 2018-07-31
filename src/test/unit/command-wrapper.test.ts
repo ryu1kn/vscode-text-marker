@@ -1,12 +1,14 @@
-import {expect, sinon} from '../helpers/helper';
+import {contains, expect, mock, sinon, verify} from '../helpers/helper';
 
 import CommandWrapper from '../../lib/command-wrapper';
+import {Logger} from '../../lib/Logger';
+import DummyLogger from '../helpers/Logger';
 
 suite('CommandWrapper', () => {
 
     test('it executes given command with same args', async () => {
         const command = {execute: sinon.spy()};
-        const commandWrapper = new CommandWrapper({command} as any);
+        const commandWrapper = new CommandWrapper(command, {} as Logger);
 
         commandWrapper.execute('ARG1', 'ARG2');
 
@@ -17,22 +19,22 @@ suite('CommandWrapper', () => {
         const command = {execute: () => {
             throw new Error('UNEXPECTED_ERROR');
         }};
-        const logger = {error: sinon.spy()};
-        const commandWrapper = new CommandWrapper({command, logger});
+        const logger = mock(DummyLogger);
+        const commandWrapper = new CommandWrapper(command, logger);
 
         await commandWrapper.execute();
 
-        expect(logger.error.args[0][0]).to.have.string('UNEXPECTED_ERROR');
+        verify(logger.error(contains('UNEXPECTED_ERROR')));
     });
 
     test('it logs an asynchronously thrown error', async () => {
         const command = {execute: () => Promise.reject(new Error('UNEXPECTED_ERROR'))};
-        const logger = {error: sinon.spy()};
-        const commandWrapper = new CommandWrapper({command, logger});
+        const logger = mock(DummyLogger);
+        const commandWrapper = new CommandWrapper(command, logger);
 
         await commandWrapper.execute();
 
-        expect(logger.error.args[0][0]).to.have.string('UNEXPECTED_ERROR');
+        verify(logger.error(contains('UNEXPECTED_ERROR')));
     });
 
 });

@@ -2,6 +2,7 @@ import DecorationOperatorFactory from './decoration-operator-factory';
 import Debouncer from './debouncer';
 import TextEditorFactory from './text-editor-factory';
 import WindowComponent from './editor-components/window';
+import {Logger} from './Logger';
 
 export default class DecorationRefresher {
     private readonly logger: Logger;
