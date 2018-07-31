@@ -193,10 +193,10 @@ suite('DecorationRegistry', () => {
     }
 
     function createConfigStore({useHighlightColorOnRuler, autoSelectDistinctiveTextColor}: any = {}) {
-        return {get: key => {
-            if (key === 'useHighlightColorOnRuler') return !!useHighlightColorOnRuler;
-            if (key === 'autoSelectDistinctiveTextColor') return !!autoSelectDistinctiveTextColor;
-        }};
+        return {
+            useHighlightColorOnRuler: !!useHighlightColorOnRuler,
+            autoSelectDistinctiveTextColor: !!autoSelectDistinctiveTextColor
+        };
     }
 
     function createPattern(phrase) {

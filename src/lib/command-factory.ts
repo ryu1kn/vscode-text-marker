@@ -216,7 +216,7 @@ export default class CommandFactory {
 
     private createMatchingModeRegistry() {
         const configStore = this.getConfigStore();
-        return new MatchingModeRegistry(configStore.get('enableIgnoreCase'), configStore.get('enableWholeMatch'), this.getEventBus());
+        return new MatchingModeRegistry(configStore.enableIgnoreCase, configStore.enableWholeMatch, this.getEventBus());
     }
 
     private getPatternFactory() {

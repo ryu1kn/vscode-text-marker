@@ -16,7 +16,7 @@ suite('SavedHighlightsRestorer', () => {
                 wholeMatch: false
             }
         }];
-        const configStore = {get: stubWithArgs(['savedHighlights'], savedDecorations)};
+        const configStore = {savedHighlights: savedDecorations};
         const decorationOperator = {addDecoration: sinon.spy()};
         const decorationOperatorFactory = {createForVisibleEditors: () => decorationOperator};
         const patternFactory = {

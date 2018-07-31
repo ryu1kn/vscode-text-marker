@@ -10,9 +10,9 @@ export default class ColourRegistry {
     }
 
     issue() {
-        const colours = this.configStore.get('highlightColors') as string[];
+        const colours = this.configStore.highlightColors;
         const availableColour = colours.find(colour => !this.inUseColours.includes(colour));
-        const newColour = availableColour || this.configStore.get('defaultHighlightColor');
+        const newColour = availableColour || this.configStore.defaultHighlightColor;
         this.inUseColours = this.inUseColours.concat(newColour);
         return newColour;
     }

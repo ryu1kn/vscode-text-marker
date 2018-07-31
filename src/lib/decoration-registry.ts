@@ -61,20 +61,12 @@ export default class DecorationRegistry {
                 {
                     backgroundColor: colour,
                     borderRadius: '.2em',
-                    overviewRulerColor: this.useHighlightColorOnRuler ? colour : OVERVIEW_RULER_COLOUR,
+                    overviewRulerColor: this.configStore.useHighlightColorOnRuler ? colour : OVERVIEW_RULER_COLOUR,
                     overviewRulerLane: OverviewRulerLane.Center
                 },
-                this.autoSelectDistinctiveTextColor && {color: getColorContrast(colour)}
+                this.configStore.autoSelectDistinctiveTextColor && {color: getColorContrast(colour)}
             )
         );
-    }
-
-    private get useHighlightColorOnRuler() {
-        return this.configStore.get('useHighlightColorOnRuler');
-    }
-
-    private get autoSelectDistinctiveTextColor() {
-        return this.configStore.get('autoSelectDistinctiveTextColor');
     }
 
 }

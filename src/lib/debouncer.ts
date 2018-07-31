@@ -13,7 +13,7 @@ export default class Debouncer {
     debounce(callback) {
         if (this.timeout) clearTimeout(this.timeout);
 
-        const waitTime = this.configStore.get('delayForRefreshingHighlight');
+        const waitTime = this.configStore.delayForRefreshingHighlight;
         if (isNumber(waitTime)) {
             this.timeout = setTimeout(callback, waitTime);
         }
