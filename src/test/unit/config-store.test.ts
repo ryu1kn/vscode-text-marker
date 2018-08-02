@@ -1,4 +1,4 @@
-import {expect, mock, sinon, stubWithArgs, when} from '../helpers/helper';
+import {expect, mock, mockTypeWithMethod, verify, when} from '../helpers/helper';
 
 import ConfigStore from '../../lib/config-store';
 import * as vscode from 'vscode';
@@ -9,13 +9,15 @@ suite('ConfigStore', () => {
     let configStore: any;
 
     setup(() => {
-        extensionConfig = {
-            get: stubWithArgs(['CONFIG_NAME'], 'CONFIG_VALUE'),
-            update: sinon.spy()
-        };
-        const workspace = {getConfiguration: stubWithArgs(['textmarker'], extensionConfig)} as typeof vscode.workspace;
+        extensionConfig = mockTypeWithMethod<vscode.WorkspaceConfiguration>(['get', 'update']);
+        when(extensionConfig.get('CONFIG_NAME')).thenReturn('CONFIG_VALUE');
+
+        const workspace = mockTypeWithMethod<typeof vscode.workspace>(['getConfiguration']);
+        when(workspace.getConfiguration('textmarker')).thenReturn(extensionConfig);
+
         const configTargetPicker = mock(ConfigurationTargetPicker);
         when(configTargetPicker.pick()).thenResolve('CONFIG_TARGET');
+
         configStore = new ConfigStore(workspace, configTargetPicker);
     });
 
@@ -26,6 +28,6 @@ suite('ConfigStore', () => {
     test('it sets a config value for the specified location', async () => {
         await configStore.set('CONFIG_NAME', 'CONFIG_VALUE');
 
-        expect(extensionConfig.update).to.have.been.calledWith('CONFIG_NAME', 'CONFIG_VALUE', 'CONFIG_TARGET');
+        verify(extensionConfig.update('CONFIG_NAME', 'CONFIG_VALUE', 'CONFIG_TARGET'));
     });
 });

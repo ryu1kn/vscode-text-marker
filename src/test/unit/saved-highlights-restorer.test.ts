@@ -1,11 +1,11 @@
-import {expect, mock, mockType, sinon, stubWithArgs, when} from '../helpers/helper';
-
-const EventEmitter = require('events');
+import {expect, mock, mockType, mockTypeWithMethod, sinon, when} from '../helpers/helper';
 import {Event} from '../../lib/const';
 import SavedHighlightsRestorer from '../../lib/saved-highlights-restorer';
 import ConfigStore from '../../lib/config-store';
 import DecorationOperatorFactory from '../../lib/decoration-operator-factory';
 import PatternFactory from '../../lib/pattern-factory';
+
+const EventEmitter = require('events');
 
 suite('SavedHighlightsRestorer', () => {
 
@@ -23,14 +23,13 @@ suite('SavedHighlightsRestorer', () => {
         const decorationOperator = {addDecoration: sinon.spy()};
         const decorationOperatorFactory = mock(DecorationOperatorFactory);
         when(decorationOperatorFactory.createForVisibleEditors()).thenReturn(decorationOperator);
-        const patternFactory = mockType<PatternFactory>({
-            create: stubWithArgs([{
-                type: 'String',
-                phrase: 'PHRASE',
-                ignoreCase: false,
-                wholeMatch: false
-            }], 'PATTERN')
-        });
+        const patternFactory = mockTypeWithMethod<PatternFactory>(['create']);
+        when(patternFactory.create({
+            type: 'String',
+            phrase: 'PHRASE',
+            ignoreCase: false,
+            wholeMatch: false
+        })).thenReturn('PATTERN');
         new SavedHighlightsRestorer(configStore, decorationOperatorFactory, patternFactory, eventBus); // eslint-disable-line no-new
 
         eventBus.on(Event.EXTENSION_READY, () => {
