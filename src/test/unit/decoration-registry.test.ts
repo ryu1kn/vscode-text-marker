@@ -1,8 +1,9 @@
-import {expect, mockType, stubReturns} from '../helpers/helper';
+import {expect, mockType, mockTypeWithMethod, stubReturns, when} from '../helpers/helper';
 
 import DecorationRegistry from '../../lib/decoration-registry';
 import PatternFactory from '../../lib/pattern-factory';
 import MatchingModeRegistry from '../../lib/matching-mode-registry';
+import * as vscode from 'vscode';
 
 suite('DecorationRegistry', () => {
 
@@ -107,26 +108,25 @@ suite('DecorationRegistry', () => {
     });
 
     test('it issues new decoration with new color', () => {
-        const window = {createTextEditorDecorationType: stubReturns('DECORATION_TYPE_1', 'DECORATION_TYPE_2')};
+        const window = mockTypeWithMethod<typeof vscode.window>(['createTextEditorDecorationType']);
+        when(window.createTextEditorDecorationType({
+            backgroundColor: 'pink',
+            borderRadius: '.2em',
+            overviewRulerColor: 'violet',
+            overviewRulerLane: 2
+        })).thenReturn('DECORATION_TYPE_1');
+        when(window.createTextEditorDecorationType({
+            backgroundColor: 'yellow',
+            borderRadius: '.2em',
+            overviewRulerColor: 'violet',
+            overviewRulerLane: 2
+        })).thenReturn('DECORATION_TYPE_2');
         const registry = createDecorationRegistry({window});
 
-        registry.issue(createPattern('TEXT_1'));
-        registry.issue(createPattern('TEXT_2'));
-
-        expect(window.createTextEditorDecorationType.args).to.eql([
-            [{
-                backgroundColor: 'pink',
-                borderRadius: '.2em',
-                overviewRulerColor: 'violet',
-                overviewRulerLane: 2
-            }],
-            [{
-                backgroundColor: 'yellow',
-                borderRadius: '.2em',
-                overviewRulerColor: 'violet',
-                overviewRulerLane: 2
-            }]
-        ]);
+        const pattern1 = createPattern('TEXT_1');
+        expect(registry.issue(pattern1)!.decorationType).to.eql('DECORATION_TYPE_1');
+        const pattern2 = createPattern('TEXT_2');
+        expect(registry.issue(pattern2)!.decorationType).to.eql('DECORATION_TYPE_2');
     });
 
     test('it toggles the case sensitivity of a pattern', () => {
@@ -145,40 +145,36 @@ suite('DecorationRegistry', () => {
     });
 
     test('it use the text highlight colour on the ruler', () => {
-        const window = {createTextEditorDecorationType: stubReturns('DECORATION_TYPE_1')};
+        const window = mockTypeWithMethod<typeof vscode.window>(['createTextEditorDecorationType']);
+        when(window.createTextEditorDecorationType({
+            backgroundColor: 'pink',
+            borderRadius: '.2em',
+            overviewRulerColor: 'pink',
+            overviewRulerLane: 2
+        })).thenReturn('DECORATION_TYPE_1');
+
         const configStore = createConfigStore({useHighlightColorOnRuler: true});
         const registry = createDecorationRegistry({configStore, window});
 
         const pattern = createPattern('TEXT');
-        registry.issue(pattern);
-
-        expect(window.createTextEditorDecorationType.args).to.eql([
-            [{
-                backgroundColor: 'pink',
-                borderRadius: '.2em',
-                overviewRulerColor: 'pink',
-                overviewRulerLane: 2
-            }]
-        ]);
+        expect(registry.issue(pattern)!.decorationType).to.eql('DECORATION_TYPE_1');
     });
 
     test('it use the high contrast colour for text with highlights', () => {
-        const window = {createTextEditorDecorationType: stubReturns('DECORATION_TYPE_1')};
+        const window = mockTypeWithMethod<typeof vscode.window>(['createTextEditorDecorationType']);
+        when(window.createTextEditorDecorationType({
+            backgroundColor: 'pink',
+            borderRadius: '.2em',
+            color: '#545454',
+            overviewRulerColor: 'violet',
+            overviewRulerLane: 2
+        })).thenReturn('DECORATION_TYPE_1');
+
         const configStore = createConfigStore({autoSelectDistinctiveTextColor: true});
         const registry = createDecorationRegistry({configStore, window});
 
         const pattern = createPattern('TEXT');
-        registry.issue(pattern);
-
-        expect(window.createTextEditorDecorationType.args).to.eql([
-            [{
-                backgroundColor: 'pink',
-                borderRadius: '.2em',
-                color: '#545454',
-                overviewRulerColor: 'violet',
-                overviewRulerLane: 2
-            }]
-        ]);
+        expect(registry.issue(pattern)!.decorationType).to.eql('DECORATION_TYPE_1');
     });
 
     function createDecorationRegistry(options: any = {}) {
