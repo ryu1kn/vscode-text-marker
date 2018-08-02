@@ -61,7 +61,7 @@ suite('DecorationRegistry', () => {
         const registry = createDecorationRegistry();
 
         const pattern = createPattern('PATTERN');
-        const decorationId = registry.issue(pattern).id;
+        const decorationId = registry.issue(pattern)!.id;
         registry.revoke(decorationId);
         expect(registry.inquireByPattern(pattern)).to.be.null;
     });
@@ -201,7 +201,7 @@ suite('DecorationRegistry', () => {
         };
     }
 
-    function createPattern(phrase) {
+    function createPattern(phrase: string) {
         const matchingModeRegistry = mockType<MatchingModeRegistry>({mode: {ignoreCase: false}});
         return new PatternFactory(matchingModeRegistry).create({phrase});
     }

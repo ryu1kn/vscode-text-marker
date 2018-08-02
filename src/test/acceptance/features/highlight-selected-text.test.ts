@@ -6,11 +6,11 @@ import {createFakeVsCode, EXECUTION_CONTEXT} from '../helpers/fake-vscode';
 
 suite('Highlight command', () => {
 
-    let editor1;
-    let editor2;
-    let editor3;
-    let command;
-    let fakeVscode;
+    let editor1: any;
+    let editor2: any;
+    let editor3: any;
+    let command: any;
+    let fakeVscode: any;
 
     setup(() => {
         editor1 = createFakeEditor({wholeText: 'A TEXT B TEXT C', selectedText: 'TEXT'});

@@ -5,8 +5,8 @@ import * as vscode from "vscode";
 import ConfigurationTargetPicker from "../../lib/config-target-picker";
 
 suite('ConfigStore', () => {
-    let extensionConfig;
-    let configStore;
+    let extensionConfig: any;
+    let configStore: any;
 
     setup(() => {
         extensionConfig = {

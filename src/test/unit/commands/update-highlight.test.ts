@@ -1,4 +1,4 @@
-import {any, mock, verify, when} from '../../helpers/helper';
+import {any, mock, mockType, verify, when} from '../../helpers/helper';
 
 import UpdateHighlightCommand from '../../../lib/commands/update-highlight';
 import DecorationOperatorFactory from '../../../lib/decoration-operator-factory';
@@ -17,7 +17,7 @@ suite('UpdateHighlightCommand', () => {
 
     suite('When the cursor is on highlight', () => {
 
-        const editor = {selectedText: null} as TextEditor;
+        const editor = mockType<TextEditor>({selectedText: null});
         const textEditorFactory = mock(TextEditorFactory);
         when(textEditorFactory.create(rawEditor)).thenReturn(editor);
 
@@ -77,7 +77,7 @@ suite('UpdateHighlightCommand', () => {
         const patternVariationReader = mock(PatternVariationReader);
 
         test('it does nothing', async () => {
-            const editor = {selectedText: null} as TextEditor;
+            const editor = mockType<TextEditor>({selectedText: null});
             const textEditorFactory = mock(TextEditorFactory);
             when(textEditorFactory.create(rawEditor)).thenReturn(editor);
             const textLocationRegistry = mock(TextLocationRegistry);

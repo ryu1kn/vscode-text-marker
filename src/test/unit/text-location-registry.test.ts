@@ -4,7 +4,7 @@ import TextLocationRegistry from '../../lib/text-location-registry';
 
 suite('TextLocationRegistry', () => {
 
-    let registry;
+    let registry: TextLocationRegistry;
 
     setup(() => {
         registry = new TextLocationRegistry();
@@ -40,12 +40,12 @@ suite('TextLocationRegistry', () => {
     test('it deregisters a decoration id and their positions', () => {
         const decorationId = registry.queryDecorationId('EDITOR_ID', range(1, 1));
         expect(decorationId).to.eql('DECORATION_ID');
-        registry.deregister(decorationId);
+        registry.deregister(decorationId!);
         const decorationId2 = registry.queryDecorationId('EDITOR_ID', range(1, 1));
         expect(decorationId2).to.be.null;
     });
 
-    function range(start, end) {
+    function range(start: number, end: number) {
         return {start, end};
     }
 });

@@ -25,7 +25,7 @@ export default class DecorationRefresher {
         this.windowComponent = windowComponent;
     }
 
-    refresh(editor: VsTextEditor) {
+    refresh(editor?: VsTextEditor) {
         if (!editor) return;
         try {
             const textEditor = this.textEditorFactory.create(editor);

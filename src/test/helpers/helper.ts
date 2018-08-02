@@ -7,7 +7,7 @@ export const sinon = require('sinon');
 
 export const expect = chai.expect;
 
-export const stubWithArgs = (...args) => {
+export const stubWithArgs = (...args: any[]) => {
     const stub = sinon.stub();
     for (let i = 0; i + 1 < args.length; i += 2) {
         stub.withArgs.apply(stub, args[i]).returns(args[i + 1]);
@@ -15,7 +15,7 @@ export const stubWithArgs = (...args) => {
     return stub;
 };
 
-export const stubReturns = (...args) =>
+export const stubReturns = (...args: any[]) =>
     args.reduce(
         (stub, arg, index) => {
             stub.onCall(index).returns(arg);
@@ -28,7 +28,7 @@ export const when = td.when;
 
 export const verify = td.verify;
 
-export function wrapVerify(invokeCallback, expectedCalls: any[][]) {
+export function wrapVerify(invokeCallback: (...args: any[]) => void, expectedCalls: any[][]) {
     const captors = [td.matchers.captor(), td.matchers.captor(), td.matchers.captor()];
 
     invokeCallback(...captors.map(captor => captor.capture));
@@ -36,7 +36,7 @@ export function wrapVerify(invokeCallback, expectedCalls: any[][]) {
     expectedCalls.forEach((call, callIndex) => {
         call.forEach((expectedArg, argIndex) => {
             const failureMessage = `Check argument ${argIndex} of call ${callIndex}`;
-            expect(captors[argIndex].values[callIndex]).to.eql(expectedArg, failureMessage);
+            expect(captors[argIndex].values![callIndex]).to.eql(expectedArg, failureMessage);
         });
     });
 }
@@ -49,6 +49,10 @@ export const callback = td.callback;
 
 export function mock<T>(c: new (...args: any[]) => T): T {
     return new (td.constructor(c));
+}
+
+export function mockFunction() {
+    return td.function();
 }
 
 export function mockType<T>(params: any): T {

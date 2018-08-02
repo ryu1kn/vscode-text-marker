@@ -1,4 +1,4 @@
-import {any, expect, mock, sinon, verify, when} from '../../helpers/helper';
+import {any, expect, mock, mockType, sinon, verify, when} from '../../helpers/helper';
 
 import ToggleHighlightCommand from '../../../lib/commands/toggle-highlight';
 import PatternFactory from '../../../lib/pattern-factory';
@@ -38,7 +38,7 @@ suite('ToggleHighlightCommand', () => {
         });
 
         test('it remove decoration if the cursor is on highlight', () => {
-            const editor = {selectedText: null} as TextEditor;
+            const editor = mockType<TextEditor>({selectedText: null});
             const decorationOperator = {removeDecoration: sinon.spy()};
             const decorationOperatorFactory = mock(DecorationOperatorFactory);
             when(decorationOperatorFactory.createForVisibleEditors()).thenReturn(decorationOperator);
@@ -62,7 +62,7 @@ suite('ToggleHighlightCommand', () => {
         const patternFactory = mock(PatternFactory);
         when(patternFactory.create(any())).thenReturn(mock(RegexPattern));
 
-        const editor = {selectedText: null} as TextEditor;
+        const editor = mockType<TextEditor>({selectedText: null});
         const textEditorFactory = mock(TextEditorFactory);
         when(textEditorFactory.create(rawEditor)).thenReturn(editor);
 

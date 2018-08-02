@@ -23,18 +23,18 @@ suite('SelectedTextFinder', () => {
         expect(finder.find(editor)).to.be.undefined;
     });
 
-    function fakeEditor(selectedText, entireText, wordUnderCursor?) {
+    function fakeEditor(selectedText: string, entireText: string, wordUnderCursor?: string) {
         const selection = {
             active: 'CURSOR_POSITION',
             text: selectedText
         };
         const document = {
-            getText: range => {
+            getText: (range: any) => {
                 if (range === selection) return range.text;
                 if (range === 'WORD_RANGE') return wordUnderCursor;
                 return entireText;
             },
-            getWordRangeAtPosition: cursorAt => {
+            getWordRangeAtPosition: (cursorAt: any) => {
                 return 'WORD_RANGE';
             }
         };

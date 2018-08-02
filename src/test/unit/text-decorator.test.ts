@@ -110,7 +110,7 @@ suite('TextDecorator', () => {
         expect(editors[0].setDecorations.args).to.eql([[decorationType, [{start: 7, end: 11}, {start: 12, end: 16}]]]);
     });
 
-    function createPattern(phrase) {
+    function createPattern(phrase: string) {
         const matchingModeRegistry = mockType<MatchingModeRegistry>({mode: {ignoreCase: false}});
         return new PatternFactory(matchingModeRegistry).create({phrase});
     }

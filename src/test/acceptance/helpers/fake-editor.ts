@@ -3,7 +3,7 @@ import {sinon} from '../../helpers/helper';
 export const createFakeEditor = ({selectedText, wholeText}: any = {}) => {
     return {
         document: {
-            getText: selection => selection ? selectedText : wholeText,
+            getText: (selection: any) => selection ? selectedText : wholeText,
             positionAt: position,
             offsetAt: offset,
             uri: 'EDITOR_ID'
@@ -13,7 +13,7 @@ export const createFakeEditor = ({selectedText, wholeText}: any = {}) => {
     };
 };
 
-function createSelection(selectedText, wholeText) {
+function createSelection(selectedText: any, wholeText: any) {
     if (!selectedText) return null;
     return {
         start: position(wholeText.indexOf(selectedText)),
@@ -21,11 +21,11 @@ function createSelection(selectedText, wholeText) {
     };
 }
 
-function position(offset) {
+function position(offset: any) {
     return `POSITION:${offset}`;
 }
 
-function offset(position) {
+function offset(position: any) {
     const POS_PREFIX = 'POSITION:';
     return position.startsWith(POS_PREFIX) && parseInt(position.replace(POS_PREFIX, ''), 10);
 }

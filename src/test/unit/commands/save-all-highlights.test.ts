@@ -4,8 +4,8 @@ import DecorationRegistry from "../../../lib/decoration-registry";
 import ConfigStore from "../../../lib/config-store";
 
 suite('SaveAllHighlightsCommand', () => {
-    let command;
-    let configStore;
+    let command: SaveAllHighlightsCommand;
+    let configStore: ConfigStore;
     const decorations = [{
         id: 'ID1',
         colour: 'COLOUR1',

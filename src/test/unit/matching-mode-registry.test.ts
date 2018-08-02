@@ -1,12 +1,11 @@
 import {expect} from '../helpers/helper';
 import {Event} from '../../lib/const';
 import MatchingModeRegistry from '../../lib/matching-mode-registry';
-
-const EventEmitter = require('events');
+import {EventEmitter} from "events";
 
 suite('MatchingModeRegistry', () => {
-    let eventBus;
-    let registry;
+    let eventBus: EventEmitter;
+    let registry: MatchingModeRegistry;
 
     setup(() => {
         eventBus = new EventEmitter();
@@ -26,7 +25,7 @@ suite('MatchingModeRegistry', () => {
     });
 
     test('it broadcasts if case sensitivity has been updated', done => {
-        eventBus.on(Event.TOGGLED_CASE_SENSITIVITY, mode => {
+        eventBus.on(Event.TOGGLED_CASE_SENSITIVITY, (mode: any) => {
             expect(mode).to.have.property('ignoreCase');
             done();
         });
@@ -39,7 +38,7 @@ suite('MatchingModeRegistry', () => {
     });
 
     test('it broadcasts if whole/partial match has been toggled', done => {
-        eventBus.on(Event.WHOLE_MATCH_MODE_TOGGLED, mode => {
+        eventBus.on(Event.WHOLE_MATCH_MODE_TOGGLED, (mode: any) => {
             expect(mode).to.have.property('wholeMatch');
             done();
         });
@@ -47,7 +46,7 @@ suite('MatchingModeRegistry', () => {
     });
 
     test('after extension started, it broadcast if it is ready', done => {
-        eventBus.on(Event.MATCHING_MODE_INITIALISED, mode => {
+        eventBus.on(Event.MATCHING_MODE_INITIALISED, (mode: any) => {
             expect(mode).to.have.property('ignoreCase');
             done();
         });

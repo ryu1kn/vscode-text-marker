@@ -1,13 +1,15 @@
 import {stubReturns} from '../../helpers/helper';
 
 export const createFakeVsCode = ({editors}: any = {}) => {
-    const commands = {};
+    const commands = {} as any;
     const textMarkerConfig = {
         highlightColors: ['COLOUR_A', 'COLOUR_B'],
-        savedHighlights: []
-    };
+        savedHighlights: [] as any[]
+    } as any;
     return {
-        Range: function (startPos, endPos) {
+        _startPos: undefined,
+        _endPos: undefined,
+        Range: function (startPos: any, endPos: any) {
             this._startPos = startPos;
             this._endPos = endPos;
         },
@@ -19,14 +21,14 @@ export const createFakeVsCode = ({editors}: any = {}) => {
         },
         workspace: {
             onDidChangeTextDocument: () => {},
-            getConfiguration: configKey =>
+            getConfiguration: (configKey: string) =>
                 configKey === 'textmarker' ?
-                    {get: textMarkerConfigKey => textMarkerConfig[textMarkerConfigKey]} :
+                    {get: (textMarkerConfigKey: string) => textMarkerConfig[textMarkerConfigKey]} :
                     {}
         },
         commands: {
             registerCommand: () => {},
-            registerTextEditorCommand: (commandName, handler, scope) => {
+            registerTextEditorCommand: (commandName: string, handler: any, scope: any) => {
                 commands[commandName] = handler.bind(scope);
             }
         },
