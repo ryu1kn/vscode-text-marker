@@ -1,13 +1,15 @@
 import TextLocationRegistry from './text-location-registry';
+import TextEditor from './text-editor';
+import {Decoration} from './entities/decoration';
 
 export default class TextDecorator {
     private readonly textLocationRegistry: TextLocationRegistry;
 
-    constructor(textLocationRegistry) {
+    constructor(textLocationRegistry: TextLocationRegistry) {
         this.textLocationRegistry = textLocationRegistry;
     }
 
-    decorate(editors, decorations) {
+    decorate(editors: TextEditor[], decorations: Decoration[]) {
         editors.forEach(visibleEditor => {
             decorations.forEach(decoration => {
                 if (decoration.decorationType) {
@@ -17,7 +19,7 @@ export default class TextDecorator {
         });
     }
 
-    undecorate(editors, decorations) {
+    undecorate(editors: TextEditor[], decorations: Decoration[]) {
         decorations.forEach(decoration => {
             editors.forEach(visibleEditor => {
                 visibleEditor.unsetDecorations(decoration.decorationType);
@@ -26,14 +28,10 @@ export default class TextDecorator {
         });
     }
 
-    private addDecoration(editor, decoration) {
+    private addDecoration(editor: TextEditor, decoration: Decoration) {
         const ranges = decoration.pattern.locateIn(editor.wholeText);
         editor.setDecorations(decoration.decorationType, ranges);
-        this.textLocationRegistry.register({
-            editorId: editor.id,
-            decorationId: decoration.id,
-            ranges
-        });
+        this.textLocationRegistry.register(editor.id, decoration.id, ranges);
     }
 
 }

@@ -1,7 +1,8 @@
-import {expect, stubReturns} from '../helpers/helper';
+import {expect, mockType, stubReturns} from '../helpers/helper';
 
 import DecorationRegistry from '../../lib/decoration-registry';
 import PatternFactory from '../../lib/pattern-factory';
+import MatchingModeRegistry from "../../lib/matching-mode-registry";
 
 suite('DecorationRegistry', () => {
 
@@ -131,14 +132,15 @@ suite('DecorationRegistry', () => {
     test('it toggles the case sensitivity of a pattern', () => {
         const registry = createDecorationRegistry();
 
-        const pattern = createPattern('TEXT');
-        registry.issue(pattern);
+        const oldPattern = createPattern('TEXT');
+        const newPattern = createPattern('TEXT');
+        registry.issue(oldPattern);
 
-        expect(registry.updatePattern('UUID_1', 'TEXT')).to.eql({
+        expect(registry.updatePattern('UUID_1', newPattern)).to.eql({
             id: 'UUID_1',
             colour: 'pink',
             decorationType: 'DECORATION_TYPE_1',
-            pattern: 'TEXT'
+            pattern: newPattern
         });
     });
 
@@ -200,9 +202,7 @@ suite('DecorationRegistry', () => {
     }
 
     function createPattern(phrase) {
-        const matchingModeRegistry = {
-            mode: {ignoreCase: false}
-        };
+        const matchingModeRegistry = mockType<MatchingModeRegistry>({mode: {ignoreCase: false}});
         return new PatternFactory(matchingModeRegistry).create({phrase});
     }
 

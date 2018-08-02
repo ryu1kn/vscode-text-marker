@@ -1,4 +1,5 @@
-import Pattern from './pattern';
+import Pattern, {PatternParams} from './pattern';
+import {FlatRange} from '../models/flat-range';
 
 export default class RegexPattern extends Pattern {
 
@@ -9,9 +10,9 @@ export default class RegexPattern extends Pattern {
         return new RegExp(this.phrase, caseFlag).toString();
     }
 
-    protected findCandidateRanges(text) {
+    protected findCandidateRanges(text: string): FlatRange[] {
         const adjustedPattern = this.getAdjustedRegex();
-        const ranges = [];
+        const ranges: FlatRange[] = [];
 
         text.replace(adjustedPattern, (match, ...args) => {
             const matchLength = match.length;
@@ -27,7 +28,7 @@ export default class RegexPattern extends Pattern {
         return ranges;
     }
 
-    protected create(params) {
+    protected create(params: PatternParams) {
         return new RegexPattern(params);
     }
 

@@ -5,7 +5,7 @@ export default class RegexReader {
     private readonly patternFactory: PatternFactory;
     private readonly windowComponent: WindowComponent;
 
-    constructor(patternFactory, windowComponent) {
+    constructor(patternFactory: PatternFactory, windowComponent: WindowComponent) {
         this.patternFactory = patternFactory;
         this.windowComponent = windowComponent;
     }

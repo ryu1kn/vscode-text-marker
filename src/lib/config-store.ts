@@ -7,7 +7,7 @@ export default class ConfigStore {
     private readonly workspace: typeof vscode.workspace;
     private readonly configTargetPicker: ConfigurationTargetPicker;
 
-    constructor(workspace, configTargetPicker) {
+    constructor(workspace: typeof vscode.workspace, configTargetPicker: ConfigurationTargetPicker) {
         this.workspace = workspace;
         this.configTargetPicker = configTargetPicker;
     }
@@ -44,12 +44,12 @@ export default class ConfigStore {
         return this.get<boolean>('enableWholeMatch');
     }
 
-    private get<T>(configName) {
+    private get<T>(configName: string) {
         const extensionConfig = this.workspace.getConfiguration(Const.EXTENSION_ID);
         return extensionConfig.get(configName) as T;
     }
 
-    async set(configName, configValue) {
+    async set(configName: string, configValue: any) {
         const configTarget = await this.configTargetPicker.pick();
         const extensionConfig = this.workspace.getConfiguration(Const.EXTENSION_ID);
         return extensionConfig.update(configName, configValue, configTarget);

@@ -8,7 +8,7 @@ export default class ToggleWholeMatchModeButton {
     private readonly eventBus: EventEmitter;
     private readonly statusBarItem: StatusBarItem;
 
-    constructor(eventBus, statusBarItem) {
+    constructor(eventBus: EventEmitter, statusBarItem: StatusBarItem) {
         this.eventBus = eventBus;
         this.statusBarItem = statusBarItem;
         this.registerListeners();
@@ -19,14 +19,14 @@ export default class ToggleWholeMatchModeButton {
         this.eventBus.on(Event.WHOLE_MATCH_MODE_TOGGLED, this.updateButton.bind(this));
     }
 
-    private initialiseButton(params) {
+    private initialiseButton(params: {wholeMatch: boolean}) {
         this.updateButton(params);
 
         this.statusBarItem.command = `${Const.EXTENSION_ID}.toggleModeForWholeMatch`;
         this.statusBarItem.show();
     }
 
-    private updateButton({wholeMatch}) {
+    private updateButton({wholeMatch}: {wholeMatch: boolean}) {
         const statusBarItem = this.statusBarItem;
         if (wholeMatch) {
             statusBarItem.text = '[Ab|]';

@@ -1,8 +1,9 @@
 import {mock, when, verify} from '../../helpers/helper';
 import HighlightUsingRegexCommand from '../../../lib/commands/highlight-using-regex';
-import DecorationOperatorFactory from "../../../lib/decoration-operator-factory";
-import RegexReader from "../../../lib/regex-reader";
-import DecorationOperator from "../../../lib/decoration-operator";
+import DecorationOperatorFactory from '../../../lib/decoration-operator-factory';
+import RegexReader from '../../../lib/regex-reader';
+import DecorationOperator from '../../../lib/decoration-operator';
+import RegexPattern from '../../../lib/patterns/regex';
 
 suite('HighlightUsingRegexCommand', () => {
 
@@ -11,15 +12,17 @@ suite('HighlightUsingRegexCommand', () => {
         const decorationOperatorFactory = mock(DecorationOperatorFactory);
         when(decorationOperatorFactory.createForVisibleEditors()).thenReturn(decorationOperator);
 
+        const pattern = mock(RegexPattern);
+
         const regexReader = mock(RegexReader);
-        when(regexReader.read()).thenResolve('PATTERN');
+        when(regexReader.read()).thenResolve(pattern);
 
         const command = new HighlightUsingRegexCommand(decorationOperatorFactory, regexReader);
 
         test('it decorates text that matches to the specified regex', async () => {
             await command.execute();
 
-            verify(decorationOperator.addDecoration('PATTERN'));
+            verify(decorationOperator.addDecoration(pattern));
         });
     })
 

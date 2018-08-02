@@ -13,15 +13,15 @@ interface ConfigurationTargetQuickPickItem extends QuickPickItem {
 export default class ConfigurationTargetPicker {
     private readonly windowComponent: WindowComponent;
 
-    constructor(windowComponent) {
+    constructor(windowComponent: WindowComponent) {
         this.windowComponent = windowComponent;
     }
 
-    async pick() {
+    async pick(): Promise<boolean|undefined> {
         const selectItems = this.buildQuickPickItems();
         const options = {placeHolder: 'Select which scope of settings to save highlights to'};
         const item = await this.windowComponent.showQuickPick<ConfigurationTargetQuickPickItem>(selectItems, options);
-        return item ? item.value : null;
+        return item ? item.value : undefined;
     }
 
     private buildQuickPickItems(): ConfigurationTargetQuickPickItem[] {
@@ -29,12 +29,12 @@ export default class ConfigurationTargetPicker {
             {
                 label: 'Global',
                 value: ConfigurationTarget.GLOBAL,
-                description: null
+                description: ''
             },
             {
                 label: 'Workspace',
                 value: ConfigurationTarget.WORKSPACE,
-                description: null
+                description: ''
             }
         ];
     }

@@ -7,19 +7,19 @@ export default class TextLocationRegistry {
         this.recordMap = new Map();
     }
 
-    register({editorId, decorationId, ranges}) {
+    register(editorId: string, decorationId: string, ranges: FlatRange[]) {
         const editorDecorations = this.recordMap.get(editorId) || new Map();
         editorDecorations.set(decorationId, ranges);
         this.recordMap.set(editorId, editorDecorations);
     }
 
-    deregister(decorationId) {
+    deregister(decorationId: string) {
         Array.from(this.recordMap.values()).forEach(decorationIdMap => {
             decorationIdMap.delete(decorationId);
         });
     }
 
-    queryDecorationId({editorId, flatRange}) {
+    queryDecorationId(editorId: string, flatRange: FlatRange) {
         const decorationMap = this.recordMap.get(editorId);
         if (!decorationMap) return null;
 
@@ -28,8 +28,8 @@ export default class TextLocationRegistry {
         return decorationId || null;
     }
 
-    private isPointingRange(range2) {
-        return range1 => {
+    private isPointingRange(range2: FlatRange) {
+        return (range1: FlatRange) => {
             if (range2.start < range1.start || range2.end > range1.end) return false;
             return range2.start === range2.end ||
                 (range1.start === range2.start && range1.end === range2.end);

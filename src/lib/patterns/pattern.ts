@@ -1,15 +1,22 @@
 import {FlatRange} from '../models/flat-range';
 
+export type PatternParams = {
+    phrase: string;
+    ignoreCase?: boolean;
+    wholeMatch?: boolean;
+};
+
 export default abstract class Pattern {
     public readonly phrase: string;
     public readonly ignoreCase: boolean;
     public readonly wholeMatch: boolean;
 
-    public abstract type;
-    protected abstract create(params): Pattern;
-    protected abstract findCandidateRanges(text): FlatRange[];
+    public abstract type: string;
+    public abstract displayText: string;
+    protected abstract create(params: PatternParams): Pattern;
+    protected abstract findCandidateRanges(text: string): FlatRange[];
 
-    constructor(params) {
+    constructor(params: PatternParams) {
         this.phrase = params.phrase;
         this.ignoreCase = params.ignoreCase || false;
         this.wholeMatch = params.wholeMatch || false;
@@ -31,7 +38,7 @@ export default abstract class Pattern {
         });
     }
 
-    updatePhrase(newPhrase) {
+    updatePhrase(newPhrase: string) {
         return this.create({
             phrase: newPhrase,
             ignoreCase: this.ignoreCase,
@@ -39,19 +46,19 @@ export default abstract class Pattern {
         });
     }
 
-    equalTo(other) {
+    equalTo(other: Pattern) {
         return this.type === other.type &&
                 this.phrase === other.phrase &&
                 this.ignoreCase === other.ignoreCase &&
                 this.wholeMatch === other.wholeMatch;
     }
 
-    locateIn(text): FlatRange {
+    locateIn(text: string): FlatRange[] {
         const candidateRanges = this.findCandidateRanges(text);
         return this.wholeMatch ? this.filterwholeMatchMatch(text, candidateRanges) : candidateRanges;
     }
 
-    private filterwholeMatchMatch(text, ranges) {
+    private filterwholeMatchMatch(text: string, ranges: FlatRange[]) {
         return ranges.filter(range =>
             !/\w\w/.test(text.substring(range.start - 1, range.start + 1)) &&
             !/\w\w/.test(text.substring(range.end - 1, range.end + 1))

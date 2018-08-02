@@ -1,4 +1,5 @@
-import Pattern from './pattern';
+import Pattern, {PatternParams} from './pattern';
+import {FlatRange} from '../models/flat-range';
 
 export default class StringPattern extends Pattern {
 
@@ -8,9 +9,9 @@ export default class StringPattern extends Pattern {
         return this.phrase;
     }
 
-    protected findCandidateRanges(text) {
+    protected findCandidateRanges(text: string): FlatRange[] {
         const memo = {
-            ranges: [],
+            ranges: [] as FlatRange[],
             lastOffset: 0
         };
         const textInFrontOfSelectedText = this.getTextForComparison(text)
@@ -31,11 +32,11 @@ export default class StringPattern extends Pattern {
         return this.ignoreCase ? this.phrase.toLowerCase() : this.phrase;
     }
 
-    private getTextForComparison(text) {
+    private getTextForComparison(text: string) {
         return this.ignoreCase ? text.toLowerCase() : text;
     }
 
-    protected create(params) {
+    protected create(params: PatternParams) {
         return new StringPattern(params);
     }
 

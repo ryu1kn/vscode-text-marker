@@ -4,13 +4,13 @@ const isNumber = require('lodash.isnumber');
 
 export default class Debouncer {
     private readonly configStore: ConfigStore;
-    private timeout: NodeJS.Timer;
+    private timeout?: NodeJS.Timer;
 
-    constructor(configStore) {
+    constructor(configStore: ConfigStore) {
         this.configStore = configStore;
     }
 
-    debounce(callback) {
+    debounce(callback: () => void) {
         if (this.timeout) clearTimeout(this.timeout);
 
         const waitTime = this.configStore.delayForRefreshingHighlight;

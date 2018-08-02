@@ -1,22 +1,43 @@
-import {any, expect, mock, sinon, stubWithArgs, verify} from '../../helpers/helper';
+import {any, mock, verify, when} from '../../helpers/helper';
 
 import UpdateHighlightCommand from '../../../lib/commands/update-highlight';
-import DecorationOperatorFactory from "../../../lib/decoration-operator-factory";
-import DecorationRegistry from "../../../lib/decoration-registry";
-import PatternVariationReader from "../../../lib/pattern-variation-reader";
+import DecorationOperatorFactory from '../../../lib/decoration-operator-factory';
+import DecorationRegistry from '../../../lib/decoration-registry';
+import PatternVariationReader from '../../../lib/pattern-variation-reader';
+import StringPattern from '../../../lib/patterns/string';
+import TextEditorFactory from '../../../lib/text-editor-factory';
+import TextLocationRegistry from '../../../lib/text-location-registry';
+import * as vscode from 'vscode';
+import TextEditor from '../../../lib/text-editor';
+import DecorationOperator from "../../../lib/decoration-operator";
 
 suite('UpdateHighlightCommand', () => {
 
+    const rawEditor = {} as vscode.TextEditor;
+
     suite('When the cursor is on highlight', () => {
 
-        test('it update decoration if the cursor is on highlight', async () => {
-            const editor = {selectedText: null};
-            const textEditorFactory = {create: () => editor};
-            const textLocationRegistry = {queryDecorationId: () => 'DECORATION_ID'};
-            const decorationOperator = {updateDecorationPattern: sinon.spy()};
-            const decorationOperatorFactory = {createForVisibleEditors: () => decorationOperator};
-            const decorationRegistry = {inquireById: stubWithArgs(['DECORATION_ID'], {pattern: 'PATTERN'})};
-            const patternVariationReader = {read: stubWithArgs(['PATTERN'], Promise.resolve('NEW_PATTERN'))};
+        const editor = {selectedText: null} as TextEditor;
+        const textEditorFactory = mock(TextEditorFactory);
+        when(textEditorFactory.create(rawEditor)).thenReturn(editor);
+
+        const oldPattern = mock(StringPattern);
+        const newPattern = mock(StringPattern);
+
+        const textLocationRegistry = mock(TextLocationRegistry);
+        when(textLocationRegistry.queryDecorationId(any(), any())).thenReturn('DECORATION_ID');
+
+        const decorationRegistry = mock(DecorationRegistry);
+        when(decorationRegistry.inquireById('DECORATION_ID')).thenReturn({pattern: oldPattern});
+
+        test('it updates decoration', async () => {
+            const decorationOperator = mock(DecorationOperator);
+            const decorationOperatorFactory = mock(DecorationOperatorFactory);
+            when(decorationOperatorFactory.createForVisibleEditors()).thenReturn(decorationOperator);
+
+            const patternVariationReader = mock(PatternVariationReader);
+            when(patternVariationReader.read(oldPattern)).thenResolve(newPattern);
+
             const command = new UpdateHighlightCommand(
                 decorationOperatorFactory,
                 decorationRegistry,
@@ -25,19 +46,17 @@ suite('UpdateHighlightCommand', () => {
                 textLocationRegistry
             );
 
-            await command.execute(editor);
+            await command.execute(rawEditor);
 
-            expect(patternVariationReader.read).to.have.been.calledWith('PATTERN');
-            expect(decorationOperator.updateDecorationPattern).to.have.been.calledWith('DECORATION_ID', 'NEW_PATTERN');
+            verify(decorationOperator.updateDecorationPattern('DECORATION_ID', newPattern));
         });
 
         test('it does nothing if a new pattern is not given by user', async () => {
-            const editor = {selectedText: null};
-            const textEditorFactory = {create: () => editor};
-            const textLocationRegistry = {queryDecorationId: () => 'DECORATION_ID'};
-            const decorationOperatorFactory = {createForVisibleEditors: sinon.spy()};
-            const decorationRegistry = {inquireById: () => ({pattern: 'CURRENT_PATTERN'})};
-            const patternVariationReader = {read: () => Promise.resolve()};
+            const decorationOperatorFactory = mock(DecorationOperatorFactory);
+
+            const patternVariationReader = mock(PatternVariationReader);
+            when(patternVariationReader.read(any())).thenResolve();
+
             const command = new UpdateHighlightCommand(
                 decorationOperatorFactory,
                 decorationRegistry,
@@ -46,21 +65,23 @@ suite('UpdateHighlightCommand', () => {
                 textLocationRegistry
             );
 
-            await command.execute(editor);
+            await command.execute(rawEditor);
 
-            expect(decorationOperatorFactory.createForVisibleEditors).to.not.have.been.called;
+            verify(decorationOperatorFactory.createForVisibleEditors(), {times: 0});
         });
     });
 
-    suite('When the cursor is on highlight', () => {
+    suite('When the cursor is NOT on highlight', () => {
         const decorationOperatorFactory = mock(DecorationOperatorFactory);
         const decorationRegistry = mock(DecorationRegistry);
         const patternVariationReader = mock(PatternVariationReader);
 
-        test('it does nothing if the cursor is not on highlight', async () => {
-            const editor = {selectedText: null};
-            const textEditorFactory = {create: () => editor};
-            const textLocationRegistry = {queryDecorationId: () => null};
+        test('it does nothing', async () => {
+            const editor = {selectedText: null} as TextEditor;
+            const textEditorFactory = mock(TextEditorFactory);
+            when(textEditorFactory.create(rawEditor)).thenReturn(editor);
+            const textLocationRegistry = mock(TextLocationRegistry);
+            when(textLocationRegistry.queryDecorationId(any(), any())).thenReturn(null);
             const command = new UpdateHighlightCommand(
                 decorationOperatorFactory,
                 decorationRegistry,
@@ -69,7 +90,7 @@ suite('UpdateHighlightCommand', () => {
                 textLocationRegistry
             );
 
-            await command.execute(editor);
+            await command.execute(rawEditor);
 
             verify(decorationRegistry.inquireById(any()), {times: 0});
         });

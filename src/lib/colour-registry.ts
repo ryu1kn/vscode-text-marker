@@ -9,7 +9,7 @@ export default class ColourRegistry {
         this.inUseColours = [];
     }
 
-    issue() {
+    issue(): string {
         const colours = this.configStore.highlightColors;
         const availableColour = colours.find(colour => !this.inUseColours.includes(colour));
         const newColour = availableColour || this.configStore.defaultHighlightColor;
@@ -17,7 +17,7 @@ export default class ColourRegistry {
         return newColour;
     }
 
-    revoke(colour: string) {
+    revoke(colour: string): void {
         this.inUseColours = this.inUseColours.filter(c => c !== colour);
     }
 

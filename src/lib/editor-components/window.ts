@@ -1,11 +1,12 @@
 import TextEditorFactory from '../text-editor-factory';
 import * as vscode from 'vscode';
+import {InputBoxOptions, QuickPickOptions} from 'vscode';
 
 export default class WindowComponent {
     private readonly window: typeof vscode.window;
     private readonly textEditorFactory: TextEditorFactory;
 
-    constructor(window, textEditorFactory) {
+    constructor(window: typeof vscode.window, textEditorFactory: TextEditorFactory) {
         this.window = window;
         this.textEditorFactory = textEditorFactory;
     }
@@ -19,15 +20,15 @@ export default class WindowComponent {
         return this.textEditorFactory.create(this.window.activeTextEditor);
     }
 
-    showInputBox(options) {
+    showInputBox(options: InputBoxOptions) {
         return this.window.showInputBox(options);
     }
 
-    showInformationMessage(message) {
+    showInformationMessage(message: string) {
         return this.window.showInformationMessage(message);
     }
 
-    showQuickPick<T extends vscode.QuickPickItem>(selectItems, options) {
+    showQuickPick<T extends vscode.QuickPickItem>(selectItems: T[], options: QuickPickOptions) {
         return this.window.showQuickPick<T>(selectItems, options);
     }
 

@@ -1,8 +1,10 @@
 import {getInternalName} from './pattern-type-name';
+import {Highlight} from './entities/highlight';
+import {PatternCreateRequest} from './pattern-factory';
 
 export default class DecorationEntryParser {
 
-    getPattern(decorationData) {
+    getPattern(decorationData: Highlight): PatternCreateRequest {
         const pattern = decorationData.pattern;
         return {
             type: getInternalName(pattern.type),

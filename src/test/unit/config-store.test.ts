@@ -1,6 +1,8 @@
-import {expect, sinon, stubWithArgs} from '../helpers/helper';
+import {expect, mock, sinon, stubWithArgs, when} from '../helpers/helper';
 
 import ConfigStore from '../../lib/config-store';
+import * as vscode from "vscode";
+import ConfigurationTargetPicker from "../../lib/config-target-picker";
 
 suite('ConfigStore', () => {
     let extensionConfig;
@@ -11,8 +13,9 @@ suite('ConfigStore', () => {
             get: stubWithArgs(['CONFIG_NAME'], 'CONFIG_VALUE'),
             update: sinon.spy()
         };
-        const workspace = {getConfiguration: stubWithArgs(['textmarker'], extensionConfig)};
-        const configTargetPicker = {pick: () => 'CONFIG_TARGET'};
+        const workspace = {getConfiguration: stubWithArgs(['textmarker'], extensionConfig)} as typeof vscode.workspace;
+        const configTargetPicker = mock(ConfigurationTargetPicker);
+        when(configTargetPicker.pick()).thenResolve('CONFIG_TARGET');
         configStore = new ConfigStore(workspace, configTargetPicker);
     });
 

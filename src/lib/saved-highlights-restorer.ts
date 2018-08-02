@@ -4,6 +4,8 @@ import ConfigStore from './config-store';
 import DecorationOperatorFactory from './decoration-operator-factory';
 import EventEmitter = NodeJS.EventEmitter;
 import PatternFactory from './pattern-factory';
+import {Highlight} from './entities/highlight';
+import DecorationOperator from './decoration-operator';
 
 export default class SavedHighlightsRestorer {
     private readonly configStore: ConfigStore;
@@ -12,7 +14,10 @@ export default class SavedHighlightsRestorer {
     private readonly eventBus: EventEmitter;
     private readonly decorationEntryParser: DecorationEntryParser;
 
-    constructor(configStore, decorationOperatorFactory, patternFactory, eventBus) {
+    constructor(configStore: ConfigStore,
+                decorationOperatorFactory: DecorationOperatorFactory,
+                patternFactory: PatternFactory,
+                eventBus: EventEmitter) {
         this.configStore = configStore;
         this.decorationOperatorFactory = decorationOperatorFactory;
         this.patternFactory = patternFactory;
@@ -32,7 +37,7 @@ export default class SavedHighlightsRestorer {
         decorationsData.forEach(decorationData => this.addDecoration(decorationData, decorationOperator));
     }
 
-    private addDecoration(decorationData, decorationOperator) {
+    private addDecoration(decorationData: Highlight, decorationOperator: DecorationOperator) {
         const patternData = this.decorationEntryParser.getPattern(decorationData);
         const pattern = this.patternFactory.create(patternData);
         decorationOperator.addDecoration(pattern);

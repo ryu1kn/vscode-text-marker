@@ -1,6 +1,7 @@
-import {expect, sinon} from '../helpers/helper';
+import {expect, mockType} from '../helpers/helper';
 
 import SelectedTextFinder from '../../lib/selected-text-finder';
+import * as vscode from "vscode";
 
 suite('SelectedTextFinder', () => {
 
@@ -14,7 +15,6 @@ suite('SelectedTextFinder', () => {
         const finder = new SelectedTextFinder();
         const editor = fakeEditor('', 'ENTIRE TEXT', 'WORD');
         expect(finder.find(editor)).to.eql('WORD');
-        expect(editor._getWordRangeAtPositionSpy).to.have.been.calledWith('CURSOR_POSITION');
     });
 
     test('it selects nothing if no text is selected and there is no word under the cursor', () => {
@@ -24,7 +24,6 @@ suite('SelectedTextFinder', () => {
     });
 
     function fakeEditor(selectedText, entireText, wordUnderCursor?) {
-        const _getWordRangeAtPositionSpy = sinon.spy();
         const selection = {
             active: 'CURSOR_POSITION',
             text: selectedText
@@ -36,11 +35,10 @@ suite('SelectedTextFinder', () => {
                 return entireText;
             },
             getWordRangeAtPosition: cursorAt => {
-                _getWordRangeAtPositionSpy(cursorAt);
                 return 'WORD_RANGE';
             }
         };
-        return {selection, document, _getWordRangeAtPositionSpy};
+        return mockType<vscode.TextEditor>({selection, document});
     }
 
 });

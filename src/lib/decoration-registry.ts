@@ -4,6 +4,7 @@ import ConfigStore from './config-store';
 import ColourRegistry from './colour-registry';
 import * as vscode from 'vscode';
 import Pattern from './patterns/pattern';
+import {Decoration} from './entities/decoration';
 
 const getColorContrast = require('../../lib-3rd-party/dynamic-contrast');
 
@@ -15,7 +16,10 @@ export default class DecorationRegistry {
     private readonly window: typeof vscode.window;
     private readonly textDecorationMap: TextDecorationCollection;
 
-    constructor(configStore, colourRegistry, window, generateUuid) {
+    constructor(configStore: ConfigStore,
+                colourRegistry: ColourRegistry,
+                window: typeof vscode.window,
+                generateUuid: () => string) {
         this.colourRegistry = colourRegistry;
         this.configStore = configStore;
         this.window = window;
@@ -23,12 +27,12 @@ export default class DecorationRegistry {
         this.textDecorationMap = new TextDecorationCollection(generateUuid);
     }
 
-    inquireById(decorationId) {
+    inquireById(decorationId: string) {
         return this.textDecorationMap.get(decorationId);
     }
 
-    inquireByPattern(pattern) {
-        const isSamePattern = decoration => decoration.pattern.equalTo(pattern);
+    inquireByPattern(pattern: Pattern) {
+        const isSamePattern = (decoration: Decoration) => decoration.pattern.equalTo(pattern);
         return this.textDecorationMap.find(isSamePattern);
     }
 
@@ -38,18 +42,18 @@ export default class DecorationRegistry {
 
         const colour = this.colourRegistry.issue();
         const decorationType = this.generateDecorationType(colour);
-        return this.textDecorationMap.add({pattern, colour, decorationType});
+        return this.textDecorationMap.add(pattern, colour, decorationType);
     }
 
-    updatePattern(decorationId, newPattern) {
-        const decoration = this.textDecorationMap.get(decorationId);
+    updatePattern(decorationId: string, newPattern: Pattern) {
+        const decoration = this.textDecorationMap.get(decorationId)!;
         decoration.pattern = newPattern;
         return decoration;
     }
 
-    revoke(decorationId) {
+    revoke(decorationId: string) {
         const decoration = this.textDecorationMap.get(decorationId);
-        this.colourRegistry.revoke(decoration.colour);
+        this.colourRegistry.revoke(decoration!.colour);
         this.textDecorationMap.remove(decorationId);
     }
 
@@ -57,7 +61,7 @@ export default class DecorationRegistry {
         return this.textDecorationMap.toList();
     }
 
-    private generateDecorationType(colour): TextEditorDecorationType {
+    private generateDecorationType(colour: string): TextEditorDecorationType {
         return this.window.createTextEditorDecorationType(
             Object.assign(
                 {

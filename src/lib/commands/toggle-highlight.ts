@@ -2,6 +2,8 @@ import DecorationOperatorFactory from '../decoration-operator-factory';
 import PatternFactory from '../pattern-factory';
 import TextEditorFactory from '../text-editor-factory';
 import TextLocationRegistry from '../text-location-registry';
+import * as vscode from 'vscode';
+import TextEditor from '../text-editor';
 
 export default class ToggleHighlightCommand {
     private readonly decorationOperatorFactory: DecorationOperatorFactory;
@@ -9,19 +11,19 @@ export default class ToggleHighlightCommand {
     private readonly textEditorFactory: TextEditorFactory;
     private readonly textLocationRegistry: TextLocationRegistry;
 
-    constructor(decorationOperatorFactory, patternFactory, textEditorFactory, textLocationRegistry) {
+    constructor(decorationOperatorFactory: DecorationOperatorFactory,
+                patternFactory: PatternFactory,
+                textEditorFactory: TextEditorFactory,
+                textLocationRegistry: TextLocationRegistry) {
         this.decorationOperatorFactory = decorationOperatorFactory;
         this.patternFactory = patternFactory;
         this.textEditorFactory = textEditorFactory;
         this.textLocationRegistry = textLocationRegistry;
     }
 
-    execute(editor) {
+    execute(editor: vscode.TextEditor) {
         const textEditor = this.textEditorFactory.create(editor);
-        const decorationId = this.textLocationRegistry.queryDecorationId({
-            editorId: textEditor.id,
-            flatRange: textEditor.flatRange
-        });
+        const decorationId = this.textLocationRegistry.queryDecorationId(textEditor.id, textEditor.flatRange);
         if (decorationId) {
             this.removeDecoration(decorationId);
         } else {
@@ -29,12 +31,12 @@ export default class ToggleHighlightCommand {
         }
     }
 
-    private removeDecoration(decorationId) {
+    private removeDecoration(decorationId: string) {
         const decorationOperator = this.decorationOperatorFactory.createForVisibleEditors();
         decorationOperator.removeDecoration(decorationId);
     }
 
-    private addDecoration(textEditor) {
+    private addDecoration(textEditor: TextEditor) {
         if (!textEditor.selectedText) return;
         const decorationOperator = this.decorationOperatorFactory.createForVisibleEditors();
         const pattern = this.patternFactory.create({phrase: textEditor.selectedText});

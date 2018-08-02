@@ -26,8 +26,9 @@ suite('PatternConverter', () => {
     test('it throws an error given unknown convert instruction', () => {
         const converter = new PatternConverter();
         const pattern = new StringPattern({phrase: 'text'});
-        const callback = () => converter.convert(pattern, 'UNKNOWN_CONVERSION');
-        expect(callback).to.throws('Unknown action UNKNOWN_CONVERSION');
+        const convertAction = Symbol('UNKNOWN_CONVERSION');
+        const callback = () => converter.convert(pattern, convertAction);
+        expect(callback).to.throws('Unknown action Symbol(UNKNOWN_CONVERSION)');
     });
 
 });

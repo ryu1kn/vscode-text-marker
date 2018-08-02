@@ -6,7 +6,7 @@ export default class ToggleWholeMatchCommand {
     private readonly decorationOperatorFactory: DecorationOperatorFactory;
     private readonly highlightPatternPicker: HighlightPatternPicker;
 
-    constructor(decorationOperatorFactory, highlightPatternPicker) {
+    constructor(decorationOperatorFactory: DecorationOperatorFactory, highlightPatternPicker: HighlightPatternPicker) {
         this.decorationOperatorFactory = decorationOperatorFactory;
         this.highlightPatternPicker = highlightPatternPicker;
     }

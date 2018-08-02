@@ -6,7 +6,7 @@ export default class MatchingModeRegistry {
     private ignoreCase: boolean;
     private wholeMatch: boolean;
 
-    constructor(ignoreCase, wholeMatch, eventBus) {
+    constructor(ignoreCase: boolean, wholeMatch: boolean, eventBus: EventEmitter) {
         this.eventBus = eventBus;
         this.ignoreCase = ignoreCase;
         this.wholeMatch = wholeMatch;

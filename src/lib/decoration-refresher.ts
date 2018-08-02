@@ -3,6 +3,8 @@ import Debouncer from './debouncer';
 import TextEditorFactory from './text-editor-factory';
 import WindowComponent from './editor-components/window';
 import {Logger} from './Logger';
+import {TextEditor as VsTextEditor} from 'vscode';
+import TextEditor from './text-editor';
 
 export default class DecorationRefresher {
     private readonly logger: Logger;
@@ -11,7 +13,11 @@ export default class DecorationRefresher {
     private readonly textEditorFactory: TextEditorFactory;
     private readonly windowComponent: WindowComponent;
 
-    constructor(decorationOperatorFactory, debouncer, textEditorFactory, windowComponent, logger) {
+    constructor(decorationOperatorFactory: DecorationOperatorFactory,
+                debouncer: Debouncer,
+                textEditorFactory: TextEditorFactory,
+                windowComponent: WindowComponent,
+                logger: Logger) {
         this.logger = logger;
         this.decorationOperatorFactory = decorationOperatorFactory;
         this.debouncer = debouncer;
@@ -19,7 +25,7 @@ export default class DecorationRefresher {
         this.windowComponent = windowComponent;
     }
 
-    refresh(editor) {
+    refresh(editor: VsTextEditor) {
         if (!editor) return;
         try {
             const textEditor = this.textEditorFactory.create(editor);
@@ -29,12 +35,12 @@ export default class DecorationRefresher {
         }
     }
 
-    private _refresh(editor) {
+    private _refresh(editor: TextEditor) {
         const decorationOperator = this.decorationOperatorFactory.create([editor]);
         decorationOperator.refreshDecorations();
     }
 
-    refreshWithDelay(_documentChangeEvent) {
+    refreshWithDelay(_documentChangeEvent: any) {
         try {
             const editor = this.windowComponent.activeTextEditor;
             this.debouncer.debounce(() => {
@@ -49,8 +55,8 @@ export default class DecorationRefresher {
         }
     }
 
-    private handleError(e) {
-        this.logger.error(e.stack);
+    private handleError(e: Error) {
+        this.logger.error(e.stack!);
     }
 
 }
