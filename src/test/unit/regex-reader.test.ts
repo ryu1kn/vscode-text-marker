@@ -1,9 +1,9 @@
 import {expect, mock, when} from '../helpers/helper';
 
 import RegexReader from '../../lib/regex-reader';
-import PatternFactory from "../../lib/pattern-factory";
-import WindowComponent from "../../lib/editor-components/window";
-import RegexPattern from "../../lib/patterns/regex";
+import PatternFactory from '../../lib/pattern-factory';
+import WindowComponent from '../../lib/editor-components/window';
+import RegexPattern from '../../lib/patterns/regex';
 
 suite('RegexReader', () => {
 

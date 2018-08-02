@@ -2,9 +2,9 @@ import {expect, mockType} from '../helpers/helper';
 
 import PatternVariationReader from '../../lib/pattern-variation-reader';
 import PatternFactory from '../../lib/pattern-factory';
-import WindowComponent from "../../lib/editor-components/window";
-import MatchingModeRegistry from "../../lib/matching-mode-registry";
-import {QuickPickItem} from "vscode";
+import WindowComponent from '../../lib/editor-components/window';
+import MatchingModeRegistry from '../../lib/matching-mode-registry';
+import {QuickPickItem} from 'vscode';
 
 suite('PatternVariationReader', () => {
 

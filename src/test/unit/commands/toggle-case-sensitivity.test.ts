@@ -1,9 +1,9 @@
 import {mock, verify, when} from '../../helpers/helper';
 import {PatternAction} from '../../../lib/const';
 import ToggleCaseSensitivityCommand from '../../../lib/commands/toggle-case-sensitivity';
-import HighlightPatternPicker from "../../../lib/highlight-pattern-picker";
-import DecorationOperatorFactory from "../../../lib/decoration-operator-factory";
-import DecorationOperator from "../../../lib/decoration-operator";
+import HighlightPatternPicker from '../../../lib/highlight-pattern-picker';
+import DecorationOperatorFactory from '../../../lib/decoration-operator-factory';
+import DecorationOperator from '../../../lib/decoration-operator';
 
 suite('ToggleCaseSensitivityCommand', () => {
 
@@ -22,7 +22,7 @@ suite('ToggleCaseSensitivityCommand', () => {
 
             verify(decorationOperator.updateDecorationWithPatternAction('DECORATION_ID', PatternAction.TOGGLE_CASE_SENSITIVITY));
         });
-    })
+    });
 
     suite('When text is NOT selected', () => {
         const decorationOperatorFactory = mock(DecorationOperatorFactory);

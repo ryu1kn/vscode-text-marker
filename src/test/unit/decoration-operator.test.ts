@@ -2,12 +2,12 @@ import {any, mock, mockType, verify, when, wrapVerify} from '../helpers/helper';
 
 import DecorationOperator from '../../lib/decoration-operator';
 import PatternConverter from '../../lib/pattern-converter';
-import TextEditor from "../../lib/text-editor";
-import DecorationRegistry from "../../lib/decoration-registry";
-import StringPattern from "../../lib/patterns/string";
-import TextDecorator from "../../lib/text-decorator";
-import {Decoration} from "../../lib/entities/decoration";
-import {TextEditorDecorationType} from "vscode";
+import TextEditor from '../../lib/text-editor';
+import DecorationRegistry from '../../lib/decoration-registry';
+import StringPattern from '../../lib/patterns/string';
+import TextDecorator from '../../lib/text-decorator';
+import {Decoration} from '../../lib/entities/decoration';
+import {TextEditorDecorationType} from 'vscode';
 
 suite('DecorationOperator', () => {
 
@@ -111,7 +111,7 @@ suite('DecorationOperator', () => {
                 verify(textDecorator.decorate(editors, [newDecoration]));
             });
         });
-    })
+    });
 
 
     suite('#refreshDecorations', () => {

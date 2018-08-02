@@ -1,7 +1,7 @@
 import {expect, mockType} from '../helpers/helper';
 
 import ColourRegistry from '../../lib/colour-registry';
-import ConfigStore from "../../lib/config-store";
+import ConfigStore from '../../lib/config-store';
 
 suite('ColourRegistry', () => {
 
@@ -24,7 +24,7 @@ suite('ColourRegistry', () => {
 
             expect(colourRegistry.issue()).to.eql('COLOUR_1');
         });
-    })
+    });
 
     suite('When no colours are left unused', () => {
         const configStore = mockType<ConfigStore>({

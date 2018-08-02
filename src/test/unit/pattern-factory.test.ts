@@ -3,7 +3,7 @@ import {expect, mockType} from '../helpers/helper';
 import PatternFactory from '../../lib/pattern-factory';
 import StringPattern from '../../lib/patterns/string';
 import RegexPattern from '../../lib/patterns/regex';
-import MatchingModeRegistry from "../../lib/matching-mode-registry";
+import MatchingModeRegistry from '../../lib/matching-mode-registry';
 
 suite('PatternFactory', () => {
 

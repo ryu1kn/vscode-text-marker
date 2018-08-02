@@ -1,7 +1,7 @@
 import {expect, mockTypeWithMethod, verify} from '../../helpers/helper';
 import {Event} from '../../../lib/const';
 import ToggleCaseSensitivityModeButton from '../../../lib/statusbar-buttons/toggle-case-sensitivity-mode';
-import {StatusBarItem} from "vscode";
+import {StatusBarItem} from 'vscode';
 
 const EventEmitter = require('events');
 

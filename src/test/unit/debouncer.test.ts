@@ -1,7 +1,7 @@
 import {expect, mockFunction, mockType, sinon, verify} from '../helpers/helper';
 
 import Debouncer from '../../lib/debouncer';
-import ConfigStore from "../../lib/config-store";
+import ConfigStore from '../../lib/config-store';
 
 suite('Debouncer', () => {
 
@@ -28,7 +28,7 @@ suite('Debouncer', () => {
         debouncer.debounce(callback as () => void);
 
         setTimeout(() => {
-            verify(callback(), {times: 0})
+            verify(callback(), {times: 0});
             done();
         }, 10);
     });

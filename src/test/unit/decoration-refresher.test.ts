@@ -16,10 +16,10 @@ import WindowComponent from '../../lib/editor-components/window';
 import Debouncer from '../../lib/debouncer';
 import TextEditorFactory from '../../lib/text-editor-factory';
 import DecorationOperatorFactory from '../../lib/decoration-operator-factory';
-import TextEditor from "../../lib/text-editor";
-import * as vscode from "vscode";
-import DecorationOperator from "../../lib/decoration-operator";
-import {Logger} from "../../lib/Logger";
+import TextEditor from '../../lib/text-editor';
+import * as vscode from 'vscode';
+import DecorationOperator from '../../lib/decoration-operator';
+import {Logger} from '../../lib/Logger';
 
 suite('DecorationRefresher', () => {
 

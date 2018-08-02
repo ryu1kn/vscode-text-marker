@@ -2,12 +2,12 @@ import {any, expect, mock, mockType, sinon, verify, when} from '../../helpers/he
 
 import ToggleHighlightCommand from '../../../lib/commands/toggle-highlight';
 import PatternFactory from '../../../lib/pattern-factory';
-import DecorationOperatorFactory from "../../../lib/decoration-operator-factory";
-import TextEditorFactory from "../../../lib/text-editor-factory";
-import * as vscode from "vscode";
-import TextEditor from "../../../lib/text-editor";
-import TextLocationRegistry from "../../../lib/text-location-registry";
-import RegexPattern from "../../../lib/patterns/regex";
+import DecorationOperatorFactory from '../../../lib/decoration-operator-factory';
+import TextEditorFactory from '../../../lib/text-editor-factory';
+import * as vscode from 'vscode';
+import TextEditor from '../../../lib/text-editor';
+import TextLocationRegistry from '../../../lib/text-location-registry';
+import RegexPattern from '../../../lib/patterns/regex';
 
 suite('ToggleHighlightCommand', () => {
 

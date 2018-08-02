@@ -3,9 +3,9 @@ import {expect, mock, mockType, sinon, stubWithArgs, when} from '../helpers/help
 const EventEmitter = require('events');
 import {Event} from '../../lib/const';
 import SavedHighlightsRestorer from '../../lib/saved-highlights-restorer';
-import ConfigStore from "../../lib/config-store";
-import DecorationOperatorFactory from "../../lib/decoration-operator-factory";
-import PatternFactory from "../../lib/pattern-factory";
+import ConfigStore from '../../lib/config-store';
+import DecorationOperatorFactory from '../../lib/decoration-operator-factory';
+import PatternFactory from '../../lib/pattern-factory';
 
 suite('SavedHighlightsRestorer', () => {
 

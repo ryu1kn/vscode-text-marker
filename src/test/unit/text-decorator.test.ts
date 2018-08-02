@@ -2,11 +2,11 @@ import {expect, mock, mockType, sinon, verify, wrapVerify} from '../helpers/help
 
 import TextDecorator from '../../lib/text-decorator';
 import PatternFactory from '../../lib/pattern-factory';
-import TextLocationRegistry from "../../lib/text-location-registry";
-import TextEditor from "../../lib/text-editor";
-import {Decoration} from "../../lib/entities/decoration";
-import {TextEditorDecorationType} from "vscode";
-import MatchingModeRegistry from "../../lib/matching-mode-registry";
+import TextLocationRegistry from '../../lib/text-location-registry';
+import TextEditor from '../../lib/text-editor';
+import {Decoration} from '../../lib/entities/decoration';
+import {TextEditorDecorationType} from 'vscode';
+import MatchingModeRegistry from '../../lib/matching-mode-registry';
 
 suite('TextDecorator', () => {
 
@@ -24,7 +24,7 @@ suite('TextDecorator', () => {
             })
         ];
         const pattern = createPattern('LONG');
-        const textLocationRegistry = mock(TextLocationRegistry);;
+        const textLocationRegistry = mock(TextLocationRegistry);
         const textDecorator = new TextDecorator(textLocationRegistry);
         textDecorator.decorate(
             editors,

@@ -1,7 +1,7 @@
 import {expect} from '../helpers/helper';
 import {Event} from '../../lib/const';
 import MatchingModeRegistry from '../../lib/matching-mode-registry';
-import {EventEmitter} from "events";
+import {EventEmitter} from 'events';
 
 suite('MatchingModeRegistry', () => {
     let eventBus: EventEmitter;

@@ -2,7 +2,7 @@ import {expect, mockType, stubReturns} from '../helpers/helper';
 
 import DecorationRegistry from '../../lib/decoration-registry';
 import PatternFactory from '../../lib/pattern-factory';
-import MatchingModeRegistry from "../../lib/matching-mode-registry";
+import MatchingModeRegistry from '../../lib/matching-mode-registry';
 
 suite('DecorationRegistry', () => {
 

@@ -1,8 +1,8 @@
 import {expect, mock, sinon, stubWithArgs, when} from '../helpers/helper';
 
 import ConfigStore from '../../lib/config-store';
-import * as vscode from "vscode";
-import ConfigurationTargetPicker from "../../lib/config-target-picker";
+import * as vscode from 'vscode';
+import ConfigurationTargetPicker from '../../lib/config-target-picker';
 
 suite('ConfigStore', () => {
     let extensionConfig: any;

@@ -1,7 +1,7 @@
 import {mock, verify, when} from '../../helpers/helper';
 import SaveAllHighlightsCommand from '../../../lib/commands/save-all-highlights';
-import DecorationRegistry from "../../../lib/decoration-registry";
-import ConfigStore from "../../../lib/config-store";
+import DecorationRegistry from '../../../lib/decoration-registry';
+import ConfigStore from '../../../lib/config-store';
 
 suite('SaveAllHighlightsCommand', () => {
     let command: SaveAllHighlightsCommand;

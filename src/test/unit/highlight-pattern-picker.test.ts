@@ -2,9 +2,9 @@ import {any, expect, mock, mockType, verify, when} from '../helpers/helper';
 
 import HighlightPatternPicker from '../../lib/highlight-pattern-picker';
 import PatternFactory from '../../lib/pattern-factory';
-import MatchingModeRegistry from "../../lib/matching-mode-registry";
-import DecorationRegistry from "../../lib/decoration-registry";
-import WindowComponent from "../../lib/editor-components/window";
+import MatchingModeRegistry from '../../lib/matching-mode-registry';
+import DecorationRegistry from '../../lib/decoration-registry';
+import WindowComponent from '../../lib/editor-components/window';
 
 suite('HighlightPatternPicker', () => {
 

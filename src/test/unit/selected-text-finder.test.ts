@@ -1,7 +1,7 @@
 import {expect, mockType} from '../helpers/helper';
 
 import SelectedTextFinder from '../../lib/selected-text-finder';
-import * as vscode from "vscode";
+import * as vscode from 'vscode';
 
 suite('SelectedTextFinder', () => {
 

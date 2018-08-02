@@ -24,7 +24,7 @@ suite('HighlightUsingRegexCommand', () => {
 
             verify(decorationOperator.addDecoration(pattern));
         });
-    })
+    });
 
     suite('When regex is NOT given', () => {
         const decorationOperatorFactory = mock(DecorationOperatorFactory);

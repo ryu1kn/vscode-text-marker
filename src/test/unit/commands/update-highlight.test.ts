@@ -9,7 +9,7 @@ import TextEditorFactory from '../../../lib/text-editor-factory';
 import TextLocationRegistry from '../../../lib/text-location-registry';
 import * as vscode from 'vscode';
 import TextEditor from '../../../lib/text-editor';
-import DecorationOperator from "../../../lib/decoration-operator";
+import DecorationOperator from '../../../lib/decoration-operator';
 
 suite('UpdateHighlightCommand', () => {
 
