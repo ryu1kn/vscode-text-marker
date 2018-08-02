@@ -1,6 +1,6 @@
-import {Range} from 'vscode';
+import {Position, Range} from 'vscode';
 
-export type CreateRange = (p1: any, p2: any) => Range;
+export type CreateRange = (p1: Position, p2: Position) => Range;
 
 export type ExtensionContextLike = {
     subscriptions: any[]

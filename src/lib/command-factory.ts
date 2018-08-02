@@ -30,6 +30,7 @@ import UpdateHighlightCommand from './commands/update-highlight';
 import WindowComponent from './editor-components/window';
 import {EventEmitter} from 'events';
 import {Logger} from './Logger';
+import {Position} from 'vscode';
 
 const generateUuid = require('uuid/v4');
 const BASE_STATUS_BAR_PRIORITY = 100;
@@ -228,7 +229,7 @@ export default class CommandFactory {
     }
 
     private createTextEditorFactory() {
-        const createRange = (p1: any, p2: any) => new this.vscode.Range(p1, p2);
+        const createRange = (p1: Position, p2: Position) => new this.vscode.Range(p1, p2);
         return new TextEditorFactory(createRange);
     }
 
