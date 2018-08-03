@@ -1,7 +1,5 @@
 import * as td from 'testdouble';
 
-export const sinon = require('sinon');
-
 export const expect = require('chai').expect;
 
 export const stubReturns = (...args: any[]) => () => args.shift();
@@ -10,13 +8,16 @@ export const when = td.when;
 
 export const verify = td.verify;
 
-export function wrapVerify(invokeCallback: (...args: any[]) => void, expectedCalls: any[][]) {
+export function wrapVerify(invokeCallback: (...args: any[]) => void, expectedCalls: any[][] | {[key: string]: any[]}) {
     const captors = [td.matchers.captor(), td.matchers.captor(), td.matchers.captor()];
 
     invokeCallback(...captors.map(captor => captor.capture));
 
-    expectedCalls.forEach((call, callIndex) => {
-        call.forEach((expectedArg, argIndex) => {
+    const toIndex = (key: string) => parseInt(key.replace('call', ''), 10);
+
+    Object.entries(expectedCalls).forEach(([key, value]) => {
+        const callIndex = toIndex(key);
+        (value as any[]).forEach((expectedArg, argIndex) => {
             const failureMessage = `Check argument ${argIndex} of call ${callIndex}`;
             expect(captors[argIndex].values![callIndex]).to.eql(expectedArg, failureMessage);
         });

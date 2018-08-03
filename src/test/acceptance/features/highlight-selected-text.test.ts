@@ -1,4 +1,4 @@
-import {expect} from '../../helpers/helper';
+import {verify, wrapVerify} from '../../helpers/helper';
 
 import AppIntegrator from '../../../lib/app-integrator';
 import {createFakeEditor} from '../helpers/fake-editor';
@@ -26,45 +26,47 @@ suite('Highlight command', () => {
     test('highlights selected text', async () => {
         await command(editor1);
 
-        expect(editor1.setDecorations.args).to.eql([[
-            'DECORATION_TYPE_1',
-            [
-                new fakeVscode.Range('POSITION:2', 'POSITION:6'),
-                new fakeVscode.Range('POSITION:9', 'POSITION:13')
-            ]
-        ]]);
-        expect(editor2.setDecorations.args).to.eql([[
-            'DECORATION_TYPE_1',
-            [
-                new fakeVscode.Range('POSITION:2', 'POSITION:6')
-            ]
-        ]]);
+        verify(editor1.setDecorations('DECORATION_TYPE_1', [
+            new fakeVscode.Range('POSITION:2', 'POSITION:6'),
+            new fakeVscode.Range('POSITION:9', 'POSITION:13')
+        ]));
+        verify(editor2.setDecorations('DECORATION_TYPE_1', [
+            new fakeVscode.Range('POSITION:2', 'POSITION:6')
+        ]));
     });
 
     test('add another highlight to the substring of already selected text', async () => {
         await command(editor1);
         await command(editor3);
 
-        expect(editor1.setDecorations.args[1]).to.eql([
-            'DECORATION_TYPE_2',
-            [
-                new fakeVscode.Range('POSITION:2', 'POSITION:5'),
-                new fakeVscode.Range('POSITION:9', 'POSITION:12')
+        wrapVerify((c1, c2) => verify(editor1.setDecorations(c1(), c2())), {
+            call1: [
+                'DECORATION_TYPE_2',
+                [
+                    new fakeVscode.Range('POSITION:2', 'POSITION:5'),
+                    new fakeVscode.Range('POSITION:9', 'POSITION:12')
+                ]
             ]
-        ]);
-        expect(editor3.setDecorations.args[1]).to.eql([
-            'DECORATION_TYPE_2',
-            [
-                new fakeVscode.Range('POSITION:2', 'POSITION:5')
+        });
+        wrapVerify((c1, c2) => verify(editor3.setDecorations(c1(), c2())), {
+            call1: [
+                'DECORATION_TYPE_2',
+                [
+                    new fakeVscode.Range('POSITION:2', 'POSITION:5')
+                ]
             ]
-        ]);
+        });
     });
 
     test('unhighlight selected text if the exact text is already selected', async () => {
         await command(editor1);
         await command(editor1);
 
-        expect(editor1.setDecorations.args[1]).to.eql(['DECORATION_TYPE_1', []]);
-        expect(editor2.setDecorations.args[1]).to.eql(['DECORATION_TYPE_1', []]);
+        wrapVerify((c1, c2) => verify(editor1.setDecorations(c1(), c2())), {
+            call1: ['DECORATION_TYPE_1', []]
+        });
+        wrapVerify((c1, c2) => verify(editor2.setDecorations(c1(), c2())), {
+            call1: ['DECORATION_TYPE_1', []]
+        });
     });
 });

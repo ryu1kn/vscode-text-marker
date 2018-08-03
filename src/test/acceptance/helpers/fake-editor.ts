@@ -1,16 +1,15 @@
-import {sinon} from '../../helpers/helper';
+import {mockMethods} from '../../helpers/helper';
 
 export const createFakeEditor = ({selectedText, wholeText}: any = {}) => {
-    return {
+    return mockMethods(['setDecorations'], {
         document: {
             getText: (selection: any) => selection ? selectedText : wholeText,
             positionAt: position,
             offsetAt: offset,
             uri: 'EDITOR_ID'
         },
-        selection: createSelection(selectedText, wholeText),
-        setDecorations: sinon.spy()
-    };
+        selection: createSelection(selectedText, wholeText)
+    });
 };
 
 function createSelection(selectedText: any, wholeText: any) {
