@@ -1,5 +1,6 @@
 import {CommandLike} from './editor-components/vscode';
 import {Logger} from './Logger';
+import * as vscode from 'vscode';
 
 export default class CommandWrapper {
     private readonly command: CommandLike;
@@ -10,9 +11,9 @@ export default class CommandWrapper {
         this.logger = logger;
     }
 
-    async execute(...args: any[]) {
+    async execute(editor?: vscode.TextEditor) {
         try {
-            return await this.command.execute(...args);
+            return await this.command.execute(editor);
         } catch (e) {
             this.logger.error(e.stack);
         }

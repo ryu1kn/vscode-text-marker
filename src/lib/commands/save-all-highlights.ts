@@ -1,8 +1,9 @@
 import DecorationEntryFormatter from '../decoration-entry-formatter';
 import ConfigStore from '../config-store';
 import DecorationRegistry from '../decoration-registry';
+import {CommandLike} from '../editor-components/vscode';
 
-export default class SaveAllHighlightsCommand {
+export default class SaveAllHighlightsCommand implements CommandLike {
     private readonly configStore: ConfigStore;
     private readonly decorationRegistry: DecorationRegistry;
     private readonly decorationEntryFormatter: DecorationEntryFormatter;

@@ -31,6 +31,7 @@ import WindowComponent from './editor-components/window';
 import {EventEmitter} from 'events';
 import {Logger} from './Logger';
 import {Position} from 'vscode';
+import {CommandLike} from './editor-components/vscode';
 
 const generateUuid = require('uuid/v4');
 const BASE_STATUS_BAR_PRIORITY = 100;
@@ -117,7 +118,7 @@ export default class CommandFactory {
         return this._wrapCommand(command);
     }
 
-    private _wrapCommand(command: any) {
+    private _wrapCommand(command: CommandLike) {
         return new CommandWrapper(command, this.logger);
     }
 

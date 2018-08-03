@@ -4,8 +4,9 @@ import PatternVariationReader from '../pattern-variation-reader';
 import TextEditorFactory from '../text-editor-factory';
 import TextLocationRegistry from '../text-location-registry';
 import * as vscode from 'vscode';
+import {CommandLike} from '../editor-components/vscode';
 
-export default class UpdateHighlightCommand {
+export default class UpdateHighlightCommand implements CommandLike {
     private readonly decorationOperatorFactory: DecorationOperatorFactory;
     private readonly decorationRegistry: DecorationRegistry;
     private readonly patternVariationReader: PatternVariationReader;

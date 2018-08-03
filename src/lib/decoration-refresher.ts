@@ -40,7 +40,7 @@ export default class DecorationRefresher {
         decorationOperator.refreshDecorations();
     }
 
-    refreshWithDelay(_documentChangeEvent: any) {
+    refreshWithDelay(_documentChangeEvent: unknown) {
         try {
             const editor = this.windowComponent.activeTextEditor;
             this.debouncer.debounce(() => {

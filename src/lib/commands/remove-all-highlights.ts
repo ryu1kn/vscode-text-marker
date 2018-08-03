@@ -1,6 +1,7 @@
 import DecorationOperatorFactory from '../decoration-operator-factory';
+import {CommandLike} from '../editor-components/vscode';
 
-export default class RemoveAllHighlightsCommand {
+export default class RemoveAllHighlightsCommand implements CommandLike {
     private readonly decorationOperatorFactory: DecorationOperatorFactory;
 
     constructor(decorationOperatorFactory: DecorationOperatorFactory) {

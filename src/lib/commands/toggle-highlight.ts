@@ -4,8 +4,9 @@ import TextEditorFactory from '../text-editor-factory';
 import TextLocationRegistry from '../text-location-registry';
 import * as vscode from 'vscode';
 import TextEditor from '../text-editor';
+import {CommandLike} from '../editor-components/vscode';
 
-export default class ToggleHighlightCommand {
+export default class ToggleHighlightCommand implements CommandLike {
     private readonly decorationOperatorFactory: DecorationOperatorFactory;
     private readonly patternFactory: PatternFactory;
     private readonly textEditorFactory: TextEditorFactory;
