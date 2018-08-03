@@ -1,4 +1,5 @@
 import ConfigStore from './config-store';
+import {AnyFunction} from './types';
 
 const isNumber = require('lodash.isnumber');
 
@@ -10,7 +11,7 @@ export default class Debouncer {
         this.configStore = configStore;
     }
 
-    debounce(callback: () => void) {
+    debounce(callback: AnyFunction) {
         if (this.timeout) clearTimeout(this.timeout);
 
         const waitTime = this.configStore.delayForRefreshingHighlight;

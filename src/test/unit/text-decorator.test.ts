@@ -1,4 +1,4 @@
-import {expect, mock, mockType, sinon, verify, wrapVerify} from '../helpers/helper';
+import {expect, mock, mockMethods, mockType, verify, wrapVerify} from '../helpers/helper';
 
 import TextDecorator from '../../lib/text-decorator';
 import PatternFactory from '../../lib/pattern-factory';
@@ -12,37 +12,30 @@ suite('TextDecorator', () => {
 
     test('it decorates the pattern in the editors', () => {
         const editors = [
-            mockType<TextEditor>({
+            mockMethods<TextEditor>(['setDecorations'], {
                 id: 'EDITOR_ID_1',
-                wholeText: 'ENTIRE LONG LONG TEXT',
-                setDecorations: sinon.spy()
+                wholeText: 'ENTIRE LONG LONG TEXT'
             }),
-            mockType<TextEditor>({
+            mockMethods<TextEditor>(['setDecorations'], {
                 id: 'EDITOR_ID_2',
-                wholeText: 'ANOTHER ENTIRE LONG TEXT',
-                setDecorations: sinon.spy()
+                wholeText: 'ANOTHER ENTIRE LONG TEXT'
             })
         ];
         const pattern = createPattern('LONG');
         const textLocationRegistry = mock(TextLocationRegistry);
         const textDecorator = new TextDecorator(textLocationRegistry);
+        const decorationType = mockType<TextEditorDecorationType>();
         textDecorator.decorate(
             editors,
             [mockType<Decoration>({
                 pattern,
-                decorationType: 'DECORATION_TYPE',
+                decorationType,
                 id: 'DECORATION_ID'
             })]
         );
 
-        expect(editors[0].setDecorations).to.have.been.calledWith(
-            'DECORATION_TYPE',
-            [{start: 7, end: 11}, {start: 12, end: 16}]
-        );
-        expect(editors[1].setDecorations).to.have.been.calledWith(
-            'DECORATION_TYPE',
-            [{start: 15, end: 19}]
-        );
+        verify(editors[0].setDecorations(decorationType, [{start: 7, end: 11}, {start: 12, end: 16}]));
+        expect(editors[1].setDecorations(decorationType, [{start: 15, end: 19}]));
         wrapVerify((c1, c2, c3) => verify(textLocationRegistry.register(c1(), c2(), c3())), [
             [
                 'EDITOR_ID_1',
@@ -86,16 +79,15 @@ suite('TextDecorator', () => {
     });
 
     test("it doesn't apply decorations if decorationType is not valid", () => {
-        const editors = [{
-            wholeText: 'ENTIRE LONG LONG TEXT',
-            setDecorations: sinon.spy()
-        }];
+        const editor = mockMethods<TextEditor>(['setDecorations'], {
+            wholeText: 'ENTIRE LONG LONG TEXT'
+        });
         const pattern = createPattern('LONG');
         const decorationType = mockType<TextEditorDecorationType>({});
         const textLocationRegistry = mockType<TextLocationRegistry>({register: () => {}});
         const textDecorator = new TextDecorator(textLocationRegistry);
         textDecorator.decorate(
-            editors as TextEditor[],
+            [editor],
             [
                 mockType<Decoration>({
                     pattern,
@@ -107,7 +99,7 @@ suite('TextDecorator', () => {
                 })
             ]
         );
-        expect(editors[0].setDecorations.args).to.eql([[decorationType, [{start: 7, end: 11}, {start: 12, end: 16}]]]);
+        expect(editor.setDecorations(decorationType, [{start: 7, end: 11}, {start: 12, end: 16}]));
     });
 
     function createPattern(phrase: string) {

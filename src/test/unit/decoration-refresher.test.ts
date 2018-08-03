@@ -1,15 +1,4 @@
-import {
-    any,
-    callback,
-    contains,
-    expect,
-    mock,
-    mockType,
-    mockTypeWithMethod,
-    sinon,
-    verify,
-    when
-} from '../helpers/helper';
+import {any, callback, contains, mock, mockMethods, mockType, verify, when} from '../helpers/helper';
 
 import DecorationRefresher from '../../lib/decoration-refresher';
 import WindowComponent from '../../lib/editor-components/window';
@@ -23,7 +12,7 @@ import {Logger} from '../../lib/Logger';
 
 suite('DecorationRefresher', () => {
 
-    const rawEditor = mockType<vscode.TextEditor>({});
+    const rawEditor = mockType<vscode.TextEditor>();
 
     suite('#refresh', () => {
 
@@ -44,7 +33,7 @@ suite('DecorationRefresher', () => {
 
         test('it does nothing if editor is not given when invoked', () => {
             const editor = undefined;
-            const logger = {error: sinon.spy()};
+            const logger = mockType<Logger>({error: () => {}});
             const decorationOperatorFactory = mock(DecorationOperatorFactory);
             const debouncer = mock(Debouncer);
             const textEditorFactory = mock(TextEditorFactory);
@@ -54,7 +43,7 @@ suite('DecorationRefresher', () => {
         });
 
         test('it logs error if an exception occurred', () => {
-            const logger = mockTypeWithMethod<Logger>(['error']);
+            const logger = mockMethods<Logger>(['error']);
             const textEditorFactory = mock(TextEditorFactory);
             when(textEditorFactory.create(rawEditor)).thenThrow(new Error('UNEXPECTED_ERROR'));
             const decorationOperatorFactory = mock(DecorationOperatorFactory);
@@ -72,7 +61,7 @@ suite('DecorationRefresher', () => {
             const editor = mock(TextEditor);
             const windowComponent = mockType<WindowComponent>({activeTextEditor: editor});
             const logger = getLogger();
-            const decorationOperator = {refreshDecorations: sinon.spy()};
+            const decorationOperator = mock(DecorationOperator);
             const decorationOperatorFactory = mock(DecorationOperatorFactory);
             when(decorationOperatorFactory.create([editor])).thenReturn(decorationOperator);
             const debouncer = mock(Debouncer);
@@ -82,13 +71,13 @@ suite('DecorationRefresher', () => {
 
             refresher.refreshWithDelay('DOCUMENT_CHANGE_EVENT');
 
-            expect(decorationOperator.refreshDecorations).to.have.been.calledWith();
+            verify(decorationOperator.refreshDecorations());
         });
 
         test('it does nothing if editor is not given when invoked', () => {
             const editor = undefined;
             const windowComponent = mockType<WindowComponent>({activeTextEditor: editor});
-            const logger = {error: sinon.spy()};
+            const logger = mockType<Logger>({error: () => {}});
             const decorationOperatorFactory = mock(DecorationOperatorFactory);
             const debouncer = mock(Debouncer);
             when(debouncer.debounce(callback)).thenCallback();
@@ -104,7 +93,7 @@ suite('DecorationRefresher', () => {
             when(debouncer.debounce(any())).thenThrow(new Error('UNEXPECTED_ERROR'));
             const decorationOperatorFactory = mock(DecorationOperatorFactory);
             const textEditorFactory = mock(TextEditorFactory);
-            const logger = mockTypeWithMethod<Logger>(['error']);
+            const logger = mockMethods<Logger>(['error']);
             new DecorationRefresher(decorationOperatorFactory, debouncer, textEditorFactory, windowComponent, logger).refreshWithDelay(rawEditor);
             verify(logger.error(contains('Error: UNEXPECTED_ERROR')));
         });

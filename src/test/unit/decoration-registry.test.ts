@@ -1,4 +1,4 @@
-import {expect, mockType, mockTypeWithMethod, stubReturns, when} from '../helpers/helper';
+import {expect, mockType, mockMethods, stubReturns, when} from '../helpers/helper';
 
 import DecorationRegistry from '../../lib/decoration-registry';
 import PatternFactory from '../../lib/pattern-factory';
@@ -108,7 +108,7 @@ suite('DecorationRegistry', () => {
     });
 
     test('it issues new decoration with new color', () => {
-        const window = mockTypeWithMethod<typeof vscode.window>(['createTextEditorDecorationType']);
+        const window = mockMethods<typeof vscode.window>(['createTextEditorDecorationType']);
         when(window.createTextEditorDecorationType({
             backgroundColor: 'pink',
             borderRadius: '.2em',
@@ -145,7 +145,7 @@ suite('DecorationRegistry', () => {
     });
 
     test('it use the text highlight colour on the ruler', () => {
-        const window = mockTypeWithMethod<typeof vscode.window>(['createTextEditorDecorationType']);
+        const window = mockMethods<typeof vscode.window>(['createTextEditorDecorationType']);
         when(window.createTextEditorDecorationType({
             backgroundColor: 'pink',
             borderRadius: '.2em',
@@ -161,7 +161,7 @@ suite('DecorationRegistry', () => {
     });
 
     test('it use the high contrast colour for text with highlights', () => {
-        const window = mockTypeWithMethod<typeof vscode.window>(['createTextEditorDecorationType']);
+        const window = mockMethods<typeof vscode.window>(['createTextEditorDecorationType']);
         when(window.createTextEditorDecorationType({
             backgroundColor: 'pink',
             borderRadius: '.2em',

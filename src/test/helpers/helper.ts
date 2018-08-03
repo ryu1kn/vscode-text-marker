@@ -1,11 +1,8 @@
 import * as td from 'testdouble';
 
-const chai = require('chai');
-chai.use(require('sinon-chai'));
-
 export const sinon = require('sinon');
 
-export const expect = chai.expect;
+export const expect = require('chai').expect;
 
 export const stubReturns = (...args: any[]) => () => args.shift();
 
@@ -40,14 +37,10 @@ export function mockFunction() {
     return td.function();
 }
 
-export function mockType<T>(params: any): T {
+export function mockType<T>(params?: any): T {
     return Object.assign({} as T, params);
 }
 
-export function mockTypeWithMethod<T>(methods: string[]): T {
-    return td.object(methods) as T;
-}
-
-export function mockObject(...propNames: string[]) {
-    return td.object(propNames);
+export function mockMethods<T>(methods: string[], params?: any): T {
+    return Object.assign(td.object(methods) as T, params);
 }

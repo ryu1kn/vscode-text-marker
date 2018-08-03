@@ -1,4 +1,4 @@
-import {expect, mockTypeWithMethod, verify} from '../../helpers/helper';
+import {expect, mockMethods, verify} from '../../helpers/helper';
 import {Event} from '../../../lib/const';
 import ToggleCaseSensitivityModeButton from '../../../lib/statusbar-buttons/toggle-case-sensitivity-mode';
 import {StatusBarItem} from 'vscode';
@@ -9,7 +9,7 @@ suite('ToggleCaseSensitivityModeButton', () => {
 
     test('it initialises and shows the button once matching mode is prepared', done => {
         const eventBus = new EventEmitter();
-        const statusBarItem = mockTypeWithMethod<StatusBarItem>(['show']);
+        const statusBarItem = mockMethods<StatusBarItem>(['show']);
         new ToggleCaseSensitivityModeButton(eventBus, statusBarItem);
 
         eventBus.on(Event.MATCHING_MODE_INITIALISED, () => {
@@ -24,7 +24,7 @@ suite('ToggleCaseSensitivityModeButton', () => {
 
     test('it updates button appearance on receving case sensitivity mode change', done => {
         const eventBus = new EventEmitter();
-        const statusBarItem = mockTypeWithMethod<StatusBarItem>(['show']);
+        const statusBarItem = mockMethods<StatusBarItem>(['show']);
         new ToggleCaseSensitivityModeButton(eventBus, statusBarItem);
 
         eventBus.on(Event.TOGGLED_CASE_SENSITIVITY, () => {

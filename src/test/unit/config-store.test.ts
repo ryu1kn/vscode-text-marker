@@ -1,4 +1,4 @@
-import {expect, mock, mockTypeWithMethod, verify, when} from '../helpers/helper';
+import {expect, mock, mockMethods, verify, when} from '../helpers/helper';
 
 import ConfigStore from '../../lib/config-store';
 import * as vscode from 'vscode';
@@ -9,10 +9,10 @@ suite('ConfigStore', () => {
     let configStore: any;
 
     setup(() => {
-        extensionConfig = mockTypeWithMethod<vscode.WorkspaceConfiguration>(['get', 'update']);
+        extensionConfig = mockMethods<vscode.WorkspaceConfiguration>(['get', 'update']);
         when(extensionConfig.get('CONFIG_NAME')).thenReturn('CONFIG_VALUE');
 
-        const workspace = mockTypeWithMethod<typeof vscode.workspace>(['getConfiguration']);
+        const workspace = mockMethods<typeof vscode.workspace>(['getConfiguration']);
         when(workspace.getConfiguration('textmarker')).thenReturn(extensionConfig);
 
         const configTargetPicker = mock(ConfigurationTargetPicker);

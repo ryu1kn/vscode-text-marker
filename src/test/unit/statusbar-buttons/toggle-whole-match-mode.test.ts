@@ -1,4 +1,4 @@
-import {expect, mockTypeWithMethod, verify} from '../../helpers/helper';
+import {expect, mockMethods, verify} from '../../helpers/helper';
 import {Event} from '../../../lib/const';
 import ToggleWholeMatchModeButton from '../../../lib/statusbar-buttons/toggle-whole-match-mode';
 import {StatusBarItem} from 'vscode';
@@ -9,7 +9,7 @@ suite('ToggleWholeMatchModeButton', () => {
 
     test('it initialises and shows the button once matching mode is prepared', done => {
         const eventBus = new EventEmitter();
-        const statusBarItem = mockTypeWithMethod<StatusBarItem>(['show']);
+        const statusBarItem = mockMethods<StatusBarItem>(['show']);
         new ToggleWholeMatchModeButton(eventBus, statusBarItem);
 
         eventBus.on(Event.MATCHING_MODE_INITIALISED, () => {
@@ -24,7 +24,7 @@ suite('ToggleWholeMatchModeButton', () => {
 
     test('it updates button appearance on receving whole match mode change', done => {
         const eventBus = new EventEmitter();
-        const statusBarItem = mockTypeWithMethod<StatusBarItem>(['show']);
+        const statusBarItem = mockMethods<StatusBarItem>(['show']);
         new ToggleWholeMatchModeButton(eventBus, statusBarItem);
 
         eventBus.on(Event.WHOLE_MATCH_MODE_TOGGLED, () => {

@@ -1,4 +1,4 @@
-import {any, expect, mock, mockType, sinon, verify, when} from '../../helpers/helper';
+import {any, mock, mockType, verify, when} from '../../helpers/helper';
 
 import ToggleHighlightCommand from '../../../lib/commands/toggle-highlight';
 import PatternFactory from '../../../lib/pattern-factory';
@@ -8,14 +8,15 @@ import * as vscode from 'vscode';
 import TextEditor from '../../../lib/text-editor';
 import TextLocationRegistry from '../../../lib/text-location-registry';
 import RegexPattern from '../../../lib/patterns/regex';
+import DecorationOperator from '../../../lib/decoration-operator';
+import MatchingModeRegistry from '../../../lib/matching-mode-registry';
 
 suite('ToggleHighlightCommand', () => {
 
     const rawEditor = {} as vscode.TextEditor;
+    const patternFactory = new PatternFactory({} as MatchingModeRegistry);
 
     suite('When text is selected', () => {
-        const patternFactory = mock(PatternFactory);
-        when(patternFactory.create({phrase: 'SELECTED'})).thenReturn('PATTERN');
 
         test('it decorates a selected text if the cursor is not on highlight', () => {
             const editor = {selectedText: 'SELECTED'} as TextEditor;
@@ -23,7 +24,7 @@ suite('ToggleHighlightCommand', () => {
             when(textEditorFactory.create(rawEditor)).thenReturn(editor);
             const textLocationRegistry = mock(TextLocationRegistry);
             when(textLocationRegistry.queryDecorationId(any(), any())).thenReturn(null);
-            const decorationOperator = {addDecoration: sinon.spy()};
+            const decorationOperator = mock(DecorationOperator);
             const decorationOperatorFactory = mock(DecorationOperatorFactory);
             when(decorationOperatorFactory.createForVisibleEditors()).thenReturn(decorationOperator);
             const command = new ToggleHighlightCommand(
@@ -34,12 +35,13 @@ suite('ToggleHighlightCommand', () => {
             );
             command.execute(rawEditor);
 
-            expect(decorationOperator.addDecoration).to.have.been.calledWith('PATTERN');
+            const pattern = patternFactory.create({phrase: 'SELECTED'});
+            verify(decorationOperator.addDecoration(pattern));
         });
 
         test('it remove decoration if the cursor is on highlight', () => {
             const editor = mockType<TextEditor>({selectedText: null});
-            const decorationOperator = {removeDecoration: sinon.spy()};
+            const decorationOperator = mock(DecorationOperator);
             const decorationOperatorFactory = mock(DecorationOperatorFactory);
             when(decorationOperatorFactory.createForVisibleEditors()).thenReturn(decorationOperator);
             const textEditorFactory = mock(TextEditorFactory);
@@ -54,7 +56,7 @@ suite('ToggleHighlightCommand', () => {
             );
             command.execute(rawEditor);
 
-            expect(decorationOperator.removeDecoration).to.have.been.calledWith('DECORATION_ID');
+            verify(decorationOperator.removeDecoration('DECORATION_ID'));
         });
     });
 

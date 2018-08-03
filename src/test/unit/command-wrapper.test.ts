@@ -1,25 +1,27 @@
-import {contains, expect, mock, sinon, verify} from '../helpers/helper';
+import {contains, mockType, mockMethods, verify} from '../helpers/helper';
 
 import CommandWrapper from '../../lib/command-wrapper';
 import {Logger} from '../../lib/Logger';
-import DummyLogger from '../helpers/Logger';
+import {CommandLike} from '../../lib/editor-components/vscode';
+import * as vscode from 'vscode';
 
 suite('CommandWrapper', () => {
 
     test('it executes given command with same args', async () => {
-        const command = {execute: sinon.spy()};
-        const commandWrapper = new CommandWrapper(command, {} as Logger);
+        const command = mockMethods<CommandLike>(['execute']);
+        const commandWrapper = new CommandWrapper(command, mockType<Logger>());
+        const editor = mockType<vscode.TextEditor>();
 
-        commandWrapper.execute('ARG1', 'ARG2');
+        commandWrapper.execute(editor);
 
-        expect(command.execute).to.have.been.calledWith('ARG1', 'ARG2');
+        verify(command.execute(editor));
     });
 
     test('it logs a synchronously thrown error', async () => {
         const command = {execute: () => {
             throw new Error('UNEXPECTED_ERROR');
         }};
-        const logger = mock(DummyLogger);
+        const logger = mockMethods<Logger>(['error']);
         const commandWrapper = new CommandWrapper(command, logger);
 
         await commandWrapper.execute();
@@ -29,7 +31,7 @@ suite('CommandWrapper', () => {
 
     test('it logs an asynchronously thrown error', async () => {
         const command = {execute: () => Promise.reject(new Error('UNEXPECTED_ERROR'))};
-        const logger = mock(DummyLogger);
+        const logger = mockMethods<Logger>(['error']);
         const commandWrapper = new CommandWrapper(command, logger);
 
         await commandWrapper.execute();
