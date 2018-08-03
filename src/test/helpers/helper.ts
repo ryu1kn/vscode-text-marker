@@ -7,14 +7,7 @@ export const sinon = require('sinon');
 
 export const expect = chai.expect;
 
-export const stubReturns = (...args: any[]) =>
-    args.reduce(
-        (stub, arg, index) => {
-            stub.onCall(index).returns(arg);
-            return stub;
-        },
-        sinon.stub()
-    );
+export const stubReturns = (...args: any[]) => () => args.shift();
 
 export const when = td.when;
 

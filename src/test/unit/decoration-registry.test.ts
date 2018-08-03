@@ -23,11 +23,11 @@ suite('DecorationRegistry', () => {
         const colourRegistry = {issue: stubReturns('pink', 'yellow')};
         const registry = createDecorationRegistry({colourRegistry});
 
-        registry.issue(createPattern('PATTERN'));
+        const firstResult = registry.issue(createPattern('PATTERN'));
         const secondResult = registry.issue(createPattern('PATTERN'));
 
+        expect(firstResult!.colour).to.eql('pink');
         expect(secondResult).to.be.null;
-        expect(colourRegistry.issue).to.have.been.calledOnce;
     });
 
     test('it returns a registered decoration type for the passed decoration id', () => {
