@@ -23,7 +23,7 @@ export default class ToggleHighlightCommand {
 
     execute(editor: vscode.TextEditor) {
         const textEditor = this.textEditorFactory.create(editor);
-        const decorationId = this.textLocationRegistry.queryDecorationId(textEditor.id, textEditor.flatRange);
+        const decorationId = this.textLocationRegistry.queryDecorationId(textEditor.id, textEditor.selection);
         if (decorationId) {
             this.removeDecoration(decorationId);
         } else {

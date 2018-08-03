@@ -26,7 +26,7 @@ export default class TextEditor {
         return this.editor.document.getText();
     }
 
-    get flatRange(): FlatRange {
+    get selection(): FlatRange {
         const selection = this.editor.selection;
         return {
             start: this.getFlatPosition(selection.start),

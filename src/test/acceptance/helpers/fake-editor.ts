@@ -1,7 +1,8 @@
 import {mockMethods} from '../../helpers/helper';
+import * as vscode from 'vscode';
 
 export const createFakeEditor = ({selectedText, wholeText}: any = {}) => {
-    return mockMethods(['setDecorations'], {
+    return mockMethods<vscode.TextEditor>(['setDecorations'], {
         document: {
             getText: (selection: any) => selection ? selectedText : wholeText,
             positionAt: position,
