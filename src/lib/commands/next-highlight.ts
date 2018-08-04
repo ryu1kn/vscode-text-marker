@@ -11,8 +11,6 @@ export class NextHighlightCommand implements CommandLike {
 
     execute(editor: TextEditor) {
         const next = this.textLocationRegistry.findNextOccurence(editor.id, editor.selection);
-        next.map(range => {
-            editor.selection = {start: range.start, end: range.start};
-        });
+        next.map(range => { editor.selection = range; });
     }
 }
