@@ -33,7 +33,7 @@ suite('SavedHighlightsRestorer', () => {
             ignoreCase: false,
             wholeMatch: false
         })).thenReturn(pattern);
-        new SavedHighlightsRestorer(configStore, decorationOperatorFactory, patternFactory, eventBus); // eslint-disable-line no-new
+        new SavedHighlightsRestorer(configStore, decorationOperatorFactory, patternFactory, eventBus);
 
         eventBus.on(Event.EXTENSION_READY, () => {
             verify(decorationOperator.addDecoration(pattern));

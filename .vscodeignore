@@ -6,8 +6,6 @@ coverage/**/*
 .codeclimate.yml
 .gitignore
 .editorconfig
-.eslintrc.yaml
-.eslintignore
 .idea/**/*
 .nvmrc
 .nycrc

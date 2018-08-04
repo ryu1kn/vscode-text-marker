@@ -20,7 +20,7 @@ export default class PatternVariationReader {
         const item = await this.windowComponent.showQuickPick<PatternUpdateActionQuickPickItem>(items, options);
         if (!item) return null;
 
-        switch (item.actionId) {    // eslint-disable-line default-case
+        switch (item.actionId) {
         case PatternAction.TOGGLE_CASE_SENSITIVITY:
             return currentPattern.toggleCaseSensitivity();
         case PatternAction.TOGGLE_WHOLE_MATCH:
