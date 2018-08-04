@@ -18,7 +18,7 @@ export default class ToggleHighlightCommand implements CommandLike {
     }
 
     execute(textEditor: TextEditor) {
-        const decorationId = this.textLocationRegistry.queryDecorationId(textEditor.id, textEditor.selection);
+        const decorationId = this.textLocationRegistry.queryDecorationId(textEditor.id, textEditor.selection).toUndefined();
         if (decorationId) {
             this.removeDecoration(decorationId);
         } else {

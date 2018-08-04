@@ -8,6 +8,7 @@ import TextLocationRegistry from '../../../lib/text-location-registry';
 import RegexPattern from '../../../lib/patterns/regex';
 import DecorationOperator from '../../../lib/decoration-operator';
 import MatchingModeRegistry from '../../../lib/matching-mode-registry';
+import {none, some} from 'fp-ts/lib/Option';
 
 suite('ToggleHighlightCommand', () => {
 
@@ -18,7 +19,7 @@ suite('ToggleHighlightCommand', () => {
         test('it decorates a selected text if the cursor is not on highlight', () => {
             const editor = {selectedText: 'SELECTED'} as TextEditor;
             const textLocationRegistry = mock(TextLocationRegistry);
-            when(textLocationRegistry.queryDecorationId(any(), any())).thenReturn(null);
+            when(textLocationRegistry.queryDecorationId(any(), any())).thenReturn(none);
             const decorationOperator = mock(DecorationOperator);
             const decorationOperatorFactory = mock(DecorationOperatorFactory);
             when(decorationOperatorFactory.createForVisibleEditors()).thenReturn(decorationOperator);
@@ -39,7 +40,7 @@ suite('ToggleHighlightCommand', () => {
             const decorationOperatorFactory = mock(DecorationOperatorFactory);
             when(decorationOperatorFactory.createForVisibleEditors()).thenReturn(decorationOperator);
             const textLocationRegistry = mock(TextLocationRegistry);
-            when(textLocationRegistry.queryDecorationId(any(), any())).thenReturn('DECORATION_ID');
+            when(textLocationRegistry.queryDecorationId(any(), any())).thenReturn(some('DECORATION_ID'));
             const command = new ToggleHighlightCommand(
                 decorationOperatorFactory,
                 patternFactory,
@@ -60,7 +61,7 @@ suite('ToggleHighlightCommand', () => {
         test('it does nothing if text is not selected', () => {
             const decorationOperatorFactory = mock(DecorationOperatorFactory);
             const textLocationRegistry = mock(TextLocationRegistry);
-            when(textLocationRegistry.queryDecorationId(any(), any())).thenReturn(null);
+            when(textLocationRegistry.queryDecorationId(any(), any())).thenReturn(none);
             const command = new ToggleHighlightCommand(decorationOperatorFactory, patternFactory, textLocationRegistry);
             command.execute(editor);
 

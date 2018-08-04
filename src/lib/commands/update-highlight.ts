@@ -22,7 +22,7 @@ export default class UpdateHighlightCommand implements CommandLike {
     }
 
     async execute(textEditor: TextEditor) {
-        const decorationId = this.textLocationRegistry.queryDecorationId(textEditor.id, textEditor.selection);
+        const decorationId = this.textLocationRegistry.queryDecorationId(textEditor.id, textEditor.selection).toUndefined();
         if (!decorationId) return;
 
         const pattern = this.decorationRegistry.inquireById(decorationId)!.pattern;

@@ -1,6 +1,7 @@
 import {FlatRange} from './models/flat-range';
-import {fromNullable, none, Option, some} from 'fp-ts/lib/Option';
+import {Option} from 'fp-ts/lib/Option';
 import {OptionMap} from './utils/collections';
+import {findFirst} from 'fp-ts/lib/Array';
 
 export default class TextLocationRegistry {
     private readonly recordMap: OptionMap<OptionMap<FlatRange[]>>;
@@ -10,34 +11,34 @@ export default class TextLocationRegistry {
     }
 
     register(editorId: string, decorationId: string, ranges: FlatRange[]) {
-        const editorDecorations = this.recordMap.get(editorId).toNullable() || new OptionMap();
+        const editorDecorations = this.recordMap.get(editorId).getOrElse(new OptionMap());
         editorDecorations.set(decorationId, ranges);
         this.recordMap.set(editorId, editorDecorations);
     }
 
     deregister(decorationId: string) {
-        Array.from(this.recordMap.values()).forEach(decorationIdMap => {
+        [...this.recordMap.values()].forEach(decorationIdMap => {
             decorationIdMap.delete(decorationId);
         });
     }
 
-    queryDecorationId(editorId: string, flatRange: FlatRange) {
-        const decoration = this.recordMap.get(editorId)
-            .chain(decorationMap => fromNullable(
-                Array.from(decorationMap.entries())
-                    .find(([_decorationId, ranges]) => ranges.some(this.isPointingRange(flatRange)))
-            ))
-            .map(([decorationId, _ranges]) => decorationId);
-        return decoration.toNullable();
+    queryDecorationId(editorId: string, range: FlatRange): Option<string> {
+        return this.findDecorationIdAndRanges(editorId, range).map(([decorationId]) => decorationId);
     }
 
     findNextOccurence(editorId: string, range: FlatRange): Option<FlatRange> {
-        const decorationId = this.queryDecorationId(editorId, range);
-        if (!decorationId) return none;
+        return this.findDecorationIdAndRanges(editorId, range)
+            .map(([_, ranges]) => {
+                const newIndex = ranges.findIndex(this.isPointingRange(range)) + 1;
+                return ranges[newIndex === ranges.length ? 0 : newIndex];
+            });
+    }
 
-        const ranges = this.recordMap.get(editorId).chain(em => em.get(decorationId)).getOrElse([]);
-        const newIndex = ranges.findIndex(this.isPointingRange(range)) + 1;
-        return some(ranges[newIndex === ranges.length ? 0 : newIndex]);
+    private findDecorationIdAndRanges(editorId: string, range: FlatRange): Option<[string, FlatRange[]]> {
+        return this.recordMap.get(editorId).chain(decorationMap => findFirst(
+            [...decorationMap.entries()],
+            ([_decorationId, ranges]) => ranges.some(this.isPointingRange(range))
+        ));
     }
 
     private isPointingRange(range2: FlatRange): (range: FlatRange) => boolean {

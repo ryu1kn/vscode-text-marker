@@ -8,6 +8,7 @@ import StringPattern from '../../../lib/patterns/string';
 import TextLocationRegistry from '../../../lib/text-location-registry';
 import TextEditor from '../../../lib/text-editor';
 import DecorationOperator from '../../../lib/decoration-operator';
+import {none, some} from 'fp-ts/lib/Option';
 
 suite('UpdateHighlightCommand', () => {
 
@@ -19,7 +20,7 @@ suite('UpdateHighlightCommand', () => {
         const newPattern = mock(StringPattern);
 
         const textLocationRegistry = mock(TextLocationRegistry);
-        when(textLocationRegistry.queryDecorationId(any(), any())).thenReturn('DECORATION_ID');
+        when(textLocationRegistry.queryDecorationId(any(), any())).thenReturn(some('DECORATION_ID'));
 
         const decorationRegistry = mock(DecorationRegistry);
         when(decorationRegistry.inquireById('DECORATION_ID')).thenReturn({pattern: oldPattern});
@@ -71,7 +72,7 @@ suite('UpdateHighlightCommand', () => {
         test('it does nothing', async () => {
             const editor = mockType<TextEditor>({selectedText: null});
             const textLocationRegistry = mock(TextLocationRegistry);
-            when(textLocationRegistry.queryDecorationId(any(), any())).thenReturn(null);
+            when(textLocationRegistry.queryDecorationId(any(), any())).thenReturn(none);
             const command = new UpdateHighlightCommand(
                 decorationOperatorFactory,
                 decorationRegistry,
