@@ -1,32 +1,27 @@
 import DecorationOperatorFactory from '../decoration-operator-factory';
 import DecorationRegistry from '../decoration-registry';
 import PatternVariationReader from '../pattern-variation-reader';
-import TextEditorFactory from '../text-editor-factory';
 import TextLocationRegistry from '../text-location-registry';
-import * as vscode from 'vscode';
 import {CommandLike} from '../editor-components/vscode';
+import TextEditor from '../text-editor';
 
 export default class UpdateHighlightCommand implements CommandLike {
     private readonly decorationOperatorFactory: DecorationOperatorFactory;
     private readonly decorationRegistry: DecorationRegistry;
     private readonly patternVariationReader: PatternVariationReader;
-    private readonly textEditorFactory: TextEditorFactory;
     private readonly textLocationRegistry: TextLocationRegistry;
 
     constructor(decorationOperatorFactory: DecorationOperatorFactory,
                 decorationRegistry: DecorationRegistry,
                 patternVariationReader: PatternVariationReader,
-                textEditorFactory: TextEditorFactory,
                 textLocationRegistry: TextLocationRegistry) {
         this.decorationOperatorFactory = decorationOperatorFactory;
         this.decorationRegistry = decorationRegistry;
         this.patternVariationReader = patternVariationReader;
-        this.textEditorFactory = textEditorFactory;
         this.textLocationRegistry = textLocationRegistry;
     }
 
-    async execute(editor: vscode.TextEditor) {
-        const textEditor = this.textEditorFactory.create(editor);
+    async execute(textEditor: TextEditor) {
         const decorationId = this.textLocationRegistry.queryDecorationId(textEditor.id, textEditor.selection);
         if (!decorationId) return;
 

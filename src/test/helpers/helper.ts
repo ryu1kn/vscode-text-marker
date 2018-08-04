@@ -2,6 +2,8 @@ import * as td from 'testdouble';
 
 export const expect = require('chai').expect;
 
+export const assertEqual = require('assert').deepEqual;
+
 export const stubReturns = (...args: any[]) => () => args.shift();
 
 export const when = td.when;

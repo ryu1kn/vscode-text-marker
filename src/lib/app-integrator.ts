@@ -26,11 +26,13 @@ export default class AppIntegrator {
     }
 
     private registerEventListeners(context: ExtensionContextLike) {
-        const decorationRefresher = this.commandFactory.createDecorationRefresher();
+        const autoRefreshDecoration = this.commandFactory.createAutoRefreshDecoration();
         this.vscode.window.onDidChangeActiveTextEditor(
-            decorationRefresher.refresh, decorationRefresher, context.subscriptions);
+            autoRefreshDecoration.execute, autoRefreshDecoration, context.subscriptions);
+
+        const autoRefreshDecorationWithDelay = this.commandFactory.createAutoRefreshDecorationWithDelay();
         this.vscode.workspace.onDidChangeTextDocument(
-            decorationRefresher.refreshWithDelay, decorationRefresher, context.subscriptions);
+            autoRefreshDecorationWithDelay.execute, autoRefreshDecorationWithDelay, context.subscriptions);
     }
 
     private registerCommands(context: ExtensionContextLike) {

@@ -1,29 +1,23 @@
 import DecorationOperatorFactory from '../decoration-operator-factory';
 import PatternFactory from '../pattern-factory';
-import TextEditorFactory from '../text-editor-factory';
 import TextLocationRegistry from '../text-location-registry';
-import * as vscode from 'vscode';
 import TextEditor from '../text-editor';
 import {CommandLike} from '../editor-components/vscode';
 
 export default class ToggleHighlightCommand implements CommandLike {
     private readonly decorationOperatorFactory: DecorationOperatorFactory;
     private readonly patternFactory: PatternFactory;
-    private readonly textEditorFactory: TextEditorFactory;
     private readonly textLocationRegistry: TextLocationRegistry;
 
     constructor(decorationOperatorFactory: DecorationOperatorFactory,
                 patternFactory: PatternFactory,
-                textEditorFactory: TextEditorFactory,
                 textLocationRegistry: TextLocationRegistry) {
         this.decorationOperatorFactory = decorationOperatorFactory;
         this.patternFactory = patternFactory;
-        this.textEditorFactory = textEditorFactory;
         this.textLocationRegistry = textLocationRegistry;
     }
 
-    execute(editor: vscode.TextEditor) {
-        const textEditor = this.textEditorFactory.create(editor);
+    execute(textEditor: TextEditor) {
         const decorationId = this.textLocationRegistry.queryDecorationId(textEditor.id, textEditor.selection);
         if (decorationId) {
             this.removeDecoration(decorationId);

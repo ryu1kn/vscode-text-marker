@@ -4,7 +4,6 @@ import ConfigStore from './config-store';
 import ConfigTargetPicker from './config-target-picker';
 import Debouncer from './debouncer';
 import DecorationOperatorFactory from './decoration-operator-factory';
-import DecorationRefresher from './decoration-refresher';
 import DecorationRegistry from './decoration-registry';
 import HighlightPatternPicker from './highlight-pattern-picker';
 import HighlightUsingRegexCommand from './commands/highlight-using-regex';
@@ -32,6 +31,8 @@ import {EventEmitter} from 'events';
 import {Logger} from './Logger';
 import {Position} from 'vscode';
 import {CommandLike} from './editor-components/vscode';
+import AutoRefreshDecoration from './commands/auto-refresh-decoration';
+import AutoRefreshDecorationWithDelay from './commands/auto-refresh-decoration-with-delay';
 
 const generateUuid = require('uuid/v4');
 const BASE_STATUS_BAR_PRIORITY = 100;
@@ -60,7 +61,6 @@ export default class CommandFactory {
         const command = new ToggleHighlightCommand(
             this.getDecorationOperatorFactory(),
             this.getPatternFactory(),
-            this.getTextEditorFactory(),
             this.getTextLocationRegistry()
         );
         return this._wrapCommand(command);
@@ -112,24 +112,28 @@ export default class CommandFactory {
             this.getDecorationOperatorFactory(),
             this.getDecorationRegistry(),
             new PatternVariationReader(this.getWindowComponent()),
-            this.getTextEditorFactory(),
             this.getTextLocationRegistry()
         );
         return this._wrapCommand(command);
     }
 
-    private _wrapCommand(command: CommandLike) {
-        return new CommandWrapper(command, this.logger);
+    createAutoRefreshDecoration() {
+        const command = new AutoRefreshDecoration(this.getDecorationOperatorFactory());
+        return this._wrapCommand(command);
     }
 
-    createDecorationRefresher() {
-        return new DecorationRefresher(
+    createAutoRefreshDecorationWithDelay() {
+        const command = new AutoRefreshDecorationWithDelay(
             this.getDecorationOperatorFactory(),
             new Debouncer(this.getConfigStore()),
-            this.getTextEditorFactory(),
             this.getWindowComponent(),
             this.logger
         );
+        return this._wrapCommand(command);
+    }
+
+    private _wrapCommand(command: CommandLike) {
+        return new CommandWrapper(command, this.getTextEditorFactory(), this.logger);
     }
 
     createSavedHighlightsRestorer() {

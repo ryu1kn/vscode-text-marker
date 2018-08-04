@@ -1,5 +1,5 @@
 import {Position, Range} from 'vscode';
-import * as vscode from 'vscode';
+import TextEditor from '../text-editor';
 
 export type CreateRange = (p1: Position, p2: Position) => Range;
 
@@ -8,5 +8,5 @@ export type ExtensionContextLike = {
 };
 
 export interface CommandLike {
-    execute(editor?: vscode.TextEditor): Promise<void> | void;
+    execute(editor?: TextEditor): Promise<void> | void;
 }
