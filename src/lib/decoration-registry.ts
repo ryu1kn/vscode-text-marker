@@ -17,10 +17,9 @@ export default class DecorationRegistry {
     private readonly textDecorationMap: TextDecorationCollection;
 
     constructor(configStore: ConfigStore,
-                colourRegistry: ColourRegistry,
                 window: typeof vscode.window,
                 generateUuid: () => string) {
-        this.colourRegistry = colourRegistry;
+        this.colourRegistry = new ColourRegistry(configStore);
         this.configStore = configStore;
         this.window = window;
 

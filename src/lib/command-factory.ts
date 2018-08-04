@@ -1,4 +1,3 @@
-import ColourRegistry from './colour-registry';
 import CommandWrapper from './command-wrapper';
 import ConfigStore from './config-store';
 import ConfigTargetPicker from './config-target-picker';
@@ -206,8 +205,7 @@ export default class CommandFactory {
 
     private createDecorationRegistry() {
         const configStore = this.getConfigStore();
-        const colourRegistry = new ColourRegistry(configStore);
-        return new DecorationRegistry(configStore, colourRegistry, this.vscode.window, generateUuid);
+        return new DecorationRegistry(configStore, this.vscode.window, generateUuid);
     }
 
     private getHighlightPatternPicker() {
