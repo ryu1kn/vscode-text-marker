@@ -56,6 +56,7 @@ export default class AppIntegrator {
     private registerTextEditorCommands(context: ExtensionContextLike) {
         const factory = this.commandFactory;
         const commandMap = new Map([
+            [`${Const.EXTENSION_ID}.nextHighlight`, factory.createNextHighlightCommand()],
             [`${Const.EXTENSION_ID}.toggleHighlight`, factory.createToggleHighlightCommand()],
             [`${Const.EXTENSION_ID}.updateHighlight`, factory.createUpdateHighlightCommand()]
         ]);

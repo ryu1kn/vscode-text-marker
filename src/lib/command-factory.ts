@@ -33,6 +33,7 @@ import {Position} from 'vscode';
 import {CommandLike} from './editor-components/vscode';
 import AutoRefreshDecoration from './commands/auto-refresh-decoration';
 import AutoRefreshDecorationWithDelay from './commands/auto-refresh-decoration-with-delay';
+import {NextHighlightCommand} from './commands/next-highlight';
 
 const generateUuid = require('uuid/v4');
 const BASE_STATUS_BAR_PRIORITY = 100;
@@ -114,6 +115,11 @@ export default class CommandFactory {
             new PatternVariationReader(this.getWindowComponent()),
             this.getTextLocationRegistry()
         );
+        return this._wrapCommand(command);
+    }
+
+    createNextHighlightCommand() {
+        const command = new NextHighlightCommand(this.getTextLocationRegistry());
         return this._wrapCommand(command);
     }
 

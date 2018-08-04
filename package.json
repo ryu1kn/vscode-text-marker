@@ -182,6 +182,11 @@
         "command": "textmarker.updateHighlight",
         "title": "Update Highlight",
         "category": "TextMarker"
+      },
+      {
+        "command": "textmarker.nextHighlight",
+        "title": "Go to the next same highlight",
+        "category": "TextMarker"
       }
     ],
     "menus": {
@@ -227,6 +232,7 @@
   },
   "dependencies": {
     "color-name": "1.1.3",
+    "fp-ts": "1.7.1",
     "lodash.isnumber": "3.0.3",
     "uuid": "3.2.1"
   }
