@@ -8,28 +8,35 @@ import StringPattern from '../../../lib/patterns/string';
 import TextLocationRegistry from '../../../lib/text-location-registry';
 import TextEditor from '../../../lib/text-editor';
 import DecorationOperator from '../../../lib/decoration-operator';
-import {none, some} from 'fp-ts/lib/Option';
 
 suite('UpdateHighlightCommand', () => {
 
+    const registeredRange = {start: 10, end: 20};
+    const unregisteredRange = {start: 0, end: 0};
+
+    const textLocationRegistry = new TextLocationRegistry();
+    textLocationRegistry.register('EDITOR_ID', 'DECORATION_ID', [registeredRange]);
+
     suite('When the cursor is on highlight', () => {
 
-        const editor = mockType<TextEditor>({selectedText: null});
+        const editor = mockType<TextEditor>({id: 'EDITOR_ID', selectedText: 'SELECTED', selection: registeredRange});
 
         const oldPattern = mock(StringPattern);
         const newPattern = mock(StringPattern);
 
-        const textLocationRegistry = mock(TextLocationRegistry);
-        when(textLocationRegistry.queryDecorationId(any(), any())).thenReturn(some('DECORATION_ID'));
-
         const decorationRegistry = mock(DecorationRegistry);
         when(decorationRegistry.inquireById('DECORATION_ID')).thenReturn({pattern: oldPattern});
 
-        test('it updates decoration', async () => {
-            const decorationOperator = mock(DecorationOperator);
-            const decorationOperatorFactory = mock(DecorationOperatorFactory);
-            when(decorationOperatorFactory.createForVisibleEditors()).thenReturn(decorationOperator);
+        let decorationOperator: DecorationOperator;
+        let decorationOperatorFactory: DecorationOperatorFactory;
 
+        setup(() => {
+            const deps = createDecorationOperator();
+            decorationOperator = deps.decorationOperator;
+            decorationOperatorFactory = deps.decorationOperatorFactory;
+        });
+
+        test('it updates decoration', async () => {
             const patternVariationReader = mock(PatternVariationReader);
             when(patternVariationReader.read(oldPattern)).thenResolve(newPattern);
 
@@ -46,8 +53,6 @@ suite('UpdateHighlightCommand', () => {
         });
 
         test('it does nothing if a new pattern is not given by user', async () => {
-            const decorationOperatorFactory = mock(DecorationOperatorFactory);
-
             const patternVariationReader = mock(PatternVariationReader);
             when(patternVariationReader.read(any())).thenResolve();
 
@@ -60,19 +65,20 @@ suite('UpdateHighlightCommand', () => {
 
             await command.execute(editor);
 
-            verify(decorationOperatorFactory.createForVisibleEditors(), {times: 0});
+            verify(decorationOperator.updateDecorationPattern(any(), any()), {times: 0});
         });
     });
 
     suite('When the cursor is NOT on highlight', () => {
-        const decorationOperatorFactory = mock(DecorationOperatorFactory);
+        const deps = createDecorationOperator();
+        const {decorationOperator, decorationOperatorFactory} = deps;
+
         const decorationRegistry = mock(DecorationRegistry);
         const patternVariationReader = mock(PatternVariationReader);
 
+        const editor = mockType<TextEditor>({id: 'EDITOR_ID', selectedText: 'SELECTED', selection: unregisteredRange});
+
         test('it does nothing', async () => {
-            const editor = mockType<TextEditor>({selectedText: null});
-            const textLocationRegistry = mock(TextLocationRegistry);
-            when(textLocationRegistry.queryDecorationId(any(), any())).thenReturn(none);
             const command = new UpdateHighlightCommand(
                 decorationOperatorFactory,
                 decorationRegistry,
@@ -82,7 +88,14 @@ suite('UpdateHighlightCommand', () => {
 
             await command.execute(editor);
 
-            verify(decorationRegistry.inquireById(any()), {times: 0});
+            verify(decorationOperator.updateDecorationPattern(any(), any()), {times: 0});
         });
     });
+
+    function createDecorationOperator() {
+        const decorationOperator = mock(DecorationOperator);
+        const decorationOperatorFactory = mock(DecorationOperatorFactory);
+        when(decorationOperatorFactory.createForVisibleEditors()).thenReturn(decorationOperator);
+        return {decorationOperator, decorationOperatorFactory};
+    }
 });

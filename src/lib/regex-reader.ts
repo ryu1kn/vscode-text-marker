@@ -1,12 +1,13 @@
 import PatternFactory from './pattern-factory';
 import WindowComponent from './editor-components/window';
+import MatchingModeRegistry from './matching-mode-registry';
 
 export default class RegexReader {
     private readonly patternFactory: PatternFactory;
     private readonly windowComponent: WindowComponent;
 
-    constructor(patternFactory: PatternFactory, windowComponent: WindowComponent) {
-        this.patternFactory = patternFactory;
+    constructor(matchingModeRegistry: MatchingModeRegistry, windowComponent: WindowComponent) {
+        this.patternFactory = new PatternFactory(matchingModeRegistry);
         this.windowComponent = windowComponent;
     }
 

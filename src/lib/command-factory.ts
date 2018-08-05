@@ -7,7 +7,6 @@ import DecorationRegistry from './decoration-registry';
 import HighlightPatternPicker from './highlight-pattern-picker';
 import HighlightUsingRegexCommand from './commands/highlight-using-regex';
 import MatchingModeRegistry from './matching-mode-registry';
-import PatternFactory from './pattern-factory';
 import PatternVariationReader from './pattern-variation-reader';
 import RegexReader from './regex-reader';
 import RemoveAllHighlightsCommand from './commands/remove-all-highlights';
@@ -47,7 +46,6 @@ export default class CommandFactory {
     private decorationRegistry?: DecorationRegistry;
     private highlightPatternPicker?: HighlightPatternPicker;
     private matchingModeRegistry?: MatchingModeRegistry;
-    private patternFactory?: PatternFactory;
     private textEditorFactory?: TextEditorFactory;
     private textLocationRegistry?: TextLocationRegistry;
     private windowComponent?: WindowComponent;
@@ -60,14 +58,14 @@ export default class CommandFactory {
     createToggleHighlightCommand() {
         const command = new ToggleHighlightCommand(
             this.getDecorationOperatorFactory(),
-            this.getPatternFactory(),
+            this.getMatchingModeRegistry(),
             this.getTextLocationRegistry()
         );
         return this._wrapCommand(command);
     }
 
     createHighlightUsingRegex() {
-        const regexReader = new RegexReader(this.getPatternFactory(), this.getWindowComponent());
+        const regexReader = new RegexReader(this.getMatchingModeRegistry(), this.getWindowComponent());
         const command = new HighlightUsingRegexCommand(this.getDecorationOperatorFactory(), regexReader);
         return this._wrapCommand(command);
     }
@@ -145,7 +143,7 @@ export default class CommandFactory {
         return new SavedHighlightsRestorer(
             this.getConfigStore(),
             this.getDecorationOperatorFactory(),
-            this.getPatternFactory(),
+            this.getMatchingModeRegistry(),
             this.getEventBus()
         );
     }
@@ -225,11 +223,6 @@ export default class CommandFactory {
     private createMatchingModeRegistry() {
         const configStore = this.getConfigStore();
         return new MatchingModeRegistry(configStore.enableIgnoreCase, configStore.enableWholeMatch, this.getEventBus());
-    }
-
-    private getPatternFactory() {
-        this.patternFactory = this.patternFactory || new PatternFactory(this.getMatchingModeRegistry());
-        return this.patternFactory;
     }
 
     private getTextEditorFactory() {

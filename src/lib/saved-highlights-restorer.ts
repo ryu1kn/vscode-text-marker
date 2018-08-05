@@ -6,6 +6,7 @@ import EventEmitter = NodeJS.EventEmitter;
 import PatternFactory from './pattern-factory';
 import {Highlight} from './entities/highlight';
 import DecorationOperator from './decoration-operator';
+import MatchingModeRegistry from './matching-mode-registry';
 
 export default class SavedHighlightsRestorer {
     private readonly configStore: ConfigStore;
@@ -16,11 +17,11 @@ export default class SavedHighlightsRestorer {
 
     constructor(configStore: ConfigStore,
                 decorationOperatorFactory: DecorationOperatorFactory,
-                patternFactory: PatternFactory,
+                matchingModeRegistry: MatchingModeRegistry,
                 eventBus: EventEmitter) {
         this.configStore = configStore;
         this.decorationOperatorFactory = decorationOperatorFactory;
-        this.patternFactory = patternFactory;
+        this.patternFactory = new PatternFactory(matchingModeRegistry);
         this.eventBus = eventBus;
 
         this.decorationEntryParser = new DecorationEntryParser();

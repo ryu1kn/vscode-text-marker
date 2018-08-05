@@ -3,6 +3,7 @@ import PatternFactory from '../pattern-factory';
 import TextLocationRegistry from '../text-location-registry';
 import TextEditor from '../text-editor';
 import {CommandLike} from '../editor-components/vscode';
+import MatchingModeRegistry from '../matching-mode-registry';
 
 export default class ToggleHighlightCommand implements CommandLike {
     private readonly decorationOperatorFactory: DecorationOperatorFactory;
@@ -10,10 +11,10 @@ export default class ToggleHighlightCommand implements CommandLike {
     private readonly textLocationRegistry: TextLocationRegistry;
 
     constructor(decorationOperatorFactory: DecorationOperatorFactory,
-                patternFactory: PatternFactory,
+                matchingModeRegistry: MatchingModeRegistry,
                 textLocationRegistry: TextLocationRegistry) {
         this.decorationOperatorFactory = decorationOperatorFactory;
-        this.patternFactory = patternFactory;
+        this.patternFactory = new PatternFactory(matchingModeRegistry);
         this.textLocationRegistry = textLocationRegistry;
     }
 
