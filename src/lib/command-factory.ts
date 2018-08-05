@@ -116,7 +116,12 @@ export default class CommandFactory {
     }
 
     createNextHighlightCommand() {
-        const command = new NextHighlightCommand(this.getTextLocationRegistry());
+        const command = new NextHighlightCommand(
+            this.getMatchingModeRegistry(),
+            this.getTextLocationRegistry(),
+            this.getDecorationRegistry(),
+            this.getWindowComponent()
+        );
         return this._wrapCommand(command);
     }
 
