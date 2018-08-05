@@ -7,6 +7,7 @@
 
 * Highlight/Unhighlight text from both command palette or right-click menu
 * Update existing highlight rules from the right-click menu
+* Jump to the next/previous location of the same highlighted pattern
 * Highlight text using a regular expression
 * Case sensitive/insensitive text matching
   * Matching is done depending on the current mode for case sensitivity. You can toggle the mode from the status bar.
@@ -41,6 +42,18 @@ You can update a highlight rule after you set it.
     Update the existing highlight (Toggle case sensitivity, whole/partial match, pattern text).
     Available on right-click menu.
 
+* `Go to Next Same Highlight` (**Command ID**: `textmarker.goToNextHighlight`)
+
+    Move the cursor to the next location of the same highlight. Highlight selection or the word under cursor
+    first if the cursor is not on a highlight.
+    Available on right-click menu.
+    
+* `Go to Previous Same Highlight` (**Command ID**: `textmarker.goToPreviousHighlight`)
+
+    Move the cursor to the previous location of the same highlight. Highlight selection or the word under cursor
+    first if the cursor is not on a highlight.
+    Available on right-click menu.
+    
 * `Highlight Text Using Regex` (**Command ID**: `textmarker.highlightUsingRegex`)
 
     Highlight text that matches a given regular expression.
