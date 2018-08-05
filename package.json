@@ -185,12 +185,12 @@
       },
       {
         "command": "textmarker.goToNextHighlight",
-        "title": "Go to the next same highlight",
+        "title": "Go to Next Same Highlight",
         "category": "TextMarker"
       },
       {
         "command": "textmarker.goToPreviousHighlight",
-        "title": "Go to the previous same highlight",
+        "title": "Go to Previous Same Highlight",
         "category": "TextMarker"
       }
     ],
@@ -198,12 +198,22 @@
       "editor/context": [
         {
           "command": "textmarker.toggleHighlight",
-          "group": "2_textmarker",
+          "group": "2_textmarker@1",
           "when": "editorTextFocus"
         },
         {
           "command": "textmarker.updateHighlight",
-          "group": "2_textmarker",
+          "group": "2_textmarker@2",
+          "when": "editorTextFocus"
+        },
+        {
+          "command": "textmarker.goToNextHighlight",
+          "group": "2_textmarker@3",
+          "when": "editorTextFocus"
+        },
+        {
+          "command": "textmarker.goToPreviousHighlight",
+          "group": "2_textmarker@4",
           "when": "editorTextFocus"
         }
       ]
