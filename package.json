@@ -184,8 +184,13 @@
         "category": "TextMarker"
       },
       {
-        "command": "textmarker.nextHighlight",
+        "command": "textmarker.goToNextHighlight",
         "title": "Go to the next same highlight",
+        "category": "TextMarker"
+      },
+      {
+        "command": "textmarker.goToPreviousHighlight",
+        "title": "Go to the previous same highlight",
         "category": "TextMarker"
       }
     ],

@@ -34,6 +34,14 @@ export default class TextLocationRegistry {
             });
     }
 
+    findPreviousOccurence(editorId: string, range: FlatRange): Option<FlatRange> {
+        return this.findDecorationIdAndRanges(editorId, range)
+            .map(([_, ranges]) => {
+                const newIndex = ranges.findIndex(this.isPointingRange(range)) - 1;
+                return ranges[newIndex < 0 ? ranges.length - 1 : newIndex];
+            });
+    }
+
     private findDecorationIdAndRanges(editorId: string, range: FlatRange): Option<[string, FlatRange[]]> {
         return this.recordMap.get(editorId).chain(decorationMap => findFirst(
             [...decorationMap.entries()],

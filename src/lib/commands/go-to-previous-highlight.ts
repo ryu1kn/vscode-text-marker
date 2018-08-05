@@ -7,7 +7,7 @@ import DecorationOperatorFactory from '../decoration-operator-factory';
 import PatternFactory from '../pattern-factory';
 import MatchingModeRegistry from '../matching-mode-registry';
 
-export class NextHighlightCommand implements CommandLike {
+export class GoToPreviousHighlightCommand implements CommandLike {
     private readonly textLocationRegistry: TextLocationRegistry;
     private readonly decorationOperatorFactory: DecorationOperatorFactory;
     private readonly patternFactory: PatternFactory;
@@ -23,10 +23,8 @@ export class NextHighlightCommand implements CommandLike {
 
     execute(editor: TextEditor) {
         const decorationId = this.textLocationRegistry.queryDecorationId(editor.id, editor.selection).toUndefined();
-        if (!decorationId) {
-            this.addDecoration(editor);
-        }
-        const next = this.textLocationRegistry.findNextOccurence(editor.id, editor.selection);
+        if (!decorationId) this.addDecoration(editor);
+        const next = this.textLocationRegistry.findPreviousOccurence(editor.id, editor.selection);
         next.map(range => { editor.selection = range; });
     }
 

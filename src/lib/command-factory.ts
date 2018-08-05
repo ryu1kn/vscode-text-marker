@@ -30,7 +30,8 @@ import {Position} from 'vscode';
 import {CommandLike} from './editor-components/vscode';
 import AutoRefreshDecoration from './commands/auto-refresh-decoration';
 import AutoRefreshDecorationWithDelay from './commands/auto-refresh-decoration-with-delay';
-import {NextHighlightCommand} from './commands/next-highlight';
+import {GoToNextHighlightCommand} from './commands/go-to-next-highlight';
+import {GoToPreviousHighlightCommand} from './commands/go-to-previous-highlight';
 
 const generateUuid = require('uuid/v4');
 const BASE_STATUS_BAR_PRIORITY = 100;
@@ -115,8 +116,18 @@ export default class CommandFactory {
         return this._wrapCommand(command);
     }
 
-    createNextHighlightCommand() {
-        const command = new NextHighlightCommand(
+    createGoToNextHighlightCommand() {
+        const command = new GoToNextHighlightCommand(
+            this.getMatchingModeRegistry(),
+            this.getTextLocationRegistry(),
+            this.getDecorationRegistry(),
+            this.getWindowComponent()
+        );
+        return this._wrapCommand(command);
+    }
+
+    createGoToPreviousHighlightCommand() {
+        const command = new GoToPreviousHighlightCommand(
             this.getMatchingModeRegistry(),
             this.getTextLocationRegistry(),
             this.getDecorationRegistry(),
