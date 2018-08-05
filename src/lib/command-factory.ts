@@ -12,7 +12,6 @@ import RegexReader from './regex-reader';
 import RemoveAllHighlightsCommand from './commands/remove-all-highlights';
 import SaveAllHighlightsCommand from './commands/save-all-highlights';
 import SavedHighlightsRestorer from './saved-highlights-restorer';
-import TextDecorator from './text-decorator';
 import TextEditorFactory from './text-editor-factory';
 import TextLocationRegistry from './text-location-registry';
 import ToggleCaseSensitivityCommand from './commands/toggle-case-sensitivity';
@@ -57,9 +56,10 @@ export default class CommandFactory {
 
     createToggleHighlightCommand() {
         const command = new ToggleHighlightCommand(
-            this.getDecorationOperatorFactory(),
             this.getMatchingModeRegistry(),
-            this.getTextLocationRegistry()
+            this.getTextLocationRegistry(),
+            this.getDecorationRegistry(),
+            this.getWindowComponent()
         );
         return this._wrapCommand(command);
     }
@@ -196,7 +196,7 @@ export default class CommandFactory {
     private createDecorationOperatorFactory() {
         return new DecorationOperatorFactory(
             this.getDecorationRegistry(),
-            new TextDecorator(this.getTextLocationRegistry()),
+            this.getTextLocationRegistry(),
             this.getWindowComponent()
         );
     }

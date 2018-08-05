@@ -1,12 +1,14 @@
-import {mock, mockType, verify, when} from '../../helpers/helper';
+import {any, mock, mockMethods, mockType, verify, when} from '../../helpers/helper';
 
 import ToggleHighlightCommand from '../../../lib/commands/toggle-highlight';
-import DecorationOperatorFactory from '../../../lib/decoration-operator-factory';
 import TextEditor from '../../../lib/text-editor';
 import TextLocationRegistry from '../../../lib/text-location-registry';
-import DecorationOperator from '../../../lib/decoration-operator';
 import MatchingModeRegistry from '../../../lib/matching-mode-registry';
+import DecorationRegistry from '../../../lib/decoration-registry';
+import WindowComponent from '../../../lib/editor-components/window';
 import StringPattern from '../../../lib/patterns/string';
+import {Decoration} from '../../../lib/entities/decoration';
+import {TextEditorDecorationType} from 'vscode';
 
 suite('ToggleHighlightCommand', () => {
 
@@ -15,53 +17,79 @@ suite('ToggleHighlightCommand', () => {
     const registeredRange = {start: 10, end: 20};
     const unregisteredRange = {start: 0, end: 0};
 
+    const newPattern = new StringPattern({phrase: 'SELECTED'});
+    const knownPattern = new StringPattern({phrase: 'SELECTED_KNOWN'});
+    const decorationType = mockType<TextEditorDecorationType>();
+
     const textLocationRegistry = new TextLocationRegistry();
     textLocationRegistry.register('EDITOR_ID', 'DECORATION_ID', [registeredRange]);
+
+    const decorationRegistry = mock(DecorationRegistry);
+    when(decorationRegistry.issue(newPattern)).thenReturn(mockType<Decoration>({decorationType, pattern: newPattern}));
+    when(decorationRegistry.issue(knownPattern)).thenReturn(null);
+    when(decorationRegistry.inquireById('DECORATION_ID')).thenReturn(mockType<Decoration>({id: 'DECORATION_ID', decorationType}));
 
     suite('When text is selected', () => {
 
         test('it decorates a selected text if the cursor is not on highlight', () => {
-            const editor = mockType<TextEditor>({id: 'EDITOR_ID', selectedText: 'SELECTED', selection: unregisteredRange});
-            const decorationOperator = mock(DecorationOperator);
-            const decorationOperatorFactory = mock(DecorationOperatorFactory);
-            when(decorationOperatorFactory.createForVisibleEditors()).thenReturn(decorationOperator);
+            const editor = mockMethods<TextEditor>(['setDecorations'], {
+                id: 'EDITOR_ID',
+                selectedText: 'SELECTED',
+                selection: unregisteredRange,
+                wholeText: 'abc SELECTED def'
+            });
+
             const command = new ToggleHighlightCommand(
-                decorationOperatorFactory,
                 matchingModeRegistry,
-                textLocationRegistry
+                textLocationRegistry,
+                decorationRegistry,
+                mockType<WindowComponent>({visibleTextEditors: [editor]})
             );
             command.execute(editor);
 
-            verify(decorationOperator.addDecoration(new StringPattern({phrase: 'SELECTED'})));
+            verify(editor.setDecorations(decorationType, [{start: 4, end: 12}]));
         });
 
         test('it remove decoration if the cursor is on highlight', () => {
-            const editor = mockType<TextEditor>({id: 'EDITOR_ID', selectedText: 'SELECTED', selection: registeredRange});
-            const decorationOperator = mock(DecorationOperator);
-            const decorationOperatorFactory = mock(DecorationOperatorFactory);
-            when(decorationOperatorFactory.createForVisibleEditors()).thenReturn(decorationOperator);
+            const editor = mockMethods<TextEditor>(['unsetDecorations'], {
+                id: 'EDITOR_ID',
+                selectedText: 'SELECTED_KNOWN',
+                selection: registeredRange,
+                wholeText: 'abc SELECTED def'
+            });
+
             const command = new ToggleHighlightCommand(
-                decorationOperatorFactory,
                 matchingModeRegistry,
-                textLocationRegistry
+                textLocationRegistry,
+                decorationRegistry,
+                mockType<WindowComponent>({visibleTextEditors: [editor]})
             );
             command.execute(editor);
 
-            verify(decorationOperator.removeDecoration('DECORATION_ID'));
+            verify(editor.unsetDecorations(decorationType));
         });
     });
 
     suite('When text is NOT selected', () => {
 
-        const decorationOperatorFactory = mock(DecorationOperatorFactory);
-        const command = new ToggleHighlightCommand(decorationOperatorFactory, matchingModeRegistry, textLocationRegistry);
+        const editor = mockMethods<TextEditor>(['setDecorations', 'unsetDecorations'], {
+            id: 'EDITOR_ID',
+            selectedText: '',
+            selection: unregisteredRange
+        });
 
-        test('it does nothing if text is not selected', () => {
-            const editor = mockType<TextEditor>({id: 'EDITOR_ID', selectedText: '', selection: unregisteredRange});
+        const command = new ToggleHighlightCommand(
+            matchingModeRegistry,
+            textLocationRegistry,
+            decorationRegistry,
+            mockType<WindowComponent>({visibleTextEditors: [editor]})
+        );
 
+        test('it does nothing', () => {
             command.execute(editor);
 
-            verify(decorationOperatorFactory.createForVisibleEditors(), {times: 0});
+            verify(editor.setDecorations(any(), any()), {times: 0});
+            verify(editor.unsetDecorations(any()), {times: 0});
         });
     });
 });

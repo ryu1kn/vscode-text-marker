@@ -4,16 +4,19 @@ import TextLocationRegistry from '../text-location-registry';
 import TextEditor from '../text-editor';
 import {CommandLike} from '../editor-components/vscode';
 import MatchingModeRegistry from '../matching-mode-registry';
+import DecorationRegistry from '../decoration-registry';
+import WindowComponent from '../editor-components/window';
 
 export default class ToggleHighlightCommand implements CommandLike {
     private readonly decorationOperatorFactory: DecorationOperatorFactory;
     private readonly patternFactory: PatternFactory;
     private readonly textLocationRegistry: TextLocationRegistry;
 
-    constructor(decorationOperatorFactory: DecorationOperatorFactory,
-                matchingModeRegistry: MatchingModeRegistry,
-                textLocationRegistry: TextLocationRegistry) {
-        this.decorationOperatorFactory = decorationOperatorFactory;
+    constructor(matchingModeRegistry: MatchingModeRegistry,
+                textLocationRegistry: TextLocationRegistry,
+                decorationRegistry: DecorationRegistry,
+                windowComponent: WindowComponent) {
+        this.decorationOperatorFactory = new DecorationOperatorFactory(decorationRegistry, textLocationRegistry, windowComponent);
         this.patternFactory = new PatternFactory(matchingModeRegistry);
         this.textLocationRegistry = textLocationRegistry;
     }

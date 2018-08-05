@@ -4,6 +4,7 @@ import DecorationRegistry from './decoration-registry';
 import TextDecorator from './text-decorator';
 import WindowComponent from './editor-components/window';
 import TextEditor from './text-editor';
+import TextLocationRegistry from './text-location-registry';
 
 export default class DecorationOperatorFactory {
     private readonly decorationRegistry: DecorationRegistry;
@@ -11,9 +12,9 @@ export default class DecorationOperatorFactory {
     private readonly patternConverter: PatternConverter;
     private readonly windowComponent: WindowComponent;
 
-    constructor(decorationRegistry: DecorationRegistry, textDecorator: TextDecorator, windowComponent: WindowComponent) {
+    constructor(decorationRegistry: DecorationRegistry, textLocationRegistry: TextLocationRegistry, windowComponent: WindowComponent) {
         this.decorationRegistry = decorationRegistry;
-        this.textDecorator = textDecorator;
+        this.textDecorator = new TextDecorator(textLocationRegistry);
         this.windowComponent = windowComponent;
         this.patternConverter = new PatternConverter();
     }
