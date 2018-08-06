@@ -1,4 +1,4 @@
-import {assertKeyExists} from '../helpers/helper';
+import {assertKeyExists} from '../helpers/assertions';
 import {Event} from '../../lib/const';
 import MatchingModeRegistry from '../../lib/matching-mode-registry';
 import {EventEmitter} from 'events';

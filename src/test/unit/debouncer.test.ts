@@ -1,4 +1,4 @@
-import {mockFunction, mockType, verify} from '../helpers/helper';
+import {mockFunction, mockType, verify} from '../helpers/mock';
 
 import Debouncer from '../../lib/debouncer';
 import ConfigStore from '../../lib/config-store';

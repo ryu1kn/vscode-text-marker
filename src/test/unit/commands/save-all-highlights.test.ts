@@ -1,4 +1,4 @@
-import {mock, verify, when} from '../../helpers/helper';
+import {mock, verify, when} from '../../helpers/mock';
 import SaveAllHighlightsCommand from '../../../lib/commands/save-all-highlights';
 import DecorationRegistry from '../../../lib/decoration-registry';
 import ConfigStore from '../../../lib/config-store';

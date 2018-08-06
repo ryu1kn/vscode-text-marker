@@ -1,4 +1,4 @@
-import {mock, mockType, verify, when} from '../helpers/helper';
+import {mock, mockType, verify, when} from '../helpers/mock';
 import {Event} from '../../lib/const';
 import SavedHighlightsRestorer from '../../lib/saved-highlights-restorer';
 import ConfigStore from '../../lib/config-store';

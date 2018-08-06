@@ -1,4 +1,4 @@
-import {mock, when, verify} from '../../helpers/helper';
+import {mock, when, verify} from '../../helpers/mock';
 import HighlightUsingRegexCommand from '../../../lib/commands/highlight-using-regex';
 import DecorationOperatorFactory from '../../../lib/decoration-operator-factory';
 import RegexReader from '../../../lib/regex-reader';

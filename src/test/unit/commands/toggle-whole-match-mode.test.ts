@@ -1,4 +1,4 @@
-import {mock, verify} from '../../helpers/helper';
+import {mock, verify} from '../../helpers/mock';
 
 import ToggleWholeMatchModeCommand from '../../../lib/commands/toggle-whole-match-mode';
 import MatchingModeRegistry from '../../../lib/matching-mode-registry';

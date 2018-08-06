@@ -1,4 +1,4 @@
-import {mockType} from '../helpers/helper';
+import {mockType} from '../helpers/mock';
 
 import SelectedTextFinder from '../../lib/selected-text-finder';
 import * as vscode from 'vscode';

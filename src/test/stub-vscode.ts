@@ -8,7 +8,7 @@ const mockVscode = {
     StatusBarAlignment: {Right: 2},
     TextEditorRevealType: {InCenterIfOutsideViewport: 2},
     Position: function (line: number, character: number) {
-        return {line, character};
+        return {line, character} as Position;
     },
     Selection: function (start: Position, end: Position) {
         return {start, end} as Selection;

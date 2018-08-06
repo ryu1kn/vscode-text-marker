@@ -1,6 +1,6 @@
 import TextEditor from '../../lib/text-editor';
 import {Position, Range, Selection, TextDocument, TextEditor as VsTextEditor, TextEditorRevealType} from 'vscode';
-import {mockMethods, verify, when} from '../helpers/helper';
+import {mockMethods, verify, when} from '../helpers/mock';
 import * as assert from 'assert';
 
 suite('TextEditor', () => {
@@ -17,8 +17,8 @@ suite('TextEditor', () => {
 
     test('reveals the area if the given cursor position is out of visible area', () => {
         editor.selection = {start: 0, end: 5};
-        assert.deepEqual(rawEditor.selection, range(position1, position2));
-        verify(rawEditor.revealRange(selection(position1, position2), TextEditorRevealType.InCenterIfOutsideViewport));
+        assert.deepEqual(rawEditor.selection, selection(position1, position2));
+        verify(rawEditor.revealRange(range(position1, position2), TextEditorRevealType.InCenterIfOutsideViewport));
     });
 
     function position(line: number, character: number): Position {

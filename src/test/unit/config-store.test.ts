@@ -1,4 +1,4 @@
-import {mock, mockMethods, verify, when} from '../helpers/helper';
+import {mock, mockMethods, verify, when} from '../helpers/mock';
 
 import ConfigStore from '../../lib/config-store';
 import * as vscode from 'vscode';

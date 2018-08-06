@@ -1,4 +1,4 @@
-import {mock, mockType, when} from '../helpers/helper';
+import {mock, mockType, when} from '../helpers/mock';
 
 import RegexReader from '../../lib/regex-reader';
 import WindowComponent from '../../lib/editor-components/window';

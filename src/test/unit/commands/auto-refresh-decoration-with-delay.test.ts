@@ -1,4 +1,4 @@
-import {any, callback, contains, mock, mockMethods, mockType, verify, when} from '../../helpers/helper';
+import {any, callback, contains, mock, mockMethods, mockType, verify, when} from '../../helpers/mock';
 
 import WindowComponent from '../../../lib/editor-components/window';
 import Debouncer from '../../../lib/debouncer';

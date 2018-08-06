@@ -1,4 +1,4 @@
-import {mock, mockMethods, mockType, verify, wrapVerify} from '../helpers/helper';
+import {mock, mockMethods, mockType, verify, wrapVerify} from '../helpers/mock';
 
 import TextDecorator from '../../lib/text-decorator';
 import PatternFactory from '../../lib/pattern-factory';

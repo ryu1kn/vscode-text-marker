@@ -1,5 +1,5 @@
 import TextEditor from '../../../lib/text-editor';
-import {mock, mockMethods, mockType, verify, when} from '../../helpers/helper';
+import {mock, mockMethods, mockType, verify, when} from '../../helpers/mock';
 import TextLocationRegistry from '../../../lib/text-location-registry';
 import {GoToNextHighlightCommand} from '../../../lib/commands/go-to-next-highlight';
 import MatchingModeRegistry from '../../../lib/matching-mode-registry';

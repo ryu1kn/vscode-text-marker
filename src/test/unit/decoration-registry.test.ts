@@ -1,4 +1,4 @@
-import {mockMethods, mockType, stubReturns, when} from '../helpers/helper';
+import {mockMethods, mockType, stubReturns, when} from '../helpers/mock';
 
 import DecorationRegistry from '../../lib/decoration-registry';
 import PatternFactory from '../../lib/pattern-factory';

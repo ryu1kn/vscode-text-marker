@@ -1,4 +1,4 @@
-import {mockType} from '../helpers/helper';
+import {mockType} from '../helpers/mock';
 
 import PatternVariationReader from '../../lib/pattern-variation-reader';
 import PatternFactory from '../../lib/pattern-factory';

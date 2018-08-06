@@ -1,4 +1,4 @@
-import {mockType} from '../helpers/helper';
+import {mockType} from '../helpers/mock';
 
 import ColourRegistry from '../../lib/colour-registry';
 import ConfigStore from '../../lib/config-store';

@@ -1,4 +1,4 @@
-import {mock, verify, when} from '../../helpers/helper';
+import {mock, verify, when} from '../../helpers/mock';
 import DecorationOperatorFactory from '../../../lib/decoration-operator-factory';
 import TextEditor from '../../../lib/text-editor';
 import DecorationOperator from '../../../lib/decoration-operator';

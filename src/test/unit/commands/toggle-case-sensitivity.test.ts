@@ -1,4 +1,4 @@
-import {mock, verify, when} from '../../helpers/helper';
+import {mock, verify, when} from '../../helpers/mock';
 import {PatternAction} from '../../../lib/const';
 import ToggleCaseSensitivityCommand from '../../../lib/commands/toggle-case-sensitivity';
 import HighlightPatternPicker from '../../../lib/highlight-pattern-picker';

@@ -1,4 +1,4 @@
-import {contains, mockMethods, mockType, verify} from '../helpers/helper';
+import {contains, mockMethods, mockType, verify} from '../helpers/mock';
 
 import CommandWrapper from '../../lib/command-wrapper';
 import {Logger} from '../../lib/Logger';

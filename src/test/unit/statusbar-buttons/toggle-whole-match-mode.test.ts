@@ -1,4 +1,4 @@
-import {mockMethods, verify} from '../../helpers/helper';
+import {mockMethods, verify} from '../../helpers/mock';
 import {Event} from '../../../lib/const';
 import ToggleWholeMatchModeButton from '../../../lib/statusbar-buttons/toggle-whole-match-mode';
 import {StatusBarItem} from 'vscode';

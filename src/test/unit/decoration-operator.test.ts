@@ -1,4 +1,4 @@
-import {any, mock, mockType, verify, when, wrapVerify} from '../helpers/helper';
+import {any, mock, mockType, verify, when, wrapVerify} from '../helpers/mock';
 
 import DecorationOperator from '../../lib/decoration-operator';
 import PatternConverter from '../../lib/pattern-converter';

@@ -1,4 +1,4 @@
-import {any, mock, mockMethods, mockType, verify, when} from '../../helpers/helper';
+import {any, mock, mockMethods, mockType, verify, when} from '../../helpers/mock';
 
 import ToggleHighlightCommand from '../../../lib/commands/toggle-highlight';
 import TextEditor from '../../../lib/text-editor';

@@ -1,4 +1,4 @@
-import {verify, wrapVerify} from '../../helpers/helper';
+import {verify, wrapVerify} from '../../helpers/mock';
 
 import AppIntegrator from '../../../lib/app-integrator';
 import {createFakeEditor} from '../helpers/fake-editor';

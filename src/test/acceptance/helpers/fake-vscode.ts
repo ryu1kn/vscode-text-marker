@@ -1,4 +1,4 @@
-import {stubReturns} from '../../helpers/helper';
+import {stubReturns} from '../../helpers/mock';
 import {Range} from 'vscode';
 
 export const createFakeVsCode = ({editors}: any = {}) => {

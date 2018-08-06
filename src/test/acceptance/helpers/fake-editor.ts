@@ -1,4 +1,4 @@
-import {mockMethods} from '../../helpers/helper';
+import {mockMethods} from '../../helpers/mock';
 import * as vscode from 'vscode';
 import {Position, Selection} from 'vscode';
 

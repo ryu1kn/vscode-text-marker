@@ -1,4 +1,4 @@
-import {any, mock, when} from '../helpers/helper';
+import {any, mock, when} from '../helpers/mock';
 
 import ConfigTargetPicker from '../../lib/config-target-picker';
 import WindowComponent from '../../lib/editor-components/window';

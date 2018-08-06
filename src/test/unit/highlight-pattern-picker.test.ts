@@ -1,4 +1,4 @@
-import {any, mock, mockType, verify, when} from '../helpers/helper';
+import {any, mock, mockType, verify, when} from '../helpers/mock';
 
 import HighlightPatternPicker from '../../lib/highlight-pattern-picker';
 import PatternFactory from '../../lib/pattern-factory';

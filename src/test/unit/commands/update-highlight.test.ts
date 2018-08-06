@@ -1,4 +1,4 @@
-import {any, mock, mockType, verify, when} from '../../helpers/helper';
+import {any, mock, mockType, verify, when} from '../../helpers/mock';
 
 import UpdateHighlightCommand from '../../../lib/commands/update-highlight';
 import DecorationOperatorFactory from '../../../lib/decoration-operator-factory';

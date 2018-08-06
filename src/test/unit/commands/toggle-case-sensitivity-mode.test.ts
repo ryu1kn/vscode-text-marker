@@ -1,4 +1,4 @@
-import {mock, verify} from '../../helpers/helper';
+import {mock, verify} from '../../helpers/mock';
 
 import ToggleCaseSensitivityModeCommand from '../../../lib/commands/toggle-case-sensitivity-mode';
 import MatchingModeRegistry from '../../../lib/matching-mode-registry';

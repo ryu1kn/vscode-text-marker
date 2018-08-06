@@ -1,4 +1,4 @@
-import {any, mock, verify, when} from '../../helpers/helper';
+import {any, mock, verify, when} from '../../helpers/mock';
 
 import {PatternAction} from '../../../lib/const';
 import ToggleWholeMatchCommand from '../../../lib/commands/toggle-whole-match';

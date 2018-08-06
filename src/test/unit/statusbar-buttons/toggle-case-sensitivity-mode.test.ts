@@ -1,4 +1,4 @@
-import {mockMethods, verify} from '../../helpers/helper';
+import {mockMethods, verify} from '../../helpers/mock';
 import {Event} from '../../../lib/const';
 import ToggleCaseSensitivityModeButton from '../../../lib/statusbar-buttons/toggle-case-sensitivity-mode';
 import {StatusBarItem} from 'vscode';
