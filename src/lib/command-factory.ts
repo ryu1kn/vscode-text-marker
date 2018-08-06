@@ -12,7 +12,6 @@ import RegexReader from './regex-reader';
 import RemoveAllHighlightsCommand from './commands/remove-all-highlights';
 import SaveAllHighlightsCommand from './commands/save-all-highlights';
 import SavedHighlightsRestorer from './saved-highlights-restorer';
-import TextEditorFactory from './text-editor-factory';
 import TextLocationRegistry from './text-location-registry';
 import ToggleCaseSensitivityCommand from './commands/toggle-case-sensitivity';
 import ToggleCaseSensitivityModeButton from './statusbar-buttons/toggle-case-sensitivity-mode';
@@ -45,7 +44,6 @@ export default class CommandFactory {
     private decorationRegistry?: DecorationRegistry;
     private highlightPatternPicker?: HighlightPatternPicker;
     private matchingModeRegistry?: MatchingModeRegistry;
-    private textEditorFactory?: TextEditorFactory;
     private textLocationRegistry?: TextLocationRegistry;
     private windowComponent?: WindowComponent;
 
@@ -151,7 +149,7 @@ export default class CommandFactory {
     }
 
     private _wrapCommand(command: CommandLike) {
-        return new CommandWrapper(command, this.getTextEditorFactory(), this.logger);
+        return new CommandWrapper(command, this.logger);
     }
 
     createSavedHighlightsRestorer() {
@@ -240,15 +238,6 @@ export default class CommandFactory {
         return new MatchingModeRegistry(configStore.enableIgnoreCase, configStore.enableWholeMatch, this.getEventBus());
     }
 
-    private getTextEditorFactory() {
-        this.textEditorFactory = this.textEditorFactory || this.createTextEditorFactory();
-        return this.textEditorFactory;
-    }
-
-    private createTextEditorFactory() {
-        return new TextEditorFactory();
-    }
-
     private getTextLocationRegistry() {
         this.textLocationRegistry = this.textLocationRegistry || new TextLocationRegistry();
         return this.textLocationRegistry;
@@ -260,7 +249,7 @@ export default class CommandFactory {
     }
 
     private createWindowComponent() {
-        return new WindowComponent(this.vscode.window, this.getTextEditorFactory());
+        return new WindowComponent(this.vscode.window);
     }
 
 }
