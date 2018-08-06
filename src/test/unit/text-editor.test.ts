@@ -1,7 +1,6 @@
 import TextEditor from '../../lib/text-editor';
 import {Position, Range, Selection, TextDocument, TextEditor as VsTextEditor, TextEditorRevealType} from 'vscode';
 import {mockMethods, verify, when} from '../helpers/helper';
-import {CreateRange} from '../../lib/editor-components/vscode';
 import * as assert from 'assert';
 
 suite('TextEditor', () => {
@@ -12,11 +11,9 @@ suite('TextEditor', () => {
     when(document.positionAt(0)).thenReturn(position1);
     when(document.positionAt(5)).thenReturn(position2);
 
-    const createRange = (p1: Position, p2: Position) => ({start: p1, end: p2});
-
     const rawEditor = mockMethods<VsTextEditor>(['revealRange'], {document});
 
-    const editor = new TextEditor(rawEditor, createRange as CreateRange);
+    const editor = new TextEditor(rawEditor);
 
     test('reveals the area if the given cursor position is out of visible area', () => {
         editor.selection = {start: 0, end: 5};

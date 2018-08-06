@@ -1,4 +1,5 @@
 import {stubReturns} from '../../helpers/helper';
+import {Range} from 'vscode';
 
 export const createFakeVsCode = ({editors}: any = {}) => {
     const commands = {} as any;
@@ -9,10 +10,7 @@ export const createFakeVsCode = ({editors}: any = {}) => {
     return {
         _startPos: undefined,
         _endPos: undefined,
-        Range: function (startPos: any, endPos: any) {
-            this._startPos = startPos;
-            this._endPos = endPos;
-        },
+        Range,
         window: {
             onDidChangeActiveTextEditor: () => {},
             createStatusBarItem: () => ({show: () => {}}),

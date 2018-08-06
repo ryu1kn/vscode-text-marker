@@ -3,6 +3,7 @@ import {verify, wrapVerify} from '../../helpers/helper';
 import AppIntegrator from '../../../lib/app-integrator';
 import {createFakeEditor} from '../helpers/fake-editor';
 import {createFakeVsCode, EXECUTION_CONTEXT} from '../helpers/fake-vscode';
+import {Position, Range} from 'vscode';
 
 suite('Highlight command', () => {
 
@@ -27,11 +28,11 @@ suite('Highlight command', () => {
         await command(editor1);
 
         verify(editor1.setDecorations('DECORATION_TYPE_1', [
-            new fakeVscode.Range('POSITION:2', 'POSITION:6'),
-            new fakeVscode.Range('POSITION:9', 'POSITION:13')
+            new Range(new Position(0, 2), new Position(0, 6)),
+            new Range(new Position(0, 9), new Position(0, 13))
         ]));
         verify(editor2.setDecorations('DECORATION_TYPE_1', [
-            new fakeVscode.Range('POSITION:2', 'POSITION:6')
+            new Range(new Position(0, 2), new Position(0, 6))
         ]));
     });
 
@@ -43,8 +44,8 @@ suite('Highlight command', () => {
             call1: [
                 'DECORATION_TYPE_2',
                 [
-                    new fakeVscode.Range('POSITION:2', 'POSITION:5'),
-                    new fakeVscode.Range('POSITION:9', 'POSITION:12')
+                    new Range(new Position(0, 2), new Position(0, 5)),
+                    new Range(new Position(0, 9), new Position(0, 12))
                 ]
             ]
         });
@@ -52,7 +53,7 @@ suite('Highlight command', () => {
             call1: [
                 'DECORATION_TYPE_2',
                 [
-                    new fakeVscode.Range('POSITION:2', 'POSITION:5')
+                    new Range(new Position(0, 2), new Position(0, 5))
                 ]
             ]
         });

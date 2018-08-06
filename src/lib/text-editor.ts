@@ -8,17 +8,14 @@ import {
     TextEditorRevealType
 } from 'vscode';
 import {FlatRange} from './models/flat-range';
-import {CreateRange} from './editor-components/vscode';
 
 export default class TextEditor {
     private readonly editor: VsTextEditor;
     private readonly selectedTextFinder: SelectedTextFinder;
-    private readonly createRange: CreateRange;
 
-    constructor(editor: VsTextEditor, createRange: CreateRange) {
+    constructor(editor: VsTextEditor) {
         this.editor = editor;
         this.selectedTextFinder = new SelectedTextFinder();
-        this.createRange = createRange;
     }
 
     get id() {
@@ -55,7 +52,7 @@ export default class TextEditor {
     }
 
     private getRange(range: FlatRange): Range {
-        return this.createRange(this.getPosition(range.start), this.getPosition(range.end));
+        return new Range(this.getPosition(range.start), this.getPosition(range.end));
     }
 
     private getPosition(position: number): Position {

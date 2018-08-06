@@ -26,7 +26,6 @@ import UpdateHighlightCommand from './commands/update-highlight';
 import WindowComponent from './editor-components/window';
 import {EventEmitter} from 'events';
 import {Logger} from './Logger';
-import {Position} from 'vscode';
 import {CommandLike} from './editor-components/vscode';
 import AutoRefreshDecoration from './commands/auto-refresh-decoration';
 import AutoRefreshDecorationWithDelay from './commands/auto-refresh-decoration-with-delay';
@@ -247,8 +246,7 @@ export default class CommandFactory {
     }
 
     private createTextEditorFactory() {
-        const createRange = (p1: Position, p2: Position) => new this.vscode.Range(p1, p2);
-        return new TextEditorFactory(createRange);
+        return new TextEditorFactory();
     }
 
     private getTextLocationRegistry() {
