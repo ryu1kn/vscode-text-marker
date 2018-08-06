@@ -1,7 +1,8 @@
-import {expect, mockType} from '../helpers/helper';
+import {mockType} from '../helpers/helper';
 
 import ColourRegistry from '../../lib/colour-registry';
 import ConfigStore from '../../lib/config-store';
+import * as assert from 'assert';
 
 suite('ColourRegistry', () => {
 
@@ -15,14 +16,14 @@ suite('ColourRegistry', () => {
         });
 
         test('it returns a color which has not been used', () => {
-            expect(colourRegistry.issue()).to.eql('COLOUR_1');
+            assert.deepEqual(colourRegistry.issue(), 'COLOUR_1');
         });
 
         test('it releases the given colour and make it available', () => {
             colourRegistry.issue();
             colourRegistry.revoke('COLOUR_1');
 
-            expect(colourRegistry.issue()).to.eql('COLOUR_1');
+            assert.deepEqual(colourRegistry.issue(), 'COLOUR_1');
         });
     });
 
@@ -34,7 +35,7 @@ suite('ColourRegistry', () => {
         const colourRegistry = new ColourRegistry(configStore);
 
         test('it issues the user specified default colour', () => {
-            expect(colourRegistry.issue()).to.eql('DEFAULT_COLOUR');
+            assert.deepEqual(colourRegistry.issue(), 'DEFAULT_COLOUR');
         });
     });
 });

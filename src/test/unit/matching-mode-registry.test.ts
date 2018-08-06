@@ -1,7 +1,8 @@
-import {expect} from '../helpers/helper';
+import {assertKeyExists} from '../helpers/helper';
 import {Event} from '../../lib/const';
 import MatchingModeRegistry from '../../lib/matching-mode-registry';
 import {EventEmitter} from 'events';
+import * as assert from 'assert';
 
 suite('MatchingModeRegistry', () => {
     let eventBus: EventEmitter;
@@ -13,7 +14,7 @@ suite('MatchingModeRegistry', () => {
     });
 
     test('it holds current matching mode', () => {
-        expect(registry.mode).to.eql({
+        assert.deepEqual(registry.mode, {
             ignoreCase: true,
             wholeMatch: false
         });
@@ -21,12 +22,12 @@ suite('MatchingModeRegistry', () => {
 
     test('it reverses the case sensitivity', () => {
         registry.toggleCaseSensitivity();
-        expect(registry.mode).to.contain({ignoreCase: false});
+        assert.equal(registry.mode.ignoreCase, false);
     });
 
     test('it broadcasts if case sensitivity has been updated', done => {
         eventBus.on(Event.TOGGLED_CASE_SENSITIVITY, (mode: any) => {
-            expect(mode).to.have.property('ignoreCase');
+            assertKeyExists(mode, 'ignoreCase');
             done();
         });
         registry.toggleCaseSensitivity();
@@ -34,12 +35,12 @@ suite('MatchingModeRegistry', () => {
 
     test('it reverses the whole/partial match', () => {
         registry.toggleWholeMatch();
-        expect(registry.mode).to.contain({wholeMatch: true});
+        assert.equal(registry.mode.wholeMatch, true);
     });
 
     test('it broadcasts if whole/partial match has been toggled', done => {
         eventBus.on(Event.WHOLE_MATCH_MODE_TOGGLED, (mode: any) => {
-            expect(mode).to.have.property('wholeMatch');
+            assertKeyExists(mode, 'wholeMatch');
             done();
         });
         registry.toggleWholeMatch();
@@ -47,7 +48,7 @@ suite('MatchingModeRegistry', () => {
 
     test('after extension started, it broadcast if it is ready', done => {
         eventBus.on(Event.MATCHING_MODE_INITIALISED, (mode: any) => {
-            expect(mode).to.have.property('ignoreCase');
+            assertKeyExists(mode, 'ignoreCase');
             done();
         });
         eventBus.emit(Event.EXTENSION_READY);

@@ -1,10 +1,11 @@
-import {any, expect, mock, mockType, verify, when} from '../helpers/helper';
+import {any, mock, mockType, verify, when} from '../helpers/helper';
 
 import HighlightPatternPicker from '../../lib/highlight-pattern-picker';
 import PatternFactory from '../../lib/pattern-factory';
 import MatchingModeRegistry from '../../lib/matching-mode-registry';
 import DecorationRegistry from '../../lib/decoration-registry';
 import WindowComponent from '../../lib/editor-components/window';
+import * as assert from 'assert';
 
 suite('HighlightPatternPicker', () => {
 
@@ -40,7 +41,7 @@ suite('HighlightPatternPicker', () => {
         const picker = new HighlightPatternPicker(decorationRegistry, windowComponent);
         const decorationId = await picker.pick('PLACEHOLDER_MESSAGE');
 
-        expect(decorationId).to.eql('DECORATION_ID_1');
+        assert.deepEqual(decorationId, 'DECORATION_ID_1');
     });
 
     test('it shows "[Aa]" symbol if a pattern is case sensitive', async () => {
@@ -127,7 +128,7 @@ suite('HighlightPatternPicker', () => {
         const picker = new HighlightPatternPicker(decorationRegistry, windowComponent);
         const decorationId = await picker.pick('PLACE_HOLDER_TEXT');
 
-        expect(decorationId).to.be.null;
+        assert.equal(decorationId, null);
     });
 
     test('it shows a message instead of picker if no patterns are registered yet', async () => {
@@ -137,7 +138,7 @@ suite('HighlightPatternPicker', () => {
         const picker = new HighlightPatternPicker(decorationRegistry, windowComponent);
         const decorationId = await picker.pick('PLACE_HOLDER_TEXT');
 
-        expect(decorationId).to.be.undefined;
+        assert.equal(decorationId, undefined);
         verify(windowComponent.showQuickPick(any(), any()), {times: 0});
         verify(windowComponent.showInformationMessage('No highlight is registered yet'));
     });

@@ -1,9 +1,10 @@
-import {expect, mockType} from '../helpers/helper';
+import {assertInstanceOf, mockType} from '../helpers/helper';
 
 import PatternFactory from '../../lib/pattern-factory';
 import StringPattern from '../../lib/patterns/string';
 import RegexPattern from '../../lib/patterns/regex';
 import MatchingModeRegistry from '../../lib/matching-mode-registry';
+import * as assert from 'assert';
 
 suite('PatternFactory', () => {
 
@@ -12,8 +13,8 @@ suite('PatternFactory', () => {
         const pattern = patternFactory.create({
             phrase: 'PHRASE'
         });
-        expect(pattern).to.be.instanceof(StringPattern);
-        expect(pattern.ignoreCase).to.be.false;
+        assertInstanceOf(pattern, StringPattern);
+        assert.equal(pattern.ignoreCase, false);
     });
 
     test('it creates a regex pattern', () => {
@@ -22,7 +23,7 @@ suite('PatternFactory', () => {
             type: 'RegExp',
             phrase: 'PHRASE'
         });
-        expect(pattern).to.be.instanceof(RegexPattern);
+        assertInstanceOf(pattern, RegexPattern);
     });
 
     test('it uses the current matching mode', () => {
@@ -30,7 +31,7 @@ suite('PatternFactory', () => {
         const pattern = patternFactory.create({
             phrase: 'PHRASE'
         });
-        expect(pattern.ignoreCase).to.be.true;
+        assert.equal(pattern.ignoreCase, true);
     });
 
     test('it honours the specified matching mode rather than current mode', () => {
@@ -39,7 +40,7 @@ suite('PatternFactory', () => {
             phrase: 'PHRASE',
             ignoreCase: false
         });
-        expect(pattern.ignoreCase).to.be.false;
+        assert.equal(pattern.ignoreCase, false);
     });
 
     function fakeMatchingModeRegistry(ignoreCase = false) {

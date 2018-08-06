@@ -1,26 +1,27 @@
-import {expect, mockType} from '../helpers/helper';
+import {mockType} from '../helpers/helper';
 
 import SelectedTextFinder from '../../lib/selected-text-finder';
 import * as vscode from 'vscode';
+import * as assert from 'assert';
 
 suite('SelectedTextFinder', () => {
 
     test('it finds currently selected text in the editor', () => {
         const finder = new SelectedTextFinder();
         const editor = fakeEditor('SELECTED', 'STR1 SELECTED STR2 SELECTED');
-        expect(finder.find(editor)).to.eql('SELECTED');
+        assert.deepEqual(finder.find(editor), 'SELECTED');
     });
 
     test('it selects a word where the cursor is currently on if no text is selected', () => {
         const finder = new SelectedTextFinder();
         const editor = fakeEditor('', 'ENTIRE TEXT', 'WORD');
-        expect(finder.find(editor)).to.eql('WORD');
+        assert.deepEqual(finder.find(editor), 'WORD');
     });
 
     test('it selects nothing if no text is selected and there is no word under the cursor', () => {
         const finder = new SelectedTextFinder();
         const editor = fakeEditor('', 'ENTIRE TEXT', undefined);
-        expect(finder.find(editor)).to.be.undefined;
+        assert.equal(finder.find(editor), undefined);
     });
 
     function fakeEditor(selectedText: string, entireText: string, wordUnderCursor?: string) {

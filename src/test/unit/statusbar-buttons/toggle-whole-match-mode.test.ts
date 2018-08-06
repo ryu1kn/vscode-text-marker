@@ -1,7 +1,8 @@
-import {expect, mockMethods, verify} from '../../helpers/helper';
+import {mockMethods, verify} from '../../helpers/helper';
 import {Event} from '../../../lib/const';
 import ToggleWholeMatchModeButton from '../../../lib/statusbar-buttons/toggle-whole-match-mode';
 import {StatusBarItem} from 'vscode';
+import * as assert from 'assert';
 
 const EventEmitter = require('events');
 
@@ -13,9 +14,9 @@ suite('ToggleWholeMatchModeButton', () => {
         new ToggleWholeMatchModeButton(eventBus, statusBarItem);
 
         eventBus.on(Event.MATCHING_MODE_INITIALISED, () => {
-            expect(statusBarItem.command).to.eql('textmarker.toggleModeForWholeMatch');
-            expect(statusBarItem.text).to.eql('Ab|');
-            expect(statusBarItem.tooltip).to.eql('TextMarker: Non-Whole Match Mode');
+            assert.deepEqual(statusBarItem.command, 'textmarker.toggleModeForWholeMatch');
+            assert.deepEqual(statusBarItem.text, 'Ab|');
+            assert.deepEqual(statusBarItem.tooltip, 'TextMarker: Non-Whole Match Mode');
             verify(statusBarItem.show());
             done();
         });
@@ -28,8 +29,8 @@ suite('ToggleWholeMatchModeButton', () => {
         new ToggleWholeMatchModeButton(eventBus, statusBarItem);
 
         eventBus.on(Event.WHOLE_MATCH_MODE_TOGGLED, () => {
-            expect(statusBarItem.text).to.eql('[Ab|]');
-            expect(statusBarItem.tooltip).to.eql('TextMarker: Whole Match Mode');
+            assert.deepEqual(statusBarItem.text, '[Ab|]');
+            assert.deepEqual(statusBarItem.tooltip, 'TextMarker: Whole Match Mode');
             verify(statusBarItem.show(), {times: 0});
             done();
         });

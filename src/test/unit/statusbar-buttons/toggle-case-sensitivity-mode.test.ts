@@ -1,7 +1,8 @@
-import {expect, mockMethods, verify} from '../../helpers/helper';
+import {mockMethods, verify} from '../../helpers/helper';
 import {Event} from '../../../lib/const';
 import ToggleCaseSensitivityModeButton from '../../../lib/statusbar-buttons/toggle-case-sensitivity-mode';
 import {StatusBarItem} from 'vscode';
+import * as assert from 'assert';
 
 const EventEmitter = require('events');
 
@@ -13,9 +14,9 @@ suite('ToggleCaseSensitivityModeButton', () => {
         new ToggleCaseSensitivityModeButton(eventBus, statusBarItem);
 
         eventBus.on(Event.MATCHING_MODE_INITIALISED, () => {
-            expect(statusBarItem.command).to.eql('textmarker.toggleModeForCaseSensitivity');
-            expect(statusBarItem.text).to.eql('[Aa]');
-            expect(statusBarItem.tooltip).to.eql('TextMarker: Case Sensitive Mode');
+            assert.deepEqual(statusBarItem.command, 'textmarker.toggleModeForCaseSensitivity');
+            assert.deepEqual(statusBarItem.text, '[Aa]');
+            assert.deepEqual(statusBarItem.tooltip, 'TextMarker: Case Sensitive Mode');
             verify(statusBarItem.show());
             done();
         });
@@ -28,8 +29,8 @@ suite('ToggleCaseSensitivityModeButton', () => {
         new ToggleCaseSensitivityModeButton(eventBus, statusBarItem);
 
         eventBus.on(Event.TOGGLED_CASE_SENSITIVITY, () => {
-            expect(statusBarItem.text).to.eql('Aa');
-            expect(statusBarItem.tooltip).to.eql('TextMarker: Case Insensitive Mode');
+            assert.deepEqual(statusBarItem.text, 'Aa');
+            assert.deepEqual(statusBarItem.tooltip, 'TextMarker: Case Insensitive Mode');
             verify(statusBarItem.show(), {times: 0});
             done();
         });

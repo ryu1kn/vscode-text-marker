@@ -1,4 +1,4 @@
-import {expect, mock, mockMethods, mockType, verify, wrapVerify} from '../helpers/helper';
+import {mock, mockMethods, mockType, verify, wrapVerify} from '../helpers/helper';
 
 import TextDecorator from '../../lib/text-decorator';
 import PatternFactory from '../../lib/pattern-factory';
@@ -35,7 +35,7 @@ suite('TextDecorator', () => {
         );
 
         verify(editors[0].setDecorations(decorationType, [{start: 7, end: 11}, {start: 12, end: 16}]));
-        expect(editors[1].setDecorations(decorationType, [{start: 15, end: 19}]));
+        verify(editors[1].setDecorations(decorationType, [{start: 15, end: 19}]));
         wrapVerify((c1, c2, c3) => verify(textLocationRegistry.register(c1(), c2(), c3())), [
             [
                 'EDITOR_ID_1',
@@ -99,7 +99,7 @@ suite('TextDecorator', () => {
                 })
             ]
         );
-        expect(editor.setDecorations(decorationType, [{start: 7, end: 11}, {start: 12, end: 16}]));
+        verify(editor.setDecorations(decorationType, [{start: 7, end: 11}, {start: 12, end: 16}]));
     });
 
     function createPattern(phrase: string) {

@@ -1,7 +1,8 @@
-import {any, expect, mock, when} from '../helpers/helper';
+import {any, mock, when} from '../helpers/helper';
 
 import ConfigTargetPicker from '../../lib/config-target-picker';
 import WindowComponent from '../../lib/editor-components/window';
+import * as assert from 'assert';
 
 suite('ConfigTargetPicker', () => {
 
@@ -22,7 +23,7 @@ suite('ConfigTargetPicker', () => {
 
         const picker = new ConfigTargetPicker(windowComponent);
 
-        expect(await picker.pick()).to.eql(true);
+        assert.deepEqual(await picker.pick(), true);
     });
 
     test('it returns null if user didn\'t select anything', async () => {
@@ -30,7 +31,7 @@ suite('ConfigTargetPicker', () => {
         when(windowComponent.showQuickPick(any(), any())).thenReturn();
         const picker = new ConfigTargetPicker(windowComponent);
 
-        expect(await picker.pick()).to.eql(undefined);
+        assert.deepEqual(await picker.pick(), undefined);
     });
 
 });

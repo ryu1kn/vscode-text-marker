@@ -1,5 +1,5 @@
 import TextEditor from '../../../lib/text-editor';
-import {assertEqual, mock, mockMethods, mockType, verify, when} from '../../helpers/helper';
+import {mock, mockMethods, mockType, verify, when} from '../../helpers/helper';
 import TextLocationRegistry from '../../../lib/text-location-registry';
 import MatchingModeRegistry from '../../../lib/matching-mode-registry';
 import StringPattern from '../../../lib/patterns/string';
@@ -8,6 +8,7 @@ import DecorationRegistry from '../../../lib/decoration-registry';
 import {Decoration} from '../../../lib/entities/decoration';
 import WindowComponent from '../../../lib/editor-components/window';
 import {GoToPreviousHighlightCommand} from '../../../lib/commands/go-to-previous-highlight';
+import * as assert from 'assert';
 
 suite('Go-to-previous-highlight command', function () {
 
@@ -37,7 +38,7 @@ suite('Go-to-previous-highlight command', function () {
 
         test('takes you to the previous highlight of the pattern', async () => {
             await command.execute(editor);
-            assertEqual(editor.selection, {start: 10, end: 15});
+            assert.deepEqual(editor.selection, {start: 10, end: 15});
         });
     });
 
@@ -50,7 +51,7 @@ suite('Go-to-previous-highlight command', function () {
 
         test('takes you to the last highlight of the pattern', async () => {
             await command.execute(editor);
-            assertEqual(editor.selection, {start: 40, end: 45});
+            assert.deepEqual(editor.selection, {start: 40, end: 45});
         });
     });
 
@@ -70,7 +71,7 @@ suite('Go-to-previous-highlight command', function () {
             await command.execute(editor);
 
             verify(editor.setDecorations(decorationType, [{start: 4, end: 8}, unregisteredRange, {start: 25, end: 29}]));
-            assertEqual(editor.selection, {start: 4, end: 8});
+            assert.deepEqual(editor.selection, {start: 4, end: 8});
         });
     });
 });

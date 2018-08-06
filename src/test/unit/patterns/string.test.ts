@@ -1,7 +1,6 @@
-import {expect} from '../../helpers/helper';
-
 import RegexPattern from '../../../lib/patterns/regex';
 import StringPattern from '../../../lib/patterns/string';
+import * as assert from 'assert';
 
 suite('StringPattern', () => {
 
@@ -10,7 +9,7 @@ suite('StringPattern', () => {
             phrase: 'LONG'
         });
         const ranges = pattern.locateIn('ENTIRE LONG LONG TEXT');
-        expect(ranges).to.eql([
+        assert.deepEqual(ranges, [
             {start: 7, end: 11},
             {start: 12, end: 16}
         ]);
@@ -21,7 +20,7 @@ suite('StringPattern', () => {
             phrase: 'TEXT'
         });
         const ranges = pattern.locateIn('ENTIRE TEXT text');
-        expect(ranges).to.eql([
+        assert.deepEqual(ranges, [
             {start: 7, end: 11}
         ]);
     });
@@ -32,7 +31,7 @@ suite('StringPattern', () => {
             ignoreCase: true
         });
         const ranges = pattern.locateIn('ENTIRE TEXT text');
-        expect(ranges).to.eql([
+        assert.deepEqual(ranges, [
             {start: 7, end: 11},
             {start: 12, end: 16}
         ]);
@@ -44,7 +43,7 @@ suite('StringPattern', () => {
             wholeMatch: true
         });
         const ranges = pattern.locateIn('ENTIRE texta text');
-        expect(ranges).to.eql([
+        assert.deepEqual(ranges, [
             {start: 13, end: 17}
         ]);
     });
@@ -55,7 +54,7 @@ suite('StringPattern', () => {
             wholeMatch: true
         });
         const ranges = pattern.locateIn('text text');
-        expect(ranges).to.eql([
+        assert.deepEqual(ranges, [
             {start: 0, end: 4},
             {start: 5, end: 9}
         ]);
@@ -67,7 +66,7 @@ suite('StringPattern', () => {
             wholeMatch: true
         });
         const ranges = pattern.locateIn('text text');
-        expect(ranges).to.eql([
+        assert.deepEqual(ranges, [
             {start: 0, end: 4},
             {start: 5, end: 9}
         ]);
@@ -79,7 +78,7 @@ suite('StringPattern', () => {
             wholeMatch: true
         });
         const ranges = pattern.locateIn('a-text -textb --text-');
-        expect(ranges).to.eql([
+        assert.deepEqual(ranges, [
             {start: 1, end: 6},
             {start: 15, end: 20}
         ]);
@@ -90,7 +89,7 @@ suite('StringPattern', () => {
             phrase: 'Z+'
         });
         const ranges = pattern.locateIn('ENTIRE TEXT Z+ ZZ');
-        expect(ranges).to.eql([
+        assert.deepEqual(ranges, [
             {start: 12, end: 14}
         ]);
     });
@@ -103,7 +102,7 @@ suite('StringPattern', () => {
             phrase: 'PHRASE',
             ignoreCase: false
         });
-        expect(pattern1.equalTo(pattern2)).to.be.true;
+        assert.equal(pattern1.equalTo(pattern2), true);
     });
 
     test('it recognise the equality including case sensitivity', () => {
@@ -114,7 +113,7 @@ suite('StringPattern', () => {
             phrase: 'PHRASE',
             ignoreCase: true
         });
-        expect(pattern1.equalTo(pattern2)).to.be.false;
+        assert.equal(pattern1.equalTo(pattern2), false);
     });
 
     test('it recognise the equality including whether whole match is on/off', () => {
@@ -125,7 +124,7 @@ suite('StringPattern', () => {
             phrase: 'PHRASE',
             wholeMatch: true
         });
-        expect(pattern1.equalTo(pattern2)).to.be.false;
+        assert.equal(pattern1.equalTo(pattern2), false);
     });
 
     test('it recognises the equality including the pattern type', () => {
@@ -135,7 +134,7 @@ suite('StringPattern', () => {
         const pattern2 = new StringPattern({
             phrase: 'PHRASE'
         });
-        expect(pattern1.equalTo(pattern2)).to.be.false;
+        assert.equal(pattern1.equalTo(pattern2), false);
     });
 
     test('it toggles case sensitivity', () => {
@@ -143,7 +142,7 @@ suite('StringPattern', () => {
             phrase: 'PHRASE'
         });
         const pattern2 = pattern1.toggleCaseSensitivity();
-        expect(pattern1.equalTo(pattern2)).to.be.false;
+        assert.equal(pattern1.equalTo(pattern2), false);
     });
 
     test('it toggles partial/whole match', () => {
@@ -152,7 +151,7 @@ suite('StringPattern', () => {
             wholeMatch: true
         });
         const pattern2 = pattern1.toggleWholeMatch();
-        expect(pattern1.equalTo(pattern2)).to.be.false;
+        assert.equal(pattern1.equalTo(pattern2), false);
     });
 
 });
