@@ -1,5 +1,12 @@
 import SelectedTextFinder from './selected-text-finder';
-import {Position, Selection, TextEditor as VsTextEditor, TextEditorDecorationType} from 'vscode';
+import {
+    Position,
+    Range,
+    Selection,
+    TextEditor as VsTextEditor,
+    TextEditorDecorationType,
+    TextEditorRevealType
+} from 'vscode';
 import {FlatRange} from './models/flat-range';
 import {CreateRange} from './editor-components/vscode';
 
@@ -39,6 +46,7 @@ export default class TextEditor {
     }
 
     set selection(range: FlatRange) {
+        this.editor.revealRange(this.getRange(range), TextEditorRevealType.InCenterIfOutsideViewport);
         this.editor.selection = this.getSelection(range);
     }
 
@@ -46,14 +54,16 @@ export default class TextEditor {
         return new Selection(this.getPosition(range.start), this.getPosition(range.end));
     }
 
+    private getRange(range: FlatRange): Range {
+        return this.createRange(this.getPosition(range.start), this.getPosition(range.end));
+    }
+
     private getPosition(position: number): Position {
         return this.editor.document.positionAt(position);
     }
 
     setDecorations(decorationType: TextEditorDecorationType, ranges: FlatRange[]) {
-        const vsRanges = ranges.map(range =>
-            this.createRange(this.getPosition(range.start), this.getPosition(range.end))
-        );
+        const vsRanges = ranges.map(range => this.getRange(range));
         this.editor.setDecorations(decorationType, vsRanges);
     }
 
