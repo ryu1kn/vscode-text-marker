@@ -1,10 +1,12 @@
 {
-  "exclude": [
-    "**/__*",
-    "coverage/**",
-    "src/test/**",
-    "out/test/**"
+  "extension": [
+    ".ts"
   ],
+  "exclude": [
+    "out",
+    "coverage"
+  ],
+  "all": true,
   "reporter": [
     "lcov",
     "text-summary"

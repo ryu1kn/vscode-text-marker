@@ -227,10 +227,10 @@
     "compile": "tsc -p ./",
     "lint": "tslint -p .",
     "watch": "tsc -watch -p ./",
-    "test": "yarn run compile && mocha --opts ./mocha-opts/cli-all-test-mocha.opts",
-    "unit-test": "yarn run compile && mocha --opts ./mocha-opts/cli-unit-test-mocha.opts",
-    "acceptance-test": "yarn run compile && mocha --opts ./mocha-opts/cli-acceptance-test-mocha.opts",
-    "test-mode": "yarn run compile && mocha --opts ./mocha-opts/cli-unit-test-mocha.opts --watch"
+    "test": "mocha --opts ./mocha-opts/cli-all-test-mocha.opts",
+    "unit-test": "mocha --opts ./mocha-opts/cli-unit-test-mocha.opts",
+    "acceptance-test": "mocha --opts ./mocha-opts/cli-acceptance-test-mocha.opts",
+    "test-mode": "mocha --opts ./mocha-opts/cli-unit-test-mocha.opts --watch"
   },
   "devDependencies": {
     "@types/mocha": "^5.2.5",

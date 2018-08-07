@@ -1,4 +1,5 @@
 --recursive
 --ui tdd
---require out/test/stub-vscode.js
-out/test
+--require ts-node/register
+--require src/test/stub-vscode.ts
+src/test/**/*.ts
