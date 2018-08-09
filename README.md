@@ -47,13 +47,13 @@ You can update a highlight rule after you set it.
     Move the cursor to the next location of the same highlight. Highlight selection or the word under cursor
     first if the cursor is not on a highlight.
     Available on right-click menu.
-    
+
 * `Go to Previous Same Highlight` (**Command ID**: `textmarker.goToPreviousHighlight`)
 
     Move the cursor to the previous location of the same highlight. Highlight selection or the word under cursor
     first if the cursor is not on a highlight.
     Available on right-click menu.
-    
+
 * `Highlight Text Using Regex` (**Command ID**: `textmarker.highlightUsingRegex`)
 
     Highlight text that matches a given regular expression.
@@ -98,11 +98,11 @@ You can update a highlight rule after you set it.
 * `textmarker.defaultHighlightColor` (default: `"gray"`)
 
     Once all the colours given in `textmarker.highlightColors` is used, texts are highlighted with this colour.
-    
+
 * `textmarker.enableIgnoreCase` (default: `false`)
 
     Enable ignore case mode on startup
-    
+
 * `textmarker.enableWholeMatch` (default: `false`)
 
     Enable whole match mode on startup
@@ -117,9 +117,27 @@ You can update a highlight rule after you set it.
     Text colour will be chosen to be distinctive from the background highlight colour.
     This will hide the text colour given by syntax highlighting; if this is not desirable, set it `false`.
 
-* `textmarker.delayForRefreshingHighlight`
+* `textmarker.delayForRefreshingHighlight` (default: `300`)
 
     Number of milliseconds to wait before refreshing the highlights on editor contents change. `null` for no refresh.
+
+* `textmarker.commandsOnContextMenu` (default: 4 commands are visible. See them [here](https://github.com/ryu1kn/vscode-text-marker/blob/c8fcadd3b9271b46c7de1b15c776e6d4889aa35e/package.json#L109))
+
+    Commands appear on the context menu. For historical reason, 4 commands are visible by default.
+
+    For example, if you:
+
+    * Do NOT want to see **Update Highlight** command (Command ID: `textmarker.updateHighlight`), which is on the menu by default
+    * Want to see **Clear All Highlights** (Command ID: `textmarker.clearAllHighlight`), which is NOT on the menu by default
+
+    You can set this setting like this:
+
+    ```
+    "textmarker.commandsOnContextMenu": {
+      "updateHighlight": false,
+      "clearAllHighlight": true
+    }
+    ```
 
 * `textmarker.savedHighlights`
 
