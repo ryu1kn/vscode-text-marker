@@ -14,25 +14,25 @@ export default class PatternVariationReader {
         this.windowComponent = windowComponent;
     }
 
-    async read(currentPattern: Pattern) {
+    async read(currentPattern: Pattern): Promise<Pattern | undefined> {
         const items = this.buildSelectItems(currentPattern);
         const options = {placeHolder: 'Select how to update the highlight'};
         const item = await this.windowComponent.showQuickPick<PatternUpdateActionQuickPickItem>(items, options);
-        if (!item) return null;
+        if (!item) return;
 
         switch (item.actionId) {
-        case PatternAction.TOGGLE_CASE_SENSITIVITY:
-            return currentPattern.toggleCaseSensitivity();
-        case PatternAction.TOGGLE_WHOLE_MATCH:
-            return currentPattern.toggleWholeMatch();
-        case PatternAction.UPDATE_PHRASE: {
-            const options = {
-                value: currentPattern.phrase,
-                prompt: 'Enter a new pattern.'
-            };
-            const newPhrase = await this.windowComponent.showInputBox(options);
-            return newPhrase ? currentPattern.updatePhrase(newPhrase) : null;
-        }
+            case PatternAction.TOGGLE_CASE_SENSITIVITY:
+                return currentPattern.toggleCaseSensitivity();
+            case PatternAction.TOGGLE_WHOLE_MATCH:
+                return currentPattern.toggleWholeMatch();
+            case PatternAction.UPDATE_PHRASE: {
+                const options = {
+                    value: currentPattern.phrase,
+                    prompt: 'Enter a new pattern.'
+                };
+                const newPhrase = await this.windowComponent.showInputBox(options);
+                return newPhrase ? currentPattern.updatePhrase(newPhrase) : undefined;
+            }
         }
     }
 

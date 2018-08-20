@@ -18,7 +18,7 @@ export default class WindowComponent {
         return new TextEditor(this.window.activeTextEditor);
     }
 
-    showInputBox(options: InputBoxOptions) {
+    showInputBox(options: InputBoxOptions): Thenable<string | undefined> {
         return this.window.showInputBox(options);
     }
 

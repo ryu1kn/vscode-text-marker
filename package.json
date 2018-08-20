@@ -285,6 +285,7 @@
     "coverage": "nyc yarn test",
     "compile": "tsc -p ./",
     "lint": "tslint -p .",
+    "check": "yarn run compile && yarn run lint && yarn test",
     "watch": "tsc -watch -p ./",
     "test": "mocha --opts ./mocha-opts/cli-all-test-mocha.opts",
     "unit-test": "mocha --opts ./mocha-opts/cli-unit-test-mocha.opts",

@@ -14,6 +14,7 @@ export default class RegexReader {
     async read() {
         const options = this.getInputBoxOption();
         const phrase = await this.windowComponent.showInputBox(options);
+        if (!phrase) return;
         return this.patternFactory.create({
             type: 'RegExp',
             phrase

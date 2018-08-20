@@ -8,7 +8,6 @@ import HighlightPatternPicker from './highlight-pattern-picker';
 import HighlightUsingRegexCommand from './commands/highlight-using-regex';
 import MatchingModeRegistry from './matching-mode-registry';
 import PatternVariationReader from './pattern-variation-reader';
-import RegexReader from './regex-reader';
 import RemoveAllHighlightsCommand from './commands/remove-all-highlights';
 import SaveAllHighlightsCommand from './commands/save-all-highlights';
 import SavedHighlightsRestorer from './saved-highlights-restorer';
@@ -63,8 +62,7 @@ export default class CommandFactory {
     }
 
     createHighlightUsingRegex() {
-        const regexReader = new RegexReader(this.getMatchingModeRegistry(), this.getWindowComponent());
-        const command = new HighlightUsingRegexCommand(this.getDecorationOperatorFactory(), regexReader);
+        const command = new HighlightUsingRegexCommand(this.getDecorationOperatorFactory(), this.getMatchingModeRegistry(), this.getWindowComponent());
         return this._wrapCommand(command);
     }
 
