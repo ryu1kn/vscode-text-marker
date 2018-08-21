@@ -8,6 +8,7 @@ import StringPattern from '../../../lib/patterns/string';
 import TextLocationRegistry from '../../../lib/text-location-registry';
 import TextEditor from '../../../lib/text-editor';
 import DecorationOperator from '../../../lib/decoration-operator';
+import {none, some} from '../../../../node_modules/fp-ts/lib/Option';
 
 suite('UpdateHighlightCommand', () => {
 
@@ -38,7 +39,7 @@ suite('UpdateHighlightCommand', () => {
 
         test('it updates decoration', async () => {
             const patternVariationReader = mock(PatternVariationReader);
-            when(patternVariationReader.read(oldPattern)).thenResolve(newPattern);
+            when(patternVariationReader.read(oldPattern)).thenResolve(some(newPattern));
 
             const command = new UpdateHighlightCommand(
                 decorationOperatorFactory,
@@ -54,7 +55,7 @@ suite('UpdateHighlightCommand', () => {
 
         test('it does nothing if a new pattern is not given by user', async () => {
             const patternVariationReader = mock(PatternVariationReader);
-            when(patternVariationReader.read(any())).thenResolve();
+            when(patternVariationReader.read(any())).thenResolve(none);
 
             const command = new UpdateHighlightCommand(
                 decorationOperatorFactory,

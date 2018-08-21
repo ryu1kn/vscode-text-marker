@@ -6,6 +6,7 @@ import WindowComponent from '../../lib/editor-components/window';
 import MatchingModeRegistry from '../../lib/matching-mode-registry';
 import {QuickPickItem} from 'vscode';
 import * as assert from 'assert';
+import {none, some} from '../../../node_modules/fp-ts/lib/Option';
 
 suite('PatternVariationReader', () => {
 
@@ -17,9 +18,9 @@ suite('PatternVariationReader', () => {
         const patternVariationReader = new PatternVariationReader(windowComponent);
 
         const currentPattern = createPattern();
-        const newPattern = await patternVariationReader.read(currentPattern);
+        const newPatternOpt = await patternVariationReader.read(currentPattern);
 
-        assert.equal(newPattern!.equalTo(currentPattern.toggleCaseSensitivity()), true);
+        assert.deepEqual(newPatternOpt.map(p => p.equalTo(currentPattern.toggleCaseSensitivity())), some(true));
     });
 
     test('it lets user to toggle whole/partial match', async () => {
@@ -30,24 +31,24 @@ suite('PatternVariationReader', () => {
         const patternVariationReader = new PatternVariationReader(windowComponent);
 
         const currentPattern = createPattern();
-        const newPattern = await patternVariationReader.read(currentPattern);
+        const newPatternOpt = await patternVariationReader.read(currentPattern);
 
-        assert.equal(newPattern!.equalTo(currentPattern.toggleWholeMatch()), true);
+        assert.deepEqual(newPatternOpt.map(p => p.equalTo(currentPattern.toggleWholeMatch())), some(true));
     });
 
     test('it lets user to update the phrase of pattern', async () => {
         const windowComponent = mockType<WindowComponent>({
             showQuickPick: (items: QuickPickItem[]) =>
                 Promise.resolve(items.find(item => item.label.includes('Pattern'))),
-            showInputBox: () => Promise.resolve('NEW_PHRASE')
+            showInputBox: () => Promise.resolve(some('NEW_PHRASE'))
         });
         const patternVariationReader = new PatternVariationReader(windowComponent);
 
         const currentPattern = createPattern();
-        const newPattern = await patternVariationReader.read(currentPattern);
+        const newPatternOpt = await patternVariationReader.read(currentPattern);
 
         const expectedPattern = createPattern({phrase: 'NEW_PHRASE'});
-        assert.equal(newPattern!.equalTo(expectedPattern), true);
+        assert.deepEqual(newPatternOpt.map(p => p.equalTo(expectedPattern)), some(true));
     });
 
     test('it returns null if user selected nothing', async () => {
@@ -59,21 +60,21 @@ suite('PatternVariationReader', () => {
         const currentPattern = createPattern();
         const newPattern = await patternVariationReader.read(currentPattern);
 
-        assert.equal(newPattern, null);
+        assert.deepEqual(newPattern, none);
     });
 
     test('it returns null if user selected phrase-update but cancelled', async () => {
         const windowComponent = mockType<WindowComponent>({
             showQuickPick: (items: QuickPickItem[]) =>
                 Promise.resolve(items.find(item => item.label.includes('Pattern'))),
-            showInputBox: () => Promise.resolve()
+            showInputBox: () => Promise.resolve(none)
         });
         const patternVariationReader = new PatternVariationReader(windowComponent);
 
         const currentPattern = createPattern();
         const newPattern = await patternVariationReader.read(currentPattern);
 
-        assert.equal(newPattern, null);
+        assert.deepEqual(newPattern, none);
     });
 
     function createPattern({phrase}: any = {}) {

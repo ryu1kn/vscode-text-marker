@@ -2,6 +2,7 @@ import {PatternAction} from './const';
 import WindowComponent from './editor-components/window';
 import {QuickPickItem} from 'vscode';
 import Pattern from './patterns/pattern';
+import {none, Option, some} from '../../node_modules/fp-ts/lib/Option';
 
 interface PatternUpdateActionQuickPickItem extends QuickPickItem {
     actionId: symbol;
@@ -14,25 +15,27 @@ export default class PatternVariationReader {
         this.windowComponent = windowComponent;
     }
 
-    async read(currentPattern: Pattern): Promise<Pattern | undefined> {
+    async read(currentPattern: Pattern): Promise<Option<Pattern>> {
         const items = this.buildSelectItems(currentPattern);
         const options = {placeHolder: 'Select how to update the highlight'};
         const item = await this.windowComponent.showQuickPick<PatternUpdateActionQuickPickItem>(items, options);
-        if (!item) return;
+        if (!item) return none;
 
         switch (item.actionId) {
             case PatternAction.TOGGLE_CASE_SENSITIVITY:
-                return currentPattern.toggleCaseSensitivity();
+                return some(currentPattern.toggleCaseSensitivity());
             case PatternAction.TOGGLE_WHOLE_MATCH:
-                return currentPattern.toggleWholeMatch();
+                return some(currentPattern.toggleWholeMatch());
             case PatternAction.UPDATE_PHRASE: {
                 const options = {
                     value: currentPattern.phrase,
                     prompt: 'Enter a new pattern.'
                 };
-                const newPhrase = await this.windowComponent.showInputBox(options);
-                return newPhrase ? currentPattern.updatePhrase(newPhrase) : undefined;
+                const newPhraseOpt = await this.windowComponent.showInputBox(options);
+                return newPhraseOpt.map(newPhrase => currentPattern.updatePhrase(newPhrase));
             }
+            default:
+                return none;
         }
     }
 

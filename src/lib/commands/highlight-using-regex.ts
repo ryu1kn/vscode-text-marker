@@ -16,11 +16,11 @@ export default class HighlightUsingRegexCommand implements CommandLike {
     }
 
     async execute() {
-        const regex = await this.regexReader.read();
-        if (!regex) return;
-
-        const decorationOperator = this.decorationOperatorFactory.createForVisibleEditors();
-        decorationOperator.addDecoration(regex);
+        const regexOpt = await this.regexReader.read();
+        return regexOpt.map(regex => {
+            const decorationOperator = this.decorationOperatorFactory.createForVisibleEditors();
+            decorationOperator.addDecoration(regex);
+        });
     }
 
 }

@@ -1,6 +1,8 @@
 import PatternFactory from './pattern-factory';
 import WindowComponent from './editor-components/window';
 import MatchingModeRegistry from './matching-mode-registry';
+import Pattern from './patterns/pattern';
+import {Option} from '../../node_modules/fp-ts/lib/Option';
 
 export default class RegexReader {
     private readonly patternFactory: PatternFactory;
@@ -11,14 +13,13 @@ export default class RegexReader {
         this.windowComponent = windowComponent;
     }
 
-    async read() {
+    async read(): Promise<Option<Pattern>> {
         const options = this.getInputBoxOption();
-        const phrase = await this.windowComponent.showInputBox(options);
-        if (!phrase) return;
-        return this.patternFactory.create({
+        const phraseOpt = await this.windowComponent.showInputBox(options);
+        return phraseOpt.map(phrase => this.patternFactory.create({
             type: 'RegExp',
             phrase
-        });
+        }));
     }
 
     private getInputBoxOption() {

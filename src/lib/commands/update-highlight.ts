@@ -26,11 +26,11 @@ export default class UpdateHighlightCommand implements CommandLike {
         if (!decorationId) return;
 
         const pattern = this.decorationRegistry.inquireById(decorationId)!.pattern;
-        const newPattern = await this.patternVariationReader.read(pattern);
-        if (!newPattern) return;
-
-        const decorationOperator = this.decorationOperatorFactory.createForVisibleEditors();
-        decorationOperator.updateDecorationPattern(decorationId, newPattern);
+        const newPatternOpt = await this.patternVariationReader.read(pattern);
+        return newPatternOpt.map(newPattern => {
+            const decorationOperator = this.decorationOperatorFactory.createForVisibleEditors();
+            decorationOperator.updateDecorationPattern(decorationId, newPattern);
+        });
     }
 
 }

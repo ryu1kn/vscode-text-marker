@@ -5,5 +5,5 @@ export type ExtensionContextLike = {
 };
 
 export interface CommandLike {
-    execute(editor?: TextEditor): Promise<void> | void;
+    execute(editor?: TextEditor): Promise<any> | any;
 }

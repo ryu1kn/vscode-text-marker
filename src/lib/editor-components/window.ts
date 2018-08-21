@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import {InputBoxOptions, QuickPickOptions} from 'vscode';
 import TextEditor from '../text-editor';
+import {fromPredicate, Option} from '../../../node_modules/fp-ts/lib/Option';
 
 export default class WindowComponent {
     private readonly window: typeof vscode.window;
@@ -18,8 +19,9 @@ export default class WindowComponent {
         return new TextEditor(this.window.activeTextEditor);
     }
 
-    showInputBox(options: InputBoxOptions): Thenable<string | undefined> {
-        return this.window.showInputBox(options);
+    async showInputBox(options: InputBoxOptions): Promise<Option<string>> {
+        const userInput = await this.window.showInputBox(options);
+        return fromPredicate((s: string) => !!s)(userInput);
     }
 
     showInformationMessage(message: string) {

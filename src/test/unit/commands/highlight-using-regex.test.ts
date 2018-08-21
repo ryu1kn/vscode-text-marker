@@ -5,6 +5,7 @@ import DecorationOperator from '../../../lib/decoration-operator';
 import RegexPattern from '../../../lib/patterns/regex';
 import MatchingModeRegistry from '../../../lib/matching-mode-registry';
 import WindowComponent from '../../../lib/editor-components/window';
+import {none, some} from '../../../../node_modules/fp-ts/lib/Option';
 
 suite('HighlightUsingRegexCommand', () => {
     const matchingModeRegistry = mock(MatchingModeRegistry);
@@ -16,7 +17,7 @@ suite('HighlightUsingRegexCommand', () => {
 
         const windowComponent = mock(WindowComponent);
         when(windowComponent.showInputBox({placeHolder: 'Enter a regular expression to highlight text'}))
-            .thenResolve('pattern');
+            .thenResolve(some('pattern'));
 
         const command = new HighlightUsingRegexCommand(decorationOperatorFactory, matchingModeRegistry, windowComponent);
 
@@ -31,7 +32,7 @@ suite('HighlightUsingRegexCommand', () => {
         const decorationOperatorFactory = mock(DecorationOperatorFactory);
 
         const windowComponent = mock(WindowComponent);
-        when(windowComponent.showInputBox({placeHolder: 'Enter a regular expression to highlight text'})).thenResolve();
+        when(windowComponent.showInputBox({placeHolder: 'Enter a regular expression to highlight text'})).thenResolve(none);
 
         const command = new HighlightUsingRegexCommand(decorationOperatorFactory, matchingModeRegistry, windowComponent);
 
