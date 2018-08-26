@@ -9,6 +9,7 @@ import WindowComponent from '../../../lib/editor-components/window';
 import StringPattern from '../../../lib/patterns/string';
 import {Decoration} from '../../../lib/entities/decoration';
 import {TextEditorDecorationType} from 'vscode';
+import {some} from 'fp-ts/lib/Option';
 
 suite('ToggleHighlightCommand', () => {
 
@@ -27,7 +28,7 @@ suite('ToggleHighlightCommand', () => {
     const decorationRegistry = mock(DecorationRegistry);
     when(decorationRegistry.issue(newPattern)).thenReturn(mockType<Decoration>({decorationType, pattern: newPattern}));
     when(decorationRegistry.issue(knownPattern)).thenReturn(null);
-    when(decorationRegistry.inquireById('DECORATION_ID')).thenReturn(mockType<Decoration>({id: 'DECORATION_ID', decorationType}));
+    when(decorationRegistry.inquireById('DECORATION_ID')).thenReturn(some(mockType<Decoration>({id: 'DECORATION_ID', decorationType})));
 
     suite('When text is selected', () => {
 

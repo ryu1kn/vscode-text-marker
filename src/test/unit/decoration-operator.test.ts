@@ -8,6 +8,7 @@ import StringPattern from '../../lib/patterns/string';
 import TextDecorator from '../../lib/text-decorator';
 import {Decoration} from '../../lib/entities/decoration';
 import {TextEditorDecorationType} from 'vscode';
+import {some} from 'fp-ts/lib/Option';
 
 suite('DecorationOperator', () => {
 
@@ -51,7 +52,7 @@ suite('DecorationOperator', () => {
 
         test('it removes a decoration', () => {
             const decorationRegistry = mock(DecorationRegistry);
-            when(decorationRegistry.inquireById('DECORATION_ID')).thenReturn(decoration);
+            when(decorationRegistry.inquireById('DECORATION_ID')).thenReturn(some(decoration));
             const textDecorator = mock(TextDecorator);
             const operator = new DecorationOperator(editors, decorationRegistry, textDecorator, patternConverter);
 
@@ -81,8 +82,8 @@ suite('DecorationOperator', () => {
         });
 
         const decorationRegistry = mock(DecorationRegistry);
-        when(decorationRegistry.updatePattern('DECORATION_ID', newPattern)).thenReturn(newDecoration);
-        when(decorationRegistry.inquireById('DECORATION_ID')).thenReturn(oldDecoration);
+        when(decorationRegistry.updatePattern('DECORATION_ID', newPattern)).thenReturn(some(newDecoration));
+        when(decorationRegistry.inquireById('DECORATION_ID')).thenReturn(some(oldDecoration));
 
         suite('#updateDecorationWithPatternAction', () => {
 

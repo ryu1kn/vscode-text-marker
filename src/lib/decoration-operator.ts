@@ -28,9 +28,9 @@ export default class DecorationOperator {
         this.textDecorator.decorate(this.editors, [decoration]);
     }
 
-    removeDecoration(decorationId: string) {
+    removeDecoration(decorationId: string): void {
         const decoration = this.decorationRegistry.inquireById(decorationId);
-        this._removeDecoration(decoration!);
+        decoration.map(d => this._removeDecoration(d));
     }
 
     private _removeDecoration(decoration: Decoration) {
@@ -38,22 +38,28 @@ export default class DecorationOperator {
         this.textDecorator.undecorate(this.editors, [decoration]);
     }
 
-    updateDecorationWithPatternAction(decorationId: string, convertAction: symbol) {
-        const decoration = this.decorationRegistry.inquireById(decorationId)!;
-        const newPattern = this.patternConverter.convert(decoration.pattern, convertAction);
-        this._updateDecorationWithPattern(decoration, newPattern);
+    updateDecorationWithPatternAction(decorationId: string, convertAction: symbol): void {
+        const decoration = this.decorationRegistry.inquireById(decorationId);
+        decoration.map(d => {
+            const newPattern = this.patternConverter.convert(d.pattern, convertAction);
+            this._updateDecorationWithPattern(d, newPattern);
+        });
     }
 
-    updateDecorationPattern(decorationId: string, newPattern: Pattern) {
+    updateDecorationPattern(decorationId: string, newPattern: Pattern): void {
         const decoration = this.decorationRegistry.inquireById(decorationId);
-        this._updateDecorationWithPattern(decoration!, newPattern);
+        decoration.map(d => {
+            this._updateDecorationWithPattern(d, newPattern);
+        });
     }
 
     private _updateDecorationWithPattern(decoration: Decoration, newPattern: Pattern) {
         this.textDecorator.undecorate(this.editors, [decoration]);
 
         const newDecoration = this.decorationRegistry.updatePattern(decoration.id, newPattern);
-        this.textDecorator.decorate(this.editors, [newDecoration]);
+        newDecoration.map(d => {
+            this.textDecorator.decorate(this.editors, [d]);
+        });
     }
 
     removeAllDecorations() {

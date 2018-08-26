@@ -6,6 +6,7 @@ import MatchingModeRegistry from '../../lib/matching-mode-registry';
 import * as vscode from 'vscode';
 import ConfigStore from '../../lib/config-store';
 import * as assert from 'assert';
+import {some} from 'fp-ts/lib/Option';
 
 suite('DecorationRegistry', () => {
 
@@ -37,12 +38,12 @@ suite('DecorationRegistry', () => {
         const pattern = createPattern('PATTERN');
         registry.issue(createPattern('PATTERN'));
 
-        assert.deepEqual(registry.inquireById('UUID_1'), {
+        assert.deepEqual(registry.inquireById('UUID_1'), some({
             id: 'UUID_1',
             colour: 'pink',
             decorationType: 'DECORATION_TYPE_1',
             pattern
-        });
+        }));
     });
 
     test('it returns a registered decoration type for the passed regex', () => {
@@ -137,12 +138,12 @@ suite('DecorationRegistry', () => {
         const newPattern = createPattern('TEXT');
         registry.issue(oldPattern);
 
-        assert.deepEqual(registry.updatePattern('UUID_1', newPattern), {
+        assert.deepEqual(registry.updatePattern('UUID_1', newPattern), some({
             id: 'UUID_1',
             colour: 'pink',
             decorationType: 'DECORATION_TYPE_1',
             pattern: newPattern
-        });
+        }));
     });
 
     test('it use the text highlight colour on the ruler', () => {

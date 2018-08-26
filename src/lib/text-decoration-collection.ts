@@ -1,15 +1,17 @@
 import {Decoration} from './entities/decoration';
 import {TextEditorDecorationType} from 'vscode';
 import Pattern from './patterns/pattern';
+import {OptionMap} from './utils/collections';
+import {Option} from 'fp-ts/lib/Option';
 
 export default class TextDecorationCollection {
     private readonly generateUuid: () => string;
-    private readonly map: Map<string, Decoration>;
+    private readonly map: OptionMap<Decoration>;
 
     constructor(generateUuid: () => string) {
         this.generateUuid = generateUuid;
 
-        this.map = new Map();
+        this.map = new OptionMap();
     }
 
     add(pattern: Pattern, colour: string, decorationType: TextEditorDecorationType) {
@@ -19,11 +21,11 @@ export default class TextDecorationCollection {
         return decoration;
     }
 
-    get(id: string): Decoration | undefined {
+    get(id: string): Option<Decoration> {
         return this.map.get(id);
     }
 
-    remove(id: string) {
+    remove(id: string): void {
         this.map.delete(id);
     }
 

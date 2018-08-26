@@ -5,6 +5,7 @@ import ColourRegistry from './colour-registry';
 import * as vscode from 'vscode';
 import Pattern from './patterns/pattern';
 import {Decoration} from './entities/decoration';
+import {Option} from 'fp-ts/lib/Option';
 
 const getColorContrast = require('../../lib-3rd-party/dynamic-contrast');
 
@@ -26,7 +27,7 @@ export default class DecorationRegistry {
         this.textDecorationMap = new TextDecorationCollection(generateUuid);
     }
 
-    inquireById(decorationId: string) {
+    inquireById(decorationId: string): Option<Decoration> {
         return this.textDecorationMap.get(decorationId);
     }
 
@@ -44,16 +45,20 @@ export default class DecorationRegistry {
         return this.textDecorationMap.add(pattern, colour, decorationType);
     }
 
-    updatePattern(decorationId: string, newPattern: Pattern) {
-        const decoration = this.textDecorationMap.get(decorationId)!;
-        decoration.pattern = newPattern;
-        return decoration;
+    updatePattern(decorationId: string, newPattern: Pattern): Option<Decoration> {
+        const decoration = this.textDecorationMap.get(decorationId);
+        return decoration.map(d => {
+            d.pattern = newPattern;
+            return d;
+        });
     }
 
-    revoke(decorationId: string) {
+    revoke(decorationId: string): void {
         const decoration = this.textDecorationMap.get(decorationId);
-        this.colourRegistry.revoke(decoration!.colour);
-        this.textDecorationMap.remove(decorationId);
+        decoration.map(d => {
+            this.colourRegistry.revoke(d.colour);
+            this.textDecorationMap.remove(decorationId);
+        });
     }
 
     retrieveAll() {

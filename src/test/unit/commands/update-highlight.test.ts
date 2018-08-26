@@ -26,7 +26,7 @@ suite('UpdateHighlightCommand', () => {
         const newPattern = mock(StringPattern);
 
         const decorationRegistry = mock(DecorationRegistry);
-        when(decorationRegistry.inquireById('DECORATION_ID')).thenReturn({pattern: oldPattern});
+        when(decorationRegistry.inquireById('DECORATION_ID')).thenReturn(some({pattern: oldPattern}));
 
         let decorationOperator: DecorationOperator;
         let decorationOperatorFactory: DecorationOperatorFactory;

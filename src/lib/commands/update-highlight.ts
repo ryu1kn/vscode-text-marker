@@ -4,6 +4,7 @@ import PatternVariationReader from '../pattern-variation-reader';
 import TextLocationRegistry from '../text-location-registry';
 import {CommandLike} from '../editor-components/vscode';
 import TextEditor from '../text-editor';
+import {none} from 'fp-ts/lib/Option';
 
 export default class UpdateHighlightCommand implements CommandLike {
     private readonly decorationOperatorFactory: DecorationOperatorFactory;
@@ -25,11 +26,13 @@ export default class UpdateHighlightCommand implements CommandLike {
         const decorationId = this.textLocationRegistry.queryDecorationId(textEditor.id, textEditor.selection).toUndefined();
         if (!decorationId) return;
 
-        const pattern = this.decorationRegistry.inquireById(decorationId)!.pattern;
-        const newPatternOpt = await this.patternVariationReader.read(pattern);
-        return newPatternOpt.map(newPattern => {
-            const decorationOperator = this.decorationOperatorFactory.createForVisibleEditors();
-            decorationOperator.updateDecorationPattern(decorationId, newPattern);
+        const decorationOpt = this.decorationRegistry.inquireById(decorationId);
+        return decorationOpt.fold(Promise.resolve(none), async decoration => {
+            const newPatternOpt = await this.patternVariationReader.read(decoration.pattern);
+            return newPatternOpt.map(newPattern => {
+                const decorationOperator = this.decorationOperatorFactory.createForVisibleEditors();
+                decorationOperator.updateDecorationPattern(decorationId, newPattern);
+            });
         });
     }
 
