@@ -3,6 +3,7 @@ import {TextEditorDecorationType} from 'vscode';
 import Pattern from './patterns/pattern';
 import {OptionMap} from './utils/collections';
 import {Option} from 'fp-ts/lib/Option';
+import {findFirst} from 'fp-ts/lib/Array';
 
 export default class TextDecorationCollection {
     private readonly generateUuid: () => string;
@@ -14,7 +15,7 @@ export default class TextDecorationCollection {
         this.map = new OptionMap();
     }
 
-    add(pattern: Pattern, colour: string, decorationType: TextEditorDecorationType) {
+    add(pattern: Pattern, colour: string, decorationType: TextEditorDecorationType): Decoration {
         const id = this.generateUuid();
         const decoration = {id, pattern, colour, decorationType};
         this.map.set(id, decoration);
@@ -29,14 +30,12 @@ export default class TextDecorationCollection {
         this.map.delete(id);
     }
 
-    find(predicate: (d: Decoration) => boolean) {
-        return Array.from(this.map.values())
-            .find(decoration => predicate(decoration)) || null;
+    find(predicate: (d: Decoration) => boolean): Option<Decoration> {
+        return findFirst(this.toList(), decoration => predicate(decoration));
     }
 
-    toList() {
-        return Array.from(this.map.values())
-            .reduce((result, decoration) => [...result, decoration], [] as Decoration[]);
+    toList(): Decoration[] {
+        return Array.from(this.map.values());
     }
 
 }

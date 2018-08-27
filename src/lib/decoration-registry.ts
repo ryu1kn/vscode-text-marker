@@ -31,14 +31,14 @@ export default class DecorationRegistry {
         return this.textDecorationMap.get(decorationId);
     }
 
-    inquireByPattern(pattern: Pattern) {
+    inquireByPattern(pattern: Pattern): Option<Decoration> {
         const isSamePattern = (decoration: Decoration) => decoration.pattern.equalTo(pattern);
         return this.textDecorationMap.find(isSamePattern);
     }
 
-    issue(pattern: Pattern) {
+    issue(pattern: Pattern): Decoration | null {
         const decoration = this.inquireByPattern(pattern);
-        if (decoration) return null;
+        if (decoration.isSome()) return null;
 
         const colour = this.colourRegistry.issue();
         const decorationType = this.generateDecorationType(colour);

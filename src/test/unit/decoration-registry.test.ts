@@ -6,7 +6,7 @@ import MatchingModeRegistry from '../../lib/matching-mode-registry';
 import * as vscode from 'vscode';
 import ConfigStore from '../../lib/config-store';
 import * as assert from 'assert';
-import {some} from 'fp-ts/lib/Option';
+import {none, some} from 'fp-ts/lib/Option';
 
 suite('DecorationRegistry', () => {
 
@@ -52,12 +52,12 @@ suite('DecorationRegistry', () => {
         const pattern = createPattern('PATTERN');
         registry.issue(pattern);
 
-        assert.deepEqual(registry.inquireByPattern(pattern), {
+        assert.deepEqual(registry.inquireByPattern(pattern), some({
             id: 'UUID_1',
             colour: 'pink',
             decorationType: 'DECORATION_TYPE_1',
             pattern: pattern
-        });
+        }));
     });
 
     test("it can remove given pattern and it's associated decoration type from the registry", () => {
@@ -66,7 +66,7 @@ suite('DecorationRegistry', () => {
         const pattern = createPattern('PATTERN');
         const decorationId = registry.issue(pattern)!.id;
         registry.revoke(decorationId);
-        assert.equal(registry.inquireByPattern(pattern), null);
+        assert.equal(registry.inquireByPattern(pattern), none);
     });
 
     test('it can return all registered decorations at once', () => {

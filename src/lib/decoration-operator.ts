@@ -21,7 +21,7 @@ export default class DecorationOperator {
         this.patternConverter = patternConverter;
     }
 
-    addDecoration(pattern: Pattern) {
+    addDecoration(pattern: Pattern): void {
         const decoration = this.decorationRegistry.issue(pattern);
         if (!decoration) return;
 
