@@ -1,28 +1,22 @@
-import {OverviewRulerLane, TextEditorDecorationType} from 'vscode';
+import * as vscode from 'vscode';
 import TextDecorationCollection from './text-decoration-collection';
 import ConfigStore from './config-store';
 import ColourRegistry from './colour-registry';
-import * as vscode from 'vscode';
 import Pattern from './patterns/pattern';
 import {Decoration} from './entities/decoration';
 import {Option} from 'fp-ts/lib/Option';
-
-const getColorContrast = require('../../lib-3rd-party/dynamic-contrast');
-
-const OVERVIEW_RULER_COLOUR = 'violet';
+import DecorationTypeCreator from './decoration-type-creator';
 
 export default class DecorationRegistry {
     private readonly colourRegistry: ColourRegistry;
-    private readonly configStore: ConfigStore;
-    private readonly window: typeof vscode.window;
+    private readonly decorationTypeCreator: DecorationTypeCreator;
     private readonly textDecorationMap: TextDecorationCollection;
 
     constructor(configStore: ConfigStore,
                 window: typeof vscode.window,
                 generateUuid: () => string) {
         this.colourRegistry = new ColourRegistry(configStore);
-        this.configStore = configStore;
-        this.window = window;
+        this.decorationTypeCreator = new DecorationTypeCreator(configStore, window);
 
         this.textDecorationMap = new TextDecorationCollection(generateUuid);
     }
@@ -41,7 +35,7 @@ export default class DecorationRegistry {
         if (decoration.isSome()) return null;
 
         const colour = this.colourRegistry.issue();
-        const decorationType = this.generateDecorationType(colour);
+        const decorationType = this.decorationTypeCreator.create(colour);
         return this.textDecorationMap.add(pattern, colour, decorationType);
     }
 
@@ -64,19 +58,4 @@ export default class DecorationRegistry {
     retrieveAll() {
         return this.textDecorationMap.toList();
     }
-
-    private generateDecorationType(colour: string): TextEditorDecorationType {
-        return this.window.createTextEditorDecorationType(
-            Object.assign(
-                {
-                    backgroundColor: colour,
-                    borderRadius: '.2em',
-                    overviewRulerColor: this.configStore.useHighlightColorOnRuler ? colour : OVERVIEW_RULER_COLOUR,
-                    overviewRulerLane: OverviewRulerLane.Center
-                },
-                this.configStore.autoSelectDistinctiveTextColor && {color: getColorContrast(colour)}
-            )
-        );
-    }
-
 }
