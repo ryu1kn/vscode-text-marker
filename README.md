@@ -99,6 +99,10 @@ You can update a highlight rule after you set it.
 
     Once all the colours given in `textmarker.highlightColors` is used, texts are highlighted with this colour.
 
+* `textmarker.defaultHighlightOpacity` (default: `0.7`)
+
+    Opacity to be used when one is not given in the highlight color. The value must be in the range 0.0 to 1.0, inclusive.
+
 * `textmarker.enableIgnoreCase` (default: `false`)
 
     Enable ignore case mode on startup

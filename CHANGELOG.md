@@ -5,6 +5,10 @@ All notable changes to "Text Marker (Highlighter)" extension will be documented 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.7.0] - 2018-08-28
+### Added
+- Configuration for opacity for all highlights. Easy to see overwrapped patterns. [#23](https://github.com/ryu1kn/vscode-text-marker/issues/23)
+
 ## [1.6.0] - 2018-08-09
 ### Added
 - New configuration for individually show/hide Text Marker commands on the context menu. [#21](https://github.com/ryu1kn/vscode-text-marker/issues/21)
