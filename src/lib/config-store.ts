@@ -20,6 +20,10 @@ export default class ConfigStore {
         return this.get<string>('defaultHighlightColor');
     }
 
+    get defaultHighlightOpacity() {
+        return this.get<string>('defaultHighlightOpacity');
+    }
+
     get savedHighlights() {
         return this.get<Highlight[]>('savedHighlights');
     }

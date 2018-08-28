@@ -63,6 +63,13 @@
           "type": "string",
           "default": "gray"
         },
+        "textmarker.defaultHighlightOpacity": {
+          "description": "Opacity to be used when one is not given in the highlight color",
+          "type": "number",
+          "default": 0.7,
+          "minimum": 0,
+          "maximum": 1
+        },
         "textmarker.enableIgnoreCase": {
           "description": "Enable ignore case mode on startup",
           "type": "boolean",
@@ -95,16 +102,36 @@
           "description": "Commands appear on the context menu",
           "type": "object",
           "properties": {
-            "highlightUsingRegex": {"type": "boolean"},
-            "toggleHighlight": {"type": "boolean"},
-            "unhighlight": {"type": "boolean"},
-            "toggleCaseSensitivity": {"type": "boolean"},
-            "toggleWholeMatch": {"type": "boolean"},
-            "clearAllHighlight": {"type": "boolean"},
-            "saveAllHighlights": {"type": "boolean"},
-            "updateHighlight": {"type": "boolean"},
-            "goToNextHighlight": {"type": "boolean"},
-            "goToPreviousHighlight": {"type": "boolean"}
+            "highlightUsingRegex": {
+              "type": "boolean"
+            },
+            "toggleHighlight": {
+              "type": "boolean"
+            },
+            "unhighlight": {
+              "type": "boolean"
+            },
+            "toggleCaseSensitivity": {
+              "type": "boolean"
+            },
+            "toggleWholeMatch": {
+              "type": "boolean"
+            },
+            "clearAllHighlight": {
+              "type": "boolean"
+            },
+            "saveAllHighlights": {
+              "type": "boolean"
+            },
+            "updateHighlight": {
+              "type": "boolean"
+            },
+            "goToNextHighlight": {
+              "type": "boolean"
+            },
+            "goToPreviousHighlight": {
+              "type": "boolean"
+            }
           },
           "default": {
             "highlightUsingRegex": false,
@@ -306,6 +333,7 @@
   },
   "dependencies": {
     "color-name": "1.1.3",
+    "color-rgba": "2.1.0",
     "fp-ts": "1.7.1",
     "lodash.isnumber": "3.0.3",
     "uuid": "3.2.1"

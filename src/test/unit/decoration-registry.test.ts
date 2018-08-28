@@ -9,6 +9,8 @@ import * as assert from 'assert';
 import {none, some} from 'fp-ts/lib/Option';
 
 suite('DecorationRegistry', () => {
+    const pink = 'rgba(255,192,203,1)';
+    const yellow = 'rgba(255,255,0,1)';
 
     test('it registers a pattern and returns registry information', () => {
         const registry = createDecorationRegistry();
@@ -16,7 +18,7 @@ suite('DecorationRegistry', () => {
         const pattern = createPattern('PATTERN');
         assert.deepEqual(registry.issue(pattern), {
             id: 'UUID_1',
-            colour: 'pink',
+            colour: pink,
             decorationType: 'DECORATION_TYPE_1',
             pattern
         });
@@ -28,7 +30,7 @@ suite('DecorationRegistry', () => {
         const firstResult = registry.issue(createPattern('PATTERN'));
         const secondResult = registry.issue(createPattern('PATTERN'));
 
-        assert.equal(firstResult!.colour, 'pink');
+        assert.equal(firstResult!.colour, pink);
         assert.equal(secondResult, null);
     });
 
@@ -40,7 +42,7 @@ suite('DecorationRegistry', () => {
 
         assert.deepEqual(registry.inquireById('UUID_1'), some({
             id: 'UUID_1',
-            colour: 'pink',
+            colour: pink,
             decorationType: 'DECORATION_TYPE_1',
             pattern
         }));
@@ -54,7 +56,7 @@ suite('DecorationRegistry', () => {
 
         assert.deepEqual(registry.inquireByPattern(pattern), some({
             id: 'UUID_1',
-            colour: 'pink',
+            colour: pink,
             decorationType: 'DECORATION_TYPE_1',
             pattern: pattern
         }));
@@ -78,13 +80,13 @@ suite('DecorationRegistry', () => {
         assert.deepEqual(registry.retrieveAll(), [
             {
                 id: 'UUID_1',
-                colour: 'pink',
+                colour: pink,
                 pattern: pattern1,
                 decorationType: 'DECORATION_TYPE_1'
             },
             {
                 id: 'UUID_2',
-                colour: 'yellow',
+                colour: yellow,
                 pattern: pattern2,
                 decorationType: 'DECORATION_TYPE_2'
             }
@@ -102,7 +104,7 @@ suite('DecorationRegistry', () => {
         assert.deepEqual(registry.retrieveAll(), [
             {
                 id: 'UUID_2',
-                colour: 'yellow',
+                colour: yellow,
                 pattern: pattern2,
                 decorationType: 'DECORATION_TYPE_2'
             }
@@ -112,13 +114,13 @@ suite('DecorationRegistry', () => {
     test('it issues new decoration with new color', () => {
         const window = mockMethods<typeof vscode.window>(['createTextEditorDecorationType']);
         when(window.createTextEditorDecorationType({
-            backgroundColor: 'pink',
+            backgroundColor: pink,
             borderRadius: '.2em',
             overviewRulerColor: 'violet',
             overviewRulerLane: 2
         })).thenReturn('DECORATION_TYPE_1');
         when(window.createTextEditorDecorationType({
-            backgroundColor: 'yellow',
+            backgroundColor: yellow,
             borderRadius: '.2em',
             overviewRulerColor: 'violet',
             overviewRulerLane: 2
@@ -140,7 +142,7 @@ suite('DecorationRegistry', () => {
 
         assert.deepEqual(registry.updatePattern('UUID_1', newPattern), some({
             id: 'UUID_1',
-            colour: 'pink',
+            colour: pink,
             decorationType: 'DECORATION_TYPE_1',
             pattern: newPattern
         }));
@@ -149,9 +151,9 @@ suite('DecorationRegistry', () => {
     test('it use the text highlight colour on the ruler', () => {
         const window = mockMethods<typeof vscode.window>(['createTextEditorDecorationType']);
         when(window.createTextEditorDecorationType({
-            backgroundColor: 'pink',
+            backgroundColor: pink,
             borderRadius: '.2em',
-            overviewRulerColor: 'pink',
+            overviewRulerColor: pink,
             overviewRulerLane: 2
         })).thenReturn('DECORATION_TYPE_1');
 
@@ -165,7 +167,7 @@ suite('DecorationRegistry', () => {
     test('it use the high contrast colour for text with highlights', () => {
         const window = mockMethods<typeof vscode.window>(['createTextEditorDecorationType']);
         when(window.createTextEditorDecorationType({
-            backgroundColor: 'pink',
+            backgroundColor: pink,
             borderRadius: '.2em',
             color: '#545454',
             overviewRulerColor: 'violet',
@@ -192,7 +194,7 @@ suite('DecorationRegistry', () => {
         return mockType<ConfigStore>({
             useHighlightColorOnRuler: !!useHighlightColorOnRuler,
             autoSelectDistinctiveTextColor: !!autoSelectDistinctiveTextColor,
-            highlightColors: ['pink', 'yellow']
+            highlightColors: [pink, yellow]
         });
     }
 
