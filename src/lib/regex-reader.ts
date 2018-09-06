@@ -2,7 +2,7 @@ import PatternFactory from './pattern-factory';
 import WindowComponent from './editor-components/window';
 import MatchingModeRegistry from './matching-mode-registry';
 import Pattern from './patterns/pattern';
-import {Option} from '../../node_modules/fp-ts/lib/Option';
+import {Option} from 'fp-ts/lib/Option';
 
 export default class RegexReader {
     private readonly patternFactory: PatternFactory;

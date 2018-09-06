@@ -5,7 +5,7 @@ import DecorationOperator from '../../../lib/decoration-operator';
 import RegexPattern from '../../../lib/patterns/regex';
 import MatchingModeRegistry from '../../../lib/matching-mode-registry';
 import WindowComponent from '../../../lib/editor-components/window';
-import {none, some} from '../../../../node_modules/fp-ts/lib/Option';
+import {none, some} from 'fp-ts/lib/Option';
 
 suite('HighlightUsingRegexCommand', () => {
     const matchingModeRegistry = mock(MatchingModeRegistry);

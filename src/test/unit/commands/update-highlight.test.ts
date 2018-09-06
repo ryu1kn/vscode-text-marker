@@ -8,7 +8,7 @@ import StringPattern from '../../../lib/patterns/string';
 import TextLocationRegistry from '../../../lib/text-location-registry';
 import TextEditor from '../../../lib/text-editor';
 import DecorationOperator from '../../../lib/decoration-operator';
-import {none, some} from '../../../../node_modules/fp-ts/lib/Option';
+import {none, some} from 'fp-ts/lib/Option';
 
 suite('UpdateHighlightCommand', () => {
 

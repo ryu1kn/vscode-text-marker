@@ -6,7 +6,7 @@ import WindowComponent from '../../lib/editor-components/window';
 import MatchingModeRegistry from '../../lib/matching-mode-registry';
 import {QuickPickItem} from 'vscode';
 import * as assert from 'assert';
-import {none, some} from '../../../node_modules/fp-ts/lib/Option';
+import {none, some} from 'fp-ts/lib/Option';
 
 suite('PatternVariationReader', () => {
 

@@ -2,7 +2,7 @@ import {PatternAction} from './const';
 import WindowComponent from './editor-components/window';
 import {QuickPickItem} from 'vscode';
 import Pattern from './patterns/pattern';
-import {none, Option, some} from '../../node_modules/fp-ts/lib/Option';
+import {none, Option, some} from 'fp-ts/lib/Option';
 
 interface PatternUpdateActionQuickPickItem extends QuickPickItem {
     actionId: symbol;

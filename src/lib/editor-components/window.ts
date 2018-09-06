@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import {InputBoxOptions, QuickPickOptions} from 'vscode';
 import TextEditor from '../text-editor';
-import {fromPredicate, Option} from '../../../node_modules/fp-ts/lib/Option';
+import {fromPredicate, Option} from 'fp-ts/lib/Option';
 
 export default class WindowComponent {
     private readonly window: typeof vscode.window;

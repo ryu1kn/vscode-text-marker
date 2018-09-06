@@ -5,7 +5,7 @@ import WindowComponent from '../../lib/editor-components/window';
 import RegexPattern from '../../lib/patterns/regex';
 import MatchingModeRegistry from '../../lib/matching-mode-registry';
 import * as assert from 'assert';
-import {some} from '../../../node_modules/fp-ts/lib/Option';
+import {some} from 'fp-ts/lib/Option';
 
 suite('RegexReader', () => {
 
