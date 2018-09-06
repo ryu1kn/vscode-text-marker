@@ -52,83 +52,71 @@ export default class CommandFactory {
     }
 
     createToggleHighlightCommand() {
-        const command = new ToggleHighlightCommand(
+        return new ToggleHighlightCommand(
             this.getMatchingModeRegistry(),
             this.getTextLocationRegistry(),
             this.getDecorationRegistry(),
             this.getWindowComponent()
         );
-        return this._wrapCommand(command);
     }
 
     createHighlightUsingRegex() {
-        const command = new HighlightUsingRegexCommand(this.getDecorationOperatorFactory(), this.getMatchingModeRegistry(), this.getWindowComponent());
-        return this._wrapCommand(command);
+        return new HighlightUsingRegexCommand(this.getDecorationOperatorFactory(), this.getMatchingModeRegistry(), this.getWindowComponent());
     }
 
     createUnhighlightCommand() {
-        const command = new UnhighlightCommand(this.getDecorationOperatorFactory(), this.getHighlightPatternPicker());
-        return this._wrapCommand(command);
+        return new UnhighlightCommand(this.getDecorationOperatorFactory(), this.getHighlightPatternPicker());
     }
 
     createRemoveAllHighlightsCommand() {
-        const command = new RemoveAllHighlightsCommand(this.getDecorationOperatorFactory());
-        return this._wrapCommand(command);
+        return new RemoveAllHighlightsCommand(this.getDecorationOperatorFactory());
     }
 
     createSaveAllHighlightsCommand() {
-        const command = new SaveAllHighlightsCommand(this.getConfigStore(), this.getDecorationRegistry());
-        return this._wrapCommand(command);
+        return new SaveAllHighlightsCommand(this.getConfigStore(), this.getDecorationRegistry());
     }
 
     createToggleCaseSensitivityCommand() {
-        const command = new ToggleCaseSensitivityCommand(this.getDecorationOperatorFactory(), this.getHighlightPatternPicker());
-        return this._wrapCommand(command);
+        return new ToggleCaseSensitivityCommand(this.getDecorationOperatorFactory(), this.getHighlightPatternPicker());
     }
 
     createToggleCaseSensitivityModeCommand() {
-        const command = new ToggleCaseSensitivityModeCommand(this.getMatchingModeRegistry());
-        return this._wrapCommand(command);
+        return new ToggleCaseSensitivityModeCommand(this.getMatchingModeRegistry());
     }
 
     createToggleWholeMatchCommand() {
-        const command = new ToggleWholeMatchCommand(this.getDecorationOperatorFactory(), this.getHighlightPatternPicker());
-        return this._wrapCommand(command);
+        return new ToggleWholeMatchCommand(this.getDecorationOperatorFactory(), this.getHighlightPatternPicker());
     }
 
     createToggleWholeMatchModeCommand() {
-        const command = new ToggleWholeMatchModeCommand(this.getMatchingModeRegistry());
-        return this._wrapCommand(command);
+        return new ToggleWholeMatchModeCommand(this.getMatchingModeRegistry());
     }
 
     createUpdateHighlightCommand() {
-        const command = new UpdateHighlightCommand(
+        return new UpdateHighlightCommand(
             this.getDecorationOperatorFactory(),
             this.getDecorationRegistry(),
             new PatternVariationReader(this.getWindowComponent()),
             this.getTextLocationRegistry()
         );
-        return this._wrapCommand(command);
     }
 
     createGoToNextHighlightCommand() {
-        const command = new GoToNextHighlightCommand(
+        return new GoToNextHighlightCommand(
             this.getMatchingModeRegistry(),
             this.getTextLocationRegistry(),
             this.getDecorationRegistry(),
             this.getWindowComponent()
         );
-        return this._wrapCommand(command);
     }
 
     createGoToPreviousHighlightCommand() {
-        const command = new GoToPreviousHighlightCommand(
+        return new GoToPreviousHighlightCommand(
             this.getMatchingModeRegistry(),
             this.getTextLocationRegistry(),
             this.getDecorationRegistry(),
             this.getWindowComponent()
         );
-        return this._wrapCommand(command);
     }
 
     createAutoRefreshDecoration() {

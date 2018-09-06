@@ -2,24 +2,27 @@ import * as Const from './const';
 import CommandFactory from './command-factory';
 import {ExtensionContextLike} from './editor-components/vscode';
 import {Logger} from './Logger';
+import CommandComponent, {CommandItem} from './editor-components/command';
 
 export default class AppIntegrator {
     private readonly commandFactory: CommandFactory;
     private readonly vscode: any;
+    private readonly commandComponent: CommandComponent;
 
     static create(vscode: any, logger: Logger) {
         const commandFactory = new CommandFactory(vscode, logger);
-        return new AppIntegrator(commandFactory, vscode);
+        const commandComponent = new CommandComponent(vscode.commands, logger);
+        return new AppIntegrator(commandFactory, vscode, commandComponent);
     }
 
-    constructor(commandFactory: CommandFactory, vscode: any) {
+    constructor(commandFactory: CommandFactory, vscode: any, commandComponent: CommandComponent) {
         this.commandFactory = commandFactory;
         this.vscode = vscode;
+        this.commandComponent = commandComponent;
     }
 
     integrate(context: ExtensionContextLike) {
         this.registerCommands(context);
-        this.registerTextEditorCommands(context);
         this.registerEventListeners(context);
         this.prepareExtensionEventsDrivenItems();
         this.broadcastReady();
@@ -36,33 +39,8 @@ export default class AppIntegrator {
     }
 
     private registerCommands(context: ExtensionContextLike) {
-        const factory = this.commandFactory;
-        const commandMap = new Map([
-            [`${Const.EXTENSION_ID}.highlightUsingRegex`, factory.createHighlightUsingRegex()],
-            [`${Const.EXTENSION_ID}.clearAllHighlight`, factory.createRemoveAllHighlightsCommand()],
-            [`${Const.EXTENSION_ID}.saveAllHighlights`, factory.createSaveAllHighlightsCommand()],
-            [`${Const.EXTENSION_ID}.toggleCaseSensitivity`, factory.createToggleCaseSensitivityCommand()],
-            [`${Const.EXTENSION_ID}.toggleModeForCaseSensitivity`, factory.createToggleCaseSensitivityModeCommand()],
-            [`${Const.EXTENSION_ID}.toggleWholeMatch`, factory.createToggleWholeMatchCommand()],
-            [`${Const.EXTENSION_ID}.toggleModeForWholeMatch`, factory.createToggleWholeMatchModeCommand()],
-            [`${Const.EXTENSION_ID}.unhighlight`, factory.createUnhighlightCommand()]
-        ]);
-        commandMap.forEach((command, commandName) => {
-            const disposable = this.vscode.commands.registerCommand(commandName, command.execute, command);
-            context.subscriptions.push(disposable);
-        });
-    }
-
-    private registerTextEditorCommands(context: ExtensionContextLike) {
-        const factory = this.commandFactory;
-        const commandMap = new Map([
-            [`${Const.EXTENSION_ID}.goToNextHighlight`, factory.createGoToNextHighlightCommand()],
-            [`${Const.EXTENSION_ID}.goToPreviousHighlight`, factory.createGoToPreviousHighlightCommand()],
-            [`${Const.EXTENSION_ID}.toggleHighlight`, factory.createToggleHighlightCommand()],
-            [`${Const.EXTENSION_ID}.updateHighlight`, factory.createUpdateHighlightCommand()]
-        ]);
-        commandMap.forEach((command, commandName) => {
-            const disposable = this.vscode.commands.registerTextEditorCommand(commandName, command.execute, command);
+        this.getCommands().forEach(command => {
+            const disposable = this.commandComponent.registerCommand(command);
             context.subscriptions.push(disposable);
         });
     }
@@ -77,4 +55,58 @@ export default class AppIntegrator {
         this.commandFactory.getEventBus().emit(Const.Event.EXTENSION_READY);
     }
 
+    private getCommands(): CommandItem[] {
+        const factory = this.commandFactory;
+        return [
+            {
+                name: `${Const.EXTENSION_ID}.highlightUsingRegex`,
+                command: factory.createHighlightUsingRegex(),
+                type: 'GENERAL'
+            }, {
+                name: `${Const.EXTENSION_ID}.clearAllHighlight`,
+                command: factory.createRemoveAllHighlightsCommand(),
+                type: 'GENERAL'
+            }, {
+                name: `${Const.EXTENSION_ID}.saveAllHighlights`,
+                command: factory.createSaveAllHighlightsCommand(),
+                type: 'GENERAL'
+            }, {
+                name: `${Const.EXTENSION_ID}.toggleCaseSensitivity`,
+                command: factory.createToggleCaseSensitivityCommand(),
+                type: 'GENERAL'
+            }, {
+                name: `${Const.EXTENSION_ID}.toggleModeForCaseSensitivity`,
+                command: factory.createToggleCaseSensitivityModeCommand(),
+                type: 'GENERAL'
+            }, {
+                name: `${Const.EXTENSION_ID}.toggleWholeMatch`,
+                command: factory.createToggleWholeMatchCommand(),
+                type: 'GENERAL'
+            }, {
+                name: `${Const.EXTENSION_ID}.toggleModeForWholeMatch`,
+                command: factory.createToggleWholeMatchModeCommand(),
+                type: 'GENERAL'
+            }, {
+                name: `${Const.EXTENSION_ID}.unhighlight`,
+                command: factory.createUnhighlightCommand(),
+                type: 'GENERAL'
+            }, {
+                name: `${Const.EXTENSION_ID}.goToNextHighlight`,
+                command: factory.createGoToNextHighlightCommand(),
+                type: 'TEXT_EDITOR'
+            }, {
+                name: `${Const.EXTENSION_ID}.goToPreviousHighlight`,
+                command: factory.createGoToPreviousHighlightCommand(),
+                type: 'TEXT_EDITOR'
+            }, {
+                name: `${Const.EXTENSION_ID}.toggleHighlight`,
+                command: factory.createToggleHighlightCommand(),
+                type: 'TEXT_EDITOR'
+            }, {
+                name: `${Const.EXTENSION_ID}.updateHighlight`,
+                command: factory.createUpdateHighlightCommand(),
+                type: 'TEXT_EDITOR'
+            }
+        ];
+    }
 }
