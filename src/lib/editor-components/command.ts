@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import {Disposable} from 'vscode';
 import {CommandLike} from './vscode';
-import CommandWrapper from '../command-wrapper';
+import {ManualTriggerCommand} from '../commands/command';
 import {Logger} from '../Logger';
 
 export type CommandType = 'GENERAL' | 'TEXT_EDITOR';
@@ -24,7 +24,7 @@ export default class CommandComponent {
 
     registerCommand(item: CommandItem): Disposable {
         const registerer = this.getCommandRegisterer(item.type);
-        const commandWrapper = new CommandWrapper(item.command, this.logger);
+        const commandWrapper = new ManualTriggerCommand(item.name, item.command, this.logger);
         return registerer(item.name, commandWrapper.execute, commandWrapper);
     }
 

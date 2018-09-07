@@ -1,4 +1,3 @@
-import CommandWrapper from './command-wrapper';
 import ConfigStore from './config-store';
 import ConfigTargetPicker from './config-target-picker';
 import Debouncer from './debouncer';
@@ -29,6 +28,7 @@ import AutoRefreshDecoration from './commands/auto-refresh-decoration';
 import AutoRefreshDecorationWithDelay from './commands/auto-refresh-decoration-with-delay';
 import {GoToNextHighlightCommand} from './commands/go-to-next-highlight';
 import {GoToPreviousHighlightCommand} from './commands/go-to-previous-highlight';
+import {AutoTriggerCommand} from './commands/command';
 
 const generateUuid = require('uuid/v4');
 const BASE_STATUS_BAR_PRIORITY = 100;
@@ -135,7 +135,7 @@ export default class CommandFactory {
     }
 
     private _wrapCommand(command: CommandLike) {
-        return new CommandWrapper(command, this.logger);
+        return new AutoTriggerCommand(command, this.logger);
     }
 
     createSavedHighlightsRestorer() {

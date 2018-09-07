@@ -1,8 +1,8 @@
 import {fromNullable, Option} from 'fp-ts/lib/Option';
 
-type ObjectMap<T> = {
-    [key: string]: T
-};
+export interface ObjectMap<T> {
+    [key: string]: T;
+}
 
 function toMap<T>(object: ObjectMap<T>): Map<string, T> {
     const tuples = Object.entries(object).reduce(
