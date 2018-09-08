@@ -1,4 +1,4 @@
-import {PatternType} from './entities/highlight';
+import {PatternType} from '../entities/highlight';
 
 const PATTERN_TYPE_MAP: Map<string, PatternType> = new Map([
     ['String', PatternType.STRING],

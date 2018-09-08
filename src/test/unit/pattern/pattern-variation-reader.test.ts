@@ -1,9 +1,9 @@
-import {mockType} from '../helpers/mock';
+import {mockType} from '../../helpers/mock';
 
-import PatternVariationReader from '../../lib/pattern-variation-reader';
-import PatternFactory from '../../lib/pattern-factory';
-import WindowComponent from '../../lib/editor-components/window';
-import MatchingModeRegistry from '../../lib/matching-mode-registry';
+import PatternVariationReader from '../../../lib/pattern/pattern-variation-reader';
+import PatternFactory from '../../../lib/pattern/pattern-factory';
+import WindowComponent from '../../../lib/editor-components/window';
+import MatchingModeRegistry from '../../../lib/matching-mode-registry';
 import {QuickPickItem} from 'vscode';
 import * as assert from 'assert';
 import {none, some} from 'fp-ts/lib/Option';

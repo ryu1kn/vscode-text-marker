@@ -1,4 +1,4 @@
-import {PatternAction} from '../const';
+import {PatternAction} from '../pattern/pattern-action';
 import HighlightPatternPicker from '../highlight-pattern-picker';
 import DecorationOperatorFactory from '../decoration-operator-factory';
 import {CommandLike} from '../editor-components/vscode';

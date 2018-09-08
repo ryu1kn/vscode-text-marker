@@ -1,6 +1,6 @@
-import {PatternAction} from '../../lib/const';
-import PatternConverter from '../../lib/pattern-converter';
-import StringPattern from '../../lib/patterns/string';
+import {PatternAction} from '../../../lib/pattern/pattern-action';
+import PatternConverter from '../../../lib/pattern/pattern-converter';
+import StringPattern from '../../../lib/pattern/string';
 import * as assert from 'assert';
 
 suite('PatternConverter', () => {

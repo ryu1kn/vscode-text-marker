@@ -1,5 +1,5 @@
 import {TextEditorDecorationType} from 'vscode';
-import Pattern from '../patterns/pattern';
+import Pattern from '../pattern/pattern';
 
 export interface PreRegisteredDecoration {
     pattern: Pattern;

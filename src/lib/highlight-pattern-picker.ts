@@ -1,7 +1,7 @@
 import DecorationRegistry from './decoration-registry';
 import WindowComponent, {QuickPickItem} from './editor-components/window';
 import {Decoration} from './entities/decoration';
-import Pattern from './patterns/pattern';
+import Pattern from './pattern/pattern';
 
 interface HighlightPatternQuickPickItem extends QuickPickItem {
     id: string;

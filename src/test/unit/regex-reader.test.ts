@@ -2,7 +2,7 @@ import {mock, mockType, when} from '../helpers/mock';
 
 import RegexReader from '../../lib/regex-reader';
 import WindowComponent from '../../lib/editor-components/window';
-import RegexPattern from '../../lib/patterns/regex';
+import RegexPattern from '../../lib/pattern/regex';
 import MatchingModeRegistry from '../../lib/matching-mode-registry';
 import * as assert from 'assert';
 import {some} from 'fp-ts/lib/Option';

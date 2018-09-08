@@ -1,7 +1,7 @@
-import RegexPattern from './patterns/regex';
-import StringPattern from './patterns/string';
-import MatchingModeRegistry from './matching-mode-registry';
-import Pattern from './patterns/pattern';
+import RegexPattern from './regex';
+import StringPattern from './string';
+import MatchingModeRegistry from '../matching-mode-registry';
+import Pattern from './pattern';
 
 export type PatternCreateRequest = {
     phrase: string;

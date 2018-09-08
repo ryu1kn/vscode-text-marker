@@ -6,7 +6,7 @@ import DecorationRegistry from './decoration-registry';
 import HighlightPatternPicker from './highlight-pattern-picker';
 import HighlightUsingRegexCommand from './commands/highlight-using-regex';
 import MatchingModeRegistry from './matching-mode-registry';
-import PatternVariationReader from './pattern-variation-reader';
+import PatternVariationReader from './pattern/pattern-variation-reader';
 import RemoveAllHighlightsCommand from './commands/remove-all-highlights';
 import SaveAllHighlightsCommand from './commands/save-all-highlights';
 import SavedHighlightsRestorer from './saved-highlights-restorer';

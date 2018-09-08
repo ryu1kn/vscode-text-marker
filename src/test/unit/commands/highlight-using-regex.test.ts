@@ -2,7 +2,7 @@ import {mock, verify, when} from '../../helpers/mock';
 import HighlightUsingRegexCommand from '../../../lib/commands/highlight-using-regex';
 import DecorationOperatorFactory from '../../../lib/decoration-operator-factory';
 import DecorationOperator from '../../../lib/decoration-operator';
-import RegexPattern from '../../../lib/patterns/regex';
+import RegexPattern from '../../../lib/pattern/regex';
 import MatchingModeRegistry from '../../../lib/matching-mode-registry';
 import WindowComponent from '../../../lib/editor-components/window';
 import {none, some} from 'fp-ts/lib/Option';

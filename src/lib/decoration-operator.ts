@@ -1,10 +1,10 @@
 import DecorationRegistry from './decoration-registry';
 import TextDecorator from './text-decorator';
-import PatternConverter from './pattern-converter';
+import PatternConverter from './pattern/pattern-converter';
 import TextEditor from './text-editor';
-import Pattern from './patterns/pattern';
+import Pattern from './pattern/pattern';
 import {Decoration} from './entities/decoration';
-import {PatternAction} from './const';
+import {PatternAction} from './pattern/pattern-action';
 
 export default class DecorationOperator {
     private readonly editors: TextEditor[];

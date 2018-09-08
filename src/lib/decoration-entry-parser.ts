@@ -1,6 +1,6 @@
-import {getInternalName} from './pattern-type-name';
+import {getInternalName} from './pattern/pattern-type-name';
 import {Highlight} from './entities/highlight';
-import {PatternCreateRequest} from './pattern-factory';
+import {PatternCreateRequest} from './pattern/pattern-factory';
 
 export default class DecorationEntryParser {
 

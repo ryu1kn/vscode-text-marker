@@ -1,5 +1,5 @@
 import DecorationOperatorFactory from '../decoration-operator-factory';
-import PatternFactory from '../pattern-factory';
+import PatternFactory from '../pattern/pattern-factory';
 import TextLocationRegistry from '../text-location-registry';
 import TextEditor from '../text-editor';
 import {CommandLike} from '../editor-components/vscode';

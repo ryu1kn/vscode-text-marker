@@ -6,7 +6,7 @@ import TextLocationRegistry from '../../../lib/text-location-registry';
 import MatchingModeRegistry from '../../../lib/matching-mode-registry';
 import DecorationRegistry from '../../../lib/decoration-registry';
 import WindowComponent from '../../../lib/editor-components/window';
-import StringPattern from '../../../lib/patterns/string';
+import StringPattern from '../../../lib/pattern/string';
 import {Decoration} from '../../../lib/entities/decoration';
 import {TextEditorDecorationType} from 'vscode';
 import {some} from 'fp-ts/lib/Option';

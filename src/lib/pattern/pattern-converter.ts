@@ -1,6 +1,6 @@
 
-import {PatternAction} from './const';
-import Pattern from './patterns/pattern';
+import {PatternAction} from './pattern-action';
+import Pattern from './pattern';
 
 export default class PatternConverter {
 

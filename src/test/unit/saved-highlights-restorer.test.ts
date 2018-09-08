@@ -4,7 +4,7 @@ import SavedHighlightsRestorer from '../../lib/saved-highlights-restorer';
 import ConfigStore from '../../lib/config-store';
 import DecorationOperatorFactory from '../../lib/decoration-operator-factory';
 import DecorationOperator from '../../lib/decoration-operator';
-import StringPattern from '../../lib/patterns/string';
+import StringPattern from '../../lib/pattern/string';
 import MatchingModeRegistry from '../../lib/matching-mode-registry';
 
 const EventEmitter = require('events');

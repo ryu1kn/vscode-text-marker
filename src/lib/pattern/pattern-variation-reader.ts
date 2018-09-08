@@ -1,6 +1,6 @@
-import {PatternAction} from './const';
-import WindowComponent, {QuickPickItem} from './editor-components/window';
-import Pattern from './patterns/pattern';
+import {PatternAction} from './pattern-action';
+import WindowComponent, {QuickPickItem} from '../editor-components/window';
+import Pattern from './pattern';
 import {none, Option, some} from 'fp-ts/lib/Option';
 
 interface PatternUpdateActionQuickPickItem extends QuickPickItem {

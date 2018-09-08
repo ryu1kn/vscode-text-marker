@@ -3,7 +3,7 @@ import DecorationEntryParser from './decoration-entry-parser';
 import ConfigStore from './config-store';
 import DecorationOperatorFactory from './decoration-operator-factory';
 import EventEmitter = NodeJS.EventEmitter;
-import PatternFactory from './pattern-factory';
+import PatternFactory from './pattern/pattern-factory';
 import {Highlight} from './entities/highlight';
 import DecorationOperator from './decoration-operator';
 import MatchingModeRegistry from './matching-mode-registry';

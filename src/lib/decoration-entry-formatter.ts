@@ -1,4 +1,4 @@
-import {getExternalName} from './pattern-type-name';
+import {getExternalName} from './pattern/pattern-type-name';
 import {Highlight} from './entities/highlight';
 import {Decoration} from './entities/decoration';
 

@@ -1,7 +1,7 @@
-import PatternFactory from './pattern-factory';
+import PatternFactory from './pattern/pattern-factory';
 import WindowComponent from './editor-components/window';
 import MatchingModeRegistry from './matching-mode-registry';
-import Pattern from './patterns/pattern';
+import Pattern from './pattern/pattern';
 import {Option} from 'fp-ts/lib/Option';
 
 export default class RegexReader {

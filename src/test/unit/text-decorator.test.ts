@@ -1,7 +1,7 @@
 import {mock, mockMethods, mockType, verify, wrapVerify} from '../helpers/mock';
 
 import TextDecorator from '../../lib/text-decorator';
-import PatternFactory from '../../lib/pattern-factory';
+import PatternFactory from '../../lib/pattern/pattern-factory';
 import TextLocationRegistry from '../../lib/text-location-registry';
 import TextEditor from '../../lib/text-editor';
 import {Decoration} from '../../lib/entities/decoration';

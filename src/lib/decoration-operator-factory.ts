@@ -1,5 +1,5 @@
 import DecorationOperator from './decoration-operator';
-import PatternConverter from './pattern-converter';
+import PatternConverter from './pattern/pattern-converter';
 import DecorationRegistry from './decoration-registry';
 import TextDecorator from './text-decorator';
 import WindowComponent from './editor-components/window';

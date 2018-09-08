@@ -4,7 +4,7 @@ import TextEditor from '../text-editor';
 import DecorationRegistry from '../decoration-registry';
 import WindowComponent from '../editor-components/window';
 import DecorationOperatorFactory from '../decoration-operator-factory';
-import PatternFactory from '../pattern-factory';
+import PatternFactory from '../pattern/pattern-factory';
 import MatchingModeRegistry from '../matching-mode-registry';
 import {FlatRange} from '../models/flat-range';
 import {Option} from 'fp-ts/lib/Option';

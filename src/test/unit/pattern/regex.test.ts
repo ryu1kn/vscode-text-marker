@@ -1,5 +1,5 @@
-import RegexPattern from '../../../lib/patterns/regex';
-import StringPattern from '../../../lib/patterns/string';
+import RegexPattern from '../../../lib/pattern/regex';
+import StringPattern from '../../../lib/pattern/string';
 import * as assert from 'assert';
 
 suite('RegexPattern', () => {

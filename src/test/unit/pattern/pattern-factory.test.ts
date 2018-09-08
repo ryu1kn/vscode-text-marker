@@ -1,11 +1,11 @@
-import {mockType} from '../helpers/mock';
+import {mockType} from '../../helpers/mock';
 
-import PatternFactory from '../../lib/pattern-factory';
-import StringPattern from '../../lib/patterns/string';
-import RegexPattern from '../../lib/patterns/regex';
-import MatchingModeRegistry from '../../lib/matching-mode-registry';
+import PatternFactory from '../../../lib/pattern/pattern-factory';
+import StringPattern from '../../../lib/pattern/string';
+import RegexPattern from '../../../lib/pattern/regex';
+import MatchingModeRegistry from '../../../lib/matching-mode-registry';
 import * as assert from 'assert';
-import {assertInstanceOf} from '../helpers/assertions';
+import {assertInstanceOf} from '../../helpers/assertions';
 
 suite('PatternFactory', () => {
 

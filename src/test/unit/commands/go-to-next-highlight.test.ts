@@ -3,7 +3,7 @@ import {mock, mockMethods, mockType, verify, when} from '../../helpers/mock';
 import TextLocationRegistry from '../../../lib/text-location-registry';
 import {GoToNextHighlightCommand} from '../../../lib/commands/go-to-next-highlight';
 import MatchingModeRegistry from '../../../lib/matching-mode-registry';
-import StringPattern from '../../../lib/patterns/string';
+import StringPattern from '../../../lib/pattern/string';
 import {TextEditorDecorationType} from 'vscode';
 import DecorationRegistry from '../../../lib/decoration-registry';
 import {Decoration} from '../../../lib/entities/decoration';
