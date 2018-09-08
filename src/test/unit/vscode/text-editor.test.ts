@@ -1,6 +1,6 @@
-import TextEditor from '../../lib/text-editor';
+import TextEditor from '../../../lib/vscode/text-editor';
 import {Position, Range, Selection, TextDocument, TextEditor as VsTextEditor, TextEditorRevealType} from 'vscode';
-import {mockMethods, verify, when} from '../helpers/mock';
+import {mockMethods, verify, when} from '../../helpers/mock';
 import * as assert from 'assert';
 
 suite('TextEditor', () => {

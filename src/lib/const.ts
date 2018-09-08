@@ -9,4 +9,3 @@ export enum Event {
     MATCHING_MODE_INITIALISED = 'matching-mode-initialised',
     WHOLE_MATCH_MODE_TOGGLED = 'whole-match-mode-toggled'
 }
-

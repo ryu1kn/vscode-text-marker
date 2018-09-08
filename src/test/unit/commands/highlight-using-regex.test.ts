@@ -4,7 +4,7 @@ import DecorationOperatorFactory from '../../../lib/decoration/decoration-operat
 import DecorationOperator from '../../../lib/decoration/decoration-operator';
 import RegexPattern from '../../../lib/pattern/regex';
 import MatchingModeRegistry from '../../../lib/matching-mode-registry';
-import WindowComponent from '../../../lib/editor-components/window';
+import WindowComponent from '../../../lib/vscode/window';
 import {none, some} from 'fp-ts/lib/Option';
 
 suite('HighlightUsingRegexCommand', () => {

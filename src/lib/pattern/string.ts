@@ -1,5 +1,5 @@
 import Pattern, {PatternParams} from './pattern';
-import {FlatRange} from '../models/flat-range';
+import {FlatRange} from '../vscode/flat-range';
 
 export default class StringPattern extends Pattern {
 

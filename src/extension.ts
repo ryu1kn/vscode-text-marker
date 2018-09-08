@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import AppIntegrator from './lib/app-integrator';
 import {getVsTelemetryReporterCreator} from './lib/telemetry/vscode-telemetry-reporter';
 import {join} from 'path';
-import WorkspaceAdaptor from './lib/editor-components/workspace';
+import WorkspaceAdaptor from './lib/vscode/workspace';
 import {TelemetryReporterLocator} from './lib/telemetry/telemetry-reporter-locator';
 
 const workspace = new WorkspaceAdaptor(vscode.workspace);

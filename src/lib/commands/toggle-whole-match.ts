@@ -1,7 +1,7 @@
 import {PatternAction} from '../pattern/pattern-action';
 import HighlightPatternPicker from '../highlight-pattern-picker';
 import DecorationOperatorFactory from '../decoration/decoration-operator-factory';
-import {CommandLike} from '../editor-components/vscode';
+import {CommandLike} from '../vscode/vscode';
 
 export default class ToggleWholeMatchCommand implements CommandLike {
     private readonly decorationOperatorFactory: DecorationOperatorFactory;

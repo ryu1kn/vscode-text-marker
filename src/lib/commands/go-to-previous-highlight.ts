@@ -1,7 +1,7 @@
 import TextLocationRegistry from '../text-location-registry';
-import TextEditor from '../text-editor';
+import TextEditor from '../vscode/text-editor';
 import DecorationRegistry from '../decoration/decoration-registry';
-import WindowComponent from '../editor-components/window';
+import WindowComponent from '../vscode/window';
 import MatchingModeRegistry from '../matching-mode-registry';
 import {GoToHighlightCommand} from './go-to-highlight';
 

@@ -1,12 +1,12 @@
-import {CommandLike} from '../editor-components/vscode';
+import {CommandLike} from '../vscode/vscode';
 import TextLocationRegistry from '../text-location-registry';
-import TextEditor from '../text-editor';
+import TextEditor from '../vscode/text-editor';
 import DecorationRegistry from '../decoration/decoration-registry';
-import WindowComponent from '../editor-components/window';
+import WindowComponent from '../vscode/window';
 import DecorationOperatorFactory from '../decoration/decoration-operator-factory';
 import PatternFactory from '../pattern/pattern-factory';
 import MatchingModeRegistry from '../matching-mode-registry';
-import {FlatRange} from '../models/flat-range';
+import {FlatRange} from '../vscode/flat-range';
 import {Option} from 'fp-ts/lib/Option';
 
 export abstract class GoToHighlightCommand implements CommandLike {

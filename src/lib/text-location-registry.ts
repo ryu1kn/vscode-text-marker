@@ -1,6 +1,6 @@
-import {FlatRange} from './models/flat-range';
+import {FlatRange} from './vscode/flat-range';
 import {Option} from 'fp-ts/lib/Option';
-import {OptionMap} from './common/collections';
+import {OptionMap} from './common/collection';
 import {findFirst} from 'fp-ts/lib/Array';
 
 export default class TextLocationRegistry {

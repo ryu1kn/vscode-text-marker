@@ -2,10 +2,10 @@ import {any, mock, mockType, verify, when, wrapVerify} from '../../helpers/mock'
 
 import DecorationOperator from '../../../lib/decoration/decoration-operator';
 import PatternConverter from '../../../lib/pattern/pattern-converter';
-import TextEditor from '../../../lib/text-editor';
+import TextEditor from '../../../lib/vscode/text-editor';
 import DecorationRegistry from '../../../lib/decoration/decoration-registry';
 import StringPattern from '../../../lib/pattern/string';
-import TextDecorator from '../../../lib/text-decorator';
+import TextDecorator from '../../../lib/decoration/text-decorator';
 import {Decoration} from '../../../lib/entities/decoration';
 import {TextEditorDecorationType} from 'vscode';
 import {some} from 'fp-ts/lib/Option';

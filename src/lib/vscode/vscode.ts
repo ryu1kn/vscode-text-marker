@@ -1,4 +1,4 @@
-import TextEditor from '../text-editor';
+import TextEditor from './text-editor';
 
 export type ExtensionContextLike = {
     subscriptions: any[]

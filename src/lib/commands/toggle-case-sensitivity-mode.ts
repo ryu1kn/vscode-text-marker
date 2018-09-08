@@ -1,5 +1,5 @@
 import MatchingModeRegistry from '../matching-mode-registry';
-import {CommandLike} from '../editor-components/vscode';
+import {CommandLike} from '../vscode/vscode';
 
 export default class ToggleCaseSensitivityModeCommand implements CommandLike {
     private readonly matchingModeRegistry: MatchingModeRegistry;

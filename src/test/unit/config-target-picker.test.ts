@@ -1,7 +1,7 @@
 import {any, mock, when} from '../helpers/mock';
 
 import ConfigTargetPicker from '../../lib/config-target-picker';
-import WindowComponent from '../../lib/editor-components/window';
+import WindowComponent from '../../lib/vscode/window';
 import * as assert from 'assert';
 
 suite('ConfigTargetPicker', () => {

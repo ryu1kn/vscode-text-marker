@@ -1,6 +1,6 @@
-import {mockType} from '../helpers/mock';
+import {mockType} from '../../helpers/mock';
 
-import SelectedTextFinder from '../../lib/selected-text-finder';
+import SelectedTextFinder from '../../../lib/vscode/selected-text-finder';
 import * as vscode from 'vscode';
 import * as assert from 'assert';
 

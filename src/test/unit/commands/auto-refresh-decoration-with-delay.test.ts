@@ -1,9 +1,9 @@
 import {any, callback, contains, mock, mockMethods, mockType, verify, when} from '../../helpers/mock';
 
-import WindowComponent from '../../../lib/editor-components/window';
+import WindowComponent from '../../../lib/vscode/window';
 import Debouncer from '../../../lib/debouncer';
 import DecorationOperatorFactory from '../../../lib/decoration/decoration-operator-factory';
-import TextEditor from '../../../lib/text-editor';
+import TextEditor from '../../../lib/vscode/text-editor';
 import DecorationOperator from '../../../lib/decoration/decoration-operator';
 import {Logger} from '../../../lib/Logger';
 import AutoRefreshDecorationWithDelay from '../../../lib/commands/auto-refresh-decoration-with-delay';

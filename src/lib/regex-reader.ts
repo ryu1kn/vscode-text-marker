@@ -1,5 +1,5 @@
 import PatternFactory from './pattern/pattern-factory';
-import WindowComponent from './editor-components/window';
+import WindowComponent from './vscode/window';
 import MatchingModeRegistry from './matching-mode-registry';
 import Pattern from './pattern/pattern';
 import {Option} from 'fp-ts/lib/Option';

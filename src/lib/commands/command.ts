@@ -1,7 +1,7 @@
-import {CommandLike} from '../editor-components/vscode';
+import {CommandLike} from '../vscode/vscode';
 import {Logger} from '../Logger';
 import * as vscode from 'vscode';
-import TextEditor from '../text-editor';
+import TextEditor from '../vscode/text-editor';
 import {TelemetryReporter} from '../telemetry/telemetry-reporter';
 import {TelemetryReporterLocator} from '../telemetry/telemetry-reporter-locator';
 

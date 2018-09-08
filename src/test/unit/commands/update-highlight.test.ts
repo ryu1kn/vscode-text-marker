@@ -6,7 +6,7 @@ import DecorationRegistry from '../../../lib/decoration/decoration-registry';
 import PatternVariationReader from '../../../lib/pattern/pattern-variation-reader';
 import StringPattern from '../../../lib/pattern/string';
 import TextLocationRegistry from '../../../lib/text-location-registry';
-import TextEditor from '../../../lib/text-editor';
+import TextEditor from '../../../lib/vscode/text-editor';
 import DecorationOperator from '../../../lib/decoration/decoration-operator';
 import {none, some} from 'fp-ts/lib/Option';
 

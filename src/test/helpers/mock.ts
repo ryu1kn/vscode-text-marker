@@ -1,6 +1,8 @@
 import * as td from 'testdouble';
 import * as assert from 'assert';
 
+export type AnyFunction = (...args: any[]) => any;
+
 export const stubReturns = (...args: any[]) => () => args.shift();
 
 export const when = td.when;

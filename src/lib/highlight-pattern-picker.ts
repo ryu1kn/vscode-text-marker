@@ -1,5 +1,5 @@
 import DecorationRegistry from './decoration/decoration-registry';
-import WindowComponent, {QuickPickItem} from './editor-components/window';
+import WindowComponent, {QuickPickItem} from './vscode/window';
 import {Decoration} from './entities/decoration';
 import Pattern from './pattern/pattern';
 

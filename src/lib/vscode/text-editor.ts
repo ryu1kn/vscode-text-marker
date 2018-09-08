@@ -7,7 +7,7 @@ import {
     TextEditorDecorationType,
     TextEditorRevealType
 } from 'vscode';
-import {FlatRange} from './models/flat-range';
+import {FlatRange} from './flat-range';
 
 export default class TextEditor {
     private readonly editor: VsTextEditor;

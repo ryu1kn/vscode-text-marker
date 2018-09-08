@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import TextDecorationCollection from '../text-decoration-collection';
+import TextDecorationCollection from './text-decoration-collection';
 import ConfigStore from '../config-store';
 import ColourRegistry from '../colour-registry';
 import Pattern from '../pattern/pattern';

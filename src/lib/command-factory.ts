@@ -20,10 +20,10 @@ import ToggleWholeMatchModeButton from './statusbar-buttons/toggle-whole-match-m
 import ToggleWholeMatchModeCommand from './commands/toggle-whole-match-mode';
 import UnhighlightCommand from './commands/unhighlight';
 import UpdateHighlightCommand from './commands/update-highlight';
-import WindowComponent from './editor-components/window';
+import WindowComponent from './vscode/window';
 import {EventEmitter} from 'events';
 import {Logger} from './Logger';
-import {CommandLike} from './editor-components/vscode';
+import {CommandLike} from './vscode/vscode';
 import AutoRefreshDecoration from './commands/auto-refresh-decoration';
 import AutoRefreshDecorationWithDelay from './commands/auto-refresh-decoration-with-delay';
 import {GoToNextHighlightCommand} from './commands/go-to-next-highlight';

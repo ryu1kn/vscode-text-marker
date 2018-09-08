@@ -1,4 +1,4 @@
-import WindowComponent, {QuickPickItem} from './editor-components/window';
+import WindowComponent, {QuickPickItem} from './vscode/window';
 
 const ConfigurationTarget = {
     GLOBAL: true,

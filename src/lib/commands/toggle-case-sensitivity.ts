@@ -1,7 +1,7 @@
 import {PatternAction} from '../pattern/pattern-action';
 import DecorationOperatorFactory from '../decoration/decoration-operator-factory';
 import HighlightPatternPicker from '../highlight-pattern-picker';
-import {CommandLike} from '../editor-components/vscode';
+import {CommandLike} from '../vscode/vscode';
 
 export default class ToggleCaseSensitivityCommand implements CommandLike {
     private readonly decorationOperatorFactory: DecorationOperatorFactory;

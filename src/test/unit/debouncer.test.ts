@@ -1,8 +1,7 @@
-import {mockFunction, mockType, verify} from '../helpers/mock';
+import {AnyFunction, mockFunction, mockType, verify} from '../helpers/mock';
 
 import Debouncer from '../../lib/debouncer';
 import ConfigStore from '../../lib/config-store';
-import {AnyFunction} from '../../lib/types';
 
 suite('Debouncer', () => {
 

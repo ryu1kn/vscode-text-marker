@@ -1,4 +1,4 @@
-import {FlatRange} from '../models/flat-range';
+import {FlatRange} from '../vscode/flat-range';
 
 export type PatternParams = {
     phrase: string;

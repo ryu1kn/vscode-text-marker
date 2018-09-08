@@ -2,7 +2,7 @@ import {mockType} from '../../helpers/mock';
 
 import PatternVariationReader from '../../../lib/pattern/pattern-variation-reader';
 import PatternFactory from '../../../lib/pattern/pattern-factory';
-import WindowComponent from '../../../lib/editor-components/window';
+import WindowComponent from '../../../lib/vscode/window';
 import MatchingModeRegistry from '../../../lib/matching-mode-registry';
 import {QuickPickItem} from 'vscode';
 import * as assert from 'assert';

@@ -2,9 +2,9 @@ import {contains, mockMethods, mockType, verify} from '../helpers/mock';
 
 import {AutoTriggerCommand} from '../../lib/commands/command';
 import {Logger} from '../../lib/Logger';
-import {CommandLike} from '../../lib/editor-components/vscode';
+import {CommandLike} from '../../lib/vscode/vscode';
 import * as vscode from 'vscode';
-import TextEditor from '../../lib/text-editor';
+import TextEditor from '../../lib/vscode/text-editor';
 
 suite('AutoTriggerCommand', () => {
 

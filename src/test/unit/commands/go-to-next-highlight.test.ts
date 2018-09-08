@@ -1,4 +1,4 @@
-import TextEditor from '../../../lib/text-editor';
+import TextEditor from '../../../lib/vscode/text-editor';
 import {mock, mockMethods, mockType, verify, when} from '../../helpers/mock';
 import TextLocationRegistry from '../../../lib/text-location-registry';
 import {GoToNextHighlightCommand} from '../../../lib/commands/go-to-next-highlight';
@@ -7,7 +7,7 @@ import StringPattern from '../../../lib/pattern/string';
 import {TextEditorDecorationType} from 'vscode';
 import DecorationRegistry from '../../../lib/decoration/decoration-registry';
 import {Decoration} from '../../../lib/entities/decoration';
-import WindowComponent from '../../../lib/editor-components/window';
+import WindowComponent from '../../../lib/vscode/window';
 import * as assert from 'assert';
 
 suite('Go-to-next-highlight command', function () {

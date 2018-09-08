@@ -1,5 +1,5 @@
 import {PatternAction} from './pattern-action';
-import WindowComponent, {QuickPickItem} from '../editor-components/window';
+import WindowComponent, {QuickPickItem} from '../vscode/window';
 import Pattern from './pattern';
 import {none, Option, some} from 'fp-ts/lib/Option';
 

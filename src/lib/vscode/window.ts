@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import {InputBoxOptions, QuickPickOptions} from 'vscode';
-import TextEditor from '../text-editor';
+import TextEditor from './text-editor';
 import {fromPredicate, Option} from 'fp-ts/lib/Option';
 
 type QuickPickItemWithoutDescription = Pick<vscode.QuickPickItem, Exclude<keyof vscode.QuickPickItem, 'description'>>;

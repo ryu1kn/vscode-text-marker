@@ -1,6 +1,6 @@
-import TextLocationRegistry from './text-location-registry';
-import TextEditor from './text-editor';
-import {Decoration} from './entities/decoration';
+import TextLocationRegistry from '../text-location-registry';
+import TextEditor from '../vscode/text-editor';
+import {Decoration} from '../entities/decoration';
 
 export default class TextDecorator {
     private readonly textLocationRegistry: TextLocationRegistry;

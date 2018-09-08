@@ -1,12 +1,12 @@
-import {mock, mockMethods, mockType, verify, wrapVerify} from '../helpers/mock';
+import {mock, mockMethods, mockType, verify, wrapVerify} from '../../helpers/mock';
 
-import TextDecorator from '../../lib/text-decorator';
-import PatternFactory from '../../lib/pattern/pattern-factory';
-import TextLocationRegistry from '../../lib/text-location-registry';
-import TextEditor from '../../lib/text-editor';
-import {Decoration} from '../../lib/entities/decoration';
+import TextDecorator from '../../../lib/decoration/text-decorator';
+import PatternFactory from '../../../lib/pattern/pattern-factory';
+import TextLocationRegistry from '../../../lib/text-location-registry';
+import TextEditor from '../../../lib/vscode/text-editor';
+import {Decoration} from '../../../lib/entities/decoration';
 import {TextEditorDecorationType} from 'vscode';
-import MatchingModeRegistry from '../../lib/matching-mode-registry';
+import MatchingModeRegistry from '../../../lib/matching-mode-registry';
 
 suite('TextDecorator', () => {
 

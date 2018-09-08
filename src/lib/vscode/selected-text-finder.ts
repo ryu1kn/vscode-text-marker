@@ -1,4 +1,3 @@
-
 // TODO: consider selectionS
 import {TextEditor as VsTextEditor} from 'vscode';
 

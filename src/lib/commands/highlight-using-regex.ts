@@ -1,8 +1,8 @@
 import DecorationOperatorFactory from '../decoration/decoration-operator-factory';
 import RegexReader from '../regex-reader';
-import {CommandLike} from '../editor-components/vscode';
+import {CommandLike} from '../vscode/vscode';
 import MatchingModeRegistry from '../matching-mode-registry';
-import WindowComponent from '../editor-components/window';
+import WindowComponent from '../vscode/window';
 
 export default class HighlightUsingRegexCommand implements CommandLike {
     private readonly decorationOperatorFactory: DecorationOperatorFactory;

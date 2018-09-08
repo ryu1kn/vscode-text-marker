@@ -1,4 +1,4 @@
-import {ObjectMap} from '../common/collections';
+import {ObjectMap} from '../common/collection';
 
 export interface VsTelemetryReporterLike {
     sendTelemetryEvent(eventName: string, properties?: ObjectMap<string>, measurements?: ObjectMap<number>): void;

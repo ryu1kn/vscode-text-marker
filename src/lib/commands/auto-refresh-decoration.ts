@@ -1,5 +1,5 @@
-import TextEditor from '../text-editor';
-import {CommandLike} from '../editor-components/vscode';
+import TextEditor from '../vscode/text-editor';
+import {CommandLike} from '../vscode/vscode';
 import DecorationOperatorFactory from '../decoration/decoration-operator-factory';
 
 export default class AutoRefreshDecoration implements CommandLike {
