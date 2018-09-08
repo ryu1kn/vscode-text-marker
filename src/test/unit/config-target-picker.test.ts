@@ -11,12 +11,10 @@ suite('ConfigTargetPicker', () => {
         when(windowComponent.showQuickPick(
             [{
                 label: 'Global',
-                value: true,
-                description: ''
+                value: true
             }, {
                 label: 'Workspace',
-                value: false,
-                description: ''
+                value: false
             }],
             {placeHolder: 'Select which scope of settings to save highlights to'}
         )).thenResolve({label: 'Global', value: true});

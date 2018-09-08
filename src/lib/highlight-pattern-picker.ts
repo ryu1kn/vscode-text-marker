@@ -1,6 +1,5 @@
 import DecorationRegistry from './decoration-registry';
-import WindowComponent from './editor-components/window';
-import {QuickPickItem} from 'vscode';
+import WindowComponent, {QuickPickItem} from './editor-components/window';
 import {Decoration} from './entities/decoration';
 import Pattern from './patterns/pattern';
 
@@ -36,8 +35,7 @@ export default class HighlightPatternPicker {
         return decorations.map(decoration => ({
             id: decoration.id,
             label: decoration.pattern.displayText,
-            detail: this.buildDetail(decoration.pattern),
-            description: ''
+            detail: this.buildDetail(decoration.pattern)
         }));
     }
 

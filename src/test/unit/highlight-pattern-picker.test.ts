@@ -16,8 +16,8 @@ suite('HighlightPatternPicker', () => {
         const windowComponent = mock(WindowComponent);
         when(windowComponent.showQuickPick(
             [
-                {label: 'TEXT_1', detail: 'String', id: 'DECORATION_ID_1', description: ''},
-                {label: '/TEXT_2/i', detail: 'RegExp', id: 'DECORATION_ID_2', description: ''}
+                {label: 'TEXT_1', detail: 'String', id: 'DECORATION_ID_1'},
+                {label: '/TEXT_2/i', detail: 'RegExp', id: 'DECORATION_ID_2'}
             ],
             {placeHolder: 'PLACEHOLDER_MESSAGE'}
         )).thenResolve({
@@ -66,8 +66,8 @@ suite('HighlightPatternPicker', () => {
 
         verify(windowComponent.showQuickPick(
             [
-                {label: 'TEXT_1', detail: 'String [Aa]', id: 'DECORATION_ID_1', description: ''},
-                {label: '/TEXT_2/', detail: 'RegExp [Aa]', id: 'DECORATION_ID_2', description: ''}
+                {label: 'TEXT_1', detail: 'String [Aa]', id: 'DECORATION_ID_1'},
+                {label: '/TEXT_2/', detail: 'RegExp [Aa]', id: 'DECORATION_ID_2'}
             ],
             {placeHolder: 'PLACE_HOLDER_TEXT'}
         ));
@@ -90,7 +90,7 @@ suite('HighlightPatternPicker', () => {
         await picker.pick('PLACE_HOLDER_TEXT');
 
         verify(windowComponent.showQuickPick(
-            [{label: '/TEXT/i', detail: 'RegExp', id: 'DECORATION_ID', description: ''}],
+            [{label: '/TEXT/i', detail: 'RegExp', id: 'DECORATION_ID'}],
             {placeHolder: 'PLACE_HOLDER_TEXT'}
         ));
     });
@@ -111,7 +111,7 @@ suite('HighlightPatternPicker', () => {
         await picker.pick('PLACE_HOLDER_TEXT');
 
         verify(windowComponent.showQuickPick(
-            [{label: 'TEXT', detail: 'String [Aa] [Ab|]', id: 'DECORATION_ID', description: ''}],
+            [{label: 'TEXT', detail: 'String [Aa] [Ab|]', id: 'DECORATION_ID'}],
             {placeHolder: 'PLACE_HOLDER_TEXT'}
         ));
     });

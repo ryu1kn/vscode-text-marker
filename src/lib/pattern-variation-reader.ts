@@ -1,6 +1,5 @@
 import {PatternAction} from './const';
-import WindowComponent from './editor-components/window';
-import {QuickPickItem} from 'vscode';
+import WindowComponent, {QuickPickItem} from './editor-components/window';
 import Pattern from './patterns/pattern';
 import {none, Option, some} from 'fp-ts/lib/Option';
 
@@ -51,8 +50,7 @@ export default class PatternVariationReader {
         const label = pattern.ignoreCase ? 'Case Sensitive' : 'Case Insensitive';
         return {
             label: `Change to ${label}`,
-            actionId: PatternAction.TOGGLE_CASE_SENSITIVITY,
-            description: ''
+            actionId: PatternAction.TOGGLE_CASE_SENSITIVITY
         };
     }
 
@@ -60,8 +58,7 @@ export default class PatternVariationReader {
         const label = pattern.wholeMatch ? 'Partial Match' : 'Whole Match';
         return {
             label: `Change to ${label}`,
-            actionId: PatternAction.TOGGLE_WHOLE_MATCH,
-            description: ''
+            actionId: PatternAction.TOGGLE_WHOLE_MATCH
         };
     }
 
@@ -69,8 +66,7 @@ export default class PatternVariationReader {
         const label = pattern.type === 'RegExp' ? 'RegExp Pattern' : 'Text Pattern';
         return {
             label: `Update ${label}`,
-            actionId: PatternAction.UPDATE_PHRASE,
-            description: ''
+            actionId: PatternAction.UPDATE_PHRASE
         };
     }
 

@@ -1,5 +1,4 @@
-import WindowComponent from './editor-components/window';
-import {QuickPickItem} from 'vscode';
+import WindowComponent, {QuickPickItem} from './editor-components/window';
 
 const ConfigurationTarget = {
     GLOBAL: true,
@@ -28,13 +27,11 @@ export default class ConfigurationTargetPicker {
         return [
             {
                 label: 'Global',
-                value: ConfigurationTarget.GLOBAL,
-                description: ''
+                value: ConfigurationTarget.GLOBAL
             },
             {
                 label: 'Workspace',
-                value: ConfigurationTarget.WORKSPACE,
-                description: ''
+                value: ConfigurationTarget.WORKSPACE
             }
         ];
     }

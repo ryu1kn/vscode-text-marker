@@ -3,6 +3,12 @@ import {InputBoxOptions, QuickPickOptions} from 'vscode';
 import TextEditor from '../text-editor';
 import {fromPredicate, Option} from 'fp-ts/lib/Option';
 
+type QuickPickItemWithoutDescription = Pick<vscode.QuickPickItem, Exclude<keyof vscode.QuickPickItem, 'description'>>;
+
+export interface QuickPickItem extends QuickPickItemWithoutDescription {
+    description?: string;
+}
+
 export default class WindowComponent {
     private readonly window: typeof vscode.window;
 
@@ -28,8 +34,14 @@ export default class WindowComponent {
         return this.window.showInformationMessage(message);
     }
 
-    showQuickPick<T extends vscode.QuickPickItem>(selectItems: T[], options: QuickPickOptions) {
-        return this.window.showQuickPick<T>(selectItems, options);
+    showQuickPick<T extends QuickPickItem>(selectItems: T[], options: QuickPickOptions) {
+        const items = this.fillDescription(selectItems);
+        return this.window.showQuickPick(items, options);
     }
 
+    private fillDescription<T extends QuickPickItem>(selectItems: T[]) {
+        return selectItems.map(item =>
+            Object.assign({}, item, {description: item.description || ''})
+        );
+    }
 }
