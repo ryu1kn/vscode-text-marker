@@ -174,6 +174,12 @@ You can update a highlight rule after you set it.
     ]
     ```
 
+* `textmarker.enableTelemetry` (default: `true`)
+    
+    Allow the extension usage data to be sent to the extension author.
+
+    Text Marker sends usage data only when both `textmarker.enableTelemetry` and `telemetry.enableTelemetry` are set to `true`.
+
 ## Keyboard Shortcuts
 
 You can quickly invoke the above TextMarker commands by registering them to your keyboard shortcut settings. For example:
@@ -185,6 +191,14 @@ You can quickly invoke the above TextMarker commands by registering them to your
 ## Request Features or Report Bugs
 
 * https://github.com/ryu1kn/vscode-text-marker/issues
+
+## Telemetry
+
+Text Marker collects usage data and send it to the extension author to help improve the extension.
+If you don't want usage data to be collected, you can set the `textmarker.enableTelemetry` setting to `false`.
+
+If you're setting VS Code's `telemetry.enableTelemetry` setting to `false`,
+regardless of the value of `textmarker.enableTelemetry`, Text Marker will not collect usage data.
 
 ## Changelog
 
