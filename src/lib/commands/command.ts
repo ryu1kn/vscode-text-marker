@@ -2,7 +2,8 @@ import {CommandLike} from '../editor-components/vscode';
 import {Logger} from '../Logger';
 import * as vscode from 'vscode';
 import TextEditor from '../text-editor';
-import {TelemetryReporter, TelemetryReporterLocator} from '../telemetry-reporter';
+import {TelemetryReporter} from '../telemetry/telemetry-reporter';
+import {TelemetryReporterLocator} from '../telemetry/telemetry-reporter-locator';
 
 class CommandWrapper {
     private readonly command: CommandLike;

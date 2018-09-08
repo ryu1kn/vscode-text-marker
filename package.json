@@ -27,6 +27,7 @@
     "highlight",
     "search"
   ],
+  "telemetryKey": "99489808-a33c-4235-af6d-04f95a652ead",
   "activationEvents": [
     "*"
   ],
@@ -185,6 +186,11 @@
               "pattern"
             ]
           }
+        },
+        "textmarker.enableTelemetry": {
+          "description": "Allow usage data to be collected",
+          "type": "boolean",
+          "default": true
         }
       }
     },
@@ -336,6 +342,7 @@
     "color-rgba": "2.1.0",
     "fp-ts": "1.8.0",
     "lodash.isnumber": "3.0.3",
-    "uuid": "3.3.2"
+    "uuid": "3.3.2",
+    "vscode-extension-telemetry": "0.0.18"
   }
 }

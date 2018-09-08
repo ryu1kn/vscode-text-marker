@@ -53,6 +53,7 @@ export default class ConfigStore {
         return extensionConfig.get(configName) as T;
     }
 
+    // TODO: Move this to WorkspaceAdaptor
     async set(configName: string, configValue: any) {
         const configTarget = await this.configTargetPicker.pick();
         const extensionConfig = this.workspace.getConfiguration(Const.EXTENSION_ID);

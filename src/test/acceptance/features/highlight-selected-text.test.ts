@@ -4,8 +4,9 @@ import AppIntegrator from '../../../lib/app-integrator';
 import {createFakeEditor} from '../helpers/fake-editor';
 import {createFakeVsCode, EXECUTION_CONTEXT} from '../helpers/fake-vscode';
 import {Position, Range} from 'vscode';
-import {NullVsTelemetryReporter, TelemetryReporterLocator} from '../../../lib/telemetry-reporter';
+import {getVsTelemetryReporterCreator} from '../../../lib/telemetry/vscode-telemetry-reporter';
 import {join} from 'path';
+import {TelemetryReporterLocator} from '../../../lib/telemetry/telemetry-reporter-locator';
 
 suite('Highlight command', () => {
 
@@ -15,14 +16,14 @@ suite('Highlight command', () => {
     let command: any;
     let fakeVscode: any;
     const packageJsonPath = join(__dirname, '..', '..', '..', '..', 'package.json');
-    const createNullVsTelemetryReporter = () => new NullVsTelemetryReporter();
+    const vsTelemetryReporterCreator = getVsTelemetryReporterCreator(false);
 
     setup(() => {
         editor1 = createFakeEditor({wholeText: 'A TEXT B TEXT C', selectedText: 'TEXT'});
         editor2 = createFakeEditor({wholeText: 'a TEXT'});
         editor3 = createFakeEditor({wholeText: 'a TEXT', selectedText: 'TEX'});
         fakeVscode = createFakeVsCode({editors: [editor1, editor2, editor3]});
-        TelemetryReporterLocator.load(packageJsonPath, createNullVsTelemetryReporter);
+        TelemetryReporterLocator.load(packageJsonPath, vsTelemetryReporterCreator);
 
         AppIntegrator.create(fakeVscode, console).integrate(EXECUTION_CONTEXT);
 
