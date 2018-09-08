@@ -10,7 +10,7 @@ export type VsTelemetryReporterCreator = (extensionId: string, extensionVersion:
 export const getVsTelemetryReporterCreator = (useRealReporter: boolean) => {
     if (useRealReporter) {
         // Cannot import at the top-level as it causes error during unit test
-        const VsTelemetryReporter = require('vscode-extension-telemetry');
+        const VsTelemetryReporter = require('vscode-extension-telemetry').default;
         return (id: string, version: string, telemetryKey: string) => new VsTelemetryReporter(id, version, telemetryKey);
     } else {
         return () => new NullVsTelemetryReporter();

@@ -8,7 +8,7 @@ export default class WorkspaceAdaptor {
         this.workspace = workspace;
     }
 
-    get<T>(configName: string) {
+    get<T>(configName: string): T {
         const extensionConfig = this.workspace.getConfiguration(EXTENSION_ID);
         return extensionConfig.get(configName) as T;
     }
