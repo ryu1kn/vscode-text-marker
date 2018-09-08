@@ -4,7 +4,7 @@ import Pattern from './patterns/pattern';
 import {none, Option, some} from 'fp-ts/lib/Option';
 
 interface PatternUpdateActionQuickPickItem extends QuickPickItem {
-    actionId: symbol;
+    actionId: PatternAction;
 }
 
 export default class PatternVariationReader {

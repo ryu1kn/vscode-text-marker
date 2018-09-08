@@ -26,9 +26,9 @@ suite('PatternConverter', () => {
     test('it throws an error given unknown convert instruction', () => {
         const converter = new PatternConverter();
         const pattern = new StringPattern({phrase: 'text'});
-        const convertAction = Symbol('UNKNOWN_CONVERSION');
+        const convertAction = PatternAction.UPDATE_PHRASE;
         const callback = () => converter.convert(pattern, convertAction);
-        assert.throws(callback, /Unknown action Symbol\(UNKNOWN_CONVERSION\)/);
+        assert.throws(callback, /Unknown action update-phrase/);
     });
 
 });

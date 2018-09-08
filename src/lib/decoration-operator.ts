@@ -4,6 +4,7 @@ import PatternConverter from './pattern-converter';
 import TextEditor from './text-editor';
 import Pattern from './patterns/pattern';
 import {Decoration} from './entities/decoration';
+import {PatternAction} from './const';
 
 export default class DecorationOperator {
     private readonly editors: TextEditor[];
@@ -38,7 +39,7 @@ export default class DecorationOperator {
         this.textDecorator.undecorate(this.editors, [decoration]);
     }
 
-    updateDecorationWithPatternAction(decorationId: string, convertAction: symbol): void {
+    updateDecorationWithPatternAction(decorationId: string, convertAction: PatternAction): void {
         const decoration = this.decorationRegistry.inquireById(decorationId);
         decoration.map(d => {
             const newPattern = this.patternConverter.convert(d.pattern, convertAction);

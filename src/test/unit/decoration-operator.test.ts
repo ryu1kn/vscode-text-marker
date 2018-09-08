@@ -9,6 +9,7 @@ import TextDecorator from '../../lib/text-decorator';
 import {Decoration} from '../../lib/entities/decoration';
 import {TextEditorDecorationType} from 'vscode';
 import {some} from 'fp-ts/lib/Option';
+import {PatternAction} from '../../lib/const';
 
 suite('DecorationOperator', () => {
 
@@ -69,7 +70,7 @@ suite('DecorationOperator', () => {
         const oldPattern = mock(StringPattern);
         const newPattern = mock(StringPattern);
         const decorationType = mockType<TextEditorDecorationType>({});
-        const patternConvertAction = Symbol('pattern-convert-action');
+        const patternConvertAction = PatternAction.TOGGLE_CASE_SENSITIVITY;
         const oldDecoration = mockType<Decoration>({
             id: 'DECORATION_ID',
             decorationType: decorationType,

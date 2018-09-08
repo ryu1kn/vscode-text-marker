@@ -4,7 +4,7 @@ import Pattern from './patterns/pattern';
 
 export default class PatternConverter {
 
-    convert(pattern: Pattern, convertAction: symbol) {
+    convert(pattern: Pattern, convertAction: PatternAction) {
         switch (convertAction) {
         case PatternAction.TOGGLE_CASE_SENSITIVITY:
             return pattern.toggleCaseSensitivity();
