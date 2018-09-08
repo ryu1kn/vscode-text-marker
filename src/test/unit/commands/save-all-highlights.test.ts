@@ -1,6 +1,6 @@
 import {mock, verify, when} from '../../helpers/mock';
 import SaveAllHighlightsCommand from '../../../lib/commands/save-all-highlights';
-import DecorationRegistry from '../../../lib/decoration-registry';
+import DecorationRegistry from '../../../lib/decoration/decoration-registry';
 import ConfigStore from '../../../lib/config-store';
 
 suite('SaveAllHighlightsCommand', () => {

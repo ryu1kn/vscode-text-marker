@@ -1,10 +1,10 @@
 import DecorationOperator from './decoration-operator';
-import PatternConverter from './pattern/pattern-converter';
+import PatternConverter from '../pattern/pattern-converter';
 import DecorationRegistry from './decoration-registry';
-import TextDecorator from './text-decorator';
-import WindowComponent from './editor-components/window';
-import TextEditor from './text-editor';
-import TextLocationRegistry from './text-location-registry';
+import TextDecorator from '../text-decorator';
+import WindowComponent from '../editor-components/window';
+import TextEditor from '../text-editor';
+import TextLocationRegistry from '../text-location-registry';
 
 export default class DecorationOperatorFactory {
     private readonly decorationRegistry: DecorationRegistry;

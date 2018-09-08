@@ -1,10 +1,10 @@
-import {mockMethods, mockType, stubReturns, when} from '../helpers/mock';
+import {mockMethods, mockType, stubReturns, when} from '../../helpers/mock';
 
-import DecorationRegistry from '../../lib/decoration-registry';
-import PatternFactory from '../../lib/pattern/pattern-factory';
-import MatchingModeRegistry from '../../lib/matching-mode-registry';
+import DecorationRegistry from '../../../lib/decoration/decoration-registry';
+import PatternFactory from '../../../lib/pattern/pattern-factory';
+import MatchingModeRegistry from '../../../lib/matching-mode-registry';
 import * as vscode from 'vscode';
-import ConfigStore from '../../lib/config-store';
+import ConfigStore from '../../../lib/config-store';
 import * as assert from 'assert';
 import {none, some} from 'fp-ts/lib/Option';
 

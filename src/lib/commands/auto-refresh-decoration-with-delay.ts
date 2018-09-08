@@ -2,7 +2,7 @@ import {Logger} from '../Logger';
 import {CommandLike} from '../editor-components/vscode';
 import WindowComponent from '../editor-components/window';
 import Debouncer from '../debouncer';
-import DecorationOperatorFactory from '../decoration-operator-factory';
+import DecorationOperatorFactory from '../decoration/decoration-operator-factory';
 import TextEditor from '../text-editor';
 
 export default class AutoRefreshDecorationWithDelay implements CommandLike {

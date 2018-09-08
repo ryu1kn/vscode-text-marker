@@ -1,9 +1,9 @@
 import {OverviewRulerLane, TextEditorDecorationType} from 'vscode';
-import ConfigStore from './config-store';
+import ConfigStore from '../config-store';
 import * as vscode from 'vscode';
 
 const OVERVIEW_RULER_COLOUR = 'violet';
-const getColorContrast = require('../../lib-3rd-party/dynamic-contrast');
+const getColorContrast = require('../../../lib-3rd-party/dynamic-contrast');
 const rgba = require('color-rgba');
 
 const isValidColour = (rgba: number[]): boolean => rgba.length !== 0;

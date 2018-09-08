@@ -1,4 +1,4 @@
-import DecorationRegistry from './decoration-registry';
+import DecorationRegistry from './decoration/decoration-registry';
 import WindowComponent, {QuickPickItem} from './editor-components/window';
 import {Decoration} from './entities/decoration';
 import Pattern from './pattern/pattern';

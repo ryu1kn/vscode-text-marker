@@ -1,8 +1,8 @@
-import DecorationTypeCreator from '../../lib/decoration-type-creator';
+import DecorationTypeCreator from '../../../lib/decoration/decoration-type-creator';
 import * as vscode from 'vscode';
 import {OverviewRulerLane} from 'vscode';
-import {contains, mockMethods, mockType, verify} from '../helpers/mock';
-import ConfigStore from '../../lib/config-store';
+import {contains, mockMethods, mockType, verify} from '../../helpers/mock';
+import ConfigStore from '../../../lib/config-store';
 
 suite('Decoration type creation', () => {
 

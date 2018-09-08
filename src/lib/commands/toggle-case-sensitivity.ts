@@ -1,5 +1,5 @@
 import {PatternAction} from '../pattern/pattern-action';
-import DecorationOperatorFactory from '../decoration-operator-factory';
+import DecorationOperatorFactory from '../decoration/decoration-operator-factory';
 import HighlightPatternPicker from '../highlight-pattern-picker';
 import {CommandLike} from '../editor-components/vscode';
 

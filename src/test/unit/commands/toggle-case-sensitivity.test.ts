@@ -2,8 +2,8 @@ import {mock, verify, when} from '../../helpers/mock';
 import {PatternAction} from '../../../lib/pattern/pattern-action';
 import ToggleCaseSensitivityCommand from '../../../lib/commands/toggle-case-sensitivity';
 import HighlightPatternPicker from '../../../lib/highlight-pattern-picker';
-import DecorationOperatorFactory from '../../../lib/decoration-operator-factory';
-import DecorationOperator from '../../../lib/decoration-operator';
+import DecorationOperatorFactory from '../../../lib/decoration/decoration-operator-factory';
+import DecorationOperator from '../../../lib/decoration/decoration-operator';
 
 suite('ToggleCaseSensitivityCommand', () => {
 

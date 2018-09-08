@@ -2,8 +2,8 @@ import {mock, mockType, verify, when} from '../helpers/mock';
 import {Event} from '../../lib/const';
 import SavedHighlightsRestorer from '../../lib/saved-highlights-restorer';
 import ConfigStore from '../../lib/config-store';
-import DecorationOperatorFactory from '../../lib/decoration-operator-factory';
-import DecorationOperator from '../../lib/decoration-operator';
+import DecorationOperatorFactory from '../../lib/decoration/decoration-operator-factory';
+import DecorationOperator from '../../lib/decoration/decoration-operator';
 import StringPattern from '../../lib/pattern/string';
 import MatchingModeRegistry from '../../lib/matching-mode-registry';
 

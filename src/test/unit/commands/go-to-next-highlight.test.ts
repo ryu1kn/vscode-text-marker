@@ -5,7 +5,7 @@ import {GoToNextHighlightCommand} from '../../../lib/commands/go-to-next-highlig
 import MatchingModeRegistry from '../../../lib/matching-mode-registry';
 import StringPattern from '../../../lib/pattern/string';
 import {TextEditorDecorationType} from 'vscode';
-import DecorationRegistry from '../../../lib/decoration-registry';
+import DecorationRegistry from '../../../lib/decoration/decoration-registry';
 import {Decoration} from '../../../lib/entities/decoration';
 import WindowComponent from '../../../lib/editor-components/window';
 import * as assert from 'assert';

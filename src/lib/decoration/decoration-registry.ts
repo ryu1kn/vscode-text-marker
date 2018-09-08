@@ -1,9 +1,9 @@
 import * as vscode from 'vscode';
-import TextDecorationCollection from './text-decoration-collection';
-import ConfigStore from './config-store';
-import ColourRegistry from './colour-registry';
-import Pattern from './pattern/pattern';
-import {Decoration} from './entities/decoration';
+import TextDecorationCollection from '../text-decoration-collection';
+import ConfigStore from '../config-store';
+import ColourRegistry from '../colour-registry';
+import Pattern from '../pattern/pattern';
+import {Decoration} from '../entities/decoration';
 import {Option} from 'fp-ts/lib/Option';
 import DecorationTypeCreator from './decoration-type-creator';
 

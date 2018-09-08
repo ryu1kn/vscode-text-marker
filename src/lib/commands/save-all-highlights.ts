@@ -1,6 +1,6 @@
-import DecorationEntryFormatter from '../decoration-entry-formatter';
+import DecorationEntryFormatter from '../decoration/decoration-entry-formatter';
 import ConfigStore from '../config-store';
-import DecorationRegistry from '../decoration-registry';
+import DecorationRegistry from '../decoration/decoration-registry';
 import {CommandLike} from '../editor-components/vscode';
 
 export default class SaveAllHighlightsCommand implements CommandLike {

@@ -1,11 +1,11 @@
 import {Event} from './const';
-import DecorationEntryParser from './decoration-entry-parser';
+import DecorationEntryParser from './decoration/decoration-entry-parser';
 import ConfigStore from './config-store';
-import DecorationOperatorFactory from './decoration-operator-factory';
+import DecorationOperatorFactory from './decoration/decoration-operator-factory';
 import EventEmitter = NodeJS.EventEmitter;
 import PatternFactory from './pattern/pattern-factory';
 import {Highlight} from './entities/highlight';
-import DecorationOperator from './decoration-operator';
+import DecorationOperator from './decoration/decoration-operator';
 import MatchingModeRegistry from './matching-mode-registry';
 
 export default class SavedHighlightsRestorer {

@@ -4,7 +4,7 @@ import ToggleHighlightCommand from '../../../lib/commands/toggle-highlight';
 import TextEditor from '../../../lib/text-editor';
 import TextLocationRegistry from '../../../lib/text-location-registry';
 import MatchingModeRegistry from '../../../lib/matching-mode-registry';
-import DecorationRegistry from '../../../lib/decoration-registry';
+import DecorationRegistry from '../../../lib/decoration/decoration-registry';
 import WindowComponent from '../../../lib/editor-components/window';
 import StringPattern from '../../../lib/pattern/string';
 import {Decoration} from '../../../lib/entities/decoration';

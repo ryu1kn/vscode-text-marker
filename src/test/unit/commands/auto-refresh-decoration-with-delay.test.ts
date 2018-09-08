@@ -2,9 +2,9 @@ import {any, callback, contains, mock, mockMethods, mockType, verify, when} from
 
 import WindowComponent from '../../../lib/editor-components/window';
 import Debouncer from '../../../lib/debouncer';
-import DecorationOperatorFactory from '../../../lib/decoration-operator-factory';
+import DecorationOperatorFactory from '../../../lib/decoration/decoration-operator-factory';
 import TextEditor from '../../../lib/text-editor';
-import DecorationOperator from '../../../lib/decoration-operator';
+import DecorationOperator from '../../../lib/decoration/decoration-operator';
 import {Logger} from '../../../lib/Logger';
 import AutoRefreshDecorationWithDelay from '../../../lib/commands/auto-refresh-decoration-with-delay';
 

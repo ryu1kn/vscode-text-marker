@@ -1,4 +1,4 @@
-import DecorationOperatorFactory from '../decoration-operator-factory';
+import DecorationOperatorFactory from '../decoration/decoration-operator-factory';
 import RegexReader from '../regex-reader';
 import {CommandLike} from '../editor-components/vscode';
 import MatchingModeRegistry from '../matching-mode-registry';

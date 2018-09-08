@@ -3,7 +3,7 @@ import {any, mock, mockType, verify, when} from '../helpers/mock';
 import HighlightPatternPicker from '../../lib/highlight-pattern-picker';
 import PatternFactory from '../../lib/pattern/pattern-factory';
 import MatchingModeRegistry from '../../lib/matching-mode-registry';
-import DecorationRegistry from '../../lib/decoration-registry';
+import DecorationRegistry from '../../lib/decoration/decoration-registry';
 import WindowComponent from '../../lib/editor-components/window';
 import * as assert from 'assert';
 

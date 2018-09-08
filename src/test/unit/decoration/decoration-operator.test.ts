@@ -1,15 +1,15 @@
-import {any, mock, mockType, verify, when, wrapVerify} from '../helpers/mock';
+import {any, mock, mockType, verify, when, wrapVerify} from '../../helpers/mock';
 
-import DecorationOperator from '../../lib/decoration-operator';
-import PatternConverter from '../../lib/pattern/pattern-converter';
-import TextEditor from '../../lib/text-editor';
-import DecorationRegistry from '../../lib/decoration-registry';
-import StringPattern from '../../lib/pattern/string';
-import TextDecorator from '../../lib/text-decorator';
-import {Decoration} from '../../lib/entities/decoration';
+import DecorationOperator from '../../../lib/decoration/decoration-operator';
+import PatternConverter from '../../../lib/pattern/pattern-converter';
+import TextEditor from '../../../lib/text-editor';
+import DecorationRegistry from '../../../lib/decoration/decoration-registry';
+import StringPattern from '../../../lib/pattern/string';
+import TextDecorator from '../../../lib/text-decorator';
+import {Decoration} from '../../../lib/entities/decoration';
 import {TextEditorDecorationType} from 'vscode';
 import {some} from 'fp-ts/lib/Option';
-import {PatternAction} from '../../lib/pattern/pattern-action';
+import {PatternAction} from '../../../lib/pattern/pattern-action';
 
 suite('DecorationOperator', () => {
 

@@ -2,8 +2,8 @@ import {any, mock, verify, when} from '../../helpers/mock';
 
 import {PatternAction} from '../../../lib/pattern/pattern-action';
 import ToggleWholeMatchCommand from '../../../lib/commands/toggle-whole-match';
-import DecorationOperator from '../../../lib/decoration-operator';
-import DecorationOperatorFactory from '../../../lib/decoration-operator-factory';
+import DecorationOperator from '../../../lib/decoration/decoration-operator';
+import DecorationOperatorFactory from '../../../lib/decoration/decoration-operator-factory';
 import HighlightPatternPicker from '../../../lib/highlight-pattern-picker';
 
 suite('ToggleWholeMatchCommand', () => {

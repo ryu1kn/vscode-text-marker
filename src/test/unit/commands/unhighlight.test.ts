@@ -1,9 +1,9 @@
 import {any, mock, verify, when} from '../../helpers/mock';
 
 import UnhighlightCommand from '../../../lib/commands/unhighlight';
-import DecorationOperatorFactory from '../../../lib/decoration-operator-factory';
+import DecorationOperatorFactory from '../../../lib/decoration/decoration-operator-factory';
 import HighlightPatternPicker from '../../../lib/highlight-pattern-picker';
-import DecorationOperator from '../../../lib/decoration-operator';
+import DecorationOperator from '../../../lib/decoration/decoration-operator';
 
 suite('UnhighlightCommand', () => {
 

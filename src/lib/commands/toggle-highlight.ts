@@ -1,10 +1,10 @@
-import DecorationOperatorFactory from '../decoration-operator-factory';
+import DecorationOperatorFactory from '../decoration/decoration-operator-factory';
 import PatternFactory from '../pattern/pattern-factory';
 import TextLocationRegistry from '../text-location-registry';
 import TextEditor from '../text-editor';
 import {CommandLike} from '../editor-components/vscode';
 import MatchingModeRegistry from '../matching-mode-registry';
-import DecorationRegistry from '../decoration-registry';
+import DecorationRegistry from '../decoration/decoration-registry';
 import WindowComponent from '../editor-components/window';
 
 export default class ToggleHighlightCommand implements CommandLike {

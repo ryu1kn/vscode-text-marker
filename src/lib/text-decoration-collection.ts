@@ -1,7 +1,7 @@
 import {Decoration} from './entities/decoration';
 import {TextEditorDecorationType} from 'vscode';
 import Pattern from './pattern/pattern';
-import {OptionMap} from './utils/collections';
+import {OptionMap} from './common/collections';
 import {Option} from 'fp-ts/lib/Option';
 import {findFirst} from 'fp-ts/lib/Array';
 

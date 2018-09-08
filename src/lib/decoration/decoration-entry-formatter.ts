@@ -1,6 +1,6 @@
-import {getExternalName} from './pattern/pattern-type-name';
-import {Highlight} from './entities/highlight';
-import {Decoration} from './entities/decoration';
+import {getExternalName} from '../pattern/pattern-type-name';
+import {Highlight} from '../entities/highlight';
+import {Decoration} from '../entities/decoration';
 
 export default class DecorationEntryFormatter {
 

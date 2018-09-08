@@ -1,13 +1,13 @@
 import {any, mock, mockType, verify, when} from '../../helpers/mock';
 
 import UpdateHighlightCommand from '../../../lib/commands/update-highlight';
-import DecorationOperatorFactory from '../../../lib/decoration-operator-factory';
-import DecorationRegistry from '../../../lib/decoration-registry';
+import DecorationOperatorFactory from '../../../lib/decoration/decoration-operator-factory';
+import DecorationRegistry from '../../../lib/decoration/decoration-registry';
 import PatternVariationReader from '../../../lib/pattern/pattern-variation-reader';
 import StringPattern from '../../../lib/pattern/string';
 import TextLocationRegistry from '../../../lib/text-location-registry';
 import TextEditor from '../../../lib/text-editor';
-import DecorationOperator from '../../../lib/decoration-operator';
+import DecorationOperator from '../../../lib/decoration/decoration-operator';
 import {none, some} from 'fp-ts/lib/Option';
 
 suite('UpdateHighlightCommand', () => {
