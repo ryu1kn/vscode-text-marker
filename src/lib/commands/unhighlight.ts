@@ -4,19 +4,19 @@ import {CommandLike} from '../vscode/vscode';
 
 export default class UnhighlightCommand implements CommandLike {
     private readonly decorationOperatorFactory: DecorationOperatorFactory;
-    private readonly highlightPatternPicker: DecorationPicker;
+    private readonly decorationPicker: DecorationPicker;
 
-    constructor(decorationOperatorFactory: DecorationOperatorFactory, highlightPatternPicker: DecorationPicker) {
+    constructor(decorationOperatorFactory: DecorationOperatorFactory, decorationPicker: DecorationPicker) {
         this.decorationOperatorFactory = decorationOperatorFactory;
-        this.highlightPatternPicker = highlightPatternPicker;
+        this.decorationPicker = decorationPicker;
     }
 
     async execute() {
-        const decorationId = await this.highlightPatternPicker.pick('Select a pattern to remove highlight');
-        if (!decorationId) return;
+        const decoration = await this.decorationPicker.pick('Select a pattern to remove highlight');
+        if (!decoration) return;
 
         const decorationOperator = this.decorationOperatorFactory.createForVisibleEditors();
-        decorationOperator.removeDecoration(decorationId);
+        decorationOperator.removeDecoration(decoration.id);
     }
 
 }

@@ -4,7 +4,7 @@ import {Decoration} from '../entities/decoration';
 import Pattern from '../pattern/pattern';
 
 interface DecorationQuickPickItem extends QuickPickItem {
-    id: string;
+    decoration: Decoration;
 }
 
 export default class DecorationPicker {
@@ -17,36 +17,36 @@ export default class DecorationPicker {
         this.windowComponent = windowComponent;
     }
 
-    pick(placeHolderText: string) {
+    pick(placeHolderText: string): Promise<Decoration | null> {
         const decorations = this.decorationRegistry.retrieveAll();
         return decorations.length > 0 ?
             this.showPicker(decorations, placeHolderText) :
             this.showNoItemMessage();
     }
 
-    private async showPicker(decorations: Decoration[], placeHolderText: string) {
+    private async showPicker(decorations: Decoration[], placeHolderText: string): Promise<Decoration | null> {
         const selectItems = this.buildQuickPickItems(decorations);
         const options = {placeHolder: placeHolderText};
         const item = await this.windowComponent.showQuickPick<DecorationQuickPickItem>(selectItems, options);
-        return item ? item.id : null;
+        return item ? item.decoration : null;
     }
 
     private buildQuickPickItems(decorations: Decoration[]): DecorationQuickPickItem[] {
         return decorations.map(decoration => ({
-            id: decoration.id,
+            decoration,
             label: decoration.pattern.displayText,
             detail: this.buildDetail(decoration.pattern)
         }));
     }
 
-    private buildDetail(pattern: Pattern) {
+    private buildDetail(pattern: Pattern): string {
         const caseSuffix = !pattern.ignoreCase ? ' [Aa]' : '';
         const wholeMatchSuffix = pattern.wholeMatch ? ' [Ab|]' : '';
         return `${pattern.type}${caseSuffix}${wholeMatchSuffix}`;
     }
 
-    private showNoItemMessage() {
-        return this.windowComponent.showInformationMessage('No highlight is registered yet');
+    private async showNoItemMessage(): Promise<null> {
+        await this.windowComponent.showInformationMessage('No highlight is registered yet');
+        return null;
     }
-
 }

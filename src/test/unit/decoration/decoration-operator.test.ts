@@ -94,7 +94,7 @@ suite('DecorationOperator', () => {
                 when(patternConverter.convert(oldPattern, patternConvertAction)).thenReturn(newPattern);
 
                 const operator = new DecorationOperator(editors, decorationRegistry, textDecorator, patternConverter);
-                operator.updateDecorationWithPatternAction('DECORATION_ID', patternConvertAction);
+                operator.updateDecorationWithPatternAction(oldDecoration, patternConvertAction);
 
                 verify(textDecorator.undecorate(editors, [oldDecoration]));
                 verify(textDecorator.decorate(editors, [newDecoration]));

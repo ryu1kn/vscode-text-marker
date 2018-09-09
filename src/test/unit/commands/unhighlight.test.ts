@@ -1,9 +1,10 @@
-import {any, mock, verify, when} from '../../helpers/mock';
+import {any, mock, mockType, verify, when} from '../../helpers/mock';
 
 import UnhighlightCommand from '../../../lib/commands/unhighlight';
 import DecorationOperatorFactory from '../../../lib/decoration/decoration-operator-factory';
 import DecorationPicker from '../../../lib/decoration/decoration-picker';
 import DecorationOperator from '../../../lib/decoration/decoration-operator';
+import {Decoration} from '../../../lib/entities/decoration';
 
 suite('UnhighlightCommand', () => {
 
@@ -11,9 +12,12 @@ suite('UnhighlightCommand', () => {
         const decorationOperator = mock(DecorationOperator);
         const decorationOperatorFactory = mock(DecorationOperatorFactory);
         when(decorationOperatorFactory.createForVisibleEditors()).thenReturn(decorationOperator);
-        const highlightPatternPicker = mock(DecorationPicker);
-        when(highlightPatternPicker.pick('Select a pattern to remove highlight')).thenResolve('DECORATION_ID');
-        const command = new UnhighlightCommand(decorationOperatorFactory, highlightPatternPicker);
+
+        const decoration = mockType<Decoration>({id: 'DECORATION_ID'});
+        const decorationPicker = mock(DecorationPicker);
+        when(decorationPicker.pick('Select a pattern to remove highlight')).thenResolve(decoration);
+
+        const command = new UnhighlightCommand(decorationOperatorFactory, decorationPicker);
 
         await command.execute();
 
@@ -22,9 +26,9 @@ suite('UnhighlightCommand', () => {
 
     test('it does nothing if text is not selected', async () => {
         const decorationOperatorFactory = mock(DecorationOperatorFactory);
-        const highlightPatternPicker = mock(DecorationPicker);
-        when(highlightPatternPicker.pick(any())).thenResolve();
-        const command = new UnhighlightCommand(decorationOperatorFactory, highlightPatternPicker);
+        const decorationPicker = mock(DecorationPicker);
+        when(decorationPicker.pick(any())).thenResolve();
+        const command = new UnhighlightCommand(decorationOperatorFactory, decorationPicker);
 
         await command.execute();
 

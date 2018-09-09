@@ -41,7 +41,7 @@ export default class CommandFactory {
     private configStore?: ConfigStore;
     private configTargetPicker?: ConfigTargetPicker;
     private decorationRegistry?: DecorationRegistry;
-    private highlightPatternPicker?: DecorationPicker;
+    private decorationPicker?: DecorationPicker;
     private matchingModeRegistry?: MatchingModeRegistry;
     private textLocationRegistry?: TextLocationRegistry;
     private windowComponent?: WindowComponent;
@@ -65,7 +65,7 @@ export default class CommandFactory {
     }
 
     createUnhighlightCommand() {
-        return new UnhighlightCommand(this.getDecorationOperatorFactory(), this.getHighlightPatternPicker());
+        return new UnhighlightCommand(this.getDecorationOperatorFactory(), this.getDecorationPicker());
     }
 
     createRemoveAllHighlightsCommand() {
@@ -77,7 +77,7 @@ export default class CommandFactory {
     }
 
     createToggleCaseSensitivityCommand() {
-        return new ToggleCaseSensitivityCommand(this.getDecorationOperatorFactory(), this.getHighlightPatternPicker());
+        return new ToggleCaseSensitivityCommand(this.getDecorationOperatorFactory(), this.getDecorationPicker());
     }
 
     createToggleCaseSensitivityModeCommand() {
@@ -85,7 +85,7 @@ export default class CommandFactory {
     }
 
     createToggleWholeMatchCommand() {
-        return new ToggleWholeMatchCommand(this.getDecorationOperatorFactory(), this.getHighlightPatternPicker());
+        return new ToggleWholeMatchCommand(this.getDecorationOperatorFactory(), this.getDecorationPicker());
     }
 
     createToggleWholeMatchModeCommand() {
@@ -205,12 +205,12 @@ export default class CommandFactory {
         return new DecorationRegistry(configStore, this.vscode.window, generateUuid);
     }
 
-    private getHighlightPatternPicker() {
-        this.highlightPatternPicker = this.highlightPatternPicker || this.createHighlightPatternPicker();
-        return this.highlightPatternPicker;
+    private getDecorationPicker() {
+        this.decorationPicker = this.decorationPicker || this.createDecorationPicker();
+        return this.decorationPicker;
     }
 
-    private createHighlightPatternPicker() {
+    private createDecorationPicker() {
         return new DecorationPicker(this.getDecorationRegistry(), this.getWindowComponent());
     }
 

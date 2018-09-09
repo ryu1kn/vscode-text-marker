@@ -39,12 +39,9 @@ export default class DecorationOperator {
         this.textDecorator.undecorate(this.editors, [decoration]);
     }
 
-    updateDecorationWithPatternAction(decorationId: string, convertAction: PatternAction): void {
-        const decoration = this.decorationRegistry.inquireById(decorationId);
-        decoration.map(d => {
-            const newPattern = this.patternConverter.convert(d.pattern, convertAction);
-            this._updateDecorationWithPattern(d, newPattern);
-        });
+    updateDecorationWithPatternAction(decoration: Decoration, convertAction: PatternAction): void {
+        const newPattern = this.patternConverter.convert(decoration.pattern, convertAction);
+        this._updateDecorationWithPattern(decoration, newPattern);
     }
 
     updateDecorationPattern(decorationId: string, newPattern: Pattern): void {
