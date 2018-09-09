@@ -1,25 +1,20 @@
 import DecorationRegistry from './decoration-registry';
 import TextDecorator from './text-decorator';
-import PatternConverter from '../pattern/pattern-converter';
 import TextEditor from '../vscode/text-editor';
 import Pattern from '../pattern/pattern';
 import {Decoration} from '../entities/decoration';
-import {PatternAction} from '../pattern/pattern-action';
 
 export default class DecorationOperator {
     private readonly editors: TextEditor[];
     private readonly decorationRegistry: DecorationRegistry;
     private readonly textDecorator: TextDecorator;
-    private readonly patternConverter: PatternConverter;
 
     constructor(editors: TextEditor[],
                 decorationRegistry: DecorationRegistry,
-                textDecorator: TextDecorator,
-                patternConverter: PatternConverter) {
+                textDecorator: TextDecorator) {
         this.editors = editors;
         this.decorationRegistry = decorationRegistry;
         this.textDecorator = textDecorator;
-        this.patternConverter = patternConverter;
     }
 
     addDecoration(pattern: Pattern): void {
@@ -37,11 +32,6 @@ export default class DecorationOperator {
     private _removeDecoration(decoration: Decoration) {
         this.decorationRegistry.revoke(decoration.id);
         this.textDecorator.undecorate(this.editors, [decoration]);
-    }
-
-    updateDecorationWithPatternAction(decoration: Decoration, convertAction: PatternAction): void {
-        const newPattern = this.patternConverter.convert(decoration.pattern, convertAction);
-        this.updateDecorationPattern(decoration, newPattern);
     }
 
     updateDecorationPattern(decoration: Decoration, newPattern: Pattern): void {

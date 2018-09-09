@@ -1,10 +1,10 @@
 import {mock, mockType, verify, when} from '../../helpers/mock';
-import {PatternAction} from '../../../lib/pattern/pattern-action';
 import ToggleCaseSensitivityCommand from '../../../lib/commands/toggle-case-sensitivity';
 import DecorationPicker from '../../../lib/decoration/decoration-picker';
 import DecorationOperatorFactory from '../../../lib/decoration/decoration-operator-factory';
 import DecorationOperator from '../../../lib/decoration/decoration-operator';
 import {Decoration} from '../../../lib/entities/decoration';
+import StringPattern from '../../../lib/pattern/string';
 
 suite('ToggleCaseSensitivityCommand', () => {
 
@@ -13,7 +13,8 @@ suite('ToggleCaseSensitivityCommand', () => {
         const decorationOperatorFactory = mock(DecorationOperatorFactory);
         when(decorationOperatorFactory.createForVisibleEditors()).thenReturn(decorationOperator);
 
-        const decoration = mockType<Decoration>();
+        const pattern = new StringPattern({phrase: 'TEXT'});
+        const decoration = mockType<Decoration>({pattern});
         const decorationPicker = mock(DecorationPicker);
         when(decorationPicker.pick('Select a pattern to toggle case sensitivity')).thenResolve(decoration);
 
@@ -22,7 +23,7 @@ suite('ToggleCaseSensitivityCommand', () => {
         test('it toggles case sensitivity of the decoration', async () => {
             await command.execute();
 
-            verify(decorationOperator.updateDecorationWithPatternAction(decoration, PatternAction.TOGGLE_CASE_SENSITIVITY));
+            verify(decorationOperator.updateDecorationPattern(decoration, pattern.toggleCaseSensitivity()));
         });
     });
 

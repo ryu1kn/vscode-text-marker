@@ -1,4 +1,3 @@
-import {PatternAction} from '../pattern/pattern-action';
 import DecorationPicker from '../decoration/decoration-picker';
 import DecorationOperatorFactory from '../decoration/decoration-operator-factory';
 import {CommandLike} from '../vscode/vscode';
@@ -17,7 +16,7 @@ export default class ToggleWholeMatchCommand implements CommandLike {
         if (!decoration) return;
 
         const decorationOperator = this.decorationOperatorFactory.createForVisibleEditors();
-        decorationOperator.updateDecorationWithPatternAction(decoration, PatternAction.TOGGLE_WHOLE_MATCH);
+        decorationOperator.updateDecorationPattern(decoration, decoration.pattern.toggleWholeMatch());
     }
 
 }
