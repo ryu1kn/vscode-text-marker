@@ -107,7 +107,7 @@ suite('DecorationOperator', () => {
                 const textDecorator = mock(TextDecorator);
                 const operator = new DecorationOperator(editors, decorationRegistry, textDecorator, patternConverter);
 
-                operator.updateDecorationPattern('DECORATION_ID', newPattern);
+                operator.updateDecorationPattern(oldDecoration, newPattern);
 
                 verify(textDecorator.undecorate(editors, [oldDecoration]));
                 verify(textDecorator.decorate(editors, [newDecoration]));
