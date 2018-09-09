@@ -1,7 +1,7 @@
 import {mock, verify, when} from '../../helpers/mock';
 import {PatternAction} from '../../../lib/pattern/pattern-action';
 import ToggleCaseSensitivityCommand from '../../../lib/commands/toggle-case-sensitivity';
-import HighlightPatternPicker from '../../../lib/highlight-pattern-picker';
+import DecorationPicker from '../../../lib/decoration/decoration-picker';
 import DecorationOperatorFactory from '../../../lib/decoration/decoration-operator-factory';
 import DecorationOperator from '../../../lib/decoration/decoration-operator';
 
@@ -12,7 +12,7 @@ suite('ToggleCaseSensitivityCommand', () => {
         const decorationOperatorFactory = mock(DecorationOperatorFactory);
         when(decorationOperatorFactory.createForVisibleEditors()).thenReturn(decorationOperator);
 
-        const highlightPatternPicker = mock(HighlightPatternPicker);
+        const highlightPatternPicker = mock(DecorationPicker);
         when(highlightPatternPicker.pick('Select a pattern to toggle case sensitivity')).thenResolve('DECORATION_ID');
 
         const command = new ToggleCaseSensitivityCommand(decorationOperatorFactory, highlightPatternPicker);
@@ -26,7 +26,7 @@ suite('ToggleCaseSensitivityCommand', () => {
 
     suite('When text is NOT selected', () => {
         const decorationOperatorFactory = mock(DecorationOperatorFactory);
-        const highlightPatternPicker = mock(HighlightPatternPicker);
+        const highlightPatternPicker = mock(DecorationPicker);
         const command = new ToggleCaseSensitivityCommand(decorationOperatorFactory, highlightPatternPicker);
 
         test('it does nothing if text is not selected', async () => {

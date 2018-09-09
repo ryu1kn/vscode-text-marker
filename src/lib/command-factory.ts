@@ -3,7 +3,7 @@ import ConfigTargetPicker from './config-target-picker';
 import Debouncer from './debouncer';
 import DecorationOperatorFactory from './decoration/decoration-operator-factory';
 import DecorationRegistry from './decoration/decoration-registry';
-import HighlightPatternPicker from './highlight-pattern-picker';
+import DecorationPicker from './decoration/decoration-picker';
 import HighlightUsingRegexCommand from './commands/highlight-using-regex';
 import MatchingModeRegistry from './matching-mode-registry';
 import PatternVariationReader from './pattern/pattern-variation-reader';
@@ -41,7 +41,7 @@ export default class CommandFactory {
     private configStore?: ConfigStore;
     private configTargetPicker?: ConfigTargetPicker;
     private decorationRegistry?: DecorationRegistry;
-    private highlightPatternPicker?: HighlightPatternPicker;
+    private highlightPatternPicker?: DecorationPicker;
     private matchingModeRegistry?: MatchingModeRegistry;
     private textLocationRegistry?: TextLocationRegistry;
     private windowComponent?: WindowComponent;
@@ -211,7 +211,7 @@ export default class CommandFactory {
     }
 
     private createHighlightPatternPicker() {
-        return new HighlightPatternPicker(this.getDecorationRegistry(), this.getWindowComponent());
+        return new DecorationPicker(this.getDecorationRegistry(), this.getWindowComponent());
     }
 
     private getMatchingModeRegistry() {

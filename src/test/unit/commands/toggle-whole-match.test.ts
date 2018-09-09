@@ -4,7 +4,7 @@ import {PatternAction} from '../../../lib/pattern/pattern-action';
 import ToggleWholeMatchCommand from '../../../lib/commands/toggle-whole-match';
 import DecorationOperator from '../../../lib/decoration/decoration-operator';
 import DecorationOperatorFactory from '../../../lib/decoration/decoration-operator-factory';
-import HighlightPatternPicker from '../../../lib/highlight-pattern-picker';
+import DecorationPicker from '../../../lib/decoration/decoration-picker';
 
 suite('ToggleWholeMatchCommand', () => {
 
@@ -12,7 +12,7 @@ suite('ToggleWholeMatchCommand', () => {
         const decorationOperator = mock(DecorationOperator);
         const decorationOperatorFactory = mock(DecorationOperatorFactory);
         when(decorationOperatorFactory.createForVisibleEditors()).thenReturn(decorationOperator);
-        const highlightPatternPicker = mock(HighlightPatternPicker);
+        const highlightPatternPicker = mock(DecorationPicker);
         when(highlightPatternPicker.pick('Select a pattern to toggle partial/whole match')).thenResolve('DECORATION_ID');
         const command = new ToggleWholeMatchCommand(decorationOperatorFactory, highlightPatternPicker);
 
@@ -23,7 +23,7 @@ suite('ToggleWholeMatchCommand', () => {
 
     test('it does nothing if text is not selected', async () => {
         const decorationOperatorFactory = mock(DecorationOperatorFactory);
-        const highlightPatternPicker = mock(HighlightPatternPicker);
+        const highlightPatternPicker = mock(DecorationPicker);
         when(highlightPatternPicker.pick(any())).thenResolve();
         const command = new ToggleWholeMatchCommand(decorationOperatorFactory, highlightPatternPicker);
 

@@ -1,13 +1,13 @@
-import {any, mock, mockType, verify, when} from '../helpers/mock';
+import {any, mock, mockType, verify, when} from '../../helpers/mock';
 
-import HighlightPatternPicker from '../../lib/highlight-pattern-picker';
-import PatternFactory from '../../lib/pattern/pattern-factory';
-import MatchingModeRegistry from '../../lib/matching-mode-registry';
-import DecorationRegistry from '../../lib/decoration/decoration-registry';
-import WindowComponent from '../../lib/vscode/window';
+import DecorationPicker from '../../../lib/decoration/decoration-picker';
+import PatternFactory from '../../../lib/pattern/pattern-factory';
+import MatchingModeRegistry from '../../../lib/matching-mode-registry';
+import DecorationRegistry from '../../../lib/decoration/decoration-registry';
+import WindowComponent from '../../../lib/vscode/window';
 import * as assert from 'assert';
 
-suite('HighlightPatternPicker', () => {
+suite('DecorationPicker', () => {
 
     const matchingModeRegistry = mockType<MatchingModeRegistry>({});
     const patternFactory = new PatternFactory(matchingModeRegistry);
@@ -38,7 +38,7 @@ suite('HighlightPatternPicker', () => {
                 }
             ]
         );
-        const picker = new HighlightPatternPicker(decorationRegistry, windowComponent);
+        const picker = new DecorationPicker(decorationRegistry, windowComponent);
         const decorationId = await picker.pick('PLACEHOLDER_MESSAGE');
 
         assert.deepEqual(decorationId, 'DECORATION_ID_1');
@@ -61,7 +61,7 @@ suite('HighlightPatternPicker', () => {
                 }
             ]
         );
-        const picker = new HighlightPatternPicker(decorationRegistry, windowComponent);
+        const picker = new DecorationPicker(decorationRegistry, windowComponent);
         await picker.pick('PLACE_HOLDER_TEXT');
 
         verify(windowComponent.showQuickPick(
@@ -85,7 +85,7 @@ suite('HighlightPatternPicker', () => {
                 }
             ]
         );
-        const picker = new HighlightPatternPicker(decorationRegistry, windowComponent);
+        const picker = new DecorationPicker(decorationRegistry, windowComponent);
 
         await picker.pick('PLACE_HOLDER_TEXT');
 
@@ -107,7 +107,7 @@ suite('HighlightPatternPicker', () => {
                 }
             ]
         );
-        const picker = new HighlightPatternPicker(decorationRegistry, windowComponent);
+        const picker = new DecorationPicker(decorationRegistry, windowComponent);
         await picker.pick('PLACE_HOLDER_TEXT');
 
         verify(windowComponent.showQuickPick(
@@ -125,7 +125,7 @@ suite('HighlightPatternPicker', () => {
                 {id: 'DECORATION_ID_1', pattern: patternFactory.create({phrase: 'TEXT_1'}), decorationType: 'DECORATION_TYPE_1'}
             ]
         );
-        const picker = new HighlightPatternPicker(decorationRegistry, windowComponent);
+        const picker = new DecorationPicker(decorationRegistry, windowComponent);
         const decorationId = await picker.pick('PLACE_HOLDER_TEXT');
 
         assert.equal(decorationId, null);
@@ -135,7 +135,7 @@ suite('HighlightPatternPicker', () => {
         const windowComponent = mock(WindowComponent);
         const decorationRegistry = mock(DecorationRegistry);
         when(decorationRegistry.retrieveAll()).thenReturn([]);
-        const picker = new HighlightPatternPicker(decorationRegistry, windowComponent);
+        const picker = new DecorationPicker(decorationRegistry, windowComponent);
         const decorationId = await picker.pick('PLACE_HOLDER_TEXT');
 
         assert.equal(decorationId, undefined);

@@ -1,13 +1,13 @@
-import DecorationRegistry from './decoration/decoration-registry';
-import WindowComponent, {QuickPickItem} from './vscode/window';
-import {Decoration} from './entities/decoration';
-import Pattern from './pattern/pattern';
+import DecorationRegistry from './decoration-registry';
+import WindowComponent, {QuickPickItem} from '../vscode/window';
+import {Decoration} from '../entities/decoration';
+import Pattern from '../pattern/pattern';
 
-interface HighlightPatternQuickPickItem extends QuickPickItem {
+interface DecorationQuickPickItem extends QuickPickItem {
     id: string;
 }
 
-export default class HighlightPatternPicker {
+export default class DecorationPicker {
     private readonly decorationRegistry: DecorationRegistry;
     private readonly windowComponent: WindowComponent;
 
@@ -27,11 +27,11 @@ export default class HighlightPatternPicker {
     private async showPicker(decorations: Decoration[], placeHolderText: string) {
         const selectItems = this.buildQuickPickItems(decorations);
         const options = {placeHolder: placeHolderText};
-        const item = await this.windowComponent.showQuickPick<HighlightPatternQuickPickItem>(selectItems, options);
+        const item = await this.windowComponent.showQuickPick<DecorationQuickPickItem>(selectItems, options);
         return item ? item.id : null;
     }
 
-    private buildQuickPickItems(decorations: Decoration[]): HighlightPatternQuickPickItem[] {
+    private buildQuickPickItems(decorations: Decoration[]): DecorationQuickPickItem[] {
         return decorations.map(decoration => ({
             id: decoration.id,
             label: decoration.pattern.displayText,
