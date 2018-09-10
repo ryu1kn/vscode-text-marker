@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
-## Added
+### Added
 - Usage data collecting capability, together with the configuration (`textmarker.enableTelemetry`) which stops Text Marker to collect usage data.
 
 ## [1.7.0] - 2018-08-28
