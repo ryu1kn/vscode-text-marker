@@ -1,4 +1,5 @@
 import {fromNullable, Option} from 'fp-ts/lib/Option';
+import {findFirst} from 'fp-ts/lib/Array';
 
 export interface ObjectMap<T> {
     [key: string]: T;
@@ -37,5 +38,13 @@ export class OptionMap<T> {
 
     entries(): IterableIterator<[string, T]> {
         return this.map.entries();
+    }
+
+    toList(): T[] {
+        return Array.from(this.values());
+    }
+
+    find(predicate: (d: T) => boolean): Option<T> {
+        return findFirst(this.toList(), predicate);
     }
 }

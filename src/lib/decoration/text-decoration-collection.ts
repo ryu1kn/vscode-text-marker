@@ -3,7 +3,6 @@ import {TextEditorDecorationType} from 'vscode';
 import Pattern from '../pattern/pattern';
 import {OptionMap} from '../common/collection';
 import {Option} from 'fp-ts/lib/Option';
-import {findFirst} from 'fp-ts/lib/Array';
 
 export default class TextDecorationCollection {
     private readonly generateUuid: () => string;
@@ -31,11 +30,11 @@ export default class TextDecorationCollection {
     }
 
     find(predicate: (d: Decoration) => boolean): Option<Decoration> {
-        return findFirst(this.toList(), decoration => predicate(decoration));
+        return this.map.find(predicate);
     }
 
     toList(): Decoration[] {
-        return Array.from(this.map.values());
+        return this.map.toList();
     }
 
 }
