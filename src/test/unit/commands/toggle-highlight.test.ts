@@ -9,7 +9,7 @@ import WindowComponent from '../../../lib/vscode/window';
 import StringPattern from '../../../lib/pattern/string';
 import {Decoration} from '../../../lib/entities/decoration';
 import {TextEditorDecorationType} from 'vscode';
-import {some} from 'fp-ts/lib/Option';
+import {none, some} from 'fp-ts/lib/Option';
 
 suite('ToggleHighlightCommand', () => {
 
@@ -26,8 +26,8 @@ suite('ToggleHighlightCommand', () => {
     textLocationRegistry.register('EDITOR_ID', 'DECORATION_ID', [registeredRange]);
 
     const decorationRegistry = mock(DecorationRegistry);
-    when(decorationRegistry.issue(newPattern)).thenReturn(mockType<Decoration>({decorationType, pattern: newPattern}));
-    when(decorationRegistry.issue(knownPattern)).thenReturn(null);
+    when(decorationRegistry.issue(newPattern)).thenReturn(some(mockType<Decoration>({decorationType, pattern: newPattern})));
+    when(decorationRegistry.issue(knownPattern)).thenReturn(none);
     when(decorationRegistry.inquireById('DECORATION_ID')).thenReturn(some(mockType<Decoration>({id: 'DECORATION_ID', decorationType})));
 
     suite('When text is selected', () => {

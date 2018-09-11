@@ -9,6 +9,7 @@ import DecorationRegistry from '../../../lib/decoration/decoration-registry';
 import {Decoration} from '../../../lib/entities/decoration';
 import WindowComponent from '../../../lib/vscode/window';
 import * as assert from 'assert';
+import {some} from 'fp-ts/lib/Option';
 
 suite('Go-to-next-highlight command', function () {
 
@@ -26,8 +27,8 @@ suite('Go-to-next-highlight command', function () {
     textLocationRegistry.register('EDITOR_ID', 'DECORATION_ID', [registeredRange1, registeredRange2, registeredRange3]);
 
     const decorationRegistry = mock(DecorationRegistry);
-    when(decorationRegistry.issue(newPattern)).thenReturn(mockType<Decoration>({decorationType, pattern: newPattern}));
-    when(decorationRegistry.inquireById('DECORATION_ID')).thenReturn(mockType<Decoration>({id: 'DECORATION_ID', decorationType}));
+    when(decorationRegistry.issue(newPattern)).thenReturn(some(mockType<Decoration>({decorationType, pattern: newPattern})));
+    when(decorationRegistry.inquireById('DECORATION_ID')).thenReturn(some(mockType<Decoration>({id: 'DECORATION_ID', decorationType})));
 
     suite('when the cursor is on a highlight and not the last one of the same pattern', () => {
 

@@ -3,7 +3,7 @@ import ConfigStore from '../config-store';
 import ColourRegistry from '../colour-registry';
 import Pattern from '../pattern/pattern';
 import {Decoration} from '../entities/decoration';
-import {Option} from 'fp-ts/lib/Option';
+import {none, Option, some} from 'fp-ts/lib/Option';
 import DecorationTypeCreator from './decoration-type-creator';
 import {OptionMap} from '../common/collection';
 
@@ -32,11 +32,11 @@ export default class DecorationRegistry {
         return this.map.find(isSamePattern);
     }
 
-    issue(pattern: Pattern): Decoration | null {
-        const decoration = this.inquireByPattern(pattern);
-        if (decoration.isSome()) return null;
-
-        return this.setDecoration(this.createDecoration(pattern));
+    issue(pattern: Pattern): Option<Decoration> {
+        const decorationOpt = this.inquireByPattern(pattern);
+        return decorationOpt.isSome() ?
+            none :
+            some(this.setDecoration(this.createDecoration(pattern)));
     }
 
     private createDecoration(pattern: Pattern): Decoration {

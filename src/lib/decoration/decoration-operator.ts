@@ -18,10 +18,9 @@ export default class DecorationOperator {
     }
 
     addDecoration(pattern: Pattern): void {
-        const decoration = this.decorationRegistry.issue(pattern);
-        if (!decoration) return;
-
-        this.textDecorator.decorate(this.editors, [decoration]);
+        this.decorationRegistry.issue(pattern).map(decoration => {
+            this.textDecorator.decorate(this.editors, [decoration]);
+        });
     }
 
     removeDecoration(decorationId: string): void {

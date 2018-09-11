@@ -7,7 +7,7 @@ import StringPattern from '../../../lib/pattern/string';
 import TextDecorator from '../../../lib/decoration/text-decorator';
 import {Decoration} from '../../../lib/entities/decoration';
 import {TextEditorDecorationType} from 'vscode';
-import {some} from 'fp-ts/lib/Option';
+import {none, some} from 'fp-ts/lib/Option';
 
 suite('DecorationOperator', () => {
 
@@ -19,7 +19,7 @@ suite('DecorationOperator', () => {
         test('it highlights all the strings match to the given pattern', () => {
             const decorationRegistry = mock(DecorationRegistry);
             const decoration = {} as Decoration;
-            when(decorationRegistry.issue(pattern)).thenReturn(decoration);
+            when(decorationRegistry.issue(pattern)).thenReturn(some(decoration));
             const textDecorator = mock(TextDecorator);
             const operator = new DecorationOperator(editors, decorationRegistry, textDecorator);
 
@@ -30,7 +30,7 @@ suite('DecorationOperator', () => {
 
         test('it does nothing if given pattern is already registered for highlight', () => {
             const decorationRegistry = mock(DecorationRegistry);
-            when(decorationRegistry.issue(pattern)).thenReturn(null);
+            when(decorationRegistry.issue(pattern)).thenReturn(none);
             const textDecorator = mock(TextDecorator);
             const operator = new DecorationOperator(editors, decorationRegistry, textDecorator);
             operator.addDecoration(pattern);
