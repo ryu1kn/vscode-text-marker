@@ -1,5 +1,4 @@
 import * as vscode from 'vscode';
-import {TextEditorDecorationType} from 'vscode';
 import ConfigStore from '../config-store';
 import ColourRegistry from '../colour-registry';
 import Pattern from '../pattern/pattern';
@@ -37,24 +36,27 @@ export default class DecorationRegistry {
         const decoration = this.inquireByPattern(pattern);
         if (decoration.isSome()) return null;
 
-        const colour = this.colourRegistry.issue();
-        const decorationType = this.decorationTypeCreator.create(colour);
-        return this.add(pattern, colour, decorationType);
+        return this.setDecoration(this.createDecoration(pattern));
     }
 
-    private add(pattern: Pattern, colour: string, decorationType: TextEditorDecorationType): Decoration {
+    private createDecoration(pattern: Pattern): Decoration {
         const id = this.generateUuid();
-        const decoration = {id, pattern, colour, decorationType};
-        this.map.set(id, decoration);
-        return decoration;
+        const colour = this.colourRegistry.issue();
+        const decorationType = this.decorationTypeCreator.create(colour);
+        return {id, pattern, colour, decorationType};
     }
 
     updatePattern(decorationId: string, newPattern: Pattern): Option<Decoration> {
-        const decoration = this.map.get(decorationId);
-        return decoration.map(d => {
-            d.pattern = newPattern;
-            return d;
+        const decorationOpt = this.map.get(decorationId);
+        return decorationOpt.map(d => {
+            const newDecoration = Object.assign({}, d, {pattern: newPattern});
+            return this.setDecoration(newDecoration);
         });
+    }
+
+    private setDecoration(decoration: Decoration): Decoration {
+        this.map.set(decoration.id, decoration);
+        return decoration;
     }
 
     revoke(decorationId: string): void {
