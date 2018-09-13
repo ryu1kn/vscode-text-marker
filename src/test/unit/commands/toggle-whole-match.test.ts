@@ -5,6 +5,7 @@ import DecorationOperatorFactory from '../../../lib/decoration/decoration-operat
 import DecorationPicker from '../../../lib/decoration/decoration-picker';
 import {Decoration} from '../../../lib/entities/decoration';
 import StringPattern from '../../../lib/pattern/string';
+import {TextEditorDecorationType} from 'vscode';
 
 suite('ToggleWholeMatchCommand', () => {
 
@@ -13,15 +14,16 @@ suite('ToggleWholeMatchCommand', () => {
         const decorationOperatorFactory = mock(DecorationOperatorFactory);
         when(decorationOperatorFactory.createForVisibleEditors()).thenReturn(decorationOperator);
 
+        const decorationType = mockType<TextEditorDecorationType>();
         const pattern = new StringPattern({phrase: 'TEXT'});
-        const decoration = mockType<Decoration>({pattern});
+        const decoration = new Decoration('UUID', pattern, 'pink', decorationType);
         const decorationPicker = mock(DecorationPicker);
         when(decorationPicker.pick('Select a pattern to toggle partial/whole match')).thenResolve(decoration);
         const command = new ToggleWholeMatchCommand(decorationOperatorFactory, decorationPicker);
 
         await command.execute();
 
-        verify(decorationOperator.updateDecorationPattern(decoration, pattern.toggleWholeMatch()));
+        verify(decorationOperator.updateDecoration(decoration, decoration.withWholeMatchToggled()));
     });
 
     test('it does nothing if text is not selected', async () => {

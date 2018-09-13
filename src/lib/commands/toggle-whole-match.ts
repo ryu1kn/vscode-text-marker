@@ -16,7 +16,7 @@ export default class ToggleWholeMatchCommand implements CommandLike {
         if (!decoration) return;
 
         const decorationOperator = this.decorationOperatorFactory.createForVisibleEditors();
-        decorationOperator.updateDecorationPattern(decoration, decoration.pattern.toggleWholeMatch());
+        decorationOperator.updateDecoration(decoration, decoration.withWholeMatchToggled());
     }
 
 }

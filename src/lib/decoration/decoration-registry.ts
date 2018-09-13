@@ -46,11 +46,8 @@ export default class DecorationRegistry {
         return new Decoration(id, pattern, colour, decorationType);
     }
 
-    updatePattern(decorationId: string, newPattern: Pattern): Option<Decoration> {
-        const decorationOpt = this.map.get(decorationId);
-        return decorationOpt.map(d => {
-            return this.setDecoration(d.withPattern(newPattern));
-        });
+    update(oldDecoration: Decoration, newDecoration: Decoration): void {
+        this.map.set(newDecoration.id, newDecoration);
     }
 
     private setDecoration(decoration: Decoration): Decoration {

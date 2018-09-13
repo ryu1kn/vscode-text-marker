@@ -10,6 +10,7 @@ import TextEditor from '../../../lib/vscode/text-editor';
 import DecorationOperator from '../../../lib/decoration/decoration-operator';
 import {none, some} from 'fp-ts/lib/Option';
 import {Decoration} from '../../../lib/entities/decoration';
+import {TextEditorDecorationType} from 'vscode';
 
 suite('UpdateHighlightCommand', () => {
 
@@ -23,12 +24,10 @@ suite('UpdateHighlightCommand', () => {
 
         const editor = mockType<TextEditor>({id: 'EDITOR_ID', selectedText: 'SELECTED', selection: registeredRange});
 
+        const decorationType = mockType<TextEditorDecorationType>();
         const oldPattern = mock(StringPattern);
         const newPattern = mock(StringPattern);
-        const decoration = mockType<Decoration>({
-            id: 'DECORATION_ID',
-            pattern: oldPattern
-        });
+        const decoration = new Decoration('DECORATION_ID', oldPattern, 'pink', decorationType);
 
         const decorationRegistry = mock(DecorationRegistry);
         when(decorationRegistry.inquireById('DECORATION_ID')).thenReturn(some(decoration));
@@ -55,7 +54,7 @@ suite('UpdateHighlightCommand', () => {
 
             await command.execute(editor);
 
-            verify(decorationOperator.updateDecorationPattern(decoration, newPattern));
+            verify(decorationOperator.updateDecoration(decoration, decoration.withPattern(newPattern)));
         });
 
         test('it does nothing if a new pattern is not given by user', async () => {
@@ -71,7 +70,7 @@ suite('UpdateHighlightCommand', () => {
 
             await command.execute(editor);
 
-            verify(decorationOperator.updateDecorationPattern(any(), any()), {times: 0});
+            verify(decorationOperator.updateDecoration(any(), any()), {times: 0});
         });
     });
 
@@ -94,7 +93,7 @@ suite('UpdateHighlightCommand', () => {
 
             await command.execute(editor);
 
-            verify(decorationOperator.updateDecorationPattern(any(), any()), {times: 0});
+            verify(decorationOperator.updateDecoration(any(), any()), {times: 0});
         });
     });
 

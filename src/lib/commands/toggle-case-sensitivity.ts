@@ -16,7 +16,7 @@ export default class ToggleCaseSensitivityCommand implements CommandLike {
         if (!decoration) return;
 
         const decorationOperator = this.decorationOperatorFactory.createForVisibleEditors();
-        decorationOperator.updateDecorationPattern(decoration, decoration.pattern.toggleCaseSensitivity());
+        decorationOperator.updateDecoration(decoration, decoration.withCaseSensitivityToggled());
     }
 
 }

@@ -63,31 +63,21 @@ suite('DecorationOperator', () => {
     suite('Update Decoration', () => {
 
         const editors = [mock(TextEditor), mock(TextEditor)];
-        const oldPattern = mock(StringPattern);
-        const newPattern = mock(StringPattern);
+        const oldPattern = new StringPattern({phrase: 'TEXT_OLD'});
+        const newPattern = new StringPattern({phrase: 'TEXT_NEW'});
         const decorationType = mockType<TextEditorDecorationType>({});
-        const oldDecoration = mockType<Decoration>({
-            id: 'DECORATION_ID',
-            decorationType: decorationType,
-            pattern: oldPattern
-        });
-        const newDecoration = mockType<Decoration>({
-            id: 'DECORATION_ID',
-            decorationType: decorationType,
-            pattern: newPattern
-        });
+        const oldDecoration = new Decoration('DECORATION_ID', oldPattern, 'pink', decorationType);
+        const newDecoration = new Decoration('DECORATION_ID', newPattern, 'pink', decorationType);
 
         const decorationRegistry = mock(DecorationRegistry);
-        when(decorationRegistry.updatePattern('DECORATION_ID', newPattern)).thenReturn(some(newDecoration));
-        when(decorationRegistry.inquireById('DECORATION_ID')).thenReturn(some(oldDecoration));
 
-        suite('#updateDecorationPattern', () => {
+        suite('#updateDecoration', () => {
 
-            test('it updates a pattern of a decoration', () => {
+            test('it updates a decoration', () => {
                 const textDecorator = mock(TextDecorator);
                 const operator = new DecorationOperator(editors, decorationRegistry, textDecorator);
 
-                operator.updateDecorationPattern(oldDecoration, newPattern);
+                operator.updateDecoration(oldDecoration, newDecoration);
 
                 verify(textDecorator.undecorate(editors, [oldDecoration]));
                 verify(textDecorator.decorate(editors, [newDecoration]));

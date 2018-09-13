@@ -143,14 +143,14 @@ suite('DecorationRegistry', () => {
 
         const oldPattern = createPattern('TEXT');
         const newPattern = createPattern('TEXT');
-        registry.issue(oldPattern);
+        const decoration = registry.issue(oldPattern);
 
-        assert.deepEqual(registry.updatePattern('UUID_1', newPattern), some({
-            id: 'UUID_1',
-            colour: pink,
-            decorationType: 'DECORATION_TYPE_1',
-            pattern: newPattern
-        }));
+        assertOption(decoration, d => {
+            const id = d.id;
+            const newDecoration = d.withPattern(newPattern);
+            registry.update(d, newDecoration);
+            assert.deepEqual(registry.inquireById(id), some(newDecoration));
+        });
     });
 
     test('it use the text highlight colour on the ruler', () => {
