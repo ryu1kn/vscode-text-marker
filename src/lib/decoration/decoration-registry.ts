@@ -43,14 +43,13 @@ export default class DecorationRegistry {
         const id = this.generateUuid();
         const colour = this.colourRegistry.issue();
         const decorationType = this.decorationTypeCreator.create(colour);
-        return {id, pattern, colour, decorationType};
+        return new Decoration(id, pattern, colour, decorationType);
     }
 
     updatePattern(decorationId: string, newPattern: Pattern): Option<Decoration> {
         const decorationOpt = this.map.get(decorationId);
         return decorationOpt.map(d => {
-            const newDecoration = Object.assign({}, d, {pattern: newPattern});
-            return this.setDecoration(newDecoration);
+            return this.setDecoration(d.withPattern(newPattern));
         });
     }
 

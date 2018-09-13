@@ -38,8 +38,6 @@ export default class PatternVariationReader {
                 const newPhraseOpt = await this.windowComponent.showInputBox(options);
                 return newPhraseOpt.map(newPhrase => currentPattern.updatePhrase(newPhrase));
             }
-            default:
-                return none;
         }
     }
 
