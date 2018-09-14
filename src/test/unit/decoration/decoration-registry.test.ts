@@ -1,12 +1,12 @@
-import {mockMethods, mockType, stubReturns, when} from '../../helpers/mock';
+import {mock, mockType, stubReturns, when} from '../../helpers/mock';
 import {assertOption} from '../../helpers/assertions';
 import DecorationRegistry from '../../../lib/decoration/decoration-registry';
 import PatternFactory from '../../../lib/pattern/pattern-factory';
 import MatchingModeRegistry from '../../../lib/matching-mode-registry';
-import * as vscode from 'vscode';
 import ConfigStore from '../../../lib/config-store';
 import * as assert from 'assert';
 import {none, some} from 'fp-ts/lib/Option';
+import WindowComponent from '../../../lib/vscode/window';
 
 suite('DecorationRegistry', () => {
     const pink = 'rgba(255,192,203,1)';
@@ -113,7 +113,7 @@ suite('DecorationRegistry', () => {
     });
 
     test('it issues new decoration with new color', () => {
-        const window = mockMethods<typeof vscode.window>(['createTextEditorDecorationType']);
+        const window = mock(WindowComponent);
         when(window.createTextEditorDecorationType({
             backgroundColor: pink,
             borderRadius: '.2em',
@@ -153,7 +153,7 @@ suite('DecorationRegistry', () => {
     });
 
     test('it use the text highlight colour on the ruler', () => {
-        const window = mockMethods<typeof vscode.window>(['createTextEditorDecorationType']);
+        const window = mock(WindowComponent);
         when(window.createTextEditorDecorationType({
             backgroundColor: pink,
             borderRadius: '.2em',
@@ -171,7 +171,7 @@ suite('DecorationRegistry', () => {
     });
 
     test('it use the high contrast colour for text with highlights', () => {
-        const window = mockMethods<typeof vscode.window>(['createTextEditorDecorationType']);
+        const window = mock(WindowComponent);
         when(window.createTextEditorDecorationType({
             backgroundColor: pink,
             borderRadius: '.2em',

@@ -202,7 +202,7 @@ export default class CommandFactory {
 
     private createDecorationRegistry() {
         const configStore = this.getConfigStore();
-        return new DecorationRegistry(configStore, this.vscode.window, generateUuid);
+        return new DecorationRegistry(configStore, this.getWindowComponent(), generateUuid);
     }
 
     private getDecorationPicker() {

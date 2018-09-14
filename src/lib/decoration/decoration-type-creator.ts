@@ -1,6 +1,6 @@
 import {OverviewRulerLane, TextEditorDecorationType} from 'vscode';
 import ConfigStore from '../config-store';
-import * as vscode from 'vscode';
+import WindowComponent from '../vscode/window';
 
 const OVERVIEW_RULER_COLOUR = 'violet';
 const getColorContrast = require('../../../lib-3rd-party/dynamic-contrast');
@@ -10,10 +10,10 @@ const isValidColour = (rgba: number[]): boolean => rgba.length !== 0;
 
 export default class DecorationTypeCreator {
     private readonly configStore: ConfigStore;
-    private readonly window: typeof vscode.window;
+    private readonly window: WindowComponent;
 
     constructor(configStore: ConfigStore,
-                window: typeof vscode.window,) {
+                window: WindowComponent) {
         this.configStore = configStore;
         this.window = window;
     }

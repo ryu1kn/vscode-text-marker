@@ -1,17 +1,17 @@
 import DecorationTypeCreator from '../../../lib/decoration/decoration-type-creator';
-import * as vscode from 'vscode';
 import {OverviewRulerLane} from 'vscode';
-import {contains, mockMethods, mockType, verify} from '../../helpers/mock';
+import {contains, mock, mockType, verify} from '../../helpers/mock';
 import ConfigStore from '../../../lib/config-store';
+import WindowComponent from '../../../lib/vscode/window';
 
 suite('Decoration type creation', () => {
 
     const configStore = mockType<ConfigStore>({defaultHighlightOpacity: 0.5});
-    let window: typeof vscode.window;
+    let window: WindowComponent;
     let creator: DecorationTypeCreator;
 
     setup(() => {
-        window = mockMethods<typeof vscode.window>(['createTextEditorDecorationType']);
+        window = mock(WindowComponent);
         creator = new DecorationTypeCreator(configStore, window);
     });
 

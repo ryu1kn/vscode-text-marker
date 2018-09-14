@@ -1,4 +1,3 @@
-import * as vscode from 'vscode';
 import ConfigStore from '../config-store';
 import ColourRegistry from '../colour-registry';
 import Pattern from '../pattern/pattern';
@@ -6,6 +5,7 @@ import {Decoration} from '../entities/decoration';
 import {none, Option, some} from 'fp-ts/lib/Option';
 import DecorationTypeCreator from './decoration-type-creator';
 import {OptionMap} from '../common/collection';
+import WindowComponent from '../vscode/window';
 
 export default class DecorationRegistry {
     private readonly colourRegistry: ColourRegistry;
@@ -14,7 +14,7 @@ export default class DecorationRegistry {
     private readonly generateUuid: () => string;
 
     constructor(configStore: ConfigStore,
-                window: typeof vscode.window,
+                window: WindowComponent,
                 generateUuid: () => string) {
         this.colourRegistry = new ColourRegistry(configStore);
         this.decorationTypeCreator = new DecorationTypeCreator(configStore, window);

@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import {InputBoxOptions, QuickPickOptions} from 'vscode';
+import {DecorationRenderOptions, InputBoxOptions, QuickPickOptions, TextEditorDecorationType} from 'vscode';
 import TextEditor from './text-editor';
 import {fromPredicate, Option} from 'fp-ts/lib/Option';
 
@@ -37,6 +37,10 @@ export default class WindowComponent {
     showQuickPick<T extends QuickPickItem>(selectItems: T[], options: QuickPickOptions) {
         const items = this.fillDescription(selectItems);
         return this.window.showQuickPick(items, options);
+    }
+
+    createTextEditorDecorationType(options: DecorationRenderOptions): TextEditorDecorationType {
+        return this.window.createTextEditorDecorationType(options);
     }
 
     private fillDescription<T extends QuickPickItem>(selectItems: T[]) {
