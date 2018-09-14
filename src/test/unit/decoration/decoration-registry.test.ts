@@ -141,13 +141,12 @@ suite('DecorationRegistry', () => {
     test('it toggles the case sensitivity of a pattern', () => {
         const registry = createDecorationRegistry();
 
-        const oldPattern = createPattern('TEXT');
-        const newPattern = createPattern('TEXT');
-        const decoration = registry.issue(oldPattern);
+        const pattern = createPattern('TEXT');
+        const decoration = registry.issue(pattern);
 
         assertOption(decoration, d => {
             const id = d.id;
-            const newDecoration = d.withPattern(newPattern);
+            const newDecoration = d.withCaseSensitivityToggled();
             registry.update(d, newDecoration);
             assert.deepEqual(registry.inquireById(id), some(newDecoration));
         });

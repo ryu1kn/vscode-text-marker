@@ -1,15 +1,16 @@
 import WindowComponent, {QuickPickItem} from '../vscode/window';
-import Pattern from './pattern';
 import {none, Option, some} from 'fp-ts/lib/Option';
+import {Decoration} from '../entities/decoration';
 
-enum PatternAction {
+enum DecorationAction {
     TOGGLE_CASE_SENSITIVITY = 'toggle-case-sensitivity',
     TOGGLE_WHOLE_MATCH = 'toggle-whole-match',
-    UPDATE_PHRASE = 'update-phrase'
+    UPDATE_PHRASE = 'update-phrase',
+    UPDATE_COLOUR = 'update-colour'
 }
 
 interface PatternUpdateActionQuickPickItem extends QuickPickItem {
-    actionId: PatternAction;
+    actionId: DecorationAction;
 }
 
 export default class PatternVariationReader {
@@ -19,58 +20,73 @@ export default class PatternVariationReader {
         this.windowComponent = windowComponent;
     }
 
-    async read(currentPattern: Pattern): Promise<Option<Pattern>> {
-        const items = this.buildSelectItems(currentPattern);
+    async read(currentDecoration: Decoration): Promise<Option<Decoration>> {
+        const items = this.buildSelectItems(currentDecoration);
         const options = {placeHolder: 'Select how to update the highlight'};
         const item = await this.windowComponent.showQuickPick<PatternUpdateActionQuickPickItem>(items, options);
         if (!item) return none;
 
         switch (item.actionId) {
-            case PatternAction.TOGGLE_CASE_SENSITIVITY:
-                return some(currentPattern.toggleCaseSensitivity());
-            case PatternAction.TOGGLE_WHOLE_MATCH:
-                return some(currentPattern.toggleWholeMatch());
-            case PatternAction.UPDATE_PHRASE: {
+            case DecorationAction.TOGGLE_CASE_SENSITIVITY:
+                return some(currentDecoration.withCaseSensitivityToggled());
+            case DecorationAction.TOGGLE_WHOLE_MATCH:
+                return some(currentDecoration.withWholeMatchToggled());
+            case DecorationAction.UPDATE_PHRASE: {
                 const options = {
-                    value: currentPattern.phrase,
+                    value: currentDecoration.pattern.phrase,
                     prompt: 'Enter a new pattern.'
                 };
                 const newPhraseOpt = await this.windowComponent.showInputBox(options);
-                return newPhraseOpt.map(newPhrase => currentPattern.updatePhrase(newPhrase));
+                return newPhraseOpt.map(newPhrase => currentDecoration.withPhrase(newPhrase));
+            }
+            case DecorationAction.UPDATE_COLOUR: {
+                const options = {
+                    value: currentDecoration.colour,
+                    prompt: 'Enter a new color.'
+                };
+                const newPhraseOpt = await this.windowComponent.showInputBox(options);
+                return newPhraseOpt.map(newColour => currentDecoration.withColour(newColour));
             }
         }
     }
 
-    private buildSelectItems(pattern: Pattern): PatternUpdateActionQuickPickItem[] {
+    private buildSelectItems(decoration: Decoration): PatternUpdateActionQuickPickItem[] {
         return [
-            this.getToggleCaseSensitivityOption(pattern),
-            this.getToggleWholeMatchOption(pattern),
-            this.getUpdatePhraseOption(pattern)
+            this.getToggleCaseSensitivityOption(decoration),
+            this.getToggleWholeMatchOption(decoration),
+            this.getUpdatePhraseOption(decoration),
+            this.getUpdateColourOption(decoration)
         ];
     }
 
-    private getToggleCaseSensitivityOption(pattern: Pattern) {
-        const label = pattern.ignoreCase ? 'Case Sensitive' : 'Case Insensitive';
+    private getToggleCaseSensitivityOption(decoration: Decoration) {
+        const label = decoration.pattern.ignoreCase ? 'Case Sensitive' : 'Case Insensitive';
         return {
             label: `Change to ${label}`,
-            actionId: PatternAction.TOGGLE_CASE_SENSITIVITY
+            actionId: DecorationAction.TOGGLE_CASE_SENSITIVITY
         };
     }
 
-    private getToggleWholeMatchOption(pattern: Pattern) {
-        const label = pattern.wholeMatch ? 'Partial Match' : 'Whole Match';
+    private getToggleWholeMatchOption(decoration: Decoration) {
+        const label = decoration.pattern.wholeMatch ? 'Partial Match' : 'Whole Match';
         return {
             label: `Change to ${label}`,
-            actionId: PatternAction.TOGGLE_WHOLE_MATCH
+            actionId: DecorationAction.TOGGLE_WHOLE_MATCH
         };
     }
 
-    private getUpdatePhraseOption(pattern: Pattern) {
-        const label = pattern.type === 'RegExp' ? 'RegExp Pattern' : 'Text Pattern';
+    private getUpdatePhraseOption(decoration: Decoration) {
+        const label = decoration.pattern.type === 'RegExp' ? 'RegExp Pattern' : 'Text Pattern';
         return {
             label: `Update ${label}`,
-            actionId: PatternAction.UPDATE_PHRASE
+            actionId: DecorationAction.UPDATE_PHRASE
         };
     }
 
+    private getUpdateColourOption(decoration: Decoration) {
+        return {
+            label: 'Update color',
+            actionId: DecorationAction.UPDATE_COLOUR
+        };
+    }
 }

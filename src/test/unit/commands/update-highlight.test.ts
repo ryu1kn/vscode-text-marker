@@ -25,12 +25,12 @@ suite('UpdateHighlightCommand', () => {
         const editor = mockType<TextEditor>({id: 'EDITOR_ID', selectedText: 'SELECTED', selection: registeredRange});
 
         const decorationType = mockType<TextEditorDecorationType>();
-        const oldPattern = mock(StringPattern);
-        const newPattern = mock(StringPattern);
-        const decoration = new Decoration('DECORATION_ID', oldPattern, 'pink', decorationType);
+        const pattern = mock(StringPattern);
+        const oldDecoration = new Decoration('DECORATION_ID', pattern, 'pink', decorationType);
+        const newDecoration = new Decoration('DECORATION_ID', pattern, 'yellow', decorationType);
 
         const decorationRegistry = mock(DecorationRegistry);
-        when(decorationRegistry.inquireById('DECORATION_ID')).thenReturn(some(decoration));
+        when(decorationRegistry.inquireById('DECORATION_ID')).thenReturn(some(oldDecoration));
 
         let decorationOperator: DecorationOperator;
         let decorationOperatorFactory: DecorationOperatorFactory;
@@ -43,7 +43,7 @@ suite('UpdateHighlightCommand', () => {
 
         test('it updates decoration', async () => {
             const patternVariationReader = mock(PatternVariationReader);
-            when(patternVariationReader.read(oldPattern)).thenResolve(some(newPattern));
+            when(patternVariationReader.read(oldDecoration)).thenResolve(some(newDecoration));
 
             const command = new UpdateHighlightCommand(
                 decorationOperatorFactory,
@@ -54,7 +54,7 @@ suite('UpdateHighlightCommand', () => {
 
             await command.execute(editor);
 
-            verify(decorationOperator.updateDecoration(decoration, decoration.withPattern(newPattern)));
+            verify(decorationOperator.updateDecoration(oldDecoration, newDecoration));
         });
 
         test('it does nothing if a new pattern is not given by user', async () => {

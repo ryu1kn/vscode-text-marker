@@ -4,9 +4,11 @@ import PatternVariationReader from '../../../lib/pattern/pattern-variation-reade
 import PatternFactory from '../../../lib/pattern/pattern-factory';
 import WindowComponent from '../../../lib/vscode/window';
 import MatchingModeRegistry from '../../../lib/matching-mode-registry';
-import {QuickPickItem} from 'vscode';
+import {QuickPickItem, TextEditorDecorationType} from 'vscode';
 import * as assert from 'assert';
 import {none, some} from 'fp-ts/lib/Option';
+import {Decoration} from '../../../lib/entities/decoration';
+import {assertOption} from '../../helpers/assertions';
 
 suite('PatternVariationReader', () => {
 
@@ -17,10 +19,12 @@ suite('PatternVariationReader', () => {
         });
         const patternVariationReader = new PatternVariationReader(windowComponent);
 
-        const currentPattern = createPattern();
-        const newPatternOpt = await patternVariationReader.read(currentPattern);
+        const oldDecoration = createDecoration();
+        const newDecorationOpt = await patternVariationReader.read(oldDecoration);
 
-        assert.deepEqual(newPatternOpt.map(p => p.equalTo(currentPattern.toggleCaseSensitivity())), some(true));
+        assertOption(newDecorationOpt, newDecoration => {
+            assert.equal(newDecoration.pattern.ignoreCase, !oldDecoration.pattern.ignoreCase);
+        });
     });
 
     test('it lets user to toggle whole/partial match', async () => {
@@ -30,10 +34,12 @@ suite('PatternVariationReader', () => {
         });
         const patternVariationReader = new PatternVariationReader(windowComponent);
 
-        const currentPattern = createPattern();
-        const newPatternOpt = await patternVariationReader.read(currentPattern);
+        const oldDecoration = createDecoration();
+        const newDecorationOpt = await patternVariationReader.read(oldDecoration);
 
-        assert.deepEqual(newPatternOpt.map(p => p.equalTo(currentPattern.toggleWholeMatch())), some(true));
+        assertOption(newDecorationOpt, newDecoration => {
+            assert.equal(newDecoration.pattern.wholeMatch, !oldDecoration.pattern.wholeMatch);
+        });
     });
 
     test('it lets user to update the phrase of pattern', async () => {
@@ -44,11 +50,12 @@ suite('PatternVariationReader', () => {
         });
         const patternVariationReader = new PatternVariationReader(windowComponent);
 
-        const currentPattern = createPattern();
-        const newPatternOpt = await patternVariationReader.read(currentPattern);
+        const oldDecoration = createDecoration();
+        const newDecorationOpt = await patternVariationReader.read(oldDecoration);
 
-        const expectedPattern = createPattern({phrase: 'NEW_PHRASE'});
-        assert.deepEqual(newPatternOpt.map(p => p.equalTo(expectedPattern)), some(true));
+        assertOption(newDecorationOpt, newDecoration => {
+            assert.equal(newDecoration.pattern.phrase, 'NEW_PHRASE');
+        });
     });
 
     test('it returns null if user selected nothing', async () => {
@@ -57,10 +64,10 @@ suite('PatternVariationReader', () => {
         });
         const patternVariationReader = new PatternVariationReader(windowComponent);
 
-        const currentPattern = createPattern();
-        const newPattern = await patternVariationReader.read(currentPattern);
+        const oldDecoration = createDecoration();
+        const newDecorationOpt = await patternVariationReader.read(oldDecoration);
 
-        assert.deepEqual(newPattern, none);
+        assert.deepEqual(newDecorationOpt, none);
     });
 
     test('it returns null if user selected phrase-update but cancelled', async () => {
@@ -71,18 +78,21 @@ suite('PatternVariationReader', () => {
         });
         const patternVariationReader = new PatternVariationReader(windowComponent);
 
-        const currentPattern = createPattern();
-        const newPattern = await patternVariationReader.read(currentPattern);
+        const oldDecoration = createDecoration();
+        const newDecorationOpt = await patternVariationReader.read(oldDecoration);
 
-        assert.deepEqual(newPattern, none);
+        assert.deepEqual(newDecorationOpt, none);
     });
 
-    function createPattern({phrase}: any = {}) {
+    function createDecoration() {
+        const decorationType = mockType<TextEditorDecorationType>();
+        return new Decoration('ID', createPattern(), 'yellow', decorationType);
+    }
+
+    function createPattern() {
         const matchingModeRegistry = mockType<MatchingModeRegistry>({});
         const patternFactory = new PatternFactory(matchingModeRegistry);
-        return patternFactory.create({
-            phrase: phrase || 'PHRASE'
-        });
+        return patternFactory.create({phrase: 'PHRASE'});
     }
 
 });
