@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Apply the opacity value to the colours on overview rulers.
 
+### Changed
+- `textmarker.useHighlightColorOnRuler` is now default `true`, as colours would more likely to have opacity
+  and they can be blended instead of one of them overwrite the others.
+
 ## [1.8.0] - 2018-09-15
 ### Added
 - Highlight colour can now be updated through right-click menu. [#22](https://github.com/ryu1kn/vscode-text-marker/issues/22)

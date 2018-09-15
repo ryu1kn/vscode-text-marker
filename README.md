@@ -101,7 +101,7 @@ You can update a highlight rule after you set it.
 
 * `textmarker.defaultHighlightOpacity` (default: `0.7`)
 
-    Opacity to be used when one is not given in the highlight color. Opacity is also applied to the colors on the overview ruler.
+    Opacity to be used when one is not given in the highlight colour. Opacity is also applied to the colours on the overview ruler.
     The value must be in the range 0.0 to 1.0, inclusive.
 
 * `textmarker.enableIgnoreCase` (default: `false`)
@@ -112,10 +112,12 @@ You can update a highlight rule after you set it.
 
     Enable whole match mode on startup
 
-* `textmarker.useHighlightColorOnRuler` (default: `false`)
+* `textmarker.useHighlightColorOnRuler` (default: `true`)
 
     Use the same colour for both highlighting a text and showing the location on the ruler.
-    If you have multiple highlights on the same line, the corresponding ruler colour will be one of theirs.
+    
+    If you have multiple highlights on the same line and their colours have opacity `1`,
+    you would only see one of those colours. You can specify a smaller opacity value so that the colours can be blended.
 
 * `textmarker.autoSelectDistinctiveTextColor` (default: `false`)
 

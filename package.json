@@ -84,7 +84,7 @@
         "textmarker.useHighlightColorOnRuler": {
           "description": "Use the highlight colour on the ruler instead of the default colour",
           "type": "boolean",
-          "default": false
+          "default": true
         },
         "textmarker.autoSelectDistinctiveTextColor": {
           "description": "Text colour will be chosen to be distinctive from the background highlight colour",
