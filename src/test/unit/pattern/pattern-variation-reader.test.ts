@@ -1,6 +1,6 @@
 import {mockType} from '../../helpers/mock';
 
-import PatternVariationReader from '../../../lib/pattern/pattern-variation-reader';
+import DecorationVariationReader from '../../../lib/decoration/decoration-variation-reader';
 import PatternFactory from '../../../lib/pattern/pattern-factory';
 import WindowComponent from '../../../lib/vscode/window';
 import MatchingModeRegistry from '../../../lib/matching-mode-registry';
@@ -10,14 +10,14 @@ import {none, some} from 'fp-ts/lib/Option';
 import {Decoration} from '../../../lib/entities/decoration';
 import {assertOption} from '../../helpers/assertions';
 
-suite('PatternVariationReader', () => {
+suite('DecorationVariationReader', () => {
 
     test('it lets user to toggle case sensitivity', async () => {
         const windowComponent = mockType<WindowComponent>({
             showQuickPick: (items: QuickPickItem[]) =>
                 Promise.resolve(items.find(item => item.label.includes('Case')))
         });
-        const patternVariationReader = new PatternVariationReader(windowComponent);
+        const patternVariationReader = new DecorationVariationReader(windowComponent);
 
         const oldDecoration = createDecoration();
         const newDecorationOpt = await patternVariationReader.read(oldDecoration);
@@ -32,7 +32,7 @@ suite('PatternVariationReader', () => {
             showQuickPick: (items: QuickPickItem[]) =>
                 Promise.resolve(items.find(item => item.label.includes('Whole')))
         });
-        const patternVariationReader = new PatternVariationReader(windowComponent);
+        const patternVariationReader = new DecorationVariationReader(windowComponent);
 
         const oldDecoration = createDecoration();
         const newDecorationOpt = await patternVariationReader.read(oldDecoration);
@@ -48,7 +48,7 @@ suite('PatternVariationReader', () => {
                 Promise.resolve(items.find(item => item.label.includes('Pattern'))),
             showInputBox: () => Promise.resolve(some('NEW_PHRASE'))
         });
-        const patternVariationReader = new PatternVariationReader(windowComponent);
+        const patternVariationReader = new DecorationVariationReader(windowComponent);
 
         const oldDecoration = createDecoration();
         const newDecorationOpt = await patternVariationReader.read(oldDecoration);
@@ -62,7 +62,7 @@ suite('PatternVariationReader', () => {
         const windowComponent = mockType<WindowComponent>({
             showQuickPick: (_items: QuickPickItem[]) => Promise.resolve()
         });
-        const patternVariationReader = new PatternVariationReader(windowComponent);
+        const patternVariationReader = new DecorationVariationReader(windowComponent);
 
         const oldDecoration = createDecoration();
         const newDecorationOpt = await patternVariationReader.read(oldDecoration);
@@ -76,7 +76,7 @@ suite('PatternVariationReader', () => {
                 Promise.resolve(items.find(item => item.label.includes('Pattern'))),
             showInputBox: () => Promise.resolve(none)
         });
-        const patternVariationReader = new PatternVariationReader(windowComponent);
+        const patternVariationReader = new DecorationVariationReader(windowComponent);
 
         const oldDecoration = createDecoration();
         const newDecorationOpt = await patternVariationReader.read(oldDecoration);

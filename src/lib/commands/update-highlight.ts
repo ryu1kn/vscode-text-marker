@@ -1,6 +1,6 @@
 import DecorationOperatorFactory from '../decoration/decoration-operator-factory';
 import DecorationRegistry from '../decoration/decoration-registry';
-import PatternVariationReader from '../pattern/pattern-variation-reader';
+import DecorationVariationReader from '../decoration/decoration-variation-reader';
 import TextLocationRegistry from '../text-location-registry';
 import {CommandLike} from '../vscode/vscode';
 import TextEditor from '../vscode/text-editor';
@@ -9,12 +9,12 @@ import {none} from 'fp-ts/lib/Option';
 export default class UpdateHighlightCommand implements CommandLike {
     private readonly decorationOperatorFactory: DecorationOperatorFactory;
     private readonly decorationRegistry: DecorationRegistry;
-    private readonly patternVariationReader: PatternVariationReader;
+    private readonly patternVariationReader: DecorationVariationReader;
     private readonly textLocationRegistry: TextLocationRegistry;
 
     constructor(decorationOperatorFactory: DecorationOperatorFactory,
                 decorationRegistry: DecorationRegistry,
-                patternVariationReader: PatternVariationReader,
+                patternVariationReader: DecorationVariationReader,
                 textLocationRegistry: TextLocationRegistry) {
         this.decorationOperatorFactory = decorationOperatorFactory;
         this.decorationRegistry = decorationRegistry;

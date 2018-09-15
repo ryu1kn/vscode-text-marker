@@ -3,7 +3,7 @@ import {any, mock, mockType, verify, when} from '../../helpers/mock';
 import UpdateHighlightCommand from '../../../lib/commands/update-highlight';
 import DecorationOperatorFactory from '../../../lib/decoration/decoration-operator-factory';
 import DecorationRegistry from '../../../lib/decoration/decoration-registry';
-import PatternVariationReader from '../../../lib/pattern/pattern-variation-reader';
+import DecorationVariationReader from '../../../lib/decoration/decoration-variation-reader';
 import StringPattern from '../../../lib/pattern/string';
 import TextLocationRegistry from '../../../lib/text-location-registry';
 import TextEditor from '../../../lib/vscode/text-editor';
@@ -40,7 +40,7 @@ suite('UpdateHighlightCommand', () => {
         });
 
         test('it updates decoration', async () => {
-            const patternVariationReader = mock(PatternVariationReader);
+            const patternVariationReader = mock(DecorationVariationReader);
             when(patternVariationReader.read(oldDecoration)).thenResolve(some(newDecoration));
 
             const command = new UpdateHighlightCommand(
@@ -56,7 +56,7 @@ suite('UpdateHighlightCommand', () => {
         });
 
         test('it does nothing if a new pattern is not given by user', async () => {
-            const patternVariationReader = mock(PatternVariationReader);
+            const patternVariationReader = mock(DecorationVariationReader);
             when(patternVariationReader.read(any())).thenResolve(none);
 
             const command = new UpdateHighlightCommand(
@@ -77,7 +77,7 @@ suite('UpdateHighlightCommand', () => {
         const {decorationOperator, decorationOperatorFactory} = deps;
 
         const decorationRegistry = mock(DecorationRegistry);
-        const patternVariationReader = mock(PatternVariationReader);
+        const patternVariationReader = mock(DecorationVariationReader);
 
         const editor = mockType<TextEditor>({id: 'EDITOR_ID', selectedText: 'SELECTED', selection: unregisteredRange});
 

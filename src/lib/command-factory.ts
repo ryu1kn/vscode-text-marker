@@ -6,7 +6,7 @@ import DecorationRegistry from './decoration/decoration-registry';
 import DecorationPicker from './decoration/decoration-picker';
 import HighlightUsingRegexCommand from './commands/highlight-using-regex';
 import MatchingModeRegistry from './matching-mode-registry';
-import PatternVariationReader from './pattern/pattern-variation-reader';
+import DecorationVariationReader from './decoration/decoration-variation-reader';
 import RemoveAllHighlightsCommand from './commands/remove-all-highlights';
 import SaveAllHighlightsCommand from './commands/save-all-highlights';
 import SavedHighlightsRestorer from './saved-highlights-restorer';
@@ -93,7 +93,7 @@ export default class CommandFactory {
         return new UpdateHighlightCommand(
             this.getDecorationOperatorFactory(),
             this.getDecorationRegistry(),
-            new PatternVariationReader(this.getWindowComponent()),
+            new DecorationVariationReader(this.getWindowComponent()),
             this.getTextLocationRegistry()
         );
     }

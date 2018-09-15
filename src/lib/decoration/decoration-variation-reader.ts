@@ -9,11 +9,11 @@ enum DecorationAction {
     UPDATE_COLOUR = 'update-colour'
 }
 
-interface PatternUpdateActionQuickPickItem extends QuickPickItem {
+interface DecorationUpdateActionQuickPickItem extends QuickPickItem {
     actionId: DecorationAction;
 }
 
-export default class PatternVariationReader {
+export default class DecorationVariationReader {
     private readonly windowComponent: WindowComponent;
 
     constructor(windowComponent: WindowComponent) {
@@ -23,7 +23,7 @@ export default class PatternVariationReader {
     async read(currentDecoration: Decoration): Promise<Option<Decoration>> {
         const items = this.buildSelectItems(currentDecoration);
         const options = {placeHolder: 'Select how to update the highlight'};
-        const item = await this.windowComponent.showQuickPick<PatternUpdateActionQuickPickItem>(items, options);
+        const item = await this.windowComponent.showQuickPick<DecorationUpdateActionQuickPickItem>(items, options);
         if (!item) return none;
 
         switch (item.actionId) {
@@ -50,7 +50,7 @@ export default class PatternVariationReader {
         }
     }
 
-    private buildSelectItems(decoration: Decoration): PatternUpdateActionQuickPickItem[] {
+    private buildSelectItems(decoration: Decoration): DecorationUpdateActionQuickPickItem[] {
         return [
             this.getToggleCaseSensitivityOption(decoration),
             this.getToggleWholeMatchOption(decoration),
