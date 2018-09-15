@@ -49,4 +49,39 @@ suite('Decoration type creation', () => {
 
         verify(window.createTextEditorDecorationType(contains({backgroundColor: 'invalid_colour'})));
     });
+
+    describe('When `useHighlightColorOnRuler` is ON', () => {
+        const configStore = mockType<ConfigStore>({useHighlightColorOnRuler: true, defaultHighlightOpacity: 1});
+        const window = mock(WindowComponent);
+        const creator = new DecorationTypeCreator(configStore, window);
+
+        test('it use the text highlight colour on the ruler', () => {
+            creator.create('blue');
+
+            verify(window.createTextEditorDecorationType({
+                backgroundColor: 'rgba(0,0,255,1)',
+                borderRadius: '.2em',
+                overviewRulerColor: 'blue',
+                overviewRulerLane: OverviewRulerLane.Center
+            }));
+        });
+    });
+
+    describe('When `autoSelectDistinctiveTextColor` is ON', () => {
+        const configStore = mockType<ConfigStore>({autoSelectDistinctiveTextColor: true});
+        const window = mock(WindowComponent);
+        const creator = new DecorationTypeCreator(configStore, window);
+
+        test('it use the high contrast colour for text with highlights', () => {
+            creator.create('rgba(255,192,203,1)');
+
+            verify(window.createTextEditorDecorationType({
+                backgroundColor: 'rgba(255,192,203,1)',
+                borderRadius: '.2em',
+                color: '#545454',
+                overviewRulerColor: 'violet',
+                overviewRulerLane: 2
+            }));
+        });
+    });
 });

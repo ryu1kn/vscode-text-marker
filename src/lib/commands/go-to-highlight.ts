@@ -8,6 +8,7 @@ import PatternFactory from '../pattern/pattern-factory';
 import MatchingModeRegistry from '../matching-mode-registry';
 import {FlatRange} from '../vscode/flat-range';
 import {Option} from 'fp-ts/lib/Option';
+import {DecorationTypeRegistry} from '../decoration/decoration-type-registry';
 
 export abstract class GoToHighlightCommand implements CommandLike {
     protected readonly textLocationRegistry: TextLocationRegistry;
@@ -16,11 +17,12 @@ export abstract class GoToHighlightCommand implements CommandLike {
 
     protected abstract findTargetLocation(editor: TextEditor): Option<FlatRange>;
 
-    protected constructor(matchingModeRegistry: MatchingModeRegistry,
+    constructor(matchingModeRegistry: MatchingModeRegistry,
                 textLocationRegistry: TextLocationRegistry,
                 decorationRegistry: DecorationRegistry,
+                decorationTypeRegistry: DecorationTypeRegistry,
                 windowComponent: WindowComponent) {
-        this.decorationOperatorFactory = new DecorationOperatorFactory(decorationRegistry, textLocationRegistry, windowComponent);
+        this.decorationOperatorFactory = new DecorationOperatorFactory(decorationRegistry, decorationTypeRegistry, textLocationRegistry, windowComponent);
         this.textLocationRegistry = textLocationRegistry;
         this.patternFactory = new PatternFactory(matchingModeRegistry);
     }

@@ -4,7 +4,7 @@ import PatternVariationReader from '../../../lib/pattern/pattern-variation-reade
 import PatternFactory from '../../../lib/pattern/pattern-factory';
 import WindowComponent from '../../../lib/vscode/window';
 import MatchingModeRegistry from '../../../lib/matching-mode-registry';
-import {QuickPickItem, TextEditorDecorationType} from 'vscode';
+import {QuickPickItem} from 'vscode';
 import * as assert from 'assert';
 import {none, some} from 'fp-ts/lib/Option';
 import {Decoration} from '../../../lib/entities/decoration';
@@ -85,8 +85,7 @@ suite('PatternVariationReader', () => {
     });
 
     function createDecoration() {
-        const decorationType = mockType<TextEditorDecorationType>();
-        return new Decoration('ID', createPattern(), 'yellow', decorationType);
+        return new Decoration('ID', createPattern(), 'yellow');
     }
 
     function createPattern() {

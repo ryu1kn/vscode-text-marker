@@ -10,6 +10,7 @@ import StringPattern from '../../../lib/pattern/string';
 import {Decoration} from '../../../lib/entities/decoration';
 import {TextEditorDecorationType} from 'vscode';
 import {none, some} from 'fp-ts/lib/Option';
+import {DecorationTypeRegistry} from '../../../lib/decoration/decoration-type-registry';
 
 suite('ToggleHighlightCommand', () => {
 
@@ -26,9 +27,13 @@ suite('ToggleHighlightCommand', () => {
     textLocationRegistry.register('EDITOR_ID', 'DECORATION_ID', [registeredRange]);
 
     const decorationRegistry = mock(DecorationRegistry);
-    when(decorationRegistry.issue(newPattern)).thenReturn(some(mockType<Decoration>({decorationType, pattern: newPattern})));
+    when(decorationRegistry.issue(newPattern)).thenReturn(some(mockType<Decoration>({pattern: newPattern})));
     when(decorationRegistry.issue(knownPattern)).thenReturn(none);
-    when(decorationRegistry.inquireById('DECORATION_ID')).thenReturn(some(mockType<Decoration>({id: 'DECORATION_ID', decorationType})));
+    when(decorationRegistry.inquireById('DECORATION_ID')).thenReturn(some(mockType<Decoration>({id: 'DECORATION_ID'})));
+
+    const decorationTypeRegistry = mock(DecorationTypeRegistry);
+    when(decorationTypeRegistry.provideFor(any())).thenReturn(decorationType);
+    when(decorationTypeRegistry.inquire('DECORATION_ID')).thenReturn(some(decorationType));
 
     suite('When text is selected', () => {
 
@@ -44,6 +49,7 @@ suite('ToggleHighlightCommand', () => {
                 matchingModeRegistry,
                 textLocationRegistry,
                 decorationRegistry,
+                decorationTypeRegistry,
                 mockType<WindowComponent>({visibleTextEditors: [editor]})
             );
             command.execute(editor);
@@ -63,6 +69,7 @@ suite('ToggleHighlightCommand', () => {
                 matchingModeRegistry,
                 textLocationRegistry,
                 decorationRegistry,
+                decorationTypeRegistry,
                 mockType<WindowComponent>({visibleTextEditors: [editor]})
             );
             command.execute(editor);
@@ -83,6 +90,7 @@ suite('ToggleHighlightCommand', () => {
             matchingModeRegistry,
             textLocationRegistry,
             decorationRegistry,
+            decorationTypeRegistry,
             mockType<WindowComponent>({visibleTextEditors: [editor]})
         );
 

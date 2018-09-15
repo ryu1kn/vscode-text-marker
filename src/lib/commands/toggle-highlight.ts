@@ -6,6 +6,7 @@ import {CommandLike} from '../vscode/vscode';
 import MatchingModeRegistry from '../matching-mode-registry';
 import DecorationRegistry from '../decoration/decoration-registry';
 import WindowComponent from '../vscode/window';
+import {DecorationTypeRegistry} from '../decoration/decoration-type-registry';
 
 export default class ToggleHighlightCommand implements CommandLike {
     private readonly decorationOperatorFactory: DecorationOperatorFactory;
@@ -15,8 +16,9 @@ export default class ToggleHighlightCommand implements CommandLike {
     constructor(matchingModeRegistry: MatchingModeRegistry,
                 textLocationRegistry: TextLocationRegistry,
                 decorationRegistry: DecorationRegistry,
+                decorationTypeRegistry: DecorationTypeRegistry,
                 windowComponent: WindowComponent) {
-        this.decorationOperatorFactory = new DecorationOperatorFactory(decorationRegistry, textLocationRegistry, windowComponent);
+        this.decorationOperatorFactory = new DecorationOperatorFactory(decorationRegistry, decorationTypeRegistry, textLocationRegistry, windowComponent);
         this.patternFactory = new PatternFactory(matchingModeRegistry);
         this.textLocationRegistry = textLocationRegistry;
     }

@@ -65,9 +65,8 @@ suite('DecorationOperator', () => {
         const editors = [mock(TextEditor), mock(TextEditor)];
         const oldPattern = new StringPattern({phrase: 'TEXT_OLD'});
         const newPattern = new StringPattern({phrase: 'TEXT_NEW'});
-        const decorationType = mockType<TextEditorDecorationType>({});
-        const oldDecoration = new Decoration('DECORATION_ID', oldPattern, 'pink', decorationType);
-        const newDecoration = new Decoration('DECORATION_ID', newPattern, 'pink', decorationType);
+        const oldDecoration = new Decoration('DECORATION_ID', oldPattern, 'pink');
+        const newDecoration = new Decoration('DECORATION_ID', newPattern, 'pink');
 
         const decorationRegistry = mock(DecorationRegistry);
 

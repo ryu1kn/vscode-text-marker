@@ -3,21 +3,16 @@ import ColourRegistry from '../colour-registry';
 import Pattern from '../pattern/pattern';
 import {Decoration} from '../entities/decoration';
 import {none, Option, some} from 'fp-ts/lib/Option';
-import DecorationTypeCreator from './decoration-type-creator';
 import {OptionMap} from '../common/collection';
-import WindowComponent from '../vscode/window';
 
 export default class DecorationRegistry {
     private readonly colourRegistry: ColourRegistry;
-    private readonly decorationTypeCreator: DecorationTypeCreator;
     private readonly map: OptionMap<Decoration>;
     private readonly generateUuid: () => string;
 
     constructor(configStore: ConfigStore,
-                window: WindowComponent,
                 generateUuid: () => string) {
         this.colourRegistry = new ColourRegistry(configStore);
-        this.decorationTypeCreator = new DecorationTypeCreator(configStore, window);
 
         this.generateUuid = generateUuid;
         this.map = new OptionMap();
@@ -42,8 +37,7 @@ export default class DecorationRegistry {
     private createDecoration(pattern: Pattern): Decoration {
         const id = this.generateUuid();
         const colour = this.colourRegistry.issue();
-        const decorationType = this.decorationTypeCreator.create(colour);
-        return new Decoration(id, pattern, colour, decorationType);
+        return new Decoration(id, pattern, colour);
     }
 
     update(oldDecoration: Decoration, newDecoration: Decoration): void {

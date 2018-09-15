@@ -1,5 +1,5 @@
 import TextEditor from '../../../lib/vscode/text-editor';
-import {mock, mockMethods, mockType, verify, when} from '../../helpers/mock';
+import {any, mock, mockMethods, mockType, verify, when} from '../../helpers/mock';
 import TextLocationRegistry from '../../../lib/text-location-registry';
 import {GoToNextHighlightCommand} from '../../../lib/commands/go-to-next-highlight';
 import MatchingModeRegistry from '../../../lib/matching-mode-registry';
@@ -10,6 +10,7 @@ import {Decoration} from '../../../lib/entities/decoration';
 import WindowComponent from '../../../lib/vscode/window';
 import * as assert from 'assert';
 import {some} from 'fp-ts/lib/Option';
+import {DecorationTypeRegistry} from '../../../lib/decoration/decoration-type-registry';
 
 suite('Go-to-next-highlight command', function () {
 
@@ -27,15 +28,18 @@ suite('Go-to-next-highlight command', function () {
     textLocationRegistry.register('EDITOR_ID', 'DECORATION_ID', [registeredRange1, registeredRange2, registeredRange3]);
 
     const decorationRegistry = mock(DecorationRegistry);
-    when(decorationRegistry.issue(newPattern)).thenReturn(some(mockType<Decoration>({decorationType, pattern: newPattern})));
-    when(decorationRegistry.inquireById('DECORATION_ID')).thenReturn(some(mockType<Decoration>({id: 'DECORATION_ID', decorationType})));
+    when(decorationRegistry.issue(newPattern)).thenReturn(some(mockType<Decoration>({pattern: newPattern})));
+    when(decorationRegistry.inquireById('DECORATION_ID')).thenReturn(some(mockType<Decoration>({id: 'DECORATION_ID'})));
+
+    const decorationTypeRegistry = mock(DecorationTypeRegistry);
+    when(decorationTypeRegistry.provideFor(any())).thenReturn(decorationType);
 
     suite('when the cursor is on a highlight and not the last one of the same pattern', () => {
 
         const editor = mockType<TextEditor>({id: 'EDITOR_ID', selection: {start: 31, end: 31}});
         const windowComponent = mockType<WindowComponent>({visibleTextEditors: [editor]});
 
-        const command = new GoToNextHighlightCommand(matchingModeRegistry, textLocationRegistry, decorationRegistry, windowComponent);
+        const command = new GoToNextHighlightCommand(matchingModeRegistry, textLocationRegistry, decorationRegistry, decorationTypeRegistry, windowComponent);
 
         test('takes you to the next highlight of the pattern', async () => {
             await command.execute(editor);
@@ -48,7 +52,7 @@ suite('Go-to-next-highlight command', function () {
         const editor = mockType<TextEditor>({id: 'EDITOR_ID', selection: {start: 41, end: 41}});
         const windowComponent = mockType<WindowComponent>({visibleTextEditors: [editor]});
 
-        const command = new GoToNextHighlightCommand(matchingModeRegistry, textLocationRegistry, decorationRegistry, windowComponent);
+        const command = new GoToNextHighlightCommand(matchingModeRegistry, textLocationRegistry, decorationRegistry, decorationTypeRegistry, windowComponent);
 
         test('takes you to the first highlight of the pattern', async () => {
             await command.execute(editor);
@@ -66,7 +70,7 @@ suite('Go-to-next-highlight command', function () {
         });
         const windowComponent = mockType<WindowComponent>({visibleTextEditors: [editor]});
 
-        const command = new GoToNextHighlightCommand(matchingModeRegistry, textLocationRegistry, decorationRegistry, windowComponent);
+        const command = new GoToNextHighlightCommand(matchingModeRegistry, textLocationRegistry, decorationRegistry, decorationTypeRegistry, windowComponent);
 
         test('It highlights and take you to the next highlight', async () => {
             await command.execute(editor);

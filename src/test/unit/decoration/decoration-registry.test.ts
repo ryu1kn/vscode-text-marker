@@ -1,4 +1,4 @@
-import {mock, mockType, stubReturns, when} from '../../helpers/mock';
+import {mockType} from '../../helpers/mock';
 import {assertOption} from '../../helpers/assertions';
 import DecorationRegistry from '../../../lib/decoration/decoration-registry';
 import PatternFactory from '../../../lib/pattern/pattern-factory';
@@ -6,7 +6,6 @@ import MatchingModeRegistry from '../../../lib/matching-mode-registry';
 import ConfigStore from '../../../lib/config-store';
 import * as assert from 'assert';
 import {none, some} from 'fp-ts/lib/Option';
-import WindowComponent from '../../../lib/vscode/window';
 
 suite('DecorationRegistry', () => {
     const pink = 'rgba(255,192,203,1)';
@@ -19,7 +18,6 @@ suite('DecorationRegistry', () => {
         assert.deepEqual(registry.issue(pattern), some({
             id: 'UUID_1',
             colour: pink,
-            decorationType: 'DECORATION_TYPE_1',
             pattern
         }));
     });
@@ -45,7 +43,6 @@ suite('DecorationRegistry', () => {
         assert.deepEqual(registry.inquireById('UUID_1'), some({
             id: 'UUID_1',
             colour: pink,
-            decorationType: 'DECORATION_TYPE_1',
             pattern
         }));
     });
@@ -59,7 +56,6 @@ suite('DecorationRegistry', () => {
         assert.deepEqual(registry.inquireByPattern(pattern), some({
             id: 'UUID_1',
             colour: pink,
-            decorationType: 'DECORATION_TYPE_1',
             pattern: pattern
         }));
     });
@@ -82,14 +78,12 @@ suite('DecorationRegistry', () => {
             {
                 id: 'UUID_1',
                 colour: pink,
-                pattern: pattern1,
-                decorationType: 'DECORATION_TYPE_1'
+                pattern: pattern1
             },
             {
                 id: 'UUID_2',
                 colour: yellow,
-                pattern: pattern2,
-                decorationType: 'DECORATION_TYPE_2'
+                pattern: pattern2
             }
         ]);
     });
@@ -106,35 +100,21 @@ suite('DecorationRegistry', () => {
             {
                 id: 'UUID_2',
                 colour: yellow,
-                pattern: pattern2,
-                decorationType: 'DECORATION_TYPE_2'
+                pattern: pattern2
             }
         ]);
     });
 
     test('it issues new decoration with new color', () => {
-        const window = mock(WindowComponent);
-        when(window.createTextEditorDecorationType({
-            backgroundColor: pink,
-            borderRadius: '.2em',
-            overviewRulerColor: 'violet',
-            overviewRulerLane: 2
-        })).thenReturn('DECORATION_TYPE_1');
-        when(window.createTextEditorDecorationType({
-            backgroundColor: yellow,
-            borderRadius: '.2em',
-            overviewRulerColor: 'violet',
-            overviewRulerLane: 2
-        })).thenReturn('DECORATION_TYPE_2');
-        const registry = createDecorationRegistry({window});
+        const registry = createDecorationRegistry({window: {}});
 
         const pattern1 = createPattern('TEXT_1');
         assertOption(registry.issue(pattern1), d => {
-            assert.equal(d.decorationType, 'DECORATION_TYPE_1');
+            assert.equal(d.colour, 'rgba(255,192,203,1)');
         });
         const pattern2 = createPattern('TEXT_2');
         assertOption(registry.issue(pattern2), d => {
-            assert.equal(d.decorationType, 'DECORATION_TYPE_2');
+            assert.equal(d.colour, 'rgba(255,255,0,1)');
         });
     });
 
@@ -152,58 +132,12 @@ suite('DecorationRegistry', () => {
         });
     });
 
-    test('it use the text highlight colour on the ruler', () => {
-        const window = mock(WindowComponent);
-        when(window.createTextEditorDecorationType({
-            backgroundColor: pink,
-            borderRadius: '.2em',
-            overviewRulerColor: pink,
-            overviewRulerLane: 2
-        })).thenReturn('DECORATION_TYPE_1');
-
-        const configStore = createConfigStore({useHighlightColorOnRuler: true});
-        const registry = createDecorationRegistry({configStore, window});
-
-        const pattern = createPattern('TEXT');
-        assertOption(registry.issue(pattern), d => {
-            assert.equal(d.decorationType, 'DECORATION_TYPE_1');
-        });
-    });
-
-    test('it use the high contrast colour for text with highlights', () => {
-        const window = mock(WindowComponent);
-        when(window.createTextEditorDecorationType({
-            backgroundColor: pink,
-            borderRadius: '.2em',
-            color: '#545454',
-            overviewRulerColor: 'violet',
-            overviewRulerLane: 2
-        })).thenReturn('DECORATION_TYPE_1');
-
-        const configStore = createConfigStore({autoSelectDistinctiveTextColor: true});
-        const registry = createDecorationRegistry({configStore, window});
-
-        const pattern = createPattern('TEXT');
-        assertOption(registry.issue(pattern), d => {
-            assert.equal(d.decorationType, 'DECORATION_TYPE_1');
-        });
-    });
-
     function createDecorationRegistry(options: any = {}) {
-        const window = options.window || {
-            createTextEditorDecorationType: stubReturns('DECORATION_TYPE_1', 'DECORATION_TYPE_2')
-        };
         const generateUuid = createGenerateUuid();
-        const configStore = options.configStore || createConfigStore();
-        return new DecorationRegistry(configStore, window, generateUuid);
-    }
-
-    function createConfigStore({useHighlightColorOnRuler, autoSelectDistinctiveTextColor}: any = {}) {
-        return mockType<ConfigStore>({
-            useHighlightColorOnRuler: !!useHighlightColorOnRuler,
-            autoSelectDistinctiveTextColor: !!autoSelectDistinctiveTextColor,
+        const configStore = options.configStore || mockType<ConfigStore>({
             highlightColors: [pink, yellow]
         });
+        return new DecorationRegistry(configStore, generateUuid);
     }
 
     function createPattern(phrase: string) {
@@ -215,5 +149,4 @@ suite('DecorationRegistry', () => {
         let i = 1;
         return () => `UUID_${i++}`;
     }
-
 });

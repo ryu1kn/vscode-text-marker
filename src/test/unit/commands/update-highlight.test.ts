@@ -10,7 +10,6 @@ import TextEditor from '../../../lib/vscode/text-editor';
 import DecorationOperator from '../../../lib/decoration/decoration-operator';
 import {none, some} from 'fp-ts/lib/Option';
 import {Decoration} from '../../../lib/entities/decoration';
-import {TextEditorDecorationType} from 'vscode';
 
 suite('UpdateHighlightCommand', () => {
 
@@ -24,10 +23,9 @@ suite('UpdateHighlightCommand', () => {
 
         const editor = mockType<TextEditor>({id: 'EDITOR_ID', selectedText: 'SELECTED', selection: registeredRange});
 
-        const decorationType = mockType<TextEditorDecorationType>();
         const pattern = mock(StringPattern);
-        const oldDecoration = new Decoration('DECORATION_ID', pattern, 'pink', decorationType);
-        const newDecoration = new Decoration('DECORATION_ID', pattern, 'yellow', decorationType);
+        const oldDecoration = new Decoration('DECORATION_ID', pattern, 'pink');
+        const newDecoration = new Decoration('DECORATION_ID', pattern, 'yellow');
 
         const decorationRegistry = mock(DecorationRegistry);
         when(decorationRegistry.inquireById('DECORATION_ID')).thenReturn(some(oldDecoration));

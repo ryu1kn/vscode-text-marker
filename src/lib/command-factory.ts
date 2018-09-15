@@ -29,6 +29,7 @@ import AutoRefreshDecorationWithDelay from './commands/auto-refresh-decoration-w
 import {GoToNextHighlightCommand} from './commands/go-to-next-highlight';
 import {GoToPreviousHighlightCommand} from './commands/go-to-previous-highlight';
 import {AutoTriggerCommand} from './commands/command';
+import {DecorationTypeRegistry} from './decoration/decoration-type-registry';
 
 const generateUuid = require('uuid/v4');
 const BASE_STATUS_BAR_PRIORITY = 100;
@@ -45,6 +46,7 @@ export default class CommandFactory {
     private matchingModeRegistry?: MatchingModeRegistry;
     private textLocationRegistry?: TextLocationRegistry;
     private windowComponent?: WindowComponent;
+    private decorationTypeRegistry?: DecorationTypeRegistry;
 
     constructor(vscode: any, logger: Logger) {
         this.vscode = vscode;
@@ -52,12 +54,7 @@ export default class CommandFactory {
     }
 
     createToggleHighlightCommand() {
-        return new ToggleHighlightCommand(
-            this.getMatchingModeRegistry(),
-            this.getTextLocationRegistry(),
-            this.getDecorationRegistry(),
-            this.getWindowComponent()
-        );
+        return new ToggleHighlightCommand(this.getMatchingModeRegistry(), this.getTextLocationRegistry(), this.getDecorationRegistry(), this.getDecorationTypeRegistry(), this.getWindowComponent());
     }
 
     createHighlightUsingRegex() {
@@ -102,21 +99,11 @@ export default class CommandFactory {
     }
 
     createGoToNextHighlightCommand() {
-        return new GoToNextHighlightCommand(
-            this.getMatchingModeRegistry(),
-            this.getTextLocationRegistry(),
-            this.getDecorationRegistry(),
-            this.getWindowComponent()
-        );
+        return new GoToNextHighlightCommand(this.getMatchingModeRegistry(), this.getTextLocationRegistry(), this.getDecorationRegistry(), this.getDecorationTypeRegistry(), this.getWindowComponent());
     }
 
     createGoToPreviousHighlightCommand() {
-        return new GoToPreviousHighlightCommand(
-            this.getMatchingModeRegistry(),
-            this.getTextLocationRegistry(),
-            this.getDecorationRegistry(),
-            this.getWindowComponent()
-        );
+        return new GoToPreviousHighlightCommand(this.getMatchingModeRegistry(), this.getTextLocationRegistry(), this.getDecorationRegistry(), this.getDecorationTypeRegistry(), this.getWindowComponent());
     }
 
     createAutoRefreshDecoration() {
@@ -192,17 +179,22 @@ export default class CommandFactory {
         return this.decorationRegistry;
     }
 
+    private getDecorationTypeRegistry() {
+        this.decorationTypeRegistry = this.decorationTypeRegistry || this.createDecorationTypeRegistry();
+        return this.decorationTypeRegistry;
+    }
+
     private createDecorationOperatorFactory() {
-        return new DecorationOperatorFactory(
-            this.getDecorationRegistry(),
-            this.getTextLocationRegistry(),
-            this.getWindowComponent()
-        );
+        return new DecorationOperatorFactory(this.getDecorationRegistry(), this.getDecorationTypeRegistry(), this.getTextLocationRegistry(), this.getWindowComponent());
     }
 
     private createDecorationRegistry() {
         const configStore = this.getConfigStore();
-        return new DecorationRegistry(configStore, this.getWindowComponent(), generateUuid);
+        return new DecorationRegistry(configStore, generateUuid);
+    }
+
+    private createDecorationTypeRegistry() {
+        return new DecorationTypeRegistry(this.getConfigStore(), this.getWindowComponent());
     }
 
     private getDecorationPicker() {
