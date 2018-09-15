@@ -19,6 +19,10 @@ export class DecorationTypeRegistry {
         return this.issued.get(decorationId);
     }
 
+    revoke(id: string): void {
+        this.issued.delete(id);
+    }
+
     provideFor(decoration: Decoration): TextEditorDecorationType {
         const found = this.inquire(decoration.id).toUndefined();
         return found ? found : this.issue(decoration);

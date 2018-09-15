@@ -27,6 +27,7 @@ export default class TextDecorator {
                     visibleEditor.unsetDecorations(dt);
                 });
             });
+            this.decorationTypeRegistry.revoke(decoration.id);
             this.textLocationRegistry.deregister(decoration.id);
         });
     }

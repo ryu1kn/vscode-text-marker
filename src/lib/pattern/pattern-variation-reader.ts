@@ -85,7 +85,7 @@ export default class PatternVariationReader {
 
     private getUpdateColourOption(decoration: Decoration) {
         return {
-            label: 'Update color',
+            label: 'Update Color',
             actionId: DecorationAction.UPDATE_COLOUR
         };
     }
