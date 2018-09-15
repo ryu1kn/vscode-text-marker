@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 ### Added
+- Highlight colour can now be updated through right-click menu. [#22](https://github.com/ryu1kn/vscode-text-marker/issues/22)
 - Usage data collecting capability, together with the configuration (`textmarker.enableTelemetry`) which stops Text Marker to collect usage data.
 
 ## [1.7.0] - 2018-08-28
@@ -41,7 +42,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [1.1.0] - 2018-05-15
 ### Added
-- Introduced a configuration to change the default highlight color. [#16](https://github.com/ryu1kn/vscode-text-marker/issues/16)
+- Introduced a configuration to change the default highlight colour. [#16](https://github.com/ryu1kn/vscode-text-marker/issues/16)
 
 ## [1.0.0] - 2018-05-12
 ### Added
