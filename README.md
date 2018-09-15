@@ -101,7 +101,8 @@ You can update a highlight rule after you set it.
 
 * `textmarker.defaultHighlightOpacity` (default: `0.7`)
 
-    Opacity to be used when one is not given in the highlight color. The value must be in the range 0.0 to 1.0, inclusive.
+    Opacity to be used when one is not given in the highlight color. Opacity is also applied to the colors on the overview ruler.
+    The value must be in the range 0.0 to 1.0, inclusive.
 
 * `textmarker.enableIgnoreCase` (default: `false`)
 

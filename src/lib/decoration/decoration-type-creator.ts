@@ -19,12 +19,15 @@ export default class DecorationTypeCreator {
     }
 
     create(colour: string): TextEditorDecorationType {
+        const backgroundColour = this.getBackgroundColor(colour);
+        const overviewRulerColor = this.configStore.useHighlightColorOnRuler ?
+            backgroundColour : this.getBackgroundColor(OVERVIEW_RULER_COLOUR);
         return this.window.createTextEditorDecorationType(
             Object.assign(
                 {
-                    backgroundColor: this.getBackgroundColor(colour),
+                    backgroundColor: backgroundColour,
                     borderRadius: '.2em',
-                    overviewRulerColor: this.configStore.useHighlightColorOnRuler ? colour : OVERVIEW_RULER_COLOUR,
+                    overviewRulerColor: overviewRulerColor,
                     overviewRulerLane: OverviewRulerLane.Center
                 },
                 this.configStore.autoSelectDistinctiveTextColor && {color: getColorContrast(colour)}

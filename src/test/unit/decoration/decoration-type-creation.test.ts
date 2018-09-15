@@ -5,6 +5,8 @@ import ConfigStore from '../../../lib/config-store';
 import WindowComponent from '../../../lib/vscode/window';
 
 suite('Decoration type creation', () => {
+    const blue = (opacity: number): string => `rgba(0,0,255,${opacity})`;
+    const violet = (opacity: number): string => `rgba(238,130,238,${opacity})`;
 
     const configStore = mockType<ConfigStore>({defaultHighlightOpacity: 0.5});
     let window: WindowComponent;
@@ -19,9 +21,9 @@ suite('Decoration type creation', () => {
         creator.create('blue');
 
         verify(window.createTextEditorDecorationType({
-            backgroundColor: 'rgba(0,0,255,0.5)',
+            backgroundColor: blue(0.5),
             borderRadius: '.2em',
-            overviewRulerColor: 'violet',
+            overviewRulerColor: violet(0.5),
             overviewRulerLane: OverviewRulerLane.Center
         }));
     });
@@ -59,16 +61,16 @@ suite('Decoration type creation', () => {
             creator.create('blue');
 
             verify(window.createTextEditorDecorationType({
-                backgroundColor: 'rgba(0,0,255,1)',
+                backgroundColor: blue(1),
                 borderRadius: '.2em',
-                overviewRulerColor: 'blue',
+                overviewRulerColor: blue(1),
                 overviewRulerLane: OverviewRulerLane.Center
             }));
         });
     });
 
     describe('When `autoSelectDistinctiveTextColor` is ON', () => {
-        const configStore = mockType<ConfigStore>({autoSelectDistinctiveTextColor: true});
+        const configStore = mockType<ConfigStore>({autoSelectDistinctiveTextColor: true, defaultHighlightOpacity: 1});
         const window = mock(WindowComponent);
         const creator = new DecorationTypeCreator(configStore, window);
 
@@ -79,7 +81,7 @@ suite('Decoration type creation', () => {
                 backgroundColor: 'rgba(255,192,203,1)',
                 borderRadius: '.2em',
                 color: '#545454',
-                overviewRulerColor: 'violet',
+                overviewRulerColor: violet(1),
                 overviewRulerLane: 2
             }));
         });
