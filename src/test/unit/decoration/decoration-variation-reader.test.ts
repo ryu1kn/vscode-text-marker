@@ -9,8 +9,11 @@ import * as assert from 'assert';
 import {none, some} from 'fp-ts/lib/Option';
 import {Decoration} from '../../../lib/entities/decoration';
 import {assertOption} from '../../helpers/assertions';
+import {TelemetryReporterLocator} from '../../../lib/telemetry/telemetry-reporter-locator';
+import {getVsTelemetryReporterCreator} from '../../../lib/telemetry/vscode-telemetry-reporter';
 
 suite('DecorationVariationReader', () => {
+    TelemetryReporterLocator.load('package.json', getVsTelemetryReporterCreator(false));
 
     test('it lets user to toggle case sensitivity', async () => {
         const windowComponent = mockType<WindowComponent>({

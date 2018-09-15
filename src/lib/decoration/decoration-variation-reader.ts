@@ -1,6 +1,8 @@
 import WindowComponent, {QuickPickItem} from '../vscode/window';
 import {none, Option, some} from 'fp-ts/lib/Option';
 import {Decoration} from '../entities/decoration';
+import {TelemetryReporterLocator} from '../telemetry/telemetry-reporter-locator';
+import {TelemetryReporter} from '../telemetry/telemetry-reporter';
 
 enum DecorationAction {
     TOGGLE_CASE_SENSITIVITY = 'toggle-case-sensitivity',
@@ -15,9 +17,11 @@ interface DecorationUpdateActionQuickPickItem extends QuickPickItem {
 
 export default class DecorationVariationReader {
     private readonly windowComponent: WindowComponent;
+    private telemetryReporter: TelemetryReporter;
 
     constructor(windowComponent: WindowComponent) {
         this.windowComponent = windowComponent;
+        this.telemetryReporter = TelemetryReporterLocator.getReporter();
     }
 
     async read(currentDecoration: Decoration): Promise<Option<Decoration>> {
@@ -26,6 +30,7 @@ export default class DecorationVariationReader {
         const item = await this.windowComponent.showQuickPick<DecorationUpdateActionQuickPickItem>(items, options);
         if (!item) return none;
 
+        this.telemetryReporter.logHighlightUpdated(item.actionId);
         switch (item.actionId) {
             case DecorationAction.TOGGLE_CASE_SENSITIVITY:
                 return some(currentDecoration.withCaseSensitivityToggled());

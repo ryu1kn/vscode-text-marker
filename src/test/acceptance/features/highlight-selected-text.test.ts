@@ -16,14 +16,13 @@ suite('Highlight command', () => {
     let command: any;
     let fakeVscode: any;
     const packageJsonPath = join(__dirname, '..', '..', '..', '..', 'package.json');
-    const vsTelemetryReporterCreator = getVsTelemetryReporterCreator(false);
 
     setup(() => {
         editor1 = createFakeEditor({wholeText: 'A TEXT B TEXT C', selectedText: 'TEXT'});
         editor2 = createFakeEditor({wholeText: 'a TEXT'});
         editor3 = createFakeEditor({wholeText: 'a TEXT', selectedText: 'TEX'});
         fakeVscode = createFakeVsCode({editors: [editor1, editor2, editor3]});
-        TelemetryReporterLocator.load(packageJsonPath, vsTelemetryReporterCreator);
+        TelemetryReporterLocator.load(packageJsonPath, getVsTelemetryReporterCreator(false));
 
         AppIntegrator.create(fakeVscode, console).integrate(EXECUTION_CONTEXT);
 

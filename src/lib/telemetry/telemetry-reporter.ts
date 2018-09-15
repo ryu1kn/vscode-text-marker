@@ -16,6 +16,10 @@ export class TelemetryReporter implements Disposable {
         this.reporter.sendTelemetryEvent('commandErrored', {commandName});
     }
 
+    logHighlightUpdated(updateType: string): void {
+        this.reporter.sendTelemetryEvent('highlightUpdated', {updateType});
+    }
+
     dispose(): Promise<any> {
         return this.reporter.dispose();
     }
