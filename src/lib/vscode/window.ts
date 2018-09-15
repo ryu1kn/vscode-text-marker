@@ -16,13 +16,14 @@ export default class WindowComponent {
         this.window = window;
     }
 
-    get visibleTextEditors() {
+    get visibleTextEditors(): TextEditor[] {
         return this.window.visibleTextEditors
             .map(editor => new TextEditor(editor));
     }
 
-    get activeTextEditor() {
-        return new TextEditor(this.window.activeTextEditor);
+    get activeTextEditor(): TextEditor | undefined {
+        const editor = this.window.activeTextEditor;
+        return editor && new TextEditor(editor);
     }
 
     async showInputBox(options: InputBoxOptions): Promise<Option<string>> {
@@ -30,11 +31,11 @@ export default class WindowComponent {
         return fromPredicate((s: string) => !!s)(userInput);
     }
 
-    showInformationMessage(message: string) {
+    showInformationMessage(message: string): Thenable<string> {
         return this.window.showInformationMessage(message);
     }
 
-    showQuickPick<T extends QuickPickItem>(selectItems: T[], options: QuickPickOptions) {
+    showQuickPick<T extends QuickPickItem>(selectItems: T[], options: QuickPickOptions): Thenable<T> {
         const items = this.fillDescription(selectItems);
         return this.window.showQuickPick(items, options);
     }
