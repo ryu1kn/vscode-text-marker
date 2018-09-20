@@ -78,8 +78,7 @@ suite('DecorationOperator', () => {
 
                 operator.updateDecoration(oldDecoration, newDecoration);
 
-                verify(textDecorator.undecorate(editors, [oldDecoration.id]));
-                verify(textDecorator.decorate(editors, [newDecoration]));
+                verify(textDecorator.redecorate(editors, [newDecoration]));
             });
         });
     });

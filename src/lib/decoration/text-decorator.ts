@@ -12,7 +12,7 @@ export default class TextDecorator {
         this.decorationTypeRegistry = decorationTypeRegistry;
     }
 
-    decorate(editors: TextEditor[], decorations: Decoration[]) {
+    decorate(editors: TextEditor[], decorations: Decoration[]): void {
         editors.forEach(visibleEditor => {
             decorations.forEach(decoration => {
                 this.addDecoration(visibleEditor, decoration);
@@ -20,10 +20,10 @@ export default class TextDecorator {
         });
     }
 
-    undecorate(editors: TextEditor[], decorationIds: string[]) {
+    undecorate(editors: TextEditor[], decorationIds: string[]): void {
         decorationIds.forEach(decorationId => {
-            editors.forEach(visibleEditor => {
-                this.decorationTypeRegistry.inquire(decorationId).map(dt => {
+            this.decorationTypeRegistry.inquire(decorationId).map(dt => {
+                editors.forEach(visibleEditor => {
                     visibleEditor.unsetDecorations(dt);
                 });
             });
@@ -32,7 +32,12 @@ export default class TextDecorator {
         });
     }
 
-    private addDecoration(editor: TextEditor, decoration: Decoration) {
+    redecorate(editors: TextEditor[], decorations: Decoration[]): void {
+        this.undecorate(editors, decorations.map(d => d.id));
+        this.decorate(editors, decorations);
+    }
+
+    private addDecoration(editor: TextEditor, decoration: Decoration): void {
         const ranges = decoration.pattern.locateIn(editor.wholeText);
         const decorationType = this.decorationTypeRegistry.provideFor(decoration);
         editor.setDecorations(decorationType, ranges);

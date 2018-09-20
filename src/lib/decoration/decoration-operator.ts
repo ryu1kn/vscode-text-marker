@@ -35,8 +35,7 @@ export default class DecorationOperator {
 
     updateDecoration(oldDecoration: Decoration, newDecoration: Decoration): void {
         this.decorationRegistry.update(oldDecoration, newDecoration);
-        this.textDecorator.undecorate(this.editors, [oldDecoration.id]);
-        this.textDecorator.decorate(this.editors, [newDecoration]);
+        this.textDecorator.redecorate(this.editors, [newDecoration]);
     }
 
     removeAllDecorations() {
