@@ -56,7 +56,7 @@ suite('DecorationOperator', () => {
             operator.removeDecoration('DECORATION_ID');
 
             verify(decorationRegistry.revoke('DECORATION_ID'));
-            verify(textDecorator.undecorate(editors, [decoration]));
+            verify(textDecorator.undecorate(editors, ['DECORATION_ID']));
         });
     });
 
@@ -78,7 +78,7 @@ suite('DecorationOperator', () => {
 
                 operator.updateDecoration(oldDecoration, newDecoration);
 
-                verify(textDecorator.undecorate(editors, [oldDecoration]));
+                verify(textDecorator.undecorate(editors, [oldDecoration.id]));
                 verify(textDecorator.decorate(editors, [newDecoration]));
             });
         });
@@ -115,7 +115,7 @@ suite('DecorationOperator', () => {
             operator.removeAllDecorations();
 
             wrapVerify(capture => verify(decorationRegistry.revoke(capture())), [['DECORATION_ID_1'], ['DECORATION_ID_2']]);
-            verify(textDecorator.undecorate(editors, decorations));
+            verify(textDecorator.undecorate(editors, ['DECORATION_ID_1', 'DECORATION_ID_2']));
         });
     });
 });

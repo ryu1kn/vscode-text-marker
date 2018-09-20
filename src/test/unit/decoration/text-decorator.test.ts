@@ -74,7 +74,7 @@ suite('TextDecorator', () => {
         const editors = [mock(TextEditor), mock(TextEditor)];
         const textLocationRegistry = mock(TextLocationRegistry);
         const textDecorator = new TextDecorator(textLocationRegistry, decorationTypeRegistry);
-        textDecorator.undecorate(editors, [decoration1, decoration2]);
+        textDecorator.undecorate(editors, [decoration1.id, decoration2.id]);
 
         wrapVerify(capture => verify(editors[0].unsetDecorations(capture())), [
             ['DECORATION_TYPE_1'],

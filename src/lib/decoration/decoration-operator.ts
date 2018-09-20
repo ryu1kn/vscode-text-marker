@@ -30,21 +30,22 @@ export default class DecorationOperator {
 
     private _removeDecoration(decoration: Decoration) {
         this.decorationRegistry.revoke(decoration.id);
-        this.textDecorator.undecorate(this.editors, [decoration]);
+        this.textDecorator.undecorate(this.editors, [decoration.id]);
     }
 
     updateDecoration(oldDecoration: Decoration, newDecoration: Decoration): void {
         this.decorationRegistry.update(oldDecoration, newDecoration);
-        this.textDecorator.undecorate(this.editors, [oldDecoration]);
+        this.textDecorator.undecorate(this.editors, [oldDecoration.id]);
         this.textDecorator.decorate(this.editors, [newDecoration]);
     }
 
     removeAllDecorations() {
         const decorations = this.decorationRegistry.retrieveAll();
-        decorations.forEach(decoration => {
-            this.decorationRegistry.revoke(decoration.id);
+        const decorationIds = decorations.map(d => d.id);
+        decorationIds.forEach(decorationId => {
+            this.decorationRegistry.revoke(decorationId);
         });
-        this.textDecorator.undecorate(this.editors, decorations);
+        this.textDecorator.undecorate(this.editors, decorationIds);
     }
 
     refreshDecorations() {

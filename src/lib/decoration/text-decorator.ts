@@ -20,15 +20,15 @@ export default class TextDecorator {
         });
     }
 
-    undecorate(editors: TextEditor[], decorations: Decoration[]) {
-        decorations.forEach(decoration => {
+    undecorate(editors: TextEditor[], decorationIds: string[]) {
+        decorationIds.forEach(decorationId => {
             editors.forEach(visibleEditor => {
-                this.decorationTypeRegistry.inquire(decoration.id).map(dt => {
+                this.decorationTypeRegistry.inquire(decorationId).map(dt => {
                     visibleEditor.unsetDecorations(dt);
                 });
             });
-            this.decorationTypeRegistry.revoke(decoration.id);
-            this.textLocationRegistry.deregister(decoration.id);
+            this.decorationTypeRegistry.revoke(decorationId);
+            this.textLocationRegistry.deregister(decorationId);
         });
     }
 
