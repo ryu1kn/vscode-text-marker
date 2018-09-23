@@ -28,8 +28,10 @@ export default class DecorationVariationReader {
         const items = this.buildSelectItems(currentDecoration);
         const options = {placeHolder: 'Select how to update the highlight'};
         const item = await this.windowComponent.showQuickPick<DecorationUpdateActionQuickPickItem>(items, options);
-        if (!item) return none;
+        return item.fold(Promise.resolve(none), it => this.createDecoration(currentDecoration, it));
+    }
 
+    private async createDecoration(currentDecoration: Decoration, item: DecorationUpdateActionQuickPickItem): Promise<Option<Decoration>> {
         this.telemetryReporter.logHighlightUpdated(item.actionId);
         switch (item.actionId) {
             case DecorationAction.TOGGLE_CASE_SENSITIVITY:

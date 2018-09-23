@@ -12,11 +12,10 @@ export default class UnhighlightCommand implements CommandLike {
     }
 
     async execute() {
-        const decoration = await this.decorationPicker.pick('Select a pattern to remove highlight');
-        if (!decoration) return;
-
-        const decorationOperator = this.decorationOperatorFactory.createForVisibleEditors();
-        decorationOperator.removeDecoration(decoration.id);
+        const decorationOpt = await this.decorationPicker.pick('Select a pattern to remove highlight');
+        decorationOpt.map(decoration => {
+            const decorationOperator = this.decorationOperatorFactory.createForVisibleEditors();
+            decorationOperator.removeDecoration(decoration.id);
+        });
     }
-
 }

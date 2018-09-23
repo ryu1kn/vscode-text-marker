@@ -12,11 +12,10 @@ export default class ToggleWholeMatchCommand implements CommandLike {
     }
 
     async execute() {
-        const decoration = await this.decorationPicker.pick('Select a pattern to toggle partial/whole match');
-        if (!decoration) return;
-
-        const decorationOperator = this.decorationOperatorFactory.createForVisibleEditors();
-        decorationOperator.updateDecoration(decoration, decoration.withWholeMatchToggled());
+        const decorationOpt = await this.decorationPicker.pick('Select a pattern to toggle partial/whole match');
+        decorationOpt.map(decoration => {
+            const decorationOperator = this.decorationOperatorFactory.createForVisibleEditors();
+            decorationOperator.updateDecoration(decoration, decoration.withWholeMatchToggled());
+        });
     }
-
 }

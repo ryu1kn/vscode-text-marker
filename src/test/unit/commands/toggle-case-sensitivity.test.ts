@@ -5,6 +5,7 @@ import DecorationOperatorFactory from '../../../lib/decoration/decoration-operat
 import DecorationOperator from '../../../lib/decoration/decoration-operator';
 import {Decoration} from '../../../lib/entities/decoration';
 import StringPattern from '../../../lib/pattern/string';
+import {none, some} from 'fp-ts/lib/Option';
 
 suite('ToggleCaseSensitivityCommand', () => {
 
@@ -16,7 +17,7 @@ suite('ToggleCaseSensitivityCommand', () => {
         const pattern = new StringPattern({phrase: 'TEXT'});
         const decoration = new Decoration('UUID', pattern, 'pink');
         const decorationPicker = mock(DecorationPicker);
-        when(decorationPicker.pick('Select a pattern to toggle case sensitivity')).thenResolve(decoration);
+        when(decorationPicker.pick('Select a pattern to toggle case sensitivity')).thenResolve(some(decoration));
 
         const command = new ToggleCaseSensitivityCommand(decorationOperatorFactory, decorationPicker);
 
@@ -27,12 +28,13 @@ suite('ToggleCaseSensitivityCommand', () => {
         });
     });
 
-    suite('When text is NOT selected', () => {
+    suite('When pattern is NOT selected', () => {
         const decorationOperatorFactory = mock(DecorationOperatorFactory);
         const decorationPicker = mock(DecorationPicker);
+        when(decorationPicker.pick('Select a pattern to toggle case sensitivity')).thenResolve(none);
         const command = new ToggleCaseSensitivityCommand(decorationOperatorFactory, decorationPicker);
 
-        test('it does nothing if text is not selected', async () => {
+        test('it does nothing', async () => {
             await command.execute();
 
             verify(decorationOperatorFactory.createForVisibleEditors(), {times: 0});

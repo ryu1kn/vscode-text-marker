@@ -11,6 +11,7 @@ import {Decoration} from '../../../lib/entities/decoration';
 import {assertOption} from '../../helpers/assertions';
 import {TelemetryReporterLocator} from '../../../lib/telemetry/telemetry-reporter-locator';
 import {getVsTelemetryReporterCreator} from '../../../lib/telemetry/vscode-telemetry-reporter';
+import {findFirst} from 'fp-ts/lib/Array';
 
 suite('DecorationVariationReader', () => {
     TelemetryReporterLocator.load('package.json', getVsTelemetryReporterCreator(false));
@@ -18,7 +19,7 @@ suite('DecorationVariationReader', () => {
     test('it lets user to toggle case sensitivity', async () => {
         const windowComponent = mockType<WindowComponent>({
             showQuickPick: (items: QuickPickItem[]) =>
-                Promise.resolve(items.find(item => item.label.includes('Case')))
+                Promise.resolve(findFirst(items, item => item.label.includes('Case')))
         });
         const patternVariationReader = new DecorationVariationReader(windowComponent);
 
@@ -33,7 +34,7 @@ suite('DecorationVariationReader', () => {
     test('it lets user to toggle whole/partial match', async () => {
         const windowComponent = mockType<WindowComponent>({
             showQuickPick: (items: QuickPickItem[]) =>
-                Promise.resolve(items.find(item => item.label.includes('Whole')))
+                Promise.resolve(findFirst(items, item => item.label.includes('Whole')))
         });
         const patternVariationReader = new DecorationVariationReader(windowComponent);
 
@@ -48,7 +49,7 @@ suite('DecorationVariationReader', () => {
     test('it lets user to update the phrase of pattern', async () => {
         const windowComponent = mockType<WindowComponent>({
             showQuickPick: (items: QuickPickItem[]) =>
-                Promise.resolve(items.find(item => item.label.includes('Pattern'))),
+                Promise.resolve(findFirst(items, item => item.label.includes('Pattern'))),
             showInputBox: () => Promise.resolve(some('NEW_PHRASE'))
         });
         const patternVariationReader = new DecorationVariationReader(windowComponent);
@@ -63,7 +64,7 @@ suite('DecorationVariationReader', () => {
 
     test('it returns null if user selected nothing', async () => {
         const windowComponent = mockType<WindowComponent>({
-            showQuickPick: (_items: QuickPickItem[]) => Promise.resolve()
+            showQuickPick: (_items: QuickPickItem[]) => Promise.resolve(none)
         });
         const patternVariationReader = new DecorationVariationReader(windowComponent);
 
@@ -76,7 +77,7 @@ suite('DecorationVariationReader', () => {
     test('it returns null if user selected phrase-update but cancelled', async () => {
         const windowComponent = mockType<WindowComponent>({
             showQuickPick: (items: QuickPickItem[]) =>
-                Promise.resolve(items.find(item => item.label.includes('Pattern'))),
+                Promise.resolve(findFirst(items, item => item.label.includes('Pattern'))),
             showInputBox: () => Promise.resolve(none)
         });
         const patternVariationReader = new DecorationVariationReader(windowComponent);

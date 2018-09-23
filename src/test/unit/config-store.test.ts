@@ -4,6 +4,7 @@ import ConfigStore from '../../lib/config-store';
 import * as vscode from 'vscode';
 import ConfigurationTargetPicker from '../../lib/config-target-picker';
 import * as assert from 'assert';
+import {some} from 'fp-ts/lib/Option';
 
 suite('ConfigStore', () => {
     let extensionConfig: any;
@@ -17,7 +18,7 @@ suite('ConfigStore', () => {
         when(workspace.getConfiguration('textmarker')).thenReturn(extensionConfig);
 
         const configTargetPicker = mock(ConfigurationTargetPicker);
-        when(configTargetPicker.pick()).thenResolve('CONFIG_TARGET');
+        when(configTargetPicker.pick()).thenResolve(some('CONFIG_TARGET'));
 
         configStore = new ConfigStore(workspace, configTargetPicker);
     });

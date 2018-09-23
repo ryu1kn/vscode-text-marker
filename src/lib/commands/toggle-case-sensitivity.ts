@@ -12,11 +12,10 @@ export default class ToggleCaseSensitivityCommand implements CommandLike {
     }
 
     async execute() {
-        const decoration = await this.decorationPicker.pick('Select a pattern to toggle case sensitivity');
-        if (!decoration) return;
-
-        const decorationOperator = this.decorationOperatorFactory.createForVisibleEditors();
-        decorationOperator.updateDecoration(decoration, decoration.withCaseSensitivityToggled());
+        const decorationOpt = await this.decorationPicker.pick('Select a pattern to toggle case sensitivity');
+        decorationOpt.map(decoration => {
+            const decorationOperator = this.decorationOperatorFactory.createForVisibleEditors();
+            decorationOperator.updateDecoration(decoration, decoration.withCaseSensitivityToggled());
+        });
     }
-
 }
