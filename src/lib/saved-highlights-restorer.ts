@@ -41,7 +41,9 @@ export default class SavedHighlightsRestorer {
     private addDecoration(decorationData: Highlight, decorationOperator: DecorationOperator) {
         const patternData = this.decorationEntryParser.getPattern(decorationData);
         const pattern = this.patternFactory.create(patternData);
-        decorationOperator.addDecoration(pattern);
+        // todo: color vs colour
+        // todo: should color be in pattern?? should Highlight.pattern be of type Pattern? what's current diff?
+        decorationOperator.addDecoration(pattern, decorationData.pattern.colour);
     }
 
 }

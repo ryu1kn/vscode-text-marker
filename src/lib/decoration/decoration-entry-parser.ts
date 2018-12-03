@@ -10,7 +10,8 @@ export default class DecorationEntryParser {
             type: getInternalName(pattern.type),
             phrase: pattern.expression,
             ignoreCase: pattern.ignoreCase,
-            wholeMatch: pattern.wholeMatch
+            wholeMatch: pattern.wholeMatch,
+            colour: pattern.colour
         };
     }
 

@@ -11,7 +11,8 @@ export default class DecorationEntryFormatter {
                 type: getExternalName(pattern.type)!,
                 expression: pattern.phrase,
                 ignoreCase: pattern.ignoreCase,
-                wholeMatch: pattern.wholeMatch
+                wholeMatch: pattern.wholeMatch,
+                colour: decoration.colour
             }
         };
     }

@@ -17,8 +17,8 @@ export default class DecorationOperator {
         this.textDecorator = textDecorator;
     }
 
-    addDecoration(pattern: Pattern): void {
-        this.decorationRegistry.issue(pattern).map(decoration => {
+    addDecoration(pattern: Pattern, colour?: string): void {
+        this.decorationRegistry.issue(pattern, colour).map(decoration => {
             this.textDecorator.decorate(this.editors, [decoration]);
         });
     }

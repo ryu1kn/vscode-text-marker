@@ -172,6 +172,9 @@
                   },
                   "wholeMatch": {
                     "type": "boolean"
+                  },
+                  "colour": {
+                    "type": "string"
                   }
                 },
                 "required": [

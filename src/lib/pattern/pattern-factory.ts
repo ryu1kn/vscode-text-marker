@@ -8,6 +8,7 @@ export type PatternCreateRequest = {
     type?: string;
     ignoreCase?: boolean;
     wholeMatch?: boolean;
+    colour?: string;
 };
 
 export default class PatternFactory {
