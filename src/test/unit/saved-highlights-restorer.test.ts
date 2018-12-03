@@ -34,7 +34,7 @@ suite('SavedHighlightsRestorer', () => {
                 phrase: 'PHRASE',
                 ignoreCase: false,
                 wholeMatch: false
-            })));
+            }), undefined));
             done();
         });
 

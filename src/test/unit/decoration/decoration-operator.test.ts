@@ -19,7 +19,7 @@ suite('DecorationOperator', () => {
         test('it highlights all the strings match to the given pattern', () => {
             const decorationRegistry = mock(DecorationRegistry);
             const decoration = {} as Decoration;
-            when(decorationRegistry.issue(pattern)).thenReturn(some(decoration));
+            when(decorationRegistry.issue(pattern, any())).thenReturn(some(decoration));
             const textDecorator = mock(TextDecorator);
             const operator = new DecorationOperator(editors, decorationRegistry, textDecorator);
 
@@ -30,7 +30,7 @@ suite('DecorationOperator', () => {
 
         test('it does nothing if given pattern is already registered for highlight', () => {
             const decorationRegistry = mock(DecorationRegistry);
-            when(decorationRegistry.issue(pattern)).thenReturn(none);
+            when(decorationRegistry.issue(pattern, any())).thenReturn(none);
             const textDecorator = mock(TextDecorator);
             const operator = new DecorationOperator(editors, decorationRegistry, textDecorator);
             operator.addDecoration(pattern);
