@@ -172,9 +172,6 @@
                   },
                   "wholeMatch": {
                     "type": "boolean"
-                  },
-                  "color": {
-                    "type": "string"
                   }
                 },
                 "required": [
@@ -183,6 +180,9 @@
                   "ignoreCase",
                   "wholeMatch"
                 ]
+              },
+              "color": {
+                "type": "string"
               }
             },
             "required": [
