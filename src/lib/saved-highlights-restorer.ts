@@ -41,7 +41,7 @@ export default class SavedHighlightsRestorer {
     private addDecoration(decorationData: Highlight, decorationOperator: DecorationOperator) {
         const patternData = this.decorationEntryParser.getPattern(decorationData);
         const pattern = this.patternFactory.create(patternData);
-        decorationOperator.addDecoration(pattern, decorationData.colour);
+        decorationOperator.addDecoration(pattern, decorationData.color);
     }
 
 }

@@ -173,7 +173,7 @@
                   "wholeMatch": {
                     "type": "boolean"
                   },
-                  "colour": {
+                  "color": {
                     "type": "string"
                   }
                 },

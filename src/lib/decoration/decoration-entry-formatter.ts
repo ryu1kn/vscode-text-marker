@@ -13,7 +13,7 @@ export default class DecorationEntryFormatter {
                 ignoreCase: pattern.ignoreCase,
                 wholeMatch: pattern.wholeMatch
             },
-            colour: decoration.colour
+            color: decoration.colour
         };
     }
 

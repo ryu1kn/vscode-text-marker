@@ -43,7 +43,7 @@ suite('SaveAllHighlightsCommand', () => {
                 ignoreCase: 'IGNORE_CASE',
                 wholeMatch: 'WHOLE_MATCH'
             },
-            colour: 'COLOUR1'
+            color: 'COLOUR1'
         }, {
             pattern: {
                 type: 'regex',
@@ -51,7 +51,7 @@ suite('SaveAllHighlightsCommand', () => {
                 ignoreCase: 'IGNORE_CASE',
                 wholeMatch: 'WHOLE_MATCH'
             },
-            colour: 'COLOUR2'
+            color: 'COLOUR2'
         }]));
     });
 });

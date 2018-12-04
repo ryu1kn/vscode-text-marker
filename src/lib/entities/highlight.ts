@@ -11,5 +11,5 @@ export type Highlight = {
         ignoreCase: boolean;
         wholeMatch: boolean;
     },
-    colour: string;
+    color: string;
 };

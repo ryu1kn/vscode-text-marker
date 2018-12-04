@@ -11,7 +11,7 @@ export default class DecorationEntryParser {
             phrase: pattern.expression,
             ignoreCase: pattern.ignoreCase,
             wholeMatch: pattern.wholeMatch,
-            colour: decorationData.colour
+            colour: decorationData.color
         };
     }
 
