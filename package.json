@@ -180,6 +180,9 @@
                   "ignoreCase",
                   "wholeMatch"
                 ]
+              },
+              "color": {
+                "type": "string"
               }
             },
             "required": [

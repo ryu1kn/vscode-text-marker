@@ -10,5 +10,6 @@ export type Highlight = {
         expression: string;
         ignoreCase: boolean;
         wholeMatch: boolean;
-    }
+    },
+    color: string;
 };

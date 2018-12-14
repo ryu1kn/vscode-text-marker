@@ -105,7 +105,7 @@ suite('DecorationRegistry', () => {
         ]);
     });
 
-    test('it issues new decoration with new color', () => {
+    test('it issues new decoration with new color if color not provided', () => {
         const registry = createDecorationRegistry({window: {}});
 
         const pattern1 = createPattern('TEXT_1');
@@ -115,6 +115,19 @@ suite('DecorationRegistry', () => {
         const pattern2 = createPattern('TEXT_2');
         assertOption(registry.issue(pattern2), d => {
             assert.equal(d.colour, 'rgba(255,255,0,1)');
+        });
+    });
+
+    test('it issues new decoration with provided color', () => {
+        const registry = createDecorationRegistry({window: {}});
+
+        const pattern1 = createPattern('TEXT_1');
+        assertOption(registry.issue(pattern1, '#DB4D6D'), d => {
+            assert.equal(d.colour, '#DB4D6D');
+        });
+        const pattern2 = createPattern('TEXT_2');
+        assertOption(registry.issue(pattern2, '#86C166'), d => {
+            assert.equal(d.colour, '#86C166');
         });
     });
 

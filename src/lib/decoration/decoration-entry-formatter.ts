@@ -12,7 +12,8 @@ export default class DecorationEntryFormatter {
                 expression: pattern.phrase,
                 ignoreCase: pattern.ignoreCase,
                 wholeMatch: pattern.wholeMatch
-            }
+            },
+            color: decoration.colour
         };
     }
 

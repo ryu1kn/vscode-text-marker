@@ -21,7 +21,8 @@ suite('SavedHighlightsRestorer', () => {
                 expression: 'PHRASE',
                 ignoreCase: false,
                 wholeMatch: false
-            }
+            },
+            color: '#F7E4B3'
         }];
         const configStore = mockType<ConfigStore>({savedHighlights: savedDecorations});
         const decorationOperator = mock(DecorationOperator);
@@ -34,7 +35,7 @@ suite('SavedHighlightsRestorer', () => {
                 phrase: 'PHRASE',
                 ignoreCase: false,
                 wholeMatch: false
-            })));
+            }), '#F7E4B3'));
             done();
         });
 

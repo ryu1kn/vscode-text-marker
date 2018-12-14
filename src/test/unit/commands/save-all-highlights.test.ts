@@ -42,14 +42,16 @@ suite('SaveAllHighlightsCommand', () => {
                 expression: 'PHRASE',
                 ignoreCase: 'IGNORE_CASE',
                 wholeMatch: 'WHOLE_MATCH'
-            }
+            },
+            color: 'COLOUR1'
         }, {
             pattern: {
                 type: 'regex',
                 expression: 'PHRASE',
                 ignoreCase: 'IGNORE_CASE',
                 wholeMatch: 'WHOLE_MATCH'
-            }
+            },
+            color: 'COLOUR2'
         }]));
     });
 });

@@ -27,16 +27,16 @@ export default class DecorationRegistry {
         return this.map.find(isSamePattern);
     }
 
-    issue(pattern: Pattern): Option<Decoration> {
+    issue(pattern: Pattern, colour?: string): Option<Decoration> {
         const decorationOpt = this.inquireByPattern(pattern);
         return decorationOpt.isSome() ?
             none :
-            some(this.setDecoration(this.createDecoration(pattern)));
+            some(this.setDecoration(this.createDecoration(pattern, colour)));
     }
 
-    private createDecoration(pattern: Pattern): Decoration {
+    private createDecoration(pattern: Pattern, colour?: string): Decoration {
         const id = this.generateUuid();
-        const colour = this.colourRegistry.issue();
+        colour = colour || this.colourRegistry.issue();
         return new Decoration(id, pattern, colour);
     }
 

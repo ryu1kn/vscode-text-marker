@@ -27,7 +27,7 @@ suite('ToggleHighlightCommand', () => {
     textLocationRegistry.register('EDITOR_ID', 'DECORATION_ID', [registeredRange]);
 
     const decorationRegistry = mock(DecorationRegistry);
-    when(decorationRegistry.issue(newPattern)).thenReturn(some(mockType<Decoration>({pattern: newPattern})));
+    when(decorationRegistry.issue(newPattern, any())).thenReturn(some(mockType<Decoration>({pattern: newPattern})));
     when(decorationRegistry.issue(knownPattern)).thenReturn(none);
     when(decorationRegistry.inquireById('DECORATION_ID')).thenReturn(some(mockType<Decoration>({id: 'DECORATION_ID'})));
 
