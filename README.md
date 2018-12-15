@@ -163,7 +163,8 @@ You can update a highlight rule after you set it.
           "expression": "(TODO|XXX|HACK): .*",
           "ignoreCase": false,
           "wholeMatch": true
-        }
+        },
+        "color": "skyblue"
       },
       {
         "pattern": {
@@ -171,7 +172,8 @@ You can update a highlight rule after you set it.
           "expression": "NOTE",
           "ignoreCase": false,
           "wholeMatch": false
-        }
+        },
+        "color": "yellow"
       },
       ...
     ]
