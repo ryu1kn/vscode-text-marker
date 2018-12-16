@@ -5,7 +5,7 @@ All notable changes to "Text Marker (Highlighter)" extension will be documented 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [1.10.0] - 2018-12-16
+## [1.10.0] - 2018-12-17
 ### Added
 - Colours are now saved when highlight patterns are saved. Thanks to @BoruiGu !
   [#28](https://github.com/ryu1kn/vscode-text-marker/issues/28)
