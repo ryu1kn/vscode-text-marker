@@ -28,6 +28,17 @@ You can update a highlight rule after you set it.
 
 ![Update Existing Highlight](https://raw.githubusercontent.com/ryu1kn/vscode-text-marker/master/images/animations/update-highlight.gif)
 
+## Request Features or Report Bugs
+
+Feature requests and bug reports are very welcome: https://github.com/ryu1kn/vscode-text-marker/issues
+
+A couple of requests from me when you raise an github issue.
+
+* **Requesting a feature:** Please try to provide the context of why you want the feature. Such as,
+  in what situation the feature could help you and how, or how the lack of the feature is causing an inconvenience to you.
+  I can't think of introducing it until I understand how it helps you 🙂
+* **Reporting a bug:** Please include environment information (OS name/version, the editor version).
+  Also consider providing screenshots (or even videos) where appropriate. They are often very very helpful!
 
 ## Commands
 
@@ -192,10 +203,6 @@ You can quickly invoke the above TextMarker commands by registering them to your
 ```json
   { "key": "ctrl+h", "command": "textmarker.toggleHighlight", "when": "editorTextFocus" }
 ```
-
-## Request Features or Report Bugs
-
-* https://github.com/ryu1kn/vscode-text-marker/issues
 
 ## Telemetry
 
