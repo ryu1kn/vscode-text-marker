@@ -110,11 +110,22 @@ suite('DecorationRegistry', () => {
 
         const pattern1 = createPattern('TEXT_1');
         assertOption(registry.issue(pattern1), d => {
-            assert.equal(d.colour, 'rgba(255,192,203,1)');
+            assert.equal(d.colour, pink);
         });
         const pattern2 = createPattern('TEXT_2');
         assertOption(registry.issue(pattern2), d => {
-            assert.equal(d.colour, 'rgba(255,255,0,1)');
+            assert.equal(d.colour, yellow);
+        });
+    });
+
+    test('it does not issue a colour that is used by a saved pattern', () => {
+        const registry = createDecorationRegistry({window: {}});
+        const savedPattern = createPattern('TEXT_1');
+        const newPattern = createPattern('TEXT_2');
+
+        registry.issue(savedPattern, pink);
+        assertOption(registry.issue(newPattern), d => {
+            assert.equal(d.colour, yellow);
         });
     });
 
@@ -124,10 +135,6 @@ suite('DecorationRegistry', () => {
         const pattern1 = createPattern('TEXT_1');
         assertOption(registry.issue(pattern1, '#DB4D6D'), d => {
             assert.equal(d.colour, '#DB4D6D');
-        });
-        const pattern2 = createPattern('TEXT_2');
-        assertOption(registry.issue(pattern2, '#86C166'), d => {
-            assert.equal(d.colour, '#86C166');
         });
     });
 

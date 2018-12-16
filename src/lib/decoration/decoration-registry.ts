@@ -36,8 +36,12 @@ export default class DecorationRegistry {
 
     private createDecoration(pattern: Pattern, colour?: string): Decoration {
         const id = this.generateUuid();
-        colour = colour || this.colourRegistry.issue();
-        return new Decoration(id, pattern, colour);
+        if (colour) {
+            this.colourRegistry.reserve(colour);
+            return new Decoration(id, pattern, colour);
+        } else {
+            return new Decoration(id, pattern, this.colourRegistry.issue());
+        }
     }
 
     update(oldDecoration: Decoration, newDecoration: Decoration): void {

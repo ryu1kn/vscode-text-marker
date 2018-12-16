@@ -17,6 +17,11 @@ export default class ColourRegistry {
         return newColour;
     }
 
+    reserve(colour: string): void {
+        const addend = this.inUseColours.includes(colour) ? [] : [colour];
+        this.inUseColours = [...this.inUseColours, ...addend];
+    }
+
     revoke(colour: string): void {
         this.inUseColours = this.inUseColours.filter(c => c !== colour);
     }
