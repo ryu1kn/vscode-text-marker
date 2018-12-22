@@ -3,12 +3,11 @@ import StringPattern from './string';
 import MatchingModeRegistry from '../matching-mode-registry';
 import Pattern from './pattern';
 
-export type PatternCreateRequest = {
+export type PatternParams = {
     phrase: string;
     type?: string;
     ignoreCase?: boolean;
     wholeMatch?: boolean;
-    colour?: string;
 };
 
 export default class PatternFactory {
@@ -18,7 +17,7 @@ export default class PatternFactory {
         this.matchingModeRegistry = matchingModeRegistry;
     }
 
-    create(params: PatternCreateRequest): Pattern {
+    create(params: PatternParams): Pattern {
         const finalParams = Object.assign({}, this.matchingModeRegistry.mode, params);
         return params.type === 'RegExp' ?
             new RegexPattern(finalParams) :
