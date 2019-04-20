@@ -48,6 +48,10 @@ export default class ConfigStore {
         return this.get<boolean>('enableWholeMatch');
     }
 
+    get hideStatusBarItems() {
+        return this.get<boolean>('hideStatusBarItems');
+    }
+
     private get<T>(configName: string) {
         const extensionConfig = this.workspace.getConfiguration(Const.EXTENSION_ID);
         return extensionConfig.get(configName) as T;

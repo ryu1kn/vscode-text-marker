@@ -142,8 +142,7 @@ export default class CommandFactory {
 
     createToggleWholeMatchModeButton() {
         const alignment = this.vscode.StatusBarAlignment.Right;
-        const priority = BASE_STATUS_BAR_PRIORITY;
-        return new ToggleWholeMatchModeButton(this.getEventBus(), this.vscode.window.createStatusBarItem(alignment, priority));
+        return new ToggleWholeMatchModeButton(this.getEventBus(), this.vscode.window.createStatusBarItem(alignment, BASE_STATUS_BAR_PRIORITY));
     }
 
     getEventBus() {
@@ -156,7 +155,7 @@ export default class CommandFactory {
         return this.decorationOperatorFactory;
     }
 
-    private getConfigStore() {
+    getConfigStore() {
         this.configStore = this.configStore || this.createConfigStore();
         return this.configStore;
     }

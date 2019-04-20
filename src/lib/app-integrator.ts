@@ -47,8 +47,10 @@ export default class AppIntegrator {
 
     private prepareExtensionEventsDrivenItems() {
         this.commandFactory.createSavedHighlightsRestorer();
-        this.commandFactory.createToggleCaseSensitivityModeButton();
-        this.commandFactory.createToggleWholeMatchModeButton();
+        if (!this.commandFactory.getConfigStore().hideStatusBarItems) {
+            this.commandFactory.createToggleCaseSensitivityModeButton();
+            this.commandFactory.createToggleWholeMatchModeButton();
+        }
     }
 
     private broadcastReady() {
