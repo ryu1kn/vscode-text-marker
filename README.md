@@ -134,6 +134,11 @@ A couple of requests from me when you raise an github issue.
 
     Text colour will be chosen to be distinctive from the background highlight colour.
     This will hide the text colour given by syntax highlighting; if this is not desirable, set it `false`.
+    
+* `textmarker.hideStatusBarItems` (default: `false`)
+
+    Hide status bar items. When set it `true`, the buttons to switch the modes of partial/whole match and
+    case sensitive/insensitive match will not be displayed.
 
 * `textmarker.delayForRefreshingHighlight` (default: `300`)
 
