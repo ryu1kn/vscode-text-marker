@@ -52,7 +52,7 @@ suite('Decoration type creation', () => {
         verify(window.createTextEditorDecorationType(contains({backgroundColor: 'invalid_colour'})));
     });
 
-    describe('When `useHighlightColorOnRuler` is ON', () => {
+    suite('When `useHighlightColorOnRuler` is ON', () => {
         const configStore = mockType<ConfigStore>({useHighlightColorOnRuler: true, defaultHighlightOpacity: 1});
         const window = mock(WindowComponent);
         const creator = new DecorationTypeCreator(configStore, window);
@@ -69,7 +69,7 @@ suite('Decoration type creation', () => {
         });
     });
 
-    describe('When `autoSelectDistinctiveTextColor` is ON', () => {
+    suite('When `autoSelectDistinctiveTextColor` is ON', () => {
         const configStore = mockType<ConfigStore>({autoSelectDistinctiveTextColor: true, defaultHighlightOpacity: 1});
         const window = mock(WindowComponent);
         const creator = new DecorationTypeCreator(configStore, window);
