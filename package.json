@@ -323,7 +323,7 @@
     "vscode:prepublish": "yarn run compile",
     "vscode:postpublish": "./tag-release.sh",
     "postinstall": "node ./node_modules/vscode/bin/install",
-    "coverage": "nyc yarn test",
+    "coverage": "nyc mocha --opts ./mocha-opts/cli-all-test-mocha.opts",
     "compile": "tsc -p ./",
     "lint": "tslint -p .",
     "check": "yarn run compile && yarn run lint && yarn test",
