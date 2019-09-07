@@ -4,7 +4,9 @@ import DecorationVariationReader from '../decoration/decoration-variation-reader
 import TextLocationRegistry from '../text-location-registry';
 import {CommandLike} from '../vscode/vscode';
 import TextEditor from '../vscode/text-editor';
-import {none} from 'fp-ts/lib/Option';
+import {option} from 'fp-ts/lib/Option';
+import {getOptionT2v} from 'fp-ts/lib/OptionT';
+import {task, Task} from 'fp-ts/lib/Task';
 
 export default class UpdateHighlightCommand implements CommandLike {
     private readonly decorationOperatorFactory: DecorationOperatorFactory;
@@ -26,14 +28,15 @@ export default class UpdateHighlightCommand implements CommandLike {
         const decorationId = this.textLocationRegistry.queryDecorationId(textEditor.id, textEditor.selection).toUndefined();
         if (!decorationId) return;
 
-        const decorationOpt = this.decorationRegistry.inquireById(decorationId);
-        return decorationOpt.fold(Promise.resolve(none), async decoration => {
-            const newDecorationOpt = await this.patternVariationReader.read(decoration);
-            return newDecorationOpt.map(newDecoration => {
-                const decorationOperator = this.decorationOperatorFactory.createForVisibleEditors();
-                decorationOperator.updateDecoration(decoration, newDecoration);
-            });
-        });
+        const process = this.decorationRegistry.inquireById(decorationId).map(decoration =>
+            getOptionT2v(task).map(
+                new Task(() => this.patternVariationReader.read(decoration)),
+                newDecoration => {
+                    const decorationOperator = this.decorationOperatorFactory.createForVisibleEditors();
+                    decorationOperator.updateDecoration(decoration, newDecoration);
+                }
+            )
+        );
+        return option.sequence(task)(process).run();
     }
-
 }
