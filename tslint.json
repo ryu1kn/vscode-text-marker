@@ -1,4 +1,5 @@
 {
+  "rulesDirectory": ["./node_modules/fp-ts/rules"],
   "rules": {
     "no-string-throw": true,
     "no-unused-expression": true,
@@ -10,7 +11,8 @@
       "always"
     ],
     "quotemark": [true, "single", "avoid-escape"],
-    "triple-equals": true
+    "triple-equals": true,
+    "obsolete": {"severity": "warning"}
   },
   "defaultSeverity": "error"
 }
