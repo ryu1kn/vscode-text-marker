@@ -28,7 +28,7 @@ export default class DecorationPicker {
     private async showPicker(decorations: Decoration[], placeHolderText: string): Promise<Option<Decoration>> {
         const selectItems = this.buildQuickPickItems(decorations);
         const options = {placeHolder: placeHolderText};
-        const item = await this.windowComponent.showQuickPick<DecorationQuickPickItem>(selectItems, options);
+        const item = await this.windowComponent.showQuickPick<DecorationQuickPickItem>(selectItems, options).run();
         return item.map(it => it.decoration);
     }
 

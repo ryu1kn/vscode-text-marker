@@ -29,7 +29,7 @@ export default class DecorationVariationReader {
     read(currentDecoration: Decoration): Task<Option<Decoration>> {
         const items = this.buildSelectItems(currentDecoration);
         const options = {placeHolder: 'Select how to update the highlight'};
-        const item = new Task(() => this.windowComponent.showQuickPick<DecorationUpdateActionQuickPickItem>(items, options));
+        const item = this.windowComponent.showQuickPick<DecorationUpdateActionQuickPickItem>(items, options);
         return getOptionT2v(task).chain(item, it => this.createDecoration(currentDecoration, it));
     }
 

@@ -20,7 +20,7 @@ export default class ConfigurationTargetPicker {
     async pick(): Promise<Option<boolean>> {
         const selectItems = this.buildQuickPickItems();
         const options = {placeHolder: 'Select which scope of settings to save highlights to'};
-        const item = await this.windowComponent.showQuickPick<ConfigurationTargetQuickPickItem>(selectItems, options);
+        const item = await this.windowComponent.showQuickPick<ConfigurationTargetQuickPickItem>(selectItems, options).run();
         return item.map(it => it.value);
     }
 

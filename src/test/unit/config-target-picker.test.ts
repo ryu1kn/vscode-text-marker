@@ -4,6 +4,7 @@ import ConfigTargetPicker from '../../lib/config-target-picker';
 import WindowComponent from '../../lib/vscode/window';
 import * as assert from 'assert';
 import {none, some} from 'fp-ts/lib/Option';
+import {task} from 'fp-ts/lib/Task';
 
 suite('ConfigTargetPicker', () => {
 
@@ -18,7 +19,7 @@ suite('ConfigTargetPicker', () => {
                 value: false
             }],
             {placeHolder: 'Select which scope of settings to save highlights to'}
-        )).thenResolve(some({label: 'Global', value: true}));
+        )).thenReturn(task.of(some({label: 'Global', value: true})));
 
         const picker = new ConfigTargetPicker(windowComponent);
 
@@ -27,7 +28,7 @@ suite('ConfigTargetPicker', () => {
 
     test('it returns none if user didn\'t select anything', async () => {
         const windowComponent = mock(WindowComponent);
-        when(windowComponent.showQuickPick(any(), any())).thenReturn(none);
+        when(windowComponent.showQuickPick(any(), any())).thenReturn(task.of(none));
         const picker = new ConfigTargetPicker(windowComponent);
 
         assert.deepEqual(await picker.pick(), none);

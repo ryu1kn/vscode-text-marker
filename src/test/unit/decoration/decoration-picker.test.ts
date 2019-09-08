@@ -8,6 +8,7 @@ import WindowComponent from '../../../lib/vscode/window';
 import * as assert from 'assert';
 import {Decoration} from '../../../lib/entities/decoration';
 import {none, some} from 'fp-ts/lib/Option';
+import {task} from 'fp-ts/lib/Task';
 
 suite('DecorationPicker', () => {
 
@@ -48,9 +49,9 @@ suite('DecorationPicker', () => {
                 {label: '/TEXT_2/i', detail: 'RegExp', decoration: decoration2}
             ],
             {placeHolder: 'PLACEHOLDER_MESSAGE'}
-        )).thenResolve(some({
+        )).thenReturn(task.of(some({
             label: 'TEXT_1', detail: 'String', decoration: decoration1
-        }));
+        })));
         const decorationRegistry = mock(DecorationRegistry);
         when(decorationRegistry.retrieveAll()).thenReturn([decoration1, decoration2]);
 
@@ -68,7 +69,7 @@ suite('DecorationPicker', () => {
                 {label: '/TEXT_4/', detail: 'RegExp [Aa]', decoration: decoration4}
             ],
             {placeHolder: 'PLACE_HOLDER_TEXT'}
-        )).thenResolve(none);
+        )).thenReturn(task.of(none));
 
         const decorationRegistry = mock(DecorationRegistry);
         when(decorationRegistry.retrieveAll()).thenReturn([decoration3, decoration4]);
@@ -81,7 +82,7 @@ suite('DecorationPicker', () => {
         when(windowComponent.showQuickPick(
             [{label: '/TEXT_2/i', detail: 'RegExp', decoration: decoration2}],
             {placeHolder: 'PLACE_HOLDER_TEXT'}
-        )).thenResolve(none);
+        )).thenReturn(task.of(none));
 
         const decorationRegistry = mock(DecorationRegistry);
         when(decorationRegistry.retrieveAll()).thenReturn([decoration2]);
@@ -95,7 +96,7 @@ suite('DecorationPicker', () => {
         when(windowComponent.showQuickPick(
             [{label: 'TEXT_5', detail: 'String [Aa] [Ab|]', decoration: decoration5}],
             {placeHolder: 'PLACE_HOLDER_TEXT'}
-        )).thenResolve(none);
+        )).thenReturn(task.of(none));
 
         const decorationRegistry = mock(DecorationRegistry);
         when(decorationRegistry.retrieveAll()).thenReturn([decoration5]);
@@ -105,7 +106,7 @@ suite('DecorationPicker', () => {
 
     test('it returns none if nothing selected', async () => {
         const windowComponent = mock(WindowComponent);
-        when(windowComponent.showQuickPick(any(), any())).thenResolve(none);
+        when(windowComponent.showQuickPick(any(), any())).thenReturn(task.of(none));
         const decorationRegistry = mock(DecorationRegistry);
         when(decorationRegistry.retrieveAll()).thenReturn([decoration3]);
         const picker = new DecorationPicker(decorationRegistry, windowComponent);

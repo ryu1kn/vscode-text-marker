@@ -36,10 +36,9 @@ export default class WindowComponent {
         return this.window.showInformationMessage(message);
     }
 
-    async showQuickPick<T extends QuickPickItem>(selectItems: T[], options: QuickPickOptions): Promise<Option<T>> {
+    showQuickPick<T extends QuickPickItem>(selectItems: T[], options: QuickPickOptions): Task<Option<T>> {
         const items = this.fillDescription(selectItems);
-        const result = await this.window.showQuickPick(items, options);
-        return fromNullable(result);
+        return new Task(() => this.window.showQuickPick(items, options) as Promise<T>).map(fromNullable);
     }
 
     createTextEditorDecorationType(options: DecorationRenderOptions): TextEditorDecorationType {
