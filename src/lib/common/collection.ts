@@ -45,6 +45,6 @@ export class OptionMap<T> {
     }
 
     find(predicate: (d: T) => boolean): Option<T> {
-        return findFirst(this.toList(), predicate);
+        return findFirst(predicate)(this.toList());
     }
 }

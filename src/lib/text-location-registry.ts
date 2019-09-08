@@ -56,10 +56,7 @@ export default class TextLocationRegistry {
     private findDecorationIdAndRanges(editorId: string, range: FlatRange): O.Option<[string, FlatRange[]]> {
         return pipe(
             this.recordMap.get(editorId),
-            O.chain(decorationMap => findFirst(
-                [...decorationMap.entries()],
-                ([_decorationId, ranges]) => ranges.some(this.isPointingRange(range))
-            ))
+            O.chain(decorationMap => findFirst(([_decorationId, ranges]) => ranges.some(this.isPointingRange(range)))([...decorationMap.entries()]))
         );
     }
 

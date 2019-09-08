@@ -1,5 +1,4 @@
 {
-  "rulesDirectory": ["./node_modules/fp-ts/rules"],
   "rules": {
     "no-string-throw": {},
     "no-unused-expression": {},
@@ -8,8 +7,7 @@
     "class-name": {},
     "semicolon": {"options": ["always"]},
     "quotemark": {"options": ["single", "avoid-escape"]},
-    "triple-equals": {},
-    "obsolete": {"severity": "warning"}
+    "triple-equals": {}
   },
   "defaultSeverity": "error"
 }

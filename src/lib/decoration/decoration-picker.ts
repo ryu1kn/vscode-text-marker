@@ -30,7 +30,7 @@ export default class DecorationPicker {
         const selectItems = this.buildQuickPickItems(decorations);
         const options = {placeHolder: placeHolderText};
         return pipe(
-            await this.windowComponent.showQuickPick<DecorationQuickPickItem>(selectItems, options).run(),
+            await this.windowComponent.showQuickPick<DecorationQuickPickItem>(selectItems, options)(),
             O.map(it => it.decoration)
         );
     }

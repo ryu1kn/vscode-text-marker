@@ -30,7 +30,7 @@ export default class WindowComponent {
 
     showInputBox(options: InputBoxOptions): T.Task<O.Option<string>> {
         return pipe(
-            new T.Task(() => this.window.showInputBox(options) as Promise<string>),
+            () => this.window.showInputBox(options) as Promise<string>,
             T.map(O.fromPredicate((s: string) => !!s))
         );
     }
@@ -39,10 +39,10 @@ export default class WindowComponent {
         return this.window.showInformationMessage(message);
     }
 
-    showQuickPick<T extends QuickPickItem>(selectItems: T[], options: QuickPickOptions): T.Task<O.Option<T>> {
+    showQuickPick<U extends QuickPickItem>(selectItems: U[], options: QuickPickOptions): T.Task<O.Option<U>> {
         const items = this.fillDescription(selectItems);
         return pipe(
-            new T.Task(() => this.window.showQuickPick(items, options) as Promise<T>),
+            () => this.window.showQuickPick(items, options) as Promise<U>,
             T.map(O.fromNullable)
         );
     }
@@ -51,7 +51,7 @@ export default class WindowComponent {
         return this.window.createTextEditorDecorationType(options);
     }
 
-    private fillDescription<T extends QuickPickItem>(selectItems: T[]) {
+    private fillDescription<U extends QuickPickItem>(selectItems: U[]) {
         return selectItems.map(item =>
             Object.assign({}, item, {description: item.description || ''})
         );

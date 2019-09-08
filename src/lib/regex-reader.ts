@@ -3,7 +3,7 @@ import WindowComponent from './vscode/window';
 import MatchingModeRegistry from './matching-mode-registry';
 import Pattern from './pattern/pattern';
 import {Option} from 'fp-ts/lib/Option';
-import {getOptionT2v} from 'fp-ts/lib/OptionT';
+import {getOptionM} from 'fp-ts/lib/OptionT';
 import {task, Task} from 'fp-ts/lib/Task';
 
 export default class RegexReader {
@@ -18,7 +18,7 @@ export default class RegexReader {
     read(): Task<Option<Pattern>> {
         const options = this.getInputBoxOption();
         const phraseOpt = this.windowComponent.showInputBox(options);
-        return getOptionT2v(task).map(phraseOpt, phrase => this.patternFactory.create({
+        return getOptionM(task).map(phraseOpt, phrase => this.patternFactory.create({
             type: 'RegExp',
             phrase
         }));

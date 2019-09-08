@@ -19,7 +19,6 @@ suite('RegexReader', () => {
     const reader = new RegexReader(matchingModeRegistry, windowComponent);
 
     test('shows inputBox to let user enter regex', async () => {
-        assert.deepEqual(await reader.read().run(), some(new RegexPattern({phrase: 'PATTERN_STRING'})));
+        assert.deepEqual(await reader.read()(), some(new RegexPattern({phrase: 'PATTERN_STRING'})));
     });
-
 });

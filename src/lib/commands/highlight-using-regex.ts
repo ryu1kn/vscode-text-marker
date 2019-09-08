@@ -3,7 +3,7 @@ import RegexReader from '../regex-reader';
 import {CommandLike} from '../vscode/vscode';
 import MatchingModeRegistry from '../matching-mode-registry';
 import WindowComponent from '../vscode/window';
-import {getOptionT2v} from 'fp-ts/lib/OptionT';
+import {getOptionM} from 'fp-ts/lib/OptionT';
 import {task} from 'fp-ts/lib/Task';
 
 export default class HighlightUsingRegexCommand implements CommandLike {
@@ -18,9 +18,9 @@ export default class HighlightUsingRegexCommand implements CommandLike {
     }
 
     execute() {
-        return getOptionT2v(task).map(this.regexReader.read(), regex => {
+        return getOptionM(task).map(this.regexReader.read(), regex => {
             const decorationOperator = this.decorationOperatorFactory.createForVisibleEditors();
             decorationOperator.addDecoration(regex);
-        }).run();
+        })();
     }
 }

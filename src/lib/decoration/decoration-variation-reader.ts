@@ -4,7 +4,7 @@ import {Decoration} from '../entities/decoration';
 import {TelemetryReporterLocator} from '../telemetry/telemetry-reporter-locator';
 import {TelemetryReporter} from '../telemetry/telemetry-reporter';
 import {Task, task} from 'fp-ts/lib/Task';
-import {getOptionT2v} from 'fp-ts/lib/OptionT';
+import {getOptionM} from 'fp-ts/lib/OptionT';
 
 enum DecorationAction {
     TOGGLE_CASE_SENSITIVITY = 'toggle-case-sensitivity',
@@ -30,7 +30,7 @@ export default class DecorationVariationReader {
         const items = this.buildSelectItems(currentDecoration);
         const options = {placeHolder: 'Select how to update the highlight'};
         const item = this.windowComponent.showQuickPick<DecorationUpdateActionQuickPickItem>(items, options);
-        return getOptionT2v(task).chain(item, it => this.createDecoration(currentDecoration, it));
+        return getOptionM(task).chain(item, it => this.createDecoration(currentDecoration, it));
     }
 
     private createDecoration(currentDecoration: Decoration, item: DecorationUpdateActionQuickPickItem): Task<Option<Decoration>> {
@@ -46,7 +46,7 @@ export default class DecorationVariationReader {
                     prompt: 'Enter a new pattern.'
                 };
                 const newPhraseOpt = this.windowComponent.showInputBox(options);
-                return getOptionT2v(task).map(newPhraseOpt, newPhrase => currentDecoration.withPhrase(newPhrase));
+                return getOptionM(task).map(newPhraseOpt, newPhrase => currentDecoration.withPhrase(newPhrase));
             }
             case DecorationAction.UPDATE_COLOUR: {
                 const options = {
@@ -54,7 +54,7 @@ export default class DecorationVariationReader {
                     prompt: 'Enter a new color.'
                 };
                 const newPhraseOpt = this.windowComponent.showInputBox(options);
-                return getOptionT2v(task).map(newPhraseOpt, newColour => currentDecoration.withColour(newColour));
+                return getOptionM(task).map(newPhraseOpt, newColour => currentDecoration.withColour(newColour));
             }
         }
     }

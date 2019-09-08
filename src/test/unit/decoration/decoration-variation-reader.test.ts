@@ -20,12 +20,12 @@ suite('DecorationVariationReader', () => {
     test('it lets user to toggle case sensitivity', async () => {
         const windowComponent = mockType<WindowComponent>({
             showQuickPick: (items: QuickPickItem[]) =>
-                task.of(findFirst(items, item => item.label.includes('Case')))
+                task.of(findFirst((item: QuickPickItem) => item.label.includes('Case'))(items))
         });
         const patternVariationReader = new DecorationVariationReader(windowComponent);
 
         const oldDecoration = createDecoration();
-        const newDecorationOpt = await patternVariationReader.read(oldDecoration).run();
+        const newDecorationOpt = await patternVariationReader.read(oldDecoration)();
 
         assertOption(newDecorationOpt, newDecoration => {
             assert.equal(newDecoration.pattern.ignoreCase, !oldDecoration.pattern.ignoreCase);
@@ -35,12 +35,12 @@ suite('DecorationVariationReader', () => {
     test('it lets user to toggle whole/partial match', async () => {
         const windowComponent = mockType<WindowComponent>({
             showQuickPick: (items: QuickPickItem[]) =>
-                task.of(findFirst(items, item => item.label.includes('Whole')))
+                task.of(findFirst((item: QuickPickItem) => item.label.includes('Whole'))(items))
         });
         const patternVariationReader = new DecorationVariationReader(windowComponent);
 
         const oldDecoration = createDecoration();
-        const newDecorationOpt = await patternVariationReader.read(oldDecoration).run();
+        const newDecorationOpt = await patternVariationReader.read(oldDecoration)();
 
         assertOption(newDecorationOpt, newDecoration => {
             assert.equal(newDecoration.pattern.wholeMatch, !oldDecoration.pattern.wholeMatch);
@@ -50,13 +50,13 @@ suite('DecorationVariationReader', () => {
     test('it lets user to update the phrase of pattern', async () => {
         const windowComponent = mockType<WindowComponent>({
             showQuickPick: (items: QuickPickItem[]) =>
-                task.of(findFirst(items, item => item.label.includes('Pattern'))),
+                task.of(findFirst((item: QuickPickItem) => item.label.includes('Pattern'))(items)),
             showInputBox: () => task.of(some('NEW_PHRASE'))
         });
         const patternVariationReader = new DecorationVariationReader(windowComponent);
 
         const oldDecoration = createDecoration();
-        const newDecorationOpt = await patternVariationReader.read(oldDecoration).run();
+        const newDecorationOpt = await patternVariationReader.read(oldDecoration)();
 
         assertOption(newDecorationOpt, newDecoration => {
             assert.equal(newDecoration.pattern.phrase, 'NEW_PHRASE');
@@ -70,7 +70,7 @@ suite('DecorationVariationReader', () => {
         const patternVariationReader = new DecorationVariationReader(windowComponent);
 
         const oldDecoration = createDecoration();
-        const newDecorationOpt = await patternVariationReader.read(oldDecoration).run();
+        const newDecorationOpt = await patternVariationReader.read(oldDecoration)();
 
         assert.deepEqual(newDecorationOpt, none);
     });
@@ -78,13 +78,13 @@ suite('DecorationVariationReader', () => {
     test('it returns null if user selected phrase-update but cancelled', async () => {
         const windowComponent = mockType<WindowComponent>({
             showQuickPick: (items: QuickPickItem[]) =>
-                task.of(findFirst(items, item => item.label.includes('Pattern'))),
+                task.of(findFirst((item: QuickPickItem) => item.label.includes('Pattern'))(items)),
             showInputBox: () => task.of(none)
         });
         const patternVariationReader = new DecorationVariationReader(windowComponent);
 
         const oldDecoration = createDecoration();
-        const newDecorationOpt = await patternVariationReader.read(oldDecoration).run();
+        const newDecorationOpt = await patternVariationReader.read(oldDecoration)();
 
         assert.deepEqual(newDecorationOpt, none);
     });
