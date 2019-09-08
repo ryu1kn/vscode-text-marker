@@ -1,17 +1,14 @@
 {
   "rulesDirectory": ["./node_modules/fp-ts/rules"],
   "rules": {
-    "no-string-throw": true,
-    "no-unused-expression": true,
-    "no-duplicate-variable": true,
-    "curly": [true, "ignore-same-line"],
-    "class-name": true,
-    "semicolon": [
-      true,
-      "always"
-    ],
-    "quotemark": [true, "single", "avoid-escape"],
-    "triple-equals": true,
+    "no-string-throw": {},
+    "no-unused-expression": {},
+    "no-duplicate-variable": {},
+    "curly": {"options": ["ignore-same-line"]},
+    "class-name": {},
+    "semicolon": {"options": ["always"]},
+    "quotemark": {"options": ["single", "avoid-escape"]},
+    "triple-equals": {},
     "obsolete": {"severity": "warning"}
   },
   "defaultSeverity": "error"
