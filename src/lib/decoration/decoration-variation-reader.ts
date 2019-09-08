@@ -45,7 +45,7 @@ export default class DecorationVariationReader {
                     value: currentDecoration.pattern.phrase,
                     prompt: 'Enter a new pattern.'
                 };
-                const newPhraseOpt = new Task(() => this.windowComponent.showInputBox(options));
+                const newPhraseOpt = this.windowComponent.showInputBox(options);
                 return getOptionT2v(task).map(newPhraseOpt, newPhrase => currentDecoration.withPhrase(newPhrase));
             }
             case DecorationAction.UPDATE_COLOUR: {
@@ -53,7 +53,7 @@ export default class DecorationVariationReader {
                     value: currentDecoration.colour,
                     prompt: 'Enter a new color.'
                 };
-                const newPhraseOpt = new Task(() => this.windowComponent.showInputBox(options));
+                const newPhraseOpt = this.windowComponent.showInputBox(options);
                 return getOptionT2v(task).map(newPhraseOpt, newColour => currentDecoration.withColour(newColour));
             }
         }

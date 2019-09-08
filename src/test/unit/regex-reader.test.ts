@@ -6,6 +6,7 @@ import RegexPattern from '../../lib/pattern/regex';
 import MatchingModeRegistry from '../../lib/matching-mode-registry';
 import * as assert from 'assert';
 import {some} from 'fp-ts/lib/Option';
+import {task} from 'fp-ts/lib/Task';
 
 suite('RegexReader', () => {
 
@@ -13,12 +14,12 @@ suite('RegexReader', () => {
 
     const windowComponent = mock(WindowComponent);
     when(windowComponent.showInputBox({placeHolder: 'Enter a regular expression to highlight text'}))
-        .thenResolve(some('PATTERN_STRING'));
+        .thenReturn(task.of(some('PATTERN_STRING')));
 
     const reader = new RegexReader(matchingModeRegistry, windowComponent);
 
     test('shows inputBox to let user enter regex', async () => {
-        assert.deepEqual(await reader.read(), some(new RegexPattern({phrase: 'PATTERN_STRING'})));
+        assert.deepEqual(await reader.read().run(), some(new RegexPattern({phrase: 'PATTERN_STRING'})));
     });
 
 });

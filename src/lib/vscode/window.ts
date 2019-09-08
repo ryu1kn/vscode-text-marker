@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import {DecorationRenderOptions, InputBoxOptions, QuickPickOptions, TextEditorDecorationType} from 'vscode';
 import TextEditor from './text-editor';
 import {fromNullable, fromPredicate, Option} from 'fp-ts/lib/Option';
+import {Task} from 'fp-ts/lib/Task';
 
 type QuickPickItemWithoutDescription = Pick<vscode.QuickPickItem, Exclude<keyof vscode.QuickPickItem, 'description'>>;
 
@@ -26,9 +27,9 @@ export default class WindowComponent {
         return editor && new TextEditor(editor);
     }
 
-    async showInputBox(options: InputBoxOptions): Promise<Option<string>> {
-        const userInput = await this.window.showInputBox(options);
-        return fromPredicate((s: string) => !!s)(userInput);
+    showInputBox(options: InputBoxOptions): Task<Option<string>> {
+        const userInput = new Task(() => this.window.showInputBox(options) as Promise<string>);
+        return userInput.map(fromPredicate((s: string) => !!s));
     }
 
     showInformationMessage(message: string): Thenable<string> {

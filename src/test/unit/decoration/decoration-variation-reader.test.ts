@@ -12,6 +12,7 @@ import {assertOption} from '../../helpers/assertions';
 import {TelemetryReporterLocator} from '../../../lib/telemetry/telemetry-reporter-locator';
 import {getVsTelemetryReporterCreator} from '../../../lib/telemetry/vscode-telemetry-reporter';
 import {findFirst} from 'fp-ts/lib/Array';
+import {task} from 'fp-ts/lib/Task';
 
 suite('DecorationVariationReader', () => {
     TelemetryReporterLocator.load('package.json', getVsTelemetryReporterCreator(false));
@@ -50,7 +51,7 @@ suite('DecorationVariationReader', () => {
         const windowComponent = mockType<WindowComponent>({
             showQuickPick: (items: QuickPickItem[]) =>
                 Promise.resolve(findFirst(items, item => item.label.includes('Pattern'))),
-            showInputBox: () => Promise.resolve(some('NEW_PHRASE'))
+            showInputBox: () => task.of(some('NEW_PHRASE'))
         });
         const patternVariationReader = new DecorationVariationReader(windowComponent);
 
@@ -78,7 +79,7 @@ suite('DecorationVariationReader', () => {
         const windowComponent = mockType<WindowComponent>({
             showQuickPick: (items: QuickPickItem[]) =>
                 Promise.resolve(findFirst(items, item => item.label.includes('Pattern'))),
-            showInputBox: () => Promise.resolve(none)
+            showInputBox: () => task.of(none)
         });
         const patternVariationReader = new DecorationVariationReader(windowComponent);
 

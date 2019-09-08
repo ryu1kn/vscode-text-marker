@@ -6,6 +6,7 @@ import RegexPattern from '../../../lib/pattern/regex';
 import MatchingModeRegistry from '../../../lib/matching-mode-registry';
 import WindowComponent from '../../../lib/vscode/window';
 import {none, some} from 'fp-ts/lib/Option';
+import {task} from 'fp-ts/lib/Task';
 
 suite('HighlightUsingRegexCommand', () => {
     const matchingModeRegistry = mock(MatchingModeRegistry);
@@ -17,7 +18,7 @@ suite('HighlightUsingRegexCommand', () => {
 
         const windowComponent = mock(WindowComponent);
         when(windowComponent.showInputBox({placeHolder: 'Enter a regular expression to highlight text'}))
-            .thenResolve(some('pattern'));
+            .thenReturn(task.of(some('pattern')));
 
         const command = new HighlightUsingRegexCommand(decorationOperatorFactory, matchingModeRegistry, windowComponent);
 
@@ -32,7 +33,7 @@ suite('HighlightUsingRegexCommand', () => {
         const decorationOperatorFactory = mock(DecorationOperatorFactory);
 
         const windowComponent = mock(WindowComponent);
-        when(windowComponent.showInputBox({placeHolder: 'Enter a regular expression to highlight text'})).thenResolve(none);
+        when(windowComponent.showInputBox({placeHolder: 'Enter a regular expression to highlight text'})).thenReturn(task.of(none));
 
         const command = new HighlightUsingRegexCommand(decorationOperatorFactory, matchingModeRegistry, windowComponent);
 
