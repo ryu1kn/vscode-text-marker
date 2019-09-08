@@ -25,18 +25,17 @@ export default class UpdateHighlightCommand implements CommandLike {
     }
 
     async execute(textEditor: TextEditor) {
-        const decorationId = this.textLocationRegistry.queryDecorationId(textEditor.id, textEditor.selection).toUndefined();
-        if (!decorationId) return;
-
-        const process = this.decorationRegistry.inquireById(decorationId).map(decoration =>
-            getOptionT2v(task).map(
-                new Task(() => this.patternVariationReader.read(decoration)),
-                newDecoration => {
-                    const decorationOperator = this.decorationOperatorFactory.createForVisibleEditors();
-                    decorationOperator.updateDecoration(decoration, newDecoration);
-                }
+        const result = this.textLocationRegistry.queryDecorationId(textEditor.id, textEditor.selection).chain(decorationId =>
+            this.decorationRegistry.inquireById(decorationId).map(decoration =>
+                getOptionT2v(task).map(
+                    new Task(() => this.patternVariationReader.read(decoration)),
+                    newDecoration => {
+                        const decorationOperator = this.decorationOperatorFactory.createForVisibleEditors();
+                        decorationOperator.updateDecoration(decoration, newDecoration);
+                    }
+                )
             )
         );
-        return option.sequence(task)(process).run();
+        return option.sequence(task)(result).run();
     }
 }
