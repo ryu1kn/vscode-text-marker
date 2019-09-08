@@ -1,8 +1,10 @@
 import WindowComponent, {QuickPickItem} from '../vscode/window';
-import {none, Option, some} from 'fp-ts/lib/Option';
+import {Option, some} from 'fp-ts/lib/Option';
 import {Decoration} from '../entities/decoration';
 import {TelemetryReporterLocator} from '../telemetry/telemetry-reporter-locator';
 import {TelemetryReporter} from '../telemetry/telemetry-reporter';
+import {Task, task} from 'fp-ts/lib/Task';
+import {getOptionT2v} from 'fp-ts/lib/OptionT';
 
 enum DecorationAction {
     TOGGLE_CASE_SENSITIVITY = 'toggle-case-sensitivity',
@@ -24,35 +26,35 @@ export default class DecorationVariationReader {
         this.telemetryReporter = TelemetryReporterLocator.getReporter();
     }
 
-    async read(currentDecoration: Decoration): Promise<Option<Decoration>> {
+    read(currentDecoration: Decoration): Task<Option<Decoration>> {
         const items = this.buildSelectItems(currentDecoration);
         const options = {placeHolder: 'Select how to update the highlight'};
-        const item = await this.windowComponent.showQuickPick<DecorationUpdateActionQuickPickItem>(items, options);
-        return item.fold(Promise.resolve(none), it => this.createDecoration(currentDecoration, it));
+        const item = new Task(() => this.windowComponent.showQuickPick<DecorationUpdateActionQuickPickItem>(items, options));
+        return getOptionT2v(task).chain(item, it => this.createDecoration(currentDecoration, it));
     }
 
-    private async createDecoration(currentDecoration: Decoration, item: DecorationUpdateActionQuickPickItem): Promise<Option<Decoration>> {
+    private createDecoration(currentDecoration: Decoration, item: DecorationUpdateActionQuickPickItem): Task<Option<Decoration>> {
         this.telemetryReporter.logHighlightUpdated(item.actionId);
         switch (item.actionId) {
             case DecorationAction.TOGGLE_CASE_SENSITIVITY:
-                return some(currentDecoration.withCaseSensitivityToggled());
+                return task.of(some(currentDecoration.withCaseSensitivityToggled()));
             case DecorationAction.TOGGLE_WHOLE_MATCH:
-                return some(currentDecoration.withWholeMatchToggled());
+                return task.of(some(currentDecoration.withWholeMatchToggled()));
             case DecorationAction.UPDATE_PHRASE: {
                 const options = {
                     value: currentDecoration.pattern.phrase,
                     prompt: 'Enter a new pattern.'
                 };
-                const newPhraseOpt = await this.windowComponent.showInputBox(options);
-                return newPhraseOpt.map(newPhrase => currentDecoration.withPhrase(newPhrase));
+                const newPhraseOpt = new Task(() => this.windowComponent.showInputBox(options));
+                return getOptionT2v(task).map(newPhraseOpt, newPhrase => currentDecoration.withPhrase(newPhrase));
             }
             case DecorationAction.UPDATE_COLOUR: {
                 const options = {
                     value: currentDecoration.colour,
                     prompt: 'Enter a new color.'
                 };
-                const newPhraseOpt = await this.windowComponent.showInputBox(options);
-                return newPhraseOpt.map(newColour => currentDecoration.withColour(newColour));
+                const newPhraseOpt = new Task(() => this.windowComponent.showInputBox(options));
+                return getOptionT2v(task).map(newPhraseOpt, newColour => currentDecoration.withColour(newColour));
             }
         }
     }

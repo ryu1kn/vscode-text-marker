@@ -6,7 +6,7 @@ import {CommandLike} from '../vscode/vscode';
 import TextEditor from '../vscode/text-editor';
 import {option} from 'fp-ts/lib/Option';
 import {getOptionT2v} from 'fp-ts/lib/OptionT';
-import {task, Task} from 'fp-ts/lib/Task';
+import {task} from 'fp-ts/lib/Task';
 
 export default class UpdateHighlightCommand implements CommandLike {
     private readonly decorationOperatorFactory: DecorationOperatorFactory;
@@ -28,7 +28,7 @@ export default class UpdateHighlightCommand implements CommandLike {
         const result = this.textLocationRegistry.queryDecorationId(textEditor.id, textEditor.selection).chain(decorationId =>
             this.decorationRegistry.inquireById(decorationId).map(decoration =>
                 getOptionT2v(task).map(
-                    new Task(() => this.patternVariationReader.read(decoration)),
+                    this.patternVariationReader.read(decoration),
                     newDecoration => {
                         const decorationOperator = this.decorationOperatorFactory.createForVisibleEditors();
                         decorationOperator.updateDecoration(decoration, newDecoration);

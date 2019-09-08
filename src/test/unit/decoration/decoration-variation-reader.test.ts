@@ -24,7 +24,7 @@ suite('DecorationVariationReader', () => {
         const patternVariationReader = new DecorationVariationReader(windowComponent);
 
         const oldDecoration = createDecoration();
-        const newDecorationOpt = await patternVariationReader.read(oldDecoration);
+        const newDecorationOpt = await patternVariationReader.read(oldDecoration).run();
 
         assertOption(newDecorationOpt, newDecoration => {
             assert.equal(newDecoration.pattern.ignoreCase, !oldDecoration.pattern.ignoreCase);
@@ -39,7 +39,7 @@ suite('DecorationVariationReader', () => {
         const patternVariationReader = new DecorationVariationReader(windowComponent);
 
         const oldDecoration = createDecoration();
-        const newDecorationOpt = await patternVariationReader.read(oldDecoration);
+        const newDecorationOpt = await patternVariationReader.read(oldDecoration).run();
 
         assertOption(newDecorationOpt, newDecoration => {
             assert.equal(newDecoration.pattern.wholeMatch, !oldDecoration.pattern.wholeMatch);
@@ -55,7 +55,7 @@ suite('DecorationVariationReader', () => {
         const patternVariationReader = new DecorationVariationReader(windowComponent);
 
         const oldDecoration = createDecoration();
-        const newDecorationOpt = await patternVariationReader.read(oldDecoration);
+        const newDecorationOpt = await patternVariationReader.read(oldDecoration).run();
 
         assertOption(newDecorationOpt, newDecoration => {
             assert.equal(newDecoration.pattern.phrase, 'NEW_PHRASE');
@@ -69,7 +69,7 @@ suite('DecorationVariationReader', () => {
         const patternVariationReader = new DecorationVariationReader(windowComponent);
 
         const oldDecoration = createDecoration();
-        const newDecorationOpt = await patternVariationReader.read(oldDecoration);
+        const newDecorationOpt = await patternVariationReader.read(oldDecoration).run();
 
         assert.deepEqual(newDecorationOpt, none);
     });
@@ -83,7 +83,7 @@ suite('DecorationVariationReader', () => {
         const patternVariationReader = new DecorationVariationReader(windowComponent);
 
         const oldDecoration = createDecoration();
-        const newDecorationOpt = await patternVariationReader.read(oldDecoration);
+        const newDecorationOpt = await patternVariationReader.read(oldDecoration).run();
 
         assert.deepEqual(newDecorationOpt, none);
     });

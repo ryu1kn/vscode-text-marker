@@ -10,6 +10,7 @@ import TextEditor from '../../../lib/vscode/text-editor';
 import DecorationOperator from '../../../lib/decoration/decoration-operator';
 import {none, some} from 'fp-ts/lib/Option';
 import {Decoration} from '../../../lib/entities/decoration';
+import {task} from 'fp-ts/lib/Task';
 
 suite('UpdateHighlightCommand', () => {
 
@@ -41,7 +42,7 @@ suite('UpdateHighlightCommand', () => {
 
         test('it updates decoration', async () => {
             const patternVariationReader = mock(DecorationVariationReader);
-            when(patternVariationReader.read(oldDecoration)).thenResolve(some(newDecoration));
+            when(patternVariationReader.read(oldDecoration)).thenReturn(task.of(some(newDecoration)));
 
             const command = new UpdateHighlightCommand(
                 decorationOperatorFactory,
@@ -57,7 +58,7 @@ suite('UpdateHighlightCommand', () => {
 
         test('it does nothing if a new pattern is not given by user', async () => {
             const patternVariationReader = mock(DecorationVariationReader);
-            when(patternVariationReader.read(any())).thenResolve(none);
+            when(patternVariationReader.read(any())).thenReturn(task.of(none));
 
             const command = new UpdateHighlightCommand(
                 decorationOperatorFactory,
