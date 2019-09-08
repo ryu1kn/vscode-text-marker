@@ -1,7 +1,8 @@
 import {FlatRange} from './vscode/flat-range';
-import {Option} from 'fp-ts/lib/Option';
+import * as O from 'fp-ts/lib/Option';
 import {OptionMap} from './common/collection';
 import {findFirst} from 'fp-ts/lib/Array';
+import {pipe} from 'fp-ts/lib/pipeable';
 
 export default class TextLocationRegistry {
     private readonly recordMap: OptionMap<OptionMap<FlatRange[]>>;
@@ -11,7 +12,10 @@ export default class TextLocationRegistry {
     }
 
     register(editorId: string, decorationId: string, ranges: FlatRange[]) {
-        const editorDecorations = this.recordMap.get(editorId).getOrElse(new OptionMap());
+        const editorDecorations = pipe(
+            this.recordMap.get(editorId),
+            O.getOrElse(() => new OptionMap())
+        );
         editorDecorations.set(decorationId, ranges);
         this.recordMap.set(editorId, editorDecorations);
     }
@@ -22,31 +26,41 @@ export default class TextLocationRegistry {
         });
     }
 
-    queryDecorationId(editorId: string, range: FlatRange): Option<string> {
-        return this.findDecorationIdAndRanges(editorId, range).map(([decorationId]) => decorationId);
+    queryDecorationId(editorId: string, range: FlatRange): O.Option<string> {
+        return pipe(
+            this.findDecorationIdAndRanges(editorId, range),
+            O.map(([decorationId]) => decorationId)
+        );
     }
 
-    findNextOccurence(editorId: string, range: FlatRange): Option<FlatRange> {
-        return this.findDecorationIdAndRanges(editorId, range)
-            .map(([_, ranges]) => {
+    findNextOccurence(editorId: string, range: FlatRange): O.Option<FlatRange> {
+        return pipe(
+            this.findDecorationIdAndRanges(editorId, range),
+            O.map(([_, ranges]) => {
                 const newIndex = ranges.findIndex(this.isPointingRange(range)) + 1;
                 return ranges[newIndex === ranges.length ? 0 : newIndex];
-            });
+            })
+        );
     }
 
-    findPreviousOccurence(editorId: string, range: FlatRange): Option<FlatRange> {
-        return this.findDecorationIdAndRanges(editorId, range)
-            .map(([_, ranges]) => {
+    findPreviousOccurence(editorId: string, range: FlatRange): O.Option<FlatRange> {
+        return pipe(
+            this.findDecorationIdAndRanges(editorId, range),
+            O.map(([_, ranges]) => {
                 const newIndex = ranges.findIndex(this.isPointingRange(range)) - 1;
                 return ranges[newIndex < 0 ? ranges.length - 1 : newIndex];
-            });
+            })
+        );
     }
 
-    private findDecorationIdAndRanges(editorId: string, range: FlatRange): Option<[string, FlatRange[]]> {
-        return this.recordMap.get(editorId).chain(decorationMap => findFirst(
-            [...decorationMap.entries()],
-            ([_decorationId, ranges]) => ranges.some(this.isPointingRange(range))
-        ));
+    private findDecorationIdAndRanges(editorId: string, range: FlatRange): O.Option<[string, FlatRange[]]> {
+        return pipe(
+            this.recordMap.get(editorId),
+            O.chain(decorationMap => findFirst(
+                [...decorationMap.entries()],
+                ([_decorationId, ranges]) => ranges.some(this.isPointingRange(range))
+            ))
+        );
     }
 
     private isPointingRange(range2: FlatRange): (range: FlatRange) => boolean {

@@ -2,6 +2,8 @@ import * as Const from './const';
 import ConfigurationTargetPicker from './config-target-picker';
 import * as vscode from 'vscode';
 import {Highlight} from './entities/highlight';
+import {pipe} from 'fp-ts/lib/pipeable';
+import * as O from 'fp-ts/lib/Option';
 
 export default class ConfigStore {
     private readonly workspace: typeof vscode.workspace;
@@ -59,11 +61,12 @@ export default class ConfigStore {
 
     // TODO: Move this to WorkspaceAdaptor
     async set(configName: string, configValue: any) {
-        const configTarget = await this.configTargetPicker.pick();
-        configTarget.map(target => {
-            const extensionConfig = this.workspace.getConfiguration(Const.EXTENSION_ID);
-            return extensionConfig.update(configName, configValue, target);
-        });
+        pipe(
+            await this.configTargetPicker.pick(),
+            O.map(target => {
+                const extensionConfig = this.workspace.getConfiguration(Const.EXTENSION_ID);
+                return extensionConfig.update(configName, configValue, target);
+            })
+        );
     }
-
 }

@@ -3,6 +3,8 @@ import TextDecorator from './text-decorator';
 import TextEditor from '../vscode/text-editor';
 import Pattern from '../pattern/pattern';
 import {Decoration} from '../entities/decoration';
+import {pipe} from 'fp-ts/lib/pipeable';
+import * as O from 'fp-ts/lib/Option';
 
 export default class DecorationOperator {
     private readonly editors: TextEditor[];
@@ -18,14 +20,19 @@ export default class DecorationOperator {
     }
 
     addDecoration(pattern: Pattern, colour?: string): void {
-        this.decorationRegistry.issue(pattern, colour).map(decoration => {
-            this.textDecorator.decorate(this.editors, [decoration]);
-        });
+        pipe(
+            this.decorationRegistry.issue(pattern, colour),
+            O.map(decoration => {
+                this.textDecorator.decorate(this.editors, [decoration]);
+            })
+        );
     }
 
     removeDecoration(decorationId: string): void {
-        const decoration = this.decorationRegistry.inquireById(decorationId);
-        decoration.map(d => this._removeDecoration(d));
+        pipe(
+            this.decorationRegistry.inquireById(decorationId),
+            O.map(d => this._removeDecoration(d))
+        );
     }
 
     private _removeDecoration(decoration: Decoration) {

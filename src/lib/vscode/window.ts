@@ -1,8 +1,9 @@
 import * as vscode from 'vscode';
 import {DecorationRenderOptions, InputBoxOptions, QuickPickOptions, TextEditorDecorationType} from 'vscode';
 import TextEditor from './text-editor';
-import {fromNullable, fromPredicate, Option} from 'fp-ts/lib/Option';
-import {Task} from 'fp-ts/lib/Task';
+import * as O from 'fp-ts/lib/Option';
+import * as T from 'fp-ts/lib/Task';
+import {pipe} from 'fp-ts/lib/pipeable';
 
 type QuickPickItemWithoutDescription = Pick<vscode.QuickPickItem, Exclude<keyof vscode.QuickPickItem, 'description'>>;
 
@@ -27,18 +28,23 @@ export default class WindowComponent {
         return editor && new TextEditor(editor);
     }
 
-    showInputBox(options: InputBoxOptions): Task<Option<string>> {
-        const userInput = new Task(() => this.window.showInputBox(options) as Promise<string>);
-        return userInput.map(fromPredicate((s: string) => !!s));
+    showInputBox(options: InputBoxOptions): T.Task<O.Option<string>> {
+        return pipe(
+            new T.Task(() => this.window.showInputBox(options) as Promise<string>),
+            T.map(O.fromPredicate((s: string) => !!s))
+        );
     }
 
     showInformationMessage(message: string): Thenable<string> {
         return this.window.showInformationMessage(message);
     }
 
-    showQuickPick<T extends QuickPickItem>(selectItems: T[], options: QuickPickOptions): Task<Option<T>> {
+    showQuickPick<T extends QuickPickItem>(selectItems: T[], options: QuickPickOptions): T.Task<O.Option<T>> {
         const items = this.fillDescription(selectItems);
-        return new Task(() => this.window.showQuickPick(items, options) as Promise<T>).map(fromNullable);
+        return pipe(
+            new T.Task(() => this.window.showQuickPick(items, options) as Promise<T>),
+            T.map(O.fromNullable)
+        );
     }
 
     createTextEditorDecorationType(options: DecorationRenderOptions): TextEditorDecorationType {

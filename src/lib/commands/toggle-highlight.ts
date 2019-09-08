@@ -7,6 +7,8 @@ import MatchingModeRegistry from '../matching-mode-registry';
 import DecorationRegistry from '../decoration/decoration-registry';
 import WindowComponent from '../vscode/window';
 import {DecorationTypeRegistry} from '../decoration/decoration-type-registry';
+import {pipe} from 'fp-ts/lib/pipeable';
+import * as O from 'fp-ts/lib/Option';
 
 export default class ToggleHighlightCommand implements CommandLike {
     private readonly decorationOperatorFactory: DecorationOperatorFactory;
@@ -24,12 +26,13 @@ export default class ToggleHighlightCommand implements CommandLike {
     }
 
     execute(textEditor: TextEditor) {
-        const decorationId = this.textLocationRegistry.queryDecorationId(textEditor.id, textEditor.selection).toUndefined();
-        if (decorationId) {
-            this.removeDecoration(decorationId);
-        } else {
-            this.addDecoration(textEditor);
-        }
+        pipe(
+            this.textLocationRegistry.queryDecorationId(textEditor.id, textEditor.selection),
+            O.fold(
+                () => this.addDecoration(textEditor),
+                decorationId => this.removeDecoration(decorationId)
+            )
+        );
     }
 
     private removeDecoration(decorationId: string) {

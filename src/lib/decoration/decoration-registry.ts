@@ -2,8 +2,9 @@ import ConfigStore from '../config-store';
 import ColourRegistry from '../colour-registry';
 import Pattern from '../pattern/pattern';
 import {Decoration} from '../entities/decoration';
-import {none, Option, some} from 'fp-ts/lib/Option';
+import * as O from 'fp-ts/lib/Option';
 import {OptionMap} from '../common/collection';
+import {pipe} from 'fp-ts/lib/pipeable';
 
 export default class DecorationRegistry {
     private readonly colourRegistry: ColourRegistry;
@@ -18,20 +19,23 @@ export default class DecorationRegistry {
         this.map = new OptionMap();
     }
 
-    inquireById(decorationId: string): Option<Decoration> {
+    inquireById(decorationId: string): O.Option<Decoration> {
         return this.map.get(decorationId);
     }
 
-    inquireByPattern(pattern: Pattern): Option<Decoration> {
+    inquireByPattern(pattern: Pattern): O.Option<Decoration> {
         const isSamePattern = (decoration: Decoration) => decoration.pattern.equalTo(pattern);
         return this.map.find(isSamePattern);
     }
 
-    issue(pattern: Pattern, colour?: string): Option<Decoration> {
-        const decorationOpt = this.inquireByPattern(pattern);
-        return decorationOpt.isSome() ?
-            none :
-            some(this.setDecoration(this.createDecoration(pattern, colour)));
+    issue(pattern: Pattern, colour?: string): O.Option<Decoration> {
+        return pipe(
+            this.inquireByPattern(pattern),
+            O.fold(
+                () => O.some(this.setDecoration(this.createDecoration(pattern, colour))),
+                () => O.none
+            )
+        );
     }
 
     private createDecoration(pattern: Pattern, colour?: string): Decoration {
@@ -54,11 +58,13 @@ export default class DecorationRegistry {
     }
 
     revoke(decorationId: string): void {
-        const decoration = this.map.get(decorationId);
-        decoration.map(d => {
-            this.colourRegistry.revoke(d.colour);
-            this.map.delete(decorationId);
-        });
+        pipe(
+            this.map.get(decorationId),
+            O.map(d => {
+                this.colourRegistry.revoke(d.colour);
+                this.map.delete(decorationId);
+            })
+        );
     }
 
     retrieveAll() {

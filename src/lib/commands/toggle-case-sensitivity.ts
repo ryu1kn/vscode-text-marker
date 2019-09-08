@@ -1,6 +1,8 @@
 import DecorationOperatorFactory from '../decoration/decoration-operator-factory';
 import DecorationPicker from '../decoration/decoration-picker';
 import {CommandLike} from '../vscode/vscode';
+import {pipe} from 'fp-ts/lib/pipeable';
+import * as O from 'fp-ts/lib/Option';
 
 export default class ToggleCaseSensitivityCommand implements CommandLike {
     private readonly decorationOperatorFactory: DecorationOperatorFactory;
@@ -12,10 +14,12 @@ export default class ToggleCaseSensitivityCommand implements CommandLike {
     }
 
     async execute() {
-        const decorationOpt = await this.decorationPicker.pick('Select a pattern to toggle case sensitivity');
-        decorationOpt.map(decoration => {
-            const decorationOperator = this.decorationOperatorFactory.createForVisibleEditors();
-            decorationOperator.updateDecoration(decoration, decoration.withCaseSensitivityToggled());
-        });
+        pipe(
+            await this.decorationPicker.pick('Select a pattern to toggle case sensitivity'),
+            O.map(decoration => {
+                const decorationOperator = this.decorationOperatorFactory.createForVisibleEditors();
+                decorationOperator.updateDecoration(decoration, decoration.withCaseSensitivityToggled());
+            })
+        );
     }
 }

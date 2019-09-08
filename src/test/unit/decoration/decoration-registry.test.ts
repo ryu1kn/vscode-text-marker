@@ -5,7 +5,8 @@ import PatternFactory from '../../../lib/pattern/pattern-factory';
 import MatchingModeRegistry from '../../../lib/matching-mode-registry';
 import ConfigStore from '../../../lib/config-store';
 import * as assert from 'assert';
-import {none, some} from 'fp-ts/lib/Option';
+import * as O from 'fp-ts/lib/Option';
+import {pipe} from 'fp-ts/lib/pipeable';
 
 suite('DecorationRegistry', () => {
     const pink = 'rgba(255,192,203,1)';
@@ -15,7 +16,7 @@ suite('DecorationRegistry', () => {
         const registry = createDecorationRegistry();
 
         const pattern = createPattern('PATTERN');
-        assert.deepEqual(registry.issue(pattern), some({
+        assert.deepEqual(registry.issue(pattern), O.some({
             id: 'UUID_1',
             colour: pink,
             pattern
@@ -31,7 +32,7 @@ suite('DecorationRegistry', () => {
         assertOption(firstResult, d => {
             assert.equal(d.colour, pink);
         });
-        assert.equal(secondResult, none);
+        assert.equal(secondResult, O.none);
     });
 
     test('it returns a registered decoration type for the passed decoration id', () => {
@@ -40,7 +41,7 @@ suite('DecorationRegistry', () => {
         const pattern = createPattern('PATTERN');
         registry.issue(createPattern('PATTERN'));
 
-        assert.deepEqual(registry.inquireById('UUID_1'), some({
+        assert.deepEqual(registry.inquireById('UUID_1'), O.some({
             id: 'UUID_1',
             colour: pink,
             pattern
@@ -53,7 +54,7 @@ suite('DecorationRegistry', () => {
         const pattern = createPattern('PATTERN');
         registry.issue(pattern);
 
-        assert.deepEqual(registry.inquireByPattern(pattern), some({
+        assert.deepEqual(registry.inquireByPattern(pattern), O.some({
             id: 'UUID_1',
             colour: pink,
             pattern: pattern
@@ -64,8 +65,8 @@ suite('DecorationRegistry', () => {
         const registry = createDecorationRegistry();
 
         const pattern = createPattern('PATTERN');
-        registry.issue(pattern).map(d => registry.revoke(d.id));
-        assert.equal(registry.inquireByPattern(pattern), none);
+        pipe(registry.issue(pattern), O.map(d => registry.revoke(d.id)));
+        assert.equal(registry.inquireByPattern(pattern), O.none);
     });
 
     test('it can return all registered decorations at once', () => {
@@ -148,7 +149,7 @@ suite('DecorationRegistry', () => {
             const id = d.id;
             const newDecoration = d.withCaseSensitivityToggled();
             registry.update(d, newDecoration);
-            assert.deepEqual(registry.inquireById(id), some(newDecoration));
+            assert.deepEqual(registry.inquireById(id), O.some(newDecoration));
         });
     });
 

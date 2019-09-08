@@ -7,15 +7,16 @@ import DecorationOperatorFactory from '../decoration/decoration-operator-factory
 import PatternFactory from '../pattern/pattern-factory';
 import MatchingModeRegistry from '../matching-mode-registry';
 import {FlatRange} from '../vscode/flat-range';
-import {Option} from 'fp-ts/lib/Option';
+import * as O from 'fp-ts/lib/Option';
 import {DecorationTypeRegistry} from '../decoration/decoration-type-registry';
+import {pipe} from 'fp-ts/lib/pipeable';
 
 export abstract class GoToHighlightCommand implements CommandLike {
     protected readonly textLocationRegistry: TextLocationRegistry;
     private readonly decorationOperatorFactory: DecorationOperatorFactory;
     private readonly patternFactory: PatternFactory;
 
-    protected abstract findTargetLocation(editor: TextEditor): Option<FlatRange>;
+    protected abstract findTargetLocation(editor: TextEditor): O.Option<FlatRange>;
 
     constructor(matchingModeRegistry: MatchingModeRegistry,
                 textLocationRegistry: TextLocationRegistry,
@@ -28,9 +29,12 @@ export abstract class GoToHighlightCommand implements CommandLike {
     }
 
     execute(editor: TextEditor) {
-        const decorationId = this.textLocationRegistry.queryDecorationId(editor.id, editor.selection).toUndefined();
-        if (!decorationId) this.addDecoration(editor);
-        this.findTargetLocation(editor).map(range => { editor.selection = range; });
+        pipe(
+            this.textLocationRegistry.queryDecorationId(editor.id, editor.selection),
+            O.fold(() => O.some(this.addDecoration(editor)), () => O.some(undefined)),
+            O.chain(() => this.findTargetLocation(editor)),
+            O.map(range => { editor.selection = range; })
+        );
     }
 
     private addDecoration(textEditor: TextEditor) {

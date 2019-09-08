@@ -1,5 +1,6 @@
 import WindowComponent, {QuickPickItem} from './vscode/window';
-import {Option} from 'fp-ts/lib/Option';
+import * as O from 'fp-ts/lib/Option';
+import { pipe } from 'fp-ts/lib/pipeable';
 
 const ConfigurationTarget = {
     GLOBAL: true,
@@ -17,11 +18,11 @@ export default class ConfigurationTargetPicker {
         this.windowComponent = windowComponent;
     }
 
-    async pick(): Promise<Option<boolean>> {
+    async pick(): Promise<O.Option<boolean>> {
         const selectItems = this.buildQuickPickItems();
         const options = {placeHolder: 'Select which scope of settings to save highlights to'};
         const item = await this.windowComponent.showQuickPick<ConfigurationTargetQuickPickItem>(selectItems, options).run();
-        return item.map(it => it.value);
+        return pipe(item, O.map(it => it.value));
     }
 
     private buildQuickPickItems(): ConfigurationTargetQuickPickItem[] {

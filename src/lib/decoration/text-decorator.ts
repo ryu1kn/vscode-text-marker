@@ -2,6 +2,8 @@ import TextLocationRegistry from '../text-location-registry';
 import TextEditor from '../vscode/text-editor';
 import {Decoration} from '../entities/decoration';
 import {DecorationTypeRegistry} from './decoration-type-registry';
+import {pipe} from 'fp-ts/lib/pipeable';
+import * as O from 'fp-ts/lib/Option';
 
 export default class TextDecorator {
     private readonly textLocationRegistry: TextLocationRegistry;
@@ -22,11 +24,14 @@ export default class TextDecorator {
 
     undecorate(editors: TextEditor[], decorationIds: string[]): void {
         decorationIds.forEach(decorationId => {
-            this.decorationTypeRegistry.inquire(decorationId).map(dt => {
-                editors.forEach(visibleEditor => {
-                    visibleEditor.unsetDecorations(dt);
-                });
-            });
+            pipe(
+                this.decorationTypeRegistry.inquire(decorationId),
+                O.map(dt => {
+                    editors.forEach(visibleEditor => {
+                        visibleEditor.unsetDecorations(dt);
+                    });
+                })
+            );
             this.decorationTypeRegistry.revoke(decorationId);
             this.textLocationRegistry.deregister(decorationId);
         });

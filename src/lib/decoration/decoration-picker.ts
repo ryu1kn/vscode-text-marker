@@ -2,7 +2,8 @@ import DecorationRegistry from './decoration-registry';
 import WindowComponent, {QuickPickItem} from '../vscode/window';
 import {Decoration} from '../entities/decoration';
 import Pattern from '../pattern/pattern';
-import {none, Option} from 'fp-ts/lib/Option';
+import * as O from 'fp-ts/lib/Option';
+import {pipe} from 'fp-ts/lib/pipeable';
 
 interface DecorationQuickPickItem extends QuickPickItem {
     decoration: Decoration;
@@ -18,18 +19,20 @@ export default class DecorationPicker {
         this.windowComponent = windowComponent;
     }
 
-    pick(placeHolderText: string): Promise<Option<Decoration>> {
+    pick(placeHolderText: string): Promise<O.Option<Decoration>> {
         const decorations = this.decorationRegistry.retrieveAll();
         return decorations.length > 0 ?
             this.showPicker(decorations, placeHolderText) :
             this.showNoItemMessage();
     }
 
-    private async showPicker(decorations: Decoration[], placeHolderText: string): Promise<Option<Decoration>> {
+    private async showPicker(decorations: Decoration[], placeHolderText: string): Promise<O.Option<Decoration>> {
         const selectItems = this.buildQuickPickItems(decorations);
         const options = {placeHolder: placeHolderText};
-        const item = await this.windowComponent.showQuickPick<DecorationQuickPickItem>(selectItems, options).run();
-        return item.map(it => it.decoration);
+        return pipe(
+            await this.windowComponent.showQuickPick<DecorationQuickPickItem>(selectItems, options).run(),
+            O.map(it => it.decoration)
+        );
     }
 
     private buildQuickPickItems(decorations: Decoration[]): DecorationQuickPickItem[] {
@@ -46,8 +49,8 @@ export default class DecorationPicker {
         return `${pattern.type}${caseSuffix}${wholeMatchSuffix}`;
     }
 
-    private async showNoItemMessage(): Promise<Option<never>> {
+    private async showNoItemMessage(): Promise<O.Option<never>> {
         await this.windowComponent.showInformationMessage('No highlight is registered yet');
-        return none;
+        return O.none;
     }
 }
