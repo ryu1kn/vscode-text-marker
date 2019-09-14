@@ -23,7 +23,7 @@ suite('ConfigTargetPicker', () => {
 
         const picker = new ConfigTargetPicker(windowComponent);
 
-        assert.deepEqual(await picker.pick(), some(true));
+        assert.deepEqual(await picker.pick()(), some(true));
     });
 
     test('it returns none if user didn\'t select anything', async () => {
@@ -31,7 +31,6 @@ suite('ConfigTargetPicker', () => {
         when(windowComponent.showQuickPick(any(), any())).thenReturn(task.of(none));
         const picker = new ConfigTargetPicker(windowComponent);
 
-        assert.deepEqual(await picker.pick(), none);
+        assert.deepEqual(await picker.pick()(), none);
     });
-
 });

@@ -5,6 +5,7 @@ import * as vscode from 'vscode';
 import ConfigurationTargetPicker from '../../lib/config-target-picker';
 import * as assert from 'assert';
 import {some} from 'fp-ts/lib/Option';
+import {task} from 'fp-ts/lib/Task';
 
 suite('ConfigStore', () => {
     let extensionConfig: any;
@@ -18,7 +19,7 @@ suite('ConfigStore', () => {
         when(workspace.getConfiguration('textmarker')).thenReturn(extensionConfig);
 
         const configTargetPicker = mock(ConfigurationTargetPicker);
-        when(configTargetPicker.pick()).thenResolve(some('CONFIG_TARGET'));
+        when(configTargetPicker.pick()).thenReturn(task.of(some('CONFIG_TARGET')));
 
         configStore = new ConfigStore(workspace, configTargetPicker);
     });
@@ -28,7 +29,7 @@ suite('ConfigStore', () => {
     });
 
     test('it sets a config value for the specified location', async () => {
-        await configStore.set('CONFIG_NAME', 'CONFIG_VALUE');
+        await configStore.set('CONFIG_NAME', 'CONFIG_VALUE')();
 
         verify(extensionConfig.update('CONFIG_NAME', 'CONFIG_VALUE', 'CONFIG_TARGET'));
     });

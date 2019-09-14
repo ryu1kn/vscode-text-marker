@@ -1,9 +1,10 @@
-import * as Const from './const';
-import ConfigurationTargetPicker from './config-target-picker';
-import * as vscode from 'vscode';
-import {Highlight} from './entities/highlight';
-import {pipe} from 'fp-ts/lib/pipeable';
 import * as O from 'fp-ts/lib/Option';
+import {getOptionM} from 'fp-ts/lib/OptionT';
+import {task, Task} from 'fp-ts/lib/Task';
+import * as vscode from 'vscode';
+import ConfigurationTargetPicker from './config-target-picker';
+import * as Const from './const';
+import {Highlight} from './entities/highlight';
 
 export default class ConfigStore {
     private readonly workspace: typeof vscode.workspace;
@@ -60,13 +61,10 @@ export default class ConfigStore {
     }
 
     // TODO: Move this to WorkspaceAdaptor
-    async set(configName: string, configValue: any) {
-        pipe(
-            await this.configTargetPicker.pick(),
-            O.map(target => {
-                const extensionConfig = this.workspace.getConfiguration(Const.EXTENSION_ID);
-                return extensionConfig.update(configName, configValue, target);
-            })
-        );
+    set(configName: string, configValue: any): Task<O.Option<never>> {
+        return getOptionM(task).chain(this.configTargetPicker.pick(), target => {
+            const extensionConfig = this.workspace.getConfiguration(Const.EXTENSION_ID);
+            return () => extensionConfig.update(configName, configValue, target) as Promise<O.Option<never>>;
+        });
     }
 }

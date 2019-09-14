@@ -18,7 +18,6 @@ export default class SaveAllHighlightsCommand implements CommandLike {
     execute() {
         const decorations = this.decorationRegistry.retrieveAll()
             .map(decoration => this.decorationEntryFormatter.format(decoration));
-        return this.configStore.set('savedHighlights', decorations);
+        return this.configStore.set('savedHighlights', decorations)();
     }
-
 }
