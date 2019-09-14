@@ -35,8 +35,8 @@ export default class WindowComponent {
         );
     }
 
-    showInformationMessage(message: string): Thenable<string> {
-        return this.window.showInformationMessage(message);
+    showInformationMessage(message: string): T.Task<string> {
+        return () => this.window.showInformationMessage(message) as Promise<string>;
     }
 
     showQuickPick<U extends QuickPickItem>(selectItems: U[], options: QuickPickOptions): T.Task<O.Option<U>> {

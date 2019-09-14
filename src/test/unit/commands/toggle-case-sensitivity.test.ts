@@ -6,6 +6,7 @@ import DecorationOperator from '../../../lib/decoration/decoration-operator';
 import {Decoration} from '../../../lib/entities/decoration';
 import StringPattern from '../../../lib/pattern/string';
 import {none, some} from 'fp-ts/lib/Option';
+import {task} from 'fp-ts/lib/Task';
 
 suite('ToggleCaseSensitivityCommand', () => {
 
@@ -17,7 +18,7 @@ suite('ToggleCaseSensitivityCommand', () => {
         const pattern = new StringPattern({phrase: 'TEXT'});
         const decoration = new Decoration('UUID', pattern, 'pink');
         const decorationPicker = mock(DecorationPicker);
-        when(decorationPicker.pick('Select a pattern to toggle case sensitivity')).thenResolve(some(decoration));
+        when(decorationPicker.pick('Select a pattern to toggle case sensitivity')).thenReturn(task.of(some(decoration)));
 
         const command = new ToggleCaseSensitivityCommand(decorationOperatorFactory, decorationPicker);
 
@@ -31,7 +32,7 @@ suite('ToggleCaseSensitivityCommand', () => {
     suite('When pattern is NOT selected', () => {
         const decorationOperatorFactory = mock(DecorationOperatorFactory);
         const decorationPicker = mock(DecorationPicker);
-        when(decorationPicker.pick('Select a pattern to toggle case sensitivity')).thenResolve(none);
+        when(decorationPicker.pick('Select a pattern to toggle case sensitivity')).thenReturn(task.of(none));
         const command = new ToggleCaseSensitivityCommand(decorationOperatorFactory, decorationPicker);
 
         test('it does nothing', async () => {

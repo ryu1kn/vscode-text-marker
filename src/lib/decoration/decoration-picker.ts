@@ -3,7 +3,8 @@ import WindowComponent, {QuickPickItem} from '../vscode/window';
 import {Decoration} from '../entities/decoration';
 import Pattern from '../pattern/pattern';
 import * as O from 'fp-ts/lib/Option';
-import {pipe} from 'fp-ts/lib/pipeable';
+import {getOptionM} from 'fp-ts/lib/OptionT';
+import {task, Task, map} from 'fp-ts/lib/Task';
 
 interface DecorationQuickPickItem extends QuickPickItem {
     decoration: Decoration;
@@ -19,19 +20,19 @@ export default class DecorationPicker {
         this.windowComponent = windowComponent;
     }
 
-    pick(placeHolderText: string): Promise<O.Option<Decoration>> {
+    pick(placeHolderText: string): Task<O.Option<Decoration>> {
         const decorations = this.decorationRegistry.retrieveAll();
         return decorations.length > 0 ?
             this.showPicker(decorations, placeHolderText) :
-            this.showNoItemMessage();
+            map(_v => O.none)(this.showNoItemMessage());
     }
 
-    private async showPicker(decorations: Decoration[], placeHolderText: string): Promise<O.Option<Decoration>> {
+    private showPicker(decorations: Decoration[], placeHolderText: string): Task<O.Option<Decoration>> {
         const selectItems = this.buildQuickPickItems(decorations);
         const options = {placeHolder: placeHolderText};
-        return pipe(
-            await this.windowComponent.showQuickPick<DecorationQuickPickItem>(selectItems, options)(),
-            O.map(it => it.decoration)
+        return getOptionM(task).map(
+            this.windowComponent.showQuickPick<DecorationQuickPickItem>(selectItems, options),
+            it => it.decoration
         );
     }
 
@@ -49,8 +50,7 @@ export default class DecorationPicker {
         return `${pattern.type}${caseSuffix}${wholeMatchSuffix}`;
     }
 
-    private async showNoItemMessage(): Promise<O.Option<never>> {
-        await this.windowComponent.showInformationMessage('No highlight is registered yet');
-        return O.none;
+    private showNoItemMessage(): Task<string> {
+        return this.windowComponent.showInformationMessage('No highlight is registered yet');
     }
 }

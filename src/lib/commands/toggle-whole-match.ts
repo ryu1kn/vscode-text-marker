@@ -1,8 +1,9 @@
 import DecorationPicker from '../decoration/decoration-picker';
 import DecorationOperatorFactory from '../decoration/decoration-operator-factory';
 import {CommandLike} from '../vscode/vscode';
-import {pipe} from 'fp-ts/lib/pipeable';
-import * as O from 'fp-ts/lib/Option';
+import {getOptionM} from 'fp-ts/lib/OptionT';
+import {task} from 'fp-ts/lib/Task';
+import {Option} from 'fp-ts/lib/Option';
 
 export default class ToggleWholeMatchCommand implements CommandLike {
     private readonly decorationOperatorFactory: DecorationOperatorFactory;
@@ -13,13 +14,10 @@ export default class ToggleWholeMatchCommand implements CommandLike {
         this.decorationPicker = decorationPicker;
     }
 
-    async execute() {
-        pipe(
-            await this.decorationPicker.pick('Select a pattern to toggle partial/whole match'),
-            O.map(decoration => {
-                const decorationOperator = this.decorationOperatorFactory.createForVisibleEditors();
-                decorationOperator.updateDecoration(decoration, decoration.withWholeMatchToggled());
-            })
-        );
+    async execute(): Promise<Option<void>> {
+        return getOptionM(task).map(this.decorationPicker.pick('Select a pattern to toggle partial/whole match'), decoration => {
+            const decorationOperator = this.decorationOperatorFactory.createForVisibleEditors();
+            decorationOperator.updateDecoration(decoration, decoration.withWholeMatchToggled());
+        })();
     }
 }

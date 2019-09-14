@@ -6,6 +6,7 @@ import DecorationPicker from '../../../lib/decoration/decoration-picker';
 import {Decoration} from '../../../lib/entities/decoration';
 import StringPattern from '../../../lib/pattern/string';
 import {none, some} from 'fp-ts/lib/Option';
+import {task} from 'fp-ts/lib/Task';
 
 suite('ToggleWholeMatchCommand', () => {
 
@@ -17,7 +18,7 @@ suite('ToggleWholeMatchCommand', () => {
         const pattern = new StringPattern({phrase: 'TEXT'});
         const decoration = new Decoration('UUID', pattern, 'pink');
         const decorationPicker = mock(DecorationPicker);
-        when(decorationPicker.pick('Select a pattern to toggle partial/whole match')).thenResolve(some(decoration));
+        when(decorationPicker.pick('Select a pattern to toggle partial/whole match')).thenReturn(task.of(some(decoration)));
         const command = new ToggleWholeMatchCommand(decorationOperatorFactory, decorationPicker);
 
         await command.execute();
@@ -28,7 +29,7 @@ suite('ToggleWholeMatchCommand', () => {
     test('it does nothing if text is not selected', async () => {
         const decorationOperatorFactory = mock(DecorationOperatorFactory);
         const decorationPicker = mock(DecorationPicker);
-        when(decorationPicker.pick('Select a pattern to toggle partial/whole match')).thenResolve(none);
+        when(decorationPicker.pick('Select a pattern to toggle partial/whole match')).thenReturn(task.of(none));
 
         const command = new ToggleWholeMatchCommand(decorationOperatorFactory, decorationPicker);
 
