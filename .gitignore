@@ -6,3 +6,4 @@
 /coverage
 *.log
 __*
+.history
