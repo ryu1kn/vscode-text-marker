@@ -354,7 +354,6 @@
     "color-name": "1.1.4",
     "color-rgba": "2.1.1",
     "fp-ts": "2.0.5",
-    "lodash.debounce": "^4.0.8",
     "lodash.isnumber": "3.0.3",
     "uuid": "3.3.3",
     "vscode-extension-telemetry": "0.0.22"
