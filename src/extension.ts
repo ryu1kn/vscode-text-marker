@@ -20,7 +20,9 @@ exports.activate = (context: vscode.ExtensionContext) => {
     // highlight selection
     if (config.enableAutoHighlight) {
         vscode.window.onDidChangeTextEditorSelection((e: vscode.TextEditorSelectionChangeEvent) => {
-            if (!vscode.window.activeTextEditor.selection.isEmpty && e.kind == 2) {
+            let editor = vscode.window.activeTextEditor
+            
+            if (editor && !editor.selection.isEmpty && e && e.kind == 2) {
                 vscode.commands.executeCommand('textmarker.toggleHighlight')
             }
         })
