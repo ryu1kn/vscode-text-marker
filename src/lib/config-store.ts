@@ -19,10 +19,6 @@ export default class ConfigStore {
         return this.get<string[]>('highlightColors');
     }
 
-    get defaultHighlightColor() {
-        return this.get<string>('defaultHighlightColor');
-    }
-
     get defaultHighlightOpacity() {
         return this.get<string>('defaultHighlightOpacity');
     }

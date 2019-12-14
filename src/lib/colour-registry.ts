@@ -12,9 +12,13 @@ export default class ColourRegistry {
     issue(): string {
         const colours = this.configStore.highlightColors;
         const availableColour = colours.find(colour => !this.inUseColours.includes(colour));
-        const newColour = availableColour || this.configStore.defaultHighlightColor;
+        const newColour = availableColour || this.randomColor()
         this.inUseColours = this.inUseColours.concat(newColour);
         return newColour;
+    }
+
+    randomColor() {
+        return '#'+Math.random().toString(16).slice(-6)
     }
 
     reserve(colour: string): void {

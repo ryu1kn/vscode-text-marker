@@ -2,6 +2,7 @@ import * as O from 'fp-ts/lib/Option';
 import {getOptionM} from 'fp-ts/lib/OptionT';
 import {Task, task} from 'fp-ts/lib/Task';
 import WindowComponent, {QuickPickItem} from './vscode/window';
+import {workspace} from 'vscode'
 
 const ConfigurationTarget = {
     GLOBAL: true,
@@ -27,16 +28,19 @@ export default class ConfigurationTargetPicker {
     }
 
     private buildQuickPickItems(): ConfigurationTargetQuickPickItem[] {
-        return [
-            {
-                label: 'Global',
-                value: ConfigurationTarget.GLOBAL
-            },
-            {
+        let arr = [{
+            label: 'Global',
+            value: ConfigurationTarget.GLOBAL
+        }]
+
+        workspace.rootPath
+            ? arr.push({
                 label: 'Workspace',
                 value: ConfigurationTarget.WORKSPACE
-            }
-        ];
+            })
+            : arr
+
+        return arr;
     }
 
 }

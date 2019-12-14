@@ -30,7 +30,6 @@ suite('ColourRegistry', () => {
     suite('When no colours are left unused', () => {
         const configStore = mockType<ConfigStore>({
             highlightColors: [],
-            defaultHighlightColor: 'DEFAULT_COLOUR'
         });
         const colourRegistry = new ColourRegistry(configStore);
 

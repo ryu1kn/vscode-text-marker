@@ -59,11 +59,6 @@
             "darkseagreen"
           ]
         },
-        "textmarker.defaultHighlightColor": {
-          "description": "Color to be used once all colors listed in `textmarker.highlightColors` are used",
-          "type": "string",
-          "default": "gray"
-        },
         "textmarker.defaultHighlightOpacity": {
           "description": "Opacity to be used when one is not given in the highlight color",
           "type": "number",
@@ -201,7 +196,7 @@
           "default": true
         },
         "textmarker.enableAutoHighlight": {
-          "description": "enable auto highlight",
+          "description": "enable selection auto highlight",
           "type": "boolean",
           "default": true
         }
@@ -241,6 +236,11 @@
       {
         "command": "textmarker.toggleModeForWholeMatch",
         "title": "Toggle Mode for Whole/Partial Match",
+        "category": "TextMarker"
+      },
+      {
+        "command": "textmarker.toggleAutoHighlight",
+        "title": "Toggle Selection Auto Highlight",
         "category": "TextMarker"
       },
       {
