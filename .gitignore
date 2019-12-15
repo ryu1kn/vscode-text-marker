@@ -8,3 +8,5 @@
 __*
 .history
 *.vsix
+.DS_Store
+yarn.*

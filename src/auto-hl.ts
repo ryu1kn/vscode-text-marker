@@ -1,4 +1,5 @@
 import * as vscode from 'vscode'
+const debounce = require('lodash.debounce')
 
 export function initAutoHighlight(context: vscode.ExtensionContext) {
     // command
@@ -14,13 +15,15 @@ export function initAutoHighlight(context: vscode.ExtensionContext) {
     updateStatusBarItem(AutoHLStatusBar, getCurrentHLConfig())
 
     // selection
-    vscode.window.onDidChangeTextEditorSelection((e: vscode.TextEditorSelectionChangeEvent) => {
-        let editor = vscode.window.activeTextEditor
+    vscode.window.onDidChangeTextEditorSelection(
+        debounce(function (e: vscode.TextEditorSelectionChangeEvent) {
+            let editor = vscode.window.activeTextEditor
 
-        if (getCurrentHLConfig() && editor && !editor.selection.isEmpty && e && e.kind == 2) {
-            vscode.commands.executeCommand('textmarker.toggleHighlight')
-        }
-    })
+            if (getCurrentHLConfig() && editor && !editor.selection.isEmpty && e && e.kind == 2) {
+                vscode.commands.executeCommand('textmarker.toggleHighlight')
+            }
+        }, 150)
+    )
 
     // update on config change
     vscode.workspace.onDidChangeConfiguration((e: any) => {
