@@ -19,10 +19,14 @@ export function initAutoHighlight(context: vscode.ExtensionContext) {
         debounce(function (e: vscode.TextEditorSelectionChangeEvent) {
             let editor = vscode.window.activeTextEditor
 
-            if (getCurrentHLConfig() && editor && !editor.selection.isEmpty && e && e.kind == 2) {
+            if (
+                getCurrentHLConfig() && // hl is on
+                (editor && !editor.selection.isEmpty) && // something is selected
+                (e && e.kind == 2) // selected by mouse
+            ) {
                 vscode.commands.executeCommand('textmarker.toggleHighlight')
             }
-        }, 150)
+        }, 300)
     )
 
     // update on config change
