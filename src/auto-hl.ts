@@ -43,10 +43,11 @@ function getCurrentHLConfig() {
 
 function updateStatusBarItem(item: vscode.StatusBarItem, type: any) {
     if (type) {
-        item.text = '$(circle-filled)'
+        item.text = '$(symbol-keyword)'
         item.tooltip = 'TextMarker Toggle: Auto Highlight Enabled'
-    } else {
-        item.text = '$(circle-outline)'
+    }
+    else {
+        item.text = '$(symbol-color)'
         item.tooltip = 'TextMarker Toggle: Auto Highlight Disabled'
     }
 
