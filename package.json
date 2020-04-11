@@ -334,23 +334,26 @@
     "test-mode": "mocha --opts ./mocha-opts/cli-unit-test-mocha.opts --watch"
   },
   "devDependencies": {
-    "@types/mocha": "^5.2.7",
+    "@types/mocha": "^7.0.2",
     "@types/node": "^10.11.0",
     "codeclimate-test-reporter": "^0.5.1",
-    "mocha": "^6.2.2",
-    "nyc": "^15.0.0",
-    "testdouble": "^3.12.4",
-    "ts-node": "^8.5.4",
-    "tslint": "^5.20.1",
-    "typescript": "^3.7.4",
+    "mocha": "^7.1.1",
+    "nyc": "^15.0.1",
+    "testdouble": "^3.13.1",
+    "ts-node": "^8.8.2",
+    "tslint": "^6.1.1",
+    "typescript": "^3.8.3",
     "vscode": "^1.1.36"
   },
   "dependencies": {
     "color-name": "1.1.4",
     "color-rgba": "2.1.1",
-    "fp-ts": "2.3.1",
+    "fp-ts": "2.5.3",
     "lodash.isnumber": "3.0.3",
     "uuid": "3.3.3",
     "vscode-extension-telemetry": "0.0.22"
+  },
+  "resolutions": {
+    "**/minimist": "^1.2.5"
   }
 }
