@@ -126,7 +126,7 @@ A couple of requests from me when you raise an github issue.
 * `textmarker.useHighlightColorOnRuler` (default: `true`)
 
     Use the same colour for both highlighting a text and showing the location on the ruler.
-    
+
     If you have multiple highlights on the same line and their colours have opacity `1`,
     you would only see one of those colours. You can specify a smaller opacity value so that the colours can be blended.
 
@@ -134,7 +134,7 @@ A couple of requests from me when you raise an github issue.
 
     Text colour will be chosen to be distinctive from the background highlight colour.
     This will hide the text colour given by syntax highlighting; if this is not desirable, set it `false`.
-    
+
 * `textmarker.hideStatusBarItems` (default: `false`)
 
     Hide status bar items. When set it `true`, the buttons to switch the modes of partial/whole match and
@@ -196,7 +196,7 @@ A couple of requests from me when you raise an github issue.
     ```
 
 * `textmarker.enableTelemetry` (default: `true`)
-    
+
     Allow the extension usage data to be sent to the extension author.
 
     Text Marker sends usage data only when both `textmarker.enableTelemetry` and `telemetry.enableTelemetry` are set to `true`.
@@ -220,3 +220,7 @@ regardless of the value of `textmarker.enableTelemetry`, Text Marker will not co
 ## Changelog
 
 * https://github.com/ryu1kn/vscode-text-marker/blob/master/CHANGELOG.md
+
+## How to contribute
+
+Thank you for considering a contribution. Please check [CONTRIBUTING.md](./CONTRIBUTING.md).
