@@ -335,7 +335,7 @@
   },
   "devDependencies": {
     "@types/mocha": "^7.0.2",
-    "@types/node": "^10.11.0",
+    "@types/node": "^12.14.1",
     "codeclimate-test-reporter": "^0.5.1",
     "mocha": "^7.1.1",
     "nyc": "^15.0.1",

@@ -26,3 +26,4 @@ out/**/*.map
 src/**/*
 tsconfig.json
 yarn-error.log
+CONTRIBUTING.md
