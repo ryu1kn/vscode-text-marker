@@ -1,5 +1,0 @@
---recursive
---ui tdd
---require ts-node/register
---require src/test/stub-vscode.ts
-src/test/acceptance/**/*.ts

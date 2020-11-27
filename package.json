@@ -328,16 +328,16 @@
     "lint": "tslint -p .",
     "check": "yarn run compile && yarn run lint && yarn test",
     "watch": "tsc -watch -p ./",
-    "test": "mocha --opts ./mocha-opts/cli-all-test-mocha.opts",
-    "unit-test": "mocha --opts ./mocha-opts/cli-unit-test-mocha.opts",
-    "acceptance-test": "mocha --opts ./mocha-opts/cli-acceptance-test-mocha.opts",
-    "test-mode": "mocha --opts ./mocha-opts/cli-unit-test-mocha.opts --watch"
+    "test": "mocha --config ./mocha-opts/cli-all-test-mocha.json",
+    "unit-test": "mocha --config ./mocha-opts/cli-unit-test-mocha.json",
+    "acceptance-test": "mocha --config ./mocha-opts/cli-acceptance-test-mocha.json",
+    "test-mode": "mocha --config ./mocha-opts/cli-unit-test-mocha.json --watch"
   },
   "devDependencies": {
-    "@types/mocha": "^7.0.2",
+    "@types/mocha": "^8.0.4",
     "@types/node": "^12.14.1",
     "codeclimate-test-reporter": "^0.5.1",
-    "mocha": "^7.2.0",
+    "mocha": "^8.2.1",
     "nyc": "^15.1.0",
     "testdouble": "^3.13.1",
     "ts-node": "^9.0.0",

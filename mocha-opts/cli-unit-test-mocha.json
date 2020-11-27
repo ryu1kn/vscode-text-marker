@@ -1,0 +1,6 @@
+{
+  "recursive": true,
+  "ui": "tdd",
+  "require": ["ts-node/register", "src/test/stub-vscode.ts"],
+  "spec": "src/test/unit/**/*.ts"
+}
