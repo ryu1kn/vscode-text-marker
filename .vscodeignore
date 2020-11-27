@@ -7,6 +7,7 @@ coverage/**/*
 .gitignore
 .editorconfig
 .idea/**/*
+.mocharc.json
 .nvmrc
 .nycrc
 .nyc_output/**/*
@@ -20,7 +21,6 @@ __*/**/*
 .DS_Store
 *.vsix
 tslint.json
-mocha-opts/**
 out/test/**
 out/**/*.map
 src/**/*

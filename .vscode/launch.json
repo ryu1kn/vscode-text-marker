@@ -37,10 +37,7 @@
           "request": "launch",
           "name": "Mocha Debug",
           "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
-          "args": [
-              "--opts",
-              "${workspaceFolder}/mocha-opts/cli-all-test-mocha.opts"
-          ],
+          "args": [],
           "console": "integratedTerminal",
           "internalConsoleOptions": "neverOpen"
       }

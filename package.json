@@ -323,15 +323,15 @@
     "vscode:prepublish": "yarn run compile",
     "vscode:postpublish": "./tag-release.sh",
     "postinstall": "node ./node_modules/vscode/bin/install",
-    "coverage": "nyc mocha --opts ./mocha-opts/cli-all-test-mocha.opts",
+    "coverage": "nyc mocha 'src/test/**/*.ts'",
     "compile": "tsc -p ./",
     "lint": "tslint -p .",
     "check": "yarn run compile && yarn run lint && yarn test",
     "watch": "tsc -watch -p ./",
-    "test": "mocha --config ./mocha-opts/cli-all-test-mocha.json",
-    "unit-test": "mocha --config ./mocha-opts/cli-unit-test-mocha.json",
-    "acceptance-test": "mocha --config ./mocha-opts/cli-acceptance-test-mocha.json",
-    "test-mode": "mocha --config ./mocha-opts/cli-unit-test-mocha.json --watch"
+    "test": "mocha 'src/test/**/*.ts'",
+    "unit-test": "mocha 'src/test/unit/**/*.ts'",
+    "acceptance-test": "mocha 'src/test/acceptance/**/*.ts'",
+    "test-mode": "mocha 'src/test/unit/**/*.ts' --watch"
   },
   "devDependencies": {
     "@types/mocha": "^8.0.4",
