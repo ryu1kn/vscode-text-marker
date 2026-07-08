@@ -10,7 +10,8 @@ enum DecorationAction {
     TOGGLE_CASE_SENSITIVITY = 'toggle-case-sensitivity',
     TOGGLE_WHOLE_MATCH = 'toggle-whole-match',
     UPDATE_PHRASE = 'update-phrase',
-    UPDATE_COLOUR = 'update-colour'
+    UPDATE_COLOUR = 'update-colour',
+    UPDATE_LABEL = 'update-label'
 }
 
 interface DecorationUpdateActionQuickPickItem extends QuickPickItem {
@@ -56,6 +57,15 @@ export default class DecorationVariationReader {
                 const newPhraseOpt = this.windowComponent.showInputBox(options);
                 return getOptionM(task).map(newPhraseOpt, newColour => currentDecoration.withColour(newColour));
             }
+            case DecorationAction.UPDATE_LABEL: {
+                const options = {
+                    value: currentDecoration.label || '',
+                    prompt: 'Enter a label for this highlight.',
+                    placeHolder: 'e.g. transaction_id'
+                };
+                const newLabelOpt = this.windowComponent.showInputBox(options);
+                return getOptionM(task).map(newLabelOpt, newLabel => currentDecoration.withLabel(newLabel));
+            }
         }
     }
 
@@ -64,7 +74,8 @@ export default class DecorationVariationReader {
             this.getToggleCaseSensitivityOption(decoration),
             this.getToggleWholeMatchOption(decoration),
             this.getUpdatePhraseOption(decoration),
-            this.getUpdateColourOption(decoration)
+            this.getUpdateColourOption(decoration),
+            this.getUpdateLabelOption(decoration)
         ];
     }
 
@@ -96,6 +107,14 @@ export default class DecorationVariationReader {
         return {
             label: 'Update Color',
             actionId: DecorationAction.UPDATE_COLOUR
+        };
+    }
+
+    private getUpdateLabelOption(decoration: Decoration) {
+        const current = decoration.label ? ` (current: ${decoration.label})` : '';
+        return {
+            label: `Update Label${current}`,
+            actionId: DecorationAction.UPDATE_LABEL
         };
     }
 }

@@ -15,6 +15,7 @@ import ToggleCaseSensitivityCommand from './commands/toggle-case-sensitivity';
 import ToggleCaseSensitivityModeButton from './statusbar-buttons/toggle-case-sensitivity-mode';
 import ToggleCaseSensitivityModeCommand from './commands/toggle-case-sensitivity-mode';
 import ToggleHighlightCommand from './commands/toggle-highlight';
+import ToggleHighlightWithLabelCommand from './commands/toggle-highlight-with-label';
 import ToggleWholeMatchCommand from './commands/toggle-whole-match';
 import ToggleWholeMatchModeButton from './statusbar-buttons/toggle-whole-match-mode';
 import ToggleWholeMatchModeCommand from './commands/toggle-whole-match-mode';
@@ -55,6 +56,10 @@ export default class CommandFactory {
 
     createToggleHighlightCommand() {
         return new ToggleHighlightCommand(this.getMatchingModeRegistry(), this.getTextLocationRegistry(), this.getDecorationRegistry(), this.getDecorationTypeRegistry(), this.getWindowComponent());
+    }
+
+    createToggleHighlightWithLabelCommand() {
+        return new ToggleHighlightWithLabelCommand(this.getMatchingModeRegistry(), this.getTextLocationRegistry(), this.getDecorationRegistry(), this.getDecorationTypeRegistry(), this.getWindowComponent());
     }
 
     createHighlightUsingRegex() {

@@ -1,5 +1,7 @@
 import SelectedTextFinder from './selected-text-finder';
 import {
+    DecorationOptions,
+    MarkdownString,
     Position,
     Range,
     Selection,
@@ -59,9 +61,15 @@ export default class TextEditor {
         return this.editor.document.positionAt(position);
     }
 
-    setDecorations(decorationType: TextEditorDecorationType, ranges: FlatRange[]) {
-        const vsRanges = ranges.map(range => this.getRange(range));
-        this.editor.setDecorations(decorationType, vsRanges);
+    setDecorations(decorationType: TextEditorDecorationType, ranges: FlatRange[], label?: string) {
+        const vsOptions: DecorationOptions[] = ranges.map(range => {
+            const opt: DecorationOptions = {range: this.getRange(range)};
+            if (label) {
+                opt.hoverMessage = new MarkdownString(`**${label}**`);
+            }
+            return opt;
+        });
+        this.editor.setDecorations(decorationType, vsOptions);
     }
 
     unsetDecorations(decorationType: TextEditorDecorationType) {

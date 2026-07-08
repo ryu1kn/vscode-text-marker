@@ -6,7 +6,7 @@ export default class DecorationEntryFormatter {
 
     format(decoration: Decoration): Highlight {
         const pattern = decoration.pattern;
-        return {
+        const highlight: Highlight = {
             pattern: {
                 type: getExternalName(pattern.type)!,
                 expression: pattern.phrase,
@@ -15,6 +15,10 @@ export default class DecorationEntryFormatter {
             },
             color: decoration.colour
         };
+        if (decoration.label) {
+            highlight.label = decoration.label;
+        }
+        return highlight;
     }
 
 }

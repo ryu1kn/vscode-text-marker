@@ -28,23 +28,23 @@ export default class DecorationRegistry {
         return this.map.find(isSamePattern);
     }
 
-    issue(pattern: Pattern, colour?: string): O.Option<Decoration> {
+    issue(pattern: Pattern, colour?: string, label?: string): O.Option<Decoration> {
         return pipe(
             this.inquireByPattern(pattern),
             O.fold(
-                () => O.some(this.setDecoration(this.createDecoration(pattern, colour))),
+                () => O.some(this.setDecoration(this.createDecoration(pattern, colour, label))),
                 () => O.none
             )
         );
     }
 
-    private createDecoration(pattern: Pattern, colour?: string): Decoration {
+    private createDecoration(pattern: Pattern, colour?: string, label?: string): Decoration {
         const id = this.generateUuid();
         if (colour) {
             this.colourRegistry.reserve(colour);
-            return new Decoration(id, pattern, colour);
+            return new Decoration(id, pattern, colour, label);
         } else {
-            return new Decoration(id, pattern, this.colourRegistry.issue());
+            return new Decoration(id, pattern, this.colourRegistry.issue(), label);
         }
     }
 

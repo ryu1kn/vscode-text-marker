@@ -214,6 +214,11 @@
         "category": "TextMarker"
       },
       {
+        "command": "textmarker.toggleHighlightWithLabel",
+        "title": "Toggle Highlight with Label",
+        "category": "TextMarker"
+      },
+      {
         "command": "textmarker.unhighlight",
         "title": "Unhighlight Text",
         "category": "TextMarker"
@@ -269,6 +274,11 @@
         {
           "command": "textmarker.toggleHighlight",
           "group": "2_textmarker@1",
+          "when": "editorTextFocus && config.textmarker.commandsOnContextMenu.toggleHighlight"
+        },
+        {
+          "command": "textmarker.toggleHighlightWithLabel",
+          "group": "2_textmarker@2",
           "when": "editorTextFocus && config.textmarker.commandsOnContextMenu.toggleHighlight"
         },
         {

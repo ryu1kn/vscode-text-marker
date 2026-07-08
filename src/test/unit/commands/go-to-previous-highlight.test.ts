@@ -28,7 +28,7 @@ suite('Go-to-previous-highlight command', function () {
     textLocationRegistry.register('EDITOR_ID', 'DECORATION_ID', [registeredRange1, registeredRange2, registeredRange3]);
 
     const decorationRegistry = mock(DecorationRegistry);
-    when(decorationRegistry.issue(newPattern, any())).thenReturn(some(mockType<Decoration>({pattern: newPattern})));
+    when(decorationRegistry.issue(newPattern, any(), any())).thenReturn(some(mockType<Decoration>({pattern: newPattern})));
     when(decorationRegistry.inquireById('DECORATION_ID')).thenReturn(some(mockType<Decoration>({id: 'DECORATION_ID'})));
 
     const decorationTypeRegistry = mock(DecorationTypeRegistry);
@@ -75,7 +75,7 @@ suite('Go-to-previous-highlight command', function () {
         test('It highlights and take you to the previous highlight', async () => {
             await command.execute(editor);
 
-            verify(editor.setDecorations(decorationType, [{start: 4, end: 8}, unregisteredRange, {start: 25, end: 29}]));
+            verify(editor.setDecorations(decorationType, [{start: 4, end: 8}, unregisteredRange, {start: 25, end: 29}], undefined));
             assert.deepEqual(editor.selection, {start: 4, end: 8});
         });
     });
