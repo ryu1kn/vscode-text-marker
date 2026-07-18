@@ -33,11 +33,11 @@ suite('Highlight command', () => {
         await command(editor1);
 
         verify(editor1.setDecorations('DECORATION_TYPE_1', [
-            new Range(new Position(0, 2), new Position(0, 6)),
-            new Range(new Position(0, 9), new Position(0, 13))
+            {range: new Range(new Position(0, 2), new Position(0, 6))},
+            {range: new Range(new Position(0, 9), new Position(0, 13))}
         ]));
         verify(editor2.setDecorations('DECORATION_TYPE_1', [
-            new Range(new Position(0, 2), new Position(0, 6))
+            {range: new Range(new Position(0, 2), new Position(0, 6))}
         ]));
     });
 
@@ -49,8 +49,8 @@ suite('Highlight command', () => {
             call1: [
                 'DECORATION_TYPE_2',
                 [
-                    new Range(new Position(0, 2), new Position(0, 5)),
-                    new Range(new Position(0, 9), new Position(0, 12))
+                    {range: new Range(new Position(0, 2), new Position(0, 5))},
+                    {range: new Range(new Position(0, 9), new Position(0, 12))}
                 ]
             ]
         });
@@ -58,7 +58,7 @@ suite('Highlight command', () => {
             call1: [
                 'DECORATION_TYPE_2',
                 [
-                    new Range(new Position(0, 2), new Position(0, 5))
+                    {range: new Range(new Position(0, 2), new Position(0, 5))}
                 ]
             ]
         });

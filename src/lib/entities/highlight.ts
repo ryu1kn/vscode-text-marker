@@ -12,4 +12,5 @@ export type Highlight = {
         wholeMatch: boolean;
     },
     color: string;
+    label?: string;
 };

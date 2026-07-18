@@ -114,6 +114,9 @@
             "toggleHighlight": {
               "type": "boolean"
             },
+            "toggleHighlightWithLabel": {
+              "type": "boolean"
+            },
             "unhighlight": {
               "type": "boolean"
             },
@@ -142,6 +145,7 @@
           "default": {
             "highlightUsingRegex": false,
             "toggleHighlight": true,
+            "toggleHighlightWithLabel": true,
             "unhighlight": false,
             "toggleCaseSensitivity": false,
             "toggleWholeMatch": false,
@@ -214,6 +218,11 @@
         "category": "TextMarker"
       },
       {
+        "command": "textmarker.toggleHighlightWithLabel",
+        "title": "Toggle Highlight with Label",
+        "category": "TextMarker"
+      },
+      {
         "command": "textmarker.unhighlight",
         "title": "Unhighlight Text",
         "category": "TextMarker"
@@ -272,43 +281,48 @@
           "when": "editorTextFocus && config.textmarker.commandsOnContextMenu.toggleHighlight"
         },
         {
-          "command": "textmarker.updateHighlight",
+          "command": "textmarker.toggleHighlightWithLabel",
           "group": "2_textmarker@2",
+          "when": "editorTextFocus && config.textmarker.commandsOnContextMenu.toggleHighlightWithLabel"
+        },
+        {
+          "command": "textmarker.updateHighlight",
+          "group": "2_textmarker@3",
           "when": "editorTextFocus && config.textmarker.commandsOnContextMenu.updateHighlight"
         },
         {
           "command": "textmarker.goToNextHighlight",
-          "group": "2_textmarker@3",
+          "group": "2_textmarker@4",
           "when": "editorTextFocus && config.textmarker.commandsOnContextMenu.goToNextHighlight"
         },
         {
           "command": "textmarker.goToPreviousHighlight",
-          "group": "2_textmarker@4",
+          "group": "2_textmarker@5",
           "when": "editorTextFocus && config.textmarker.commandsOnContextMenu.goToPreviousHighlight"
         },
         {
           "command": "textmarker.highlightUsingRegex",
-          "group": "2_textmarker@5",
+          "group": "2_textmarker@6",
           "when": "editorTextFocus && config.textmarker.commandsOnContextMenu.highlightUsingRegex"
         },
         {
           "command": "textmarker.unhighlight",
-          "group": "2_textmarker@6",
+          "group": "2_textmarker@7",
           "when": "editorTextFocus && config.textmarker.commandsOnContextMenu.unhighlight"
         },
         {
           "command": "textmarker.toggleCaseSensitivity",
-          "group": "2_textmarker@7",
+          "group": "2_textmarker@8",
           "when": "editorTextFocus && config.textmarker.commandsOnContextMenu.toggleCaseSensitivity"
         },
         {
           "command": "textmarker.toggleWholeMatch",
-          "group": "2_textmarker@8",
+          "group": "2_textmarker@9",
           "when": "editorTextFocus && config.textmarker.commandsOnContextMenu.toggleWholeMatch"
         },
         {
           "command": "textmarker.clearAllHighlight",
-          "group": "2_textmarker@9",
+          "group": "2_textmarker@10",
           "when": "editorTextFocus && config.textmarker.commandsOnContextMenu.clearAllHighlight"
         },
         {

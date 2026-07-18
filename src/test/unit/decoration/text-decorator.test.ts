@@ -55,8 +55,8 @@ suite('TextDecorator', () => {
 
         textDecorator.decorate(editors, [decoration0]);
 
-        verify(editors[0].setDecorations(decorationType, [{start: 7, end: 11}, {start: 12, end: 16}]));
-        verify(editors[1].setDecorations(decorationType, [{start: 15, end: 19}]));
+        verify(editors[0].setDecorations(decorationType, [{start: 7, end: 11}, {start: 12, end: 16}], undefined));
+        verify(editors[1].setDecorations(decorationType, [{start: 15, end: 19}], undefined));
         wrapVerify((c1, c2, c3) => verify(textLocationRegistry.register(c1(), c2(), c3())), [
             [
                 'EDITOR_ID_1',
@@ -100,7 +100,7 @@ suite('TextDecorator', () => {
         });
         const textDecorator = new TextDecorator(textLocationRegistry, decorationTypeRegistry);
         textDecorator.decorate([editor], [decoration3, decoration4]);
-        verify(editor.setDecorations(decorationType, [{start: 7, end: 11}, {start: 12, end: 16}]));
+        verify(editor.setDecorations(decorationType, [{start: 7, end: 11}, {start: 12, end: 16}], undefined));
     });
 
     function createPattern(phrase: string) {

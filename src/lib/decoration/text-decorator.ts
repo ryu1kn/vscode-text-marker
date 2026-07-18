@@ -45,7 +45,7 @@ export default class TextDecorator {
     private addDecoration(editor: TextEditor, decoration: Decoration): void {
         const ranges = decoration.pattern.locateIn(editor.wholeText);
         const decorationType = this.decorationTypeRegistry.provideFor(decoration);
-        editor.setDecorations(decorationType, ranges);
+        editor.setDecorations(decorationType, ranges, decoration.label);
         this.textLocationRegistry.register(editor.id, decoration.id, ranges);
     }
 }

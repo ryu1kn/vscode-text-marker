@@ -105,6 +105,10 @@ export default class AppIntegrator {
                 command: factory.createToggleHighlightCommand(),
                 type: 'TEXT_EDITOR'
             }, {
+                name: `${Const.EXTENSION_ID}.toggleHighlightWithLabel`,
+                command: factory.createToggleHighlightWithLabelCommand(),
+                type: 'TEXT_EDITOR'
+            }, {
                 name: `${Const.EXTENSION_ID}.updateHighlight`,
                 command: factory.createUpdateHighlightCommand(),
                 type: 'TEXT_EDITOR'

@@ -35,7 +35,7 @@ suite('SavedHighlightsRestorer', () => {
                 phrase: 'PHRASE',
                 ignoreCase: false,
                 wholeMatch: false
-            }), '#F7E4B3'));
+            }), '#F7E4B3', undefined));
             done();
         });
 
