@@ -1,6 +1,8 @@
 import {stubReturns} from '../../helpers/mock';
 import {Range} from 'vscode';
 
+export const decorationTypes = '123456789'.split('').map(digit => ({key: `DECORATION_TYPE_${digit}`, dispose() {}}));
+
 export const createFakeVsCode = ({editors}: any = {}) => {
     const commands = {} as any;
     const textMarkerConfig = {
@@ -19,6 +21,7 @@ export const createFakeVsCode = ({editors}: any = {}) => {
         },
         workspace: {
             onDidChangeTextDocument: () => {},
+            onDidChangeConfiguration: () => {},
             getConfiguration: (configKey: string) =>
                 configKey === 'textmarker' ?
                     {get: (textMarkerConfigKey: string) => textMarkerConfig[textMarkerConfigKey]} :
@@ -36,7 +39,6 @@ export const createFakeVsCode = ({editors}: any = {}) => {
 };
 
 function createTextEditorDecorationTypeStub() {
-    const decorationTypes = '123456789'.split('').map(digit => `DECORATION_TYPE_${digit}`);
     return stubReturns(...decorationTypes);
 }
 

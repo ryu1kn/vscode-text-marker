@@ -24,7 +24,19 @@ export default class ConfigStore {
     }
 
     get defaultHighlightOpacity() {
-        return this.get<string>('defaultHighlightOpacity');
+        return this.get<number>('defaultHighlightOpacity');
+    }
+
+    get borderWidth() {
+        return this.get<number>('borderWidth');
+    }
+
+    get borderStyle() {
+        return this.get<string>('borderStyle');
+    }
+
+    get borderRadius() {
+        return this.get<number>('borderRadius');
     }
 
     get savedHighlights() {

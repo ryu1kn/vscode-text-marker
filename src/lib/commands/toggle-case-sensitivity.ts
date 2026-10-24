@@ -1,3 +1,4 @@
+import {l10n} from 'vscode';
 import DecorationOperatorFactory from '../decoration/decoration-operator-factory';
 import DecorationPicker from '../decoration/decoration-picker';
 import {CommandLike} from '../vscode/vscode';
@@ -15,7 +16,7 @@ export default class ToggleCaseSensitivityCommand implements CommandLike {
     }
 
     execute(): Promise<Option<void>> {
-        return getOptionM(task).map(this.decorationPicker.pick('Select a pattern to toggle case sensitivity'), decoration => {
+        return getOptionM(task).map(this.decorationPicker.pick(l10n.t('Select a highlight to toggle case sensitivity')), decoration => {
             const decorationOperator = this.decorationOperatorFactory.createForVisibleEditors();
             decorationOperator.updateDecoration(decoration, decoration.withCaseSensitivityToggled());
         })();

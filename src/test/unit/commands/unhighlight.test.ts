@@ -17,7 +17,7 @@ suite('UnhighlightCommand', () => {
 
         const decoration = mockType<Decoration>({id: 'DECORATION_ID'});
         const decorationPicker = mock(DecorationPicker);
-        when(decorationPicker.pick('Select a pattern to remove highlight')).thenReturn(task.of(some(decoration)));
+        when(decorationPicker.pick('Select a highlight to remove')).thenReturn(task.of(some(decoration)));
 
         const command = new UnhighlightCommand(decorationOperatorFactory, decorationPicker);
 
@@ -29,7 +29,7 @@ suite('UnhighlightCommand', () => {
     test('it does nothing if text is not selected', async () => {
         const decorationOperatorFactory = mock(DecorationOperatorFactory);
         const decorationPicker = mock(DecorationPicker);
-        when(decorationPicker.pick('Select a pattern to remove highlight')).thenReturn(task.of(none));
+        when(decorationPicker.pick('Select a highlight to remove')).thenReturn(task.of(none));
 
         const command = new UnhighlightCommand(decorationOperatorFactory, decorationPicker);
 

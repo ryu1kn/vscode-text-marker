@@ -1,3 +1,4 @@
+import {l10n} from 'vscode';
 import DecorationRegistry from './decoration-registry';
 import WindowComponent, {QuickPickItem} from '../vscode/window';
 import {Decoration} from '../entities/decoration';
@@ -47,10 +48,11 @@ export default class DecorationPicker {
     private buildDetail(pattern: Pattern): string {
         const caseSuffix = !pattern.ignoreCase ? ' [Aa]' : '';
         const wholeMatchSuffix = pattern.wholeMatch ? ' [Ab|]' : '';
-        return `${pattern.type}${caseSuffix}${wholeMatchSuffix}`;
+        const typeLabel = pattern.type === 'RegExp' ? l10n.t('Regular expression') : l10n.t('Text');
+        return `${typeLabel}${caseSuffix}${wholeMatchSuffix}`;
     }
 
     private showNoItemMessage(): Task<string> {
-        return this.windowComponent.showInformationMessage('No highlight is registered yet');
+        return this.windowComponent.showInformationMessage(l10n.t('No highlights have been added yet'));
     }
 }

@@ -1,4 +1,4 @@
-import {mock, mockType, when} from '../helpers/mock';
+import {contains, mock, mockType, when} from '../helpers/mock';
 
 import RegexReader from '../../lib/regex-reader';
 import WindowComponent from '../../lib/vscode/window';
@@ -13,7 +13,7 @@ suite('RegexReader', () => {
     const matchingModeRegistry = mockType<MatchingModeRegistry>();
 
     const windowComponent = mock(WindowComponent);
-    when(windowComponent.showInputBox({placeHolder: 'Enter a regular expression to highlight text'}))
+    when(windowComponent.showInputBox(contains({placeHolder: 'Enter a regular expression without enclosing / characters'})))
         .thenReturn(task.of(some('PATTERN_STRING')));
 
     const reader = new RegexReader(matchingModeRegistry, windowComponent);

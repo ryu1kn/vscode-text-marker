@@ -1,3 +1,4 @@
+import {l10n} from 'vscode';
 import DecorationPicker from '../decoration/decoration-picker';
 import DecorationOperatorFactory from '../decoration/decoration-operator-factory';
 import {CommandLike} from '../vscode/vscode';
@@ -15,7 +16,7 @@ export default class UnhighlightCommand implements CommandLike {
     }
 
     execute(): Promise<Option<void>> {
-        return getOptionM(task).map(this.decorationPicker.pick('Select a pattern to remove highlight'), decoration => {
+        return getOptionM(task).map(this.decorationPicker.pick(l10n.t('Select a highlight to remove')), decoration => {
             const decorationOperator = this.decorationOperatorFactory.createForVisibleEditors();
             decorationOperator.removeDecoration(decoration.id);
         })();

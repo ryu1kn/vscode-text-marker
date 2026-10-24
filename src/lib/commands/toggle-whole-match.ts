@@ -1,3 +1,4 @@
+import {l10n} from 'vscode';
 import DecorationPicker from '../decoration/decoration-picker';
 import DecorationOperatorFactory from '../decoration/decoration-operator-factory';
 import {CommandLike} from '../vscode/vscode';
@@ -15,7 +16,7 @@ export default class ToggleWholeMatchCommand implements CommandLike {
     }
 
     async execute(): Promise<Option<void>> {
-        return getOptionM(task).map(this.decorationPicker.pick('Select a pattern to toggle partial/whole match'), decoration => {
+        return getOptionM(task).map(this.decorationPicker.pick(l10n.t('Select a highlight to toggle whole/partial matching')), decoration => {
             const decorationOperator = this.decorationOperatorFactory.createForVisibleEditors();
             decorationOperator.updateDecoration(decoration, decoration.withWholeMatchToggled());
         })();

@@ -54,6 +54,10 @@ export default class DecorationOperator {
         this.textDecorator.undecorate(this.editors, decorationIds);
     }
 
+    refreshStyles(): void {
+        this.textDecorator.redecorate(this.editors, this.decorationRegistry.retrieveAll());
+    }
+
     refreshDecorations() {
         const decorations = this.decorationRegistry.retrieveAll();
         this.textDecorator.decorate(this.editors, decorations);

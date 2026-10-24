@@ -45,12 +45,12 @@ suite('DecorationPicker', () => {
         const windowComponent = mock(WindowComponent);
         when(windowComponent.showQuickPick(
             [
-                {label: 'TEXT_1', detail: 'String', decoration: decoration1},
-                {label: '/TEXT_2/i', detail: 'RegExp', decoration: decoration2}
+                {label: 'TEXT_1', detail: 'Text', decoration: decoration1},
+                {label: '/TEXT_2/i', detail: 'Regular expression', decoration: decoration2}
             ],
             {placeHolder: 'PLACEHOLDER_MESSAGE'}
         )).thenReturn(task.of(some({
-            label: 'TEXT_1', detail: 'String', decoration: decoration1
+            label: 'TEXT_1', detail: 'Text', decoration: decoration1
         })));
         const decorationRegistry = mock(DecorationRegistry);
         when(decorationRegistry.retrieveAll()).thenReturn([decoration1, decoration2]);
@@ -65,8 +65,8 @@ suite('DecorationPicker', () => {
         const windowComponent = mock(WindowComponent);
         when(windowComponent.showQuickPick(
             [
-                {label: 'TEXT_3', detail: 'String [Aa]', decoration: decoration3},
-                {label: '/TEXT_4/', detail: 'RegExp [Aa]', decoration: decoration4}
+                {label: 'TEXT_3', detail: 'Text [Aa]', decoration: decoration3},
+                {label: '/TEXT_4/', detail: 'Regular expression [Aa]', decoration: decoration4}
             ],
             {placeHolder: 'PLACE_HOLDER_TEXT'}
         )).thenReturn(task.of(none));
@@ -80,7 +80,7 @@ suite('DecorationPicker', () => {
     test('it shows /i flag on regex if a pattern is case insensitive', async () => {
         const windowComponent = mock(WindowComponent);
         when(windowComponent.showQuickPick(
-            [{label: '/TEXT_2/i', detail: 'RegExp', decoration: decoration2}],
+            [{label: '/TEXT_2/i', detail: 'Regular expression', decoration: decoration2}],
             {placeHolder: 'PLACE_HOLDER_TEXT'}
         )).thenReturn(task.of(none));
 
@@ -94,7 +94,7 @@ suite('DecorationPicker', () => {
     test('it shows "[Aa|]" symbol if a pattern is case sensitive', async () => {
         const windowComponent = mock(WindowComponent);
         when(windowComponent.showQuickPick(
-            [{label: 'TEXT_5', detail: 'String [Aa] [Ab|]', decoration: decoration5}],
+            [{label: 'TEXT_5', detail: 'Text [Aa] [Ab|]', decoration: decoration5}],
             {placeHolder: 'PLACE_HOLDER_TEXT'}
         )).thenReturn(task.of(none));
 
@@ -117,7 +117,7 @@ suite('DecorationPicker', () => {
 
     test('it shows a message instead of picker if no patterns are registered yet', async () => {
         const windowComponent = mock(WindowComponent);
-        when(windowComponent.showInformationMessage('No highlight is registered yet')).thenReturn(task.of(none));
+        when(windowComponent.showInformationMessage('No highlights have been added yet')).thenReturn(task.of(none));
         const decorationRegistry = mock(DecorationRegistry);
         when(decorationRegistry.retrieveAll()).thenReturn([]);
         const picker = new DecorationPicker(decorationRegistry, windowComponent);

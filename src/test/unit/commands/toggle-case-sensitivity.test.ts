@@ -18,7 +18,7 @@ suite('ToggleCaseSensitivityCommand', () => {
         const pattern = new StringPattern({phrase: 'TEXT'});
         const decoration = new Decoration('UUID', pattern, 'pink');
         const decorationPicker = mock(DecorationPicker);
-        when(decorationPicker.pick('Select a pattern to toggle case sensitivity')).thenReturn(task.of(some(decoration)));
+        when(decorationPicker.pick('Select a highlight to toggle case sensitivity')).thenReturn(task.of(some(decoration)));
 
         const command = new ToggleCaseSensitivityCommand(decorationOperatorFactory, decorationPicker);
 
@@ -32,7 +32,7 @@ suite('ToggleCaseSensitivityCommand', () => {
     suite('When pattern is NOT selected', () => {
         const decorationOperatorFactory = mock(DecorationOperatorFactory);
         const decorationPicker = mock(DecorationPicker);
-        when(decorationPicker.pick('Select a pattern to toggle case sensitivity')).thenReturn(task.of(none));
+        when(decorationPicker.pick('Select a highlight to toggle case sensitivity')).thenReturn(task.of(none));
         const command = new ToggleCaseSensitivityCommand(decorationOperatorFactory, decorationPicker);
 
         test('it does nothing', async () => {

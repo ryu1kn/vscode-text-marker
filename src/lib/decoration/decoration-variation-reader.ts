@@ -1,3 +1,4 @@
+import {l10n} from 'vscode';
 import WindowComponent, {QuickPickItem} from '../vscode/window';
 import {Option, some} from 'fp-ts/lib/Option';
 import {Decoration} from '../entities/decoration';
@@ -28,7 +29,7 @@ export default class DecorationVariationReader {
 
     read(currentDecoration: Decoration): Task<Option<Decoration>> {
         const items = this.buildSelectItems(currentDecoration);
-        const options = {placeHolder: 'Select how to update the highlight'};
+        const options = {placeHolder: l10n.t('Select how to update the highlight')};
         const item = this.windowComponent.showQuickPick<DecorationUpdateActionQuickPickItem>(items, options);
         return getOptionM(task).chain(item, it => this.createDecoration(currentDecoration, it));
     }
@@ -43,7 +44,7 @@ export default class DecorationVariationReader {
             case DecorationAction.UPDATE_PHRASE: {
                 const options = {
                     value: currentDecoration.pattern.phrase,
-                    prompt: 'Enter a new pattern.'
+                    prompt: l10n.t('Enter a new matching text or regular expression.')
                 };
                 const newPhraseOpt = this.windowComponent.showInputBox(options);
                 return getOptionM(task).map(newPhraseOpt, newPhrase => currentDecoration.withPhrase(newPhrase));
@@ -51,7 +52,7 @@ export default class DecorationVariationReader {
             case DecorationAction.UPDATE_COLOUR: {
                 const options = {
                     value: currentDecoration.colour,
-                    prompt: 'Enter a new color.'
+                    prompt: l10n.t('Enter a new color, for example #5C8DFF.')
                 };
                 const newPhraseOpt = this.windowComponent.showInputBox(options);
                 return getOptionM(task).map(newPhraseOpt, newColour => currentDecoration.withColour(newColour));
@@ -69,32 +70,38 @@ export default class DecorationVariationReader {
     }
 
     private getToggleCaseSensitivityOption(decoration: Decoration) {
-        const label = decoration.pattern.ignoreCase ? 'Case Sensitive' : 'Case Insensitive';
+        const label = decoration.pattern.ignoreCase
+            ? l10n.t('Switch to case-sensitive matching')
+            : l10n.t('Switch to case-insensitive matching');
         return {
-            label: `Change to ${label}`,
+            label,
             actionId: DecorationAction.TOGGLE_CASE_SENSITIVITY
         };
     }
 
     private getToggleWholeMatchOption(decoration: Decoration) {
-        const label = decoration.pattern.wholeMatch ? 'Partial Match' : 'Whole Match';
+        const label = decoration.pattern.wholeMatch
+            ? l10n.t('Switch to partial matching')
+            : l10n.t('Switch to whole-word matching');
         return {
-            label: `Change to ${label}`,
+            label,
             actionId: DecorationAction.TOGGLE_WHOLE_MATCH
         };
     }
 
     private getUpdatePhraseOption(decoration: Decoration) {
-        const label = decoration.pattern.type === 'RegExp' ? 'RegExp Pattern' : 'Text Pattern';
+        const label = decoration.pattern.type === 'RegExp'
+            ? l10n.t('Edit regular expression')
+            : l10n.t('Edit matching text');
         return {
-            label: `Update ${label}`,
+            label,
             actionId: DecorationAction.UPDATE_PHRASE
         };
     }
 
     private getUpdateColourOption(decoration: Decoration) {
         return {
-            label: 'Update Color',
+            label: l10n.t('Change highlight color'),
             actionId: DecorationAction.UPDATE_COLOUR
         };
     }

@@ -1,4 +1,5 @@
 import ConfigStore from './config-store';
+import SetHighlightColourCommand from './commands/set-highlight-colour';
 import ConfigTargetPicker from './config-target-picker';
 import Debouncer from './debouncer';
 import DecorationOperatorFactory from './decoration/decoration-operator-factory';
@@ -51,6 +52,11 @@ export default class CommandFactory {
     constructor(vscode: any, logger: Logger) {
         this.vscode = vscode;
         this.logger = logger;
+    }
+
+    createSetHighlightColourCommand(colour: string) {
+        return new SetHighlightColourCommand(colour, this.getMatchingModeRegistry(),
+            this.getTextLocationRegistry(), this.getDecorationRegistry(), this.getDecorationOperatorFactory());
     }
 
     createToggleHighlightCommand() {
@@ -150,7 +156,7 @@ export default class CommandFactory {
         return this.eventBus;
     }
 
-    private getDecorationOperatorFactory() {
+    getDecorationOperatorFactory() {
         this.decorationOperatorFactory = this.decorationOperatorFactory || this.createDecorationOperatorFactory();
         return this.decorationOperatorFactory;
     }

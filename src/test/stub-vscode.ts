@@ -3,7 +3,16 @@
 
 import {Position, Range, Selection} from 'vscode';
 
+let testLanguage = 'en';
+export function setTestLanguage(language: string): void {
+    testLanguage = language;
+}
+const bundles: {[language: string]: {[message: string]: string}} = {
+    'zh-cn': require('../../l10n/bundle.l10n.zh-cn.json'),
+    'zh-tw': require('../../l10n/bundle.l10n.zh-tw.json')
+};
 const mockVscode = {
+    l10n: {t: (message: string) => bundles[testLanguage] ? bundles[testLanguage][message] || message : message},
     OverviewRulerLane: {Center: 2},
     StatusBarAlignment: {Right: 2},
     TextEditorRevealType: {InCenterIfOutsideViewport: 2},

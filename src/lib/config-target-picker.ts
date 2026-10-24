@@ -1,3 +1,4 @@
+import {l10n} from 'vscode';
 import * as O from 'fp-ts/lib/Option';
 import {getOptionM} from 'fp-ts/lib/OptionT';
 import {Task, task} from 'fp-ts/lib/Task';
@@ -21,7 +22,7 @@ export default class ConfigurationTargetPicker {
 
     pick(): Task<O.Option<boolean>> {
         const selectItems = this.buildQuickPickItems();
-        const options = {placeHolder: 'Select which scope of settings to save highlights to'};
+        const options = {placeHolder: l10n.t('Select where to save highlights')};
         const item = this.windowComponent.showQuickPick<ConfigurationTargetQuickPickItem>(selectItems, options);
         return getOptionM(task).map(item, it => it.value);
     }
@@ -29,11 +30,11 @@ export default class ConfigurationTargetPicker {
     private buildQuickPickItems(): ConfigurationTargetQuickPickItem[] {
         return [
             {
-                label: 'Global',
+                label: l10n.t('User settings'),
                 value: ConfigurationTarget.GLOBAL
             },
             {
-                label: 'Workspace',
+                label: l10n.t('Workspace settings'),
                 value: ConfigurationTarget.WORKSPACE
             }
         ];

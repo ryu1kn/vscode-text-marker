@@ -50,6 +50,13 @@ export default class DecorationRegistry {
 
     update(oldDecoration: Decoration, newDecoration: Decoration): void {
         this.map.set(newDecoration.id, newDecoration);
+        if (oldDecoration.colour !== newDecoration.colour) {
+            this.colourRegistry.reserve(newDecoration.colour);
+            // 多个规则可以共享同一颜色, 最后一个使用者离开后再释放.
+            if (!this.retrieveAll().some(decoration => decoration.colour === oldDecoration.colour)) {
+                this.colourRegistry.revoke(oldDecoration.colour);
+            }
+        }
     }
 
     private setDecoration(decoration: Decoration): Decoration {
@@ -61,8 +68,10 @@ export default class DecorationRegistry {
         pipe(
             this.map.get(decorationId),
             O.map(d => {
-                this.colourRegistry.revoke(d.colour);
                 this.map.delete(decorationId);
+                if (!this.retrieveAll().some(decoration => decoration.colour === d.colour)) {
+                    this.colourRegistry.revoke(d.colour);
+                }
             })
         );
     }

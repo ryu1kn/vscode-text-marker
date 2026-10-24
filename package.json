@@ -1,7 +1,7 @@
 {
   "name": "text-marker",
   "displayName": "Text Marker (Highlighter)",
-  "description": "Select text in your code and mark all matches. The highlight colour is configurable",
+  "description": "%extension.description%",
   "version": "1.11.0",
   "publisher": "ryu1kn",
   "license": "SEE LICENSE IN LICENSE.txt",
@@ -15,7 +15,7 @@
     "url": "https://github.com/ryu1kn/vscode-text-marker.git"
   },
   "engines": {
-    "vscode": "^1.51.0"
+    "vscode": "^1.73.0"
   },
   "categories": [
     "Other"
@@ -35,10 +35,10 @@
   "contributes": {
     "configuration": {
       "type": "object",
-      "title": "Text Marker (Highlighter) configurations",
+      "title": "%configuration.title%",
       "properties": {
         "textmarker.highlightColors": {
-          "description": "List of colors to be used to highlight the selected text",
+          "description": "%setting.highlightColors%",
           "type": "array",
           "items": {
             "type": "string"
@@ -60,44 +60,44 @@
           ]
         },
         "textmarker.defaultHighlightColor": {
-          "description": "Color to be used once all colors listed in `textmarker.highlightColors` are used",
+          "description": "%setting.defaultHighlightColor%",
           "type": "string",
           "default": "gray"
         },
         "textmarker.defaultHighlightOpacity": {
-          "description": "Opacity to be used when one is not given in the highlight color",
+          "description": "%setting.defaultHighlightOpacity%",
           "type": "number",
           "default": 0.7,
           "minimum": 0,
           "maximum": 1
         },
         "textmarker.enableIgnoreCase": {
-          "description": "Enable ignore case mode on startup",
+          "description": "%setting.enableIgnoreCase%",
           "type": "boolean",
           "default": false
         },
         "textmarker.enableWholeMatch": {
-          "description": "Enable whole match mode on startup",
+          "description": "%setting.enableWholeMatch%",
           "type": "boolean",
           "default": false
         },
         "textmarker.useHighlightColorOnRuler": {
-          "description": "Use the highlight colour on the ruler instead of the default colour",
+          "description": "%setting.useHighlightColorOnRuler%",
           "type": "boolean",
           "default": true
         },
         "textmarker.autoSelectDistinctiveTextColor": {
-          "description": "Text colour will be chosen to be distinctive from the background highlight colour",
+          "description": "%setting.autoSelectDistinctiveTextColor%",
           "type": "boolean",
           "default": false
         },
         "textmarker.hideStatusBarItems": {
-          "description": "Hide buttons on the status bar",
+          "description": "%setting.hideStatusBarItems%",
           "type": "boolean",
           "default": false
         },
         "textmarker.delayForRefreshingHighlight": {
-          "description": "Number of milliseconds to wait before refreshing the highlights on editor contents change. null for no refresh",
+          "description": "%setting.delayForRefreshingHighlight%",
           "type": [
             "number",
             "null"
@@ -105,7 +105,7 @@
           "default": 300
         },
         "textmarker.commandsOnContextMenu": {
-          "description": "Commands appear on the context menu",
+          "description": "%setting.commandsOnContextMenu%",
           "type": "object",
           "properties": {
             "highlightUsingRegex": {
@@ -154,7 +154,7 @@
           "additionalProperties": false
         },
         "textmarker.savedHighlights": {
-          "description": "Highlights that get applied when opening editor",
+          "description": "%setting.savedHighlights%",
           "type": "array",
           "default": [],
           "items": {
@@ -196,72 +196,163 @@
           }
         },
         "textmarker.enableTelemetry": {
-          "description": "Allow usage data to be collected",
+          "description": "%setting.enableTelemetry%",
           "type": "boolean",
           "default": true
+        },
+        "textmarker.borderWidth": {
+          "type": "number",
+          "default": 1,
+          "minimum": 0,
+          "description": "%setting.borderWidth%"
+        },
+        "textmarker.borderStyle": {
+          "type": "string",
+          "default": "solid",
+          "enum": [
+            "solid",
+            "dashed",
+            "dotted",
+            "double",
+            "none"
+          ],
+          "enumDescriptions": [
+            "%borderStyle.solid%",
+            "%borderStyle.dashed%",
+            "%borderStyle.dotted%",
+            "%borderStyle.double%",
+            "%borderStyle.none%"
+          ],
+          "description": "%setting.borderStyle%"
+        },
+        "textmarker.borderRadius": {
+          "type": "number",
+          "default": 999,
+          "minimum": 0,
+          "description": "%setting.borderRadius%"
         }
       }
     },
     "commands": [
       {
         "command": "textmarker.highlightUsingRegex",
-        "title": "Highlight Text Using Regex",
+        "title": "%command.highlightUsingRegex%",
         "category": "TextMarker"
       },
       {
         "command": "textmarker.toggleHighlight",
-        "title": "Toggle Highlight",
+        "title": "%command.toggleHighlight%",
         "category": "TextMarker"
       },
       {
         "command": "textmarker.unhighlight",
-        "title": "Unhighlight Text",
+        "title": "%command.unhighlight%",
         "category": "TextMarker"
       },
       {
         "command": "textmarker.toggleCaseSensitivity",
-        "title": "Toggle Case Sensitivity",
+        "title": "%command.toggleCaseSensitivity%",
         "category": "TextMarker"
       },
       {
         "command": "textmarker.toggleModeForCaseSensitivity",
-        "title": "Toggle Mode for Case Sensitivity",
+        "title": "%command.toggleModeForCaseSensitivity%",
         "category": "TextMarker"
       },
       {
         "command": "textmarker.toggleWholeMatch",
-        "title": "Toggle Whole/Partial Match",
+        "title": "%command.toggleWholeMatch%",
         "category": "TextMarker"
       },
       {
         "command": "textmarker.toggleModeForWholeMatch",
-        "title": "Toggle Mode for Whole/Partial Match",
+        "title": "%command.toggleModeForWholeMatch%",
         "category": "TextMarker"
       },
       {
         "command": "textmarker.clearAllHighlight",
-        "title": "Clear All Highlights",
+        "title": "%command.clearAllHighlight%",
         "category": "TextMarker"
       },
       {
         "command": "textmarker.saveAllHighlights",
-        "title": "Save All Highlights",
+        "title": "%command.saveAllHighlights%",
         "category": "TextMarker"
       },
       {
         "command": "textmarker.updateHighlight",
-        "title": "Update Highlight",
+        "title": "%command.updateHighlight%",
         "category": "TextMarker"
       },
       {
         "command": "textmarker.goToNextHighlight",
-        "title": "Go to Next Same Highlight",
+        "title": "%command.goToNextHighlight%",
         "category": "TextMarker"
       },
       {
         "command": "textmarker.goToPreviousHighlight",
-        "title": "Go to Previous Same Highlight",
+        "title": "%command.goToPreviousHighlight%",
         "category": "TextMarker"
+      },
+      {
+        "command": "textmarker.highlightCyan",
+        "title": "%command.highlightCyan%",
+        "category": "TextMarker",
+        "enablement": "editorTextFocus"
+      },
+      {
+        "command": "textmarker.highlightBlue",
+        "title": "%command.highlightBlue%",
+        "category": "TextMarker",
+        "enablement": "editorTextFocus"
+      },
+      {
+        "command": "textmarker.highlightYellow",
+        "title": "%command.highlightYellow%",
+        "category": "TextMarker",
+        "enablement": "editorTextFocus"
+      },
+      {
+        "command": "textmarker.highlightPurple",
+        "title": "%command.highlightPurple%",
+        "category": "TextMarker",
+        "enablement": "editorTextFocus"
+      },
+      {
+        "command": "textmarker.highlightGreen",
+        "title": "%command.highlightGreen%",
+        "category": "TextMarker",
+        "enablement": "editorTextFocus"
+      },
+      {
+        "command": "textmarker.highlightRed",
+        "title": "%command.highlightRed%",
+        "category": "TextMarker",
+        "enablement": "editorTextFocus"
+      },
+      {
+        "command": "textmarker.highlightPink",
+        "title": "%command.highlightPink%",
+        "category": "TextMarker",
+        "enablement": "editorTextFocus"
+      },
+      {
+        "command": "textmarker.highlightLime",
+        "title": "%command.highlightLime%",
+        "category": "TextMarker",
+        "enablement": "editorTextFocus"
+      },
+      {
+        "command": "textmarker.highlightTeal",
+        "title": "%command.highlightTeal%",
+        "category": "TextMarker",
+        "enablement": "editorTextFocus"
+      },
+      {
+        "command": "textmarker.highlightSilver",
+        "title": "%command.highlightSilver%",
+        "category": "TextMarker",
+        "enablement": "editorTextFocus"
       }
     ],
     "menus": {
@@ -315,23 +406,75 @@
           "command": "textmarker.saveAllHighlights",
           "group": "2_textmarker@10",
           "when": "editorTextFocus && config.textmarker.commandsOnContextMenu.saveAllHighlights"
+        },
+        {
+          "submenu": "textmarker.highlightColours",
+          "group": "2_textmarker@0",
+          "when": "editorTextFocus"
+        }
+      ],
+      "textmarker.highlightColours": [
+        {
+          "command": "textmarker.highlightCyan",
+          "group": "1_colours@1"
+        },
+        {
+          "command": "textmarker.highlightBlue",
+          "group": "1_colours@2"
+        },
+        {
+          "command": "textmarker.highlightYellow",
+          "group": "1_colours@3"
+        },
+        {
+          "command": "textmarker.highlightPurple",
+          "group": "1_colours@4"
+        },
+        {
+          "command": "textmarker.highlightGreen",
+          "group": "1_colours@5"
+        },
+        {
+          "command": "textmarker.highlightRed",
+          "group": "1_colours@6"
+        },
+        {
+          "command": "textmarker.highlightPink",
+          "group": "1_colours@7"
+        },
+        {
+          "command": "textmarker.highlightLime",
+          "group": "1_colours@8"
+        },
+        {
+          "command": "textmarker.highlightTeal",
+          "group": "1_colours@9"
+        },
+        {
+          "command": "textmarker.highlightSilver",
+          "group": "1_colours@10"
         }
       ]
-    }
+    },
+    "submenus": [
+      {
+        "id": "textmarker.highlightColours",
+        "label": "%menu.highlightColours%"
+      }
+    ]
   },
   "scripts": {
-    "vscode:prepublish": "yarn run compile",
+    "vscode:prepublish": "npm run compile",
     "vscode:postpublish": "./tag-release.sh",
-    "postinstall": "node ./node_modules/vscode/bin/install",
-    "coverage": "nyc mocha 'src/test/**/*.ts'",
+    "coverage": "nyc mocha \"src/test/**/*.test.ts\"",
     "compile": "tsc -p ./",
     "lint": "tslint -p .",
-    "check": "yarn run compile && yarn run lint && yarn test",
+    "check": "npm run compile && npm run lint && npm test",
     "watch": "tsc -watch -p ./",
-    "test": "mocha 'src/test/**/*.ts'",
-    "unit-test": "mocha 'src/test/unit/**/*.ts'",
-    "acceptance-test": "mocha 'src/test/acceptance/**/*.ts'",
-    "test-mode": "mocha 'src/test/unit/**/*.ts' --watch"
+    "test": "mocha \"src/test/**/*.test.ts\"",
+    "unit-test": "mocha \"src/test/unit/**/*.test.ts\"",
+    "acceptance-test": "mocha \"src/test/acceptance/**/*.test.ts\"",
+    "test-mode": "mocha \"src/test/unit/**/*.test.ts\" --watch"
   },
   "devDependencies": {
     "@types/mocha": "^8.0.4",
@@ -343,7 +486,7 @@
     "ts-node": "^9.0.0",
     "tslint": "^6.1.3",
     "typescript": "^4.1.2",
-    "vscode": "^1.1.37"
+    "@types/vscode": "1.73.0"
   },
   "dependencies": {
     "color-name": "1.1.4",
@@ -355,5 +498,6 @@
   },
   "resolutions": {
     "**/minimist": "^1.2.5"
-  }
+  },
+  "l10n": "./l10n"
 }

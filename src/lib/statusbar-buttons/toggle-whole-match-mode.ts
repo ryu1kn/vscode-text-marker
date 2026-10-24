@@ -1,6 +1,6 @@
 import * as Const from '../const';
 import EventEmitter = NodeJS.EventEmitter;
-import {StatusBarItem} from 'vscode';
+import {StatusBarItem, l10n} from 'vscode';
 
 const Event = Const.Event;
 
@@ -30,10 +30,10 @@ export default class ToggleWholeMatchModeButton {
         const statusBarItem = this.statusBarItem;
         if (wholeMatch) {
             statusBarItem.text = '[Ab|]';
-            statusBarItem.tooltip = `${Const.EXTENSION_NAME}: Whole Match Mode`;
+            statusBarItem.tooltip = `${Const.EXTENSION_NAME}: ${l10n.t('Match whole words')}`;
         } else {
             statusBarItem.text = 'Ab|';
-            statusBarItem.tooltip = `${Const.EXTENSION_NAME}: Non-Whole Match Mode`;
+            statusBarItem.tooltip = `${Const.EXTENSION_NAME}: ${l10n.t('Partial matching')}`;
         }
     }
 

@@ -1,4 +1,4 @@
-import {mock, verify, when} from '../../helpers/mock';
+import {contains, mock, verify, when} from '../../helpers/mock';
 import HighlightUsingRegexCommand from '../../../lib/commands/highlight-using-regex';
 import DecorationOperatorFactory from '../../../lib/decoration/decoration-operator-factory';
 import DecorationOperator from '../../../lib/decoration/decoration-operator';
@@ -17,7 +17,7 @@ suite('HighlightUsingRegexCommand', () => {
         when(decorationOperatorFactory.createForVisibleEditors()).thenReturn(decorationOperator);
 
         const windowComponent = mock(WindowComponent);
-        when(windowComponent.showInputBox({placeHolder: 'Enter a regular expression to highlight text'}))
+        when(windowComponent.showInputBox(contains({placeHolder: 'Enter a regular expression without enclosing / characters'})))
             .thenReturn(task.of(some('pattern')));
 
         const command = new HighlightUsingRegexCommand(decorationOperatorFactory, matchingModeRegistry, windowComponent);
@@ -33,7 +33,7 @@ suite('HighlightUsingRegexCommand', () => {
         const decorationOperatorFactory = mock(DecorationOperatorFactory);
 
         const windowComponent = mock(WindowComponent);
-        when(windowComponent.showInputBox({placeHolder: 'Enter a regular expression to highlight text'})).thenReturn(task.of(none));
+        when(windowComponent.showInputBox(contains({placeHolder: 'Enter a regular expression without enclosing / characters'}))).thenReturn(task.of(none));
 
         const command = new HighlightUsingRegexCommand(decorationOperatorFactory, matchingModeRegistry, windowComponent);
 

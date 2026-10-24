@@ -16,7 +16,7 @@ suite('ToggleWholeMatchModeButton', () => {
         eventBus.on(Event.MATCHING_MODE_INITIALISED, () => {
             assert.deepEqual(statusBarItem.command, 'textmarker.toggleModeForWholeMatch');
             assert.deepEqual(statusBarItem.text, 'Ab|');
-            assert.deepEqual(statusBarItem.tooltip, 'TextMarker: Non-Whole Match Mode');
+            assert.deepEqual(statusBarItem.tooltip, 'TextMarker: Partial matching');
             verify(statusBarItem.show());
             done();
         });
@@ -30,7 +30,7 @@ suite('ToggleWholeMatchModeButton', () => {
 
         eventBus.on(Event.WHOLE_MATCH_MODE_TOGGLED, () => {
             assert.deepEqual(statusBarItem.text, '[Ab|]');
-            assert.deepEqual(statusBarItem.tooltip, 'TextMarker: Whole Match Mode');
+            assert.deepEqual(statusBarItem.tooltip, 'TextMarker: Match whole words');
             verify(statusBarItem.show(), {times: 0});
             done();
         });

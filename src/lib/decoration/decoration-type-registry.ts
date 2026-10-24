@@ -21,6 +21,7 @@ export class DecorationTypeRegistry {
     }
 
     revoke(id: string): void {
+        pipe(this.issued.get(id), O.map(type => type.dispose()));
         this.issued.delete(id);
     }
 

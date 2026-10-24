@@ -20,7 +20,7 @@ suite('DecorationVariationReader', () => {
     test('it lets user to toggle case sensitivity', async () => {
         const windowComponent = mockType<WindowComponent>({
             showQuickPick: (items: QuickPickItem[]) =>
-                task.of(findFirst((item: QuickPickItem) => item.label.includes('Case'))(items))
+                task.of(findFirst((item: QuickPickItem) => item.label.includes('case-'))(items))
         });
         const patternVariationReader = new DecorationVariationReader(windowComponent);
 
@@ -35,7 +35,7 @@ suite('DecorationVariationReader', () => {
     test('it lets user to toggle whole/partial match', async () => {
         const windowComponent = mockType<WindowComponent>({
             showQuickPick: (items: QuickPickItem[]) =>
-                task.of(findFirst((item: QuickPickItem) => item.label.includes('Whole'))(items))
+                task.of(findFirst((item: QuickPickItem) => item.label.includes('whole-word'))(items))
         });
         const patternVariationReader = new DecorationVariationReader(windowComponent);
 
@@ -50,7 +50,7 @@ suite('DecorationVariationReader', () => {
     test('it lets user to update the phrase of pattern', async () => {
         const windowComponent = mockType<WindowComponent>({
             showQuickPick: (items: QuickPickItem[]) =>
-                task.of(findFirst((item: QuickPickItem) => item.label.includes('Pattern'))(items)),
+                task.of(findFirst((item: QuickPickItem) => item.label.includes('matching text'))(items)),
             showInputBox: () => task.of(some('NEW_PHRASE'))
         });
         const patternVariationReader = new DecorationVariationReader(windowComponent);
@@ -78,7 +78,7 @@ suite('DecorationVariationReader', () => {
     test('it returns null if user selected phrase-update but cancelled', async () => {
         const windowComponent = mockType<WindowComponent>({
             showQuickPick: (items: QuickPickItem[]) =>
-                task.of(findFirst((item: QuickPickItem) => item.label.includes('Pattern'))(items)),
+                task.of(findFirst((item: QuickPickItem) => item.label.includes('matching text'))(items)),
             showInputBox: () => task.of(none)
         });
         const patternVariationReader = new DecorationVariationReader(windowComponent);

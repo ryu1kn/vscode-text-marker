@@ -26,7 +26,9 @@ export default class DecorationTypeCreator {
             Object.assign(
                 {
                     backgroundColor: backgroundColour,
-                    borderRadius: '.2em',
+                    border: `${this.configStore.borderWidth}px ${this.configStore.borderStyle}`,
+                    borderColor: colour,
+                    borderRadius: `${this.configStore.borderRadius}px`,
                     overviewRulerColor: overviewRulerColor,
                     overviewRulerLane: OverviewRulerLane.Center
                 },

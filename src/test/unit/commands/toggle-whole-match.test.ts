@@ -18,7 +18,7 @@ suite('ToggleWholeMatchCommand', () => {
         const pattern = new StringPattern({phrase: 'TEXT'});
         const decoration = new Decoration('UUID', pattern, 'pink');
         const decorationPicker = mock(DecorationPicker);
-        when(decorationPicker.pick('Select a pattern to toggle partial/whole match')).thenReturn(task.of(some(decoration)));
+        when(decorationPicker.pick('Select a highlight to toggle whole/partial matching')).thenReturn(task.of(some(decoration)));
         const command = new ToggleWholeMatchCommand(decorationOperatorFactory, decorationPicker);
 
         await command.execute();
@@ -29,7 +29,7 @@ suite('ToggleWholeMatchCommand', () => {
     test('it does nothing if text is not selected', async () => {
         const decorationOperatorFactory = mock(DecorationOperatorFactory);
         const decorationPicker = mock(DecorationPicker);
-        when(decorationPicker.pick('Select a pattern to toggle partial/whole match')).thenReturn(task.of(none));
+        when(decorationPicker.pick('Select a highlight to toggle whole/partial matching')).thenReturn(task.of(none));
 
         const command = new ToggleWholeMatchCommand(decorationOperatorFactory, decorationPicker);
 

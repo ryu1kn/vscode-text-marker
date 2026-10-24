@@ -24,6 +24,13 @@ export default class AppIntegrator {
     integrate(context: ExtensionContextLike) {
         this.registerCommands(context);
         this.registerEventListeners(context);
+        this.vscode.workspace.onDidChangeConfiguration((event: import('vscode').ConfigurationChangeEvent) => {
+            const styleKeys = ['borderWidth', 'borderStyle', 'borderRadius', 'defaultHighlightOpacity',
+                'autoSelectDistinctiveTextColor', 'useHighlightColorOnRuler'];
+            if (styleKeys.some(key => event.affectsConfiguration(`${Const.EXTENSION_ID}.${key}`))) {
+                this.commandFactory.getDecorationOperatorFactory().createForVisibleEditors().refreshStyles();
+            }
+        }, undefined, context.subscriptions);
         this.prepareExtensionEventsDrivenItems();
         this.broadcastReady();
     }
@@ -60,6 +67,56 @@ export default class AppIntegrator {
     private getCommands(): CommandItem[] {
         const factory = this.commandFactory;
         return [
+            {
+                name: `${Const.EXTENSION_ID}.highlightCyan`,
+                command: factory.createSetHighlightColourCommand('#00BCD4'),
+                type: 'TEXT_EDITOR'
+            },
+            {
+                name: `${Const.EXTENSION_ID}.highlightBlue`,
+                command: factory.createSetHighlightColourCommand('#5C8DFF'),
+                type: 'TEXT_EDITOR'
+            },
+            {
+                name: `${Const.EXTENSION_ID}.highlightYellow`,
+                command: factory.createSetHighlightColourCommand('#FFEB3B'),
+                type: 'TEXT_EDITOR'
+            },
+            {
+                name: `${Const.EXTENSION_ID}.highlightPurple`,
+                command: factory.createSetHighlightColourCommand('#AB47BC'),
+                type: 'TEXT_EDITOR'
+            },
+            {
+                name: `${Const.EXTENSION_ID}.highlightGreen`,
+                command: factory.createSetHighlightColourCommand('#4CAF50'),
+                type: 'TEXT_EDITOR'
+            },
+            {
+                name: `${Const.EXTENSION_ID}.highlightRed`,
+                command: factory.createSetHighlightColourCommand('#FF5252'),
+                type: 'TEXT_EDITOR'
+            },
+            {
+                name: `${Const.EXTENSION_ID}.highlightPink`,
+                command: factory.createSetHighlightColourCommand('#FF80AB'),
+                type: 'TEXT_EDITOR'
+            },
+            {
+                name: `${Const.EXTENSION_ID}.highlightLime`,
+                command: factory.createSetHighlightColourCommand('#CDDC39'),
+                type: 'TEXT_EDITOR'
+            },
+            {
+                name: `${Const.EXTENSION_ID}.highlightTeal`,
+                command: factory.createSetHighlightColourCommand('#26A69A'),
+                type: 'TEXT_EDITOR'
+            },
+            {
+                name: `${Const.EXTENSION_ID}.highlightSilver`,
+                command: factory.createSetHighlightColourCommand('#B0BEC5'),
+                type: 'TEXT_EDITOR'
+            },
             {
                 name: `${Const.EXTENSION_ID}.highlightUsingRegex`,
                 command: factory.createHighlightUsingRegex(),

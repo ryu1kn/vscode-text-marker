@@ -2,7 +2,7 @@ import {verify, wrapVerify} from '../../helpers/mock';
 
 import AppIntegrator from '../../../lib/app-integrator';
 import {createFakeEditor} from '../helpers/fake-editor';
-import {createFakeVsCode, EXECUTION_CONTEXT} from '../helpers/fake-vscode';
+import {createFakeVsCode, EXECUTION_CONTEXT, decorationTypes} from '../helpers/fake-vscode';
 import {Position, Range} from 'vscode';
 import {getVsTelemetryReporterCreator} from '../../../lib/telemetry/vscode-telemetry-reporter';
 import {join} from 'path';
@@ -32,11 +32,11 @@ suite('Highlight command', () => {
     test('highlights selected text', async () => {
         await command(editor1);
 
-        verify(editor1.setDecorations('DECORATION_TYPE_1', [
+        verify(editor1.setDecorations(decorationTypes[0], [
             new Range(new Position(0, 2), new Position(0, 6)),
             new Range(new Position(0, 9), new Position(0, 13))
         ]));
-        verify(editor2.setDecorations('DECORATION_TYPE_1', [
+        verify(editor2.setDecorations(decorationTypes[0], [
             new Range(new Position(0, 2), new Position(0, 6))
         ]));
     });
@@ -47,7 +47,7 @@ suite('Highlight command', () => {
 
         wrapVerify((c1, c2) => verify(editor1.setDecorations(c1(), c2())), {
             call1: [
-                'DECORATION_TYPE_2',
+                decorationTypes[1],
                 [
                     new Range(new Position(0, 2), new Position(0, 5)),
                     new Range(new Position(0, 9), new Position(0, 12))
@@ -56,7 +56,7 @@ suite('Highlight command', () => {
         });
         wrapVerify((c1, c2) => verify(editor3.setDecorations(c1(), c2())), {
             call1: [
-                'DECORATION_TYPE_2',
+                decorationTypes[1],
                 [
                     new Range(new Position(0, 2), new Position(0, 5))
                 ]
@@ -69,10 +69,10 @@ suite('Highlight command', () => {
         await command(editor1);
 
         wrapVerify((c1, c2) => verify(editor1.setDecorations(c1(), c2())), {
-            call1: ['DECORATION_TYPE_1', []]
+            call1: [decorationTypes[0], []]
         });
         wrapVerify((c1, c2) => verify(editor2.setDecorations(c1(), c2())), {
-            call1: ['DECORATION_TYPE_1', []]
+            call1: [decorationTypes[0], []]
         });
     });
 });

@@ -8,7 +8,7 @@ suite('Decoration type creation', () => {
     const blue = (opacity: number): string => `rgba(0,0,255,${opacity})`;
     const violet = (opacity: number): string => `rgba(238,130,238,${opacity})`;
 
-    const configStore = mockType<ConfigStore>({defaultHighlightOpacity: 0.5});
+    const configStore = mockType<ConfigStore>({borderWidth: 1, borderStyle: 'solid', borderRadius: 999, defaultHighlightOpacity: 0.5});
     let window: WindowComponent;
     let creator: DecorationTypeCreator;
 
@@ -22,7 +22,9 @@ suite('Decoration type creation', () => {
 
         verify(window.createTextEditorDecorationType({
             backgroundColor: blue(0.5),
-            borderRadius: '.2em',
+            border: '1px solid',
+            borderColor: 'blue',
+            borderRadius: '999px',
             overviewRulerColor: violet(0.5),
             overviewRulerLane: OverviewRulerLane.Center
         }));
@@ -53,7 +55,7 @@ suite('Decoration type creation', () => {
     });
 
     suite('When `useHighlightColorOnRuler` is ON', () => {
-        const configStore = mockType<ConfigStore>({useHighlightColorOnRuler: true, defaultHighlightOpacity: 1});
+        const configStore = mockType<ConfigStore>({borderWidth: 1, borderStyle: 'solid', borderRadius: 999, useHighlightColorOnRuler: true, defaultHighlightOpacity: 1});
         const window = mock(WindowComponent);
         const creator = new DecorationTypeCreator(configStore, window);
 
@@ -62,7 +64,9 @@ suite('Decoration type creation', () => {
 
             verify(window.createTextEditorDecorationType({
                 backgroundColor: blue(1),
-                borderRadius: '.2em',
+                border: '1px solid',
+                borderColor: 'blue',
+                borderRadius: '999px',
                 overviewRulerColor: blue(1),
                 overviewRulerLane: OverviewRulerLane.Center
             }));
@@ -70,7 +74,7 @@ suite('Decoration type creation', () => {
     });
 
     suite('When `autoSelectDistinctiveTextColor` is ON', () => {
-        const configStore = mockType<ConfigStore>({autoSelectDistinctiveTextColor: true, defaultHighlightOpacity: 1});
+        const configStore = mockType<ConfigStore>({borderWidth: 1, borderStyle: 'solid', borderRadius: 999, autoSelectDistinctiveTextColor: true, defaultHighlightOpacity: 1});
         const window = mock(WindowComponent);
         const creator = new DecorationTypeCreator(configStore, window);
 
@@ -79,7 +83,9 @@ suite('Decoration type creation', () => {
 
             verify(window.createTextEditorDecorationType({
                 backgroundColor: 'rgba(255,192,203,1)',
-                borderRadius: '.2em',
+                border: '1px solid',
+                borderColor: 'rgba(255,192,203,1)',
+                borderRadius: '999px',
                 color: '#545454',
                 overviewRulerColor: violet(1),
                 overviewRulerLane: 2

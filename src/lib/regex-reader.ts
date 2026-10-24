@@ -1,3 +1,4 @@
+import {l10n} from 'vscode';
 import PatternFactory from './pattern/pattern-factory';
 import WindowComponent from './vscode/window';
 import MatchingModeRegistry from './matching-mode-registry';
@@ -25,7 +26,18 @@ export default class RegexReader {
     }
 
     private getInputBoxOption() {
-        return {placeHolder: 'Enter a regular expression to highlight text'};
+        return {
+            placeHolder: l10n.t('Enter a regular expression without enclosing / characters'),
+            validateInput: (phrase: string) => {
+                try {
+                    RegExp(phrase);
+                    return undefined;
+                } catch (error) {
+                    if (!(error instanceof SyntaxError)) throw error;
+                    return l10n.t('Invalid regular expression. Check brackets, escapes and quantifiers.');
+                }
+            }
+        };
     }
 
 }

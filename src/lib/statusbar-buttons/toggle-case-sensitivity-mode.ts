@@ -1,6 +1,6 @@
 import * as Const from '../const';
 import EventEmitter = NodeJS.EventEmitter;
-import {StatusBarItem} from 'vscode';
+import {StatusBarItem, l10n} from 'vscode';
 
 const Event = Const.Event;
 
@@ -30,10 +30,10 @@ export default class ToggleCaseSensitivityModeButton {
         const statusBarItem = this.statusBarItem;
         if (ignoreCase) {
             statusBarItem.text = 'Aa';
-            statusBarItem.tooltip = `${Const.EXTENSION_NAME}: Case Insensitive Mode`;
+            statusBarItem.tooltip = `${Const.EXTENSION_NAME}: ${l10n.t('Ignore case')}`;
         } else {
             statusBarItem.text = '[Aa]';
-            statusBarItem.tooltip = `${Const.EXTENSION_NAME}: Case Sensitive Mode`;
+            statusBarItem.tooltip = `${Const.EXTENSION_NAME}: ${l10n.t('Match case')}`;
         }
     }
 

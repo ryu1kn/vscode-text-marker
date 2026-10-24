@@ -1,21 +1,20 @@
-// PLEASE DO NOT MODIFY / DELETE UNLESS YOU KNOW WHAT YOU ARE DOING
-//
-// This file is providing the test runner to use when running extension tests.
-// By default the test runner in use is Mocha based.
-//
-// You can provide your own test runner if you want to override it by exporting
-// a function run(testRoot: string, clb: (error:Error) => void) that the extension
-// host can call to run the tests. The test runner is expected to use console.log
-// to report the results back to the caller. When the tests are finished, return
-// a possible error to the callback or null if none.
+import * as fs from 'fs';
+import * as path from 'path';
+import Mocha = require('mocha');
+import './stub-vscode';
 
-var testRunner = require('vscode/lib/testrunner');
-
-// You can directly control Mocha options by uncommenting the following lines
-// See https://github.com/mochajs/mocha/wiki/Using-mocha-programmatically#set-options for more info
-testRunner.configure({
-    ui: 'tdd', 	    // the TDD UI is being used in extension.test.js (suite, test, etc.)
-    useColors: true // colored output from test results
-});
-
-module.exports = testRunner;
+// VS Code 调试入口使用与命令行相同的模拟测试, 不依赖已移除的旧 vscode 测试运行器.
+export function run(): Promise<void> {
+    const mocha = new Mocha({ui: 'tdd', color: true});
+    function addTests(directory: string): void {
+        for (const entry of fs.readdirSync(directory, {withFileTypes: true})) {
+            const file = path.join(directory, entry.name);
+            if (entry.isDirectory()) addTests(file);
+            else if (entry.name.endsWith('.test.js')) mocha.addFile(file);
+        }
+    }
+    addTests(__dirname);
+    return new Promise((resolve, reject) => {
+        mocha.run(failures => failures ? reject(new Error(`${failures} tests failed`)) : resolve());
+    });
+}

@@ -3,6 +3,22 @@
 
 # Text Marker (Highlighter)
 
+## Highlight controls and localization
+
+The editor context menu includes ten fixed highlight colors. Select text to add a highlight,
+or choose a color on an existing highlight to recolor it while preserving its regular expression
+and matching options. Automatic color allocation continues to use `textmarker.highlightColors`.
+
+- `textmarker.borderWidth`: border width in pixels, `0` disables the border.
+- `textmarker.borderStyle`: `solid`, `dashed`, `dotted`, `double` or `none`.
+- `textmarker.borderRadius`: corner radius in pixels, `0` is square and `999` is pill-shaped.
+- `textmarker.defaultHighlightOpacity`: background opacity from `0` to `1`.
+
+Style changes refresh existing highlights immediately. Menus, settings and runtime prompts
+follow the VS Code display language in English, Simplified Chinese and Traditional Chinese;
+other languages use English. Restart VS Code after changing its display language.
+This functionality requires VS Code 1.73 or later.
+
 ## Features
 
 * Highlight/Unhighlight text from both command palette or right-click menu

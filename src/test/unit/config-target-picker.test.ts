@@ -12,14 +12,14 @@ suite('ConfigTargetPicker', () => {
         const windowComponent = mock(WindowComponent);
         when(windowComponent.showQuickPick(
             [{
-                label: 'Global',
+                label: 'User settings',
                 value: true
             }, {
-                label: 'Workspace',
+                label: 'Workspace settings',
                 value: false
             }],
-            {placeHolder: 'Select which scope of settings to save highlights to'}
-        )).thenReturn(task.of(some({label: 'Global', value: true})));
+            {placeHolder: 'Select where to save highlights'}
+        )).thenReturn(task.of(some({label: 'User settings', value: true})));
 
         const picker = new ConfigTargetPicker(windowComponent);
 

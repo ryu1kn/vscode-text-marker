@@ -16,7 +16,7 @@ suite('ToggleCaseSensitivityModeButton', () => {
         eventBus.on(Event.MATCHING_MODE_INITIALISED, () => {
             assert.deepEqual(statusBarItem.command, 'textmarker.toggleModeForCaseSensitivity');
             assert.deepEqual(statusBarItem.text, '[Aa]');
-            assert.deepEqual(statusBarItem.tooltip, 'TextMarker: Case Sensitive Mode');
+            assert.deepEqual(statusBarItem.tooltip, 'TextMarker: Match case');
             verify(statusBarItem.show());
             done();
         });
@@ -30,7 +30,7 @@ suite('ToggleCaseSensitivityModeButton', () => {
 
         eventBus.on(Event.TOGGLED_CASE_SENSITIVITY, () => {
             assert.deepEqual(statusBarItem.text, 'Aa');
-            assert.deepEqual(statusBarItem.tooltip, 'TextMarker: Case Insensitive Mode');
+            assert.deepEqual(statusBarItem.tooltip, 'TextMarker: Ignore case');
             verify(statusBarItem.show(), {times: 0});
             done();
         });
